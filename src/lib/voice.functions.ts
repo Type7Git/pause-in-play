@@ -23,7 +23,7 @@ export const transcribeVoice = createServerFn({ method: "POST" })
     try {
       const bytes = Uint8Array.from(atob(data.audio), (c) => c.charCodeAt(0));
       const ext = data.mime.includes("mp4") ? "mp4" : data.mime.includes("ogg") ? "ogg" : "webm";
-      const text = await transcribeClip(new File([bytes], `clip.${ext}`, { type: data.mime.split(";")[0] }));
+      const text = await transcribeClip(new File([bytes], `clip.${ext}`, { type: data.mime.split(";")[0] ?? data.mime }));
       return { text };
     } catch (e) {
       console.error("transcribe", e);

@@ -20,7 +20,7 @@ export function sanitiseFiled(raw: unknown): Filed {
     doing: cap(o["doing"], 300), next_step: cap(o["next_step"], 300), remind,
     thing: cap(o["thing"], 200), location: cap(o["location"], 300),
   };
-  let type = o["type"] === "quest" || o["type"] === "vit" ? o["type"] : "unsure";
+  let type: "quest" | "vit" | "unsure" = o["type"] === "quest" || o["type"] === "vit" ? o["type"] : "unsure";
   if (type === "quest" && !f.doing) type = "unsure";
   if (type === "vit" && (!f.thing || !f.location)) type = "unsure";
   return { type, ...f };
