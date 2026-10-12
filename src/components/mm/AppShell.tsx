@@ -29,7 +29,16 @@ function Meter() {
 }
 
 export function AppShell({ children }: { children: ReactNode }) {
-  const quiet = useLocation({ select: (l) => l.pathname }) === "/wind-down";
+  const path = useLocation({ select: (l) => l.pathname });
+  const quiet = path === "/wind-down";
+  if (path.startsWith("/admin")) {
+    return (
+      <div className="min-h-screen bg-shell px-6 py-8">
+        <div className="mx-auto max-w-6xl">{children}</div>
+        <footer className="mx-auto mt-10 max-w-6xl text-center text-xs text-muted-foreground">If you are in crisis, call Lifeline 13 11 14 or 000.</footer>
+      </div>
+    );
+  }
   return (
     <div className="px-4 py-6">
       <div className="mx-auto flex max-w-[440px] flex-col">
