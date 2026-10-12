@@ -21,13 +21,30 @@ export const Route = createFileRoute("/")({
   component: Home,
 });
 
-const CHOICES: { to: "/side-quest" | "/tabs" | "/little-win" | "/wind-down" | "/laugh" | "/remember"; icon: ChoiceIcon; title: string; desc: string; blob: string }[] = [
-  { to: "/side-quest", icon: "quest", title: "What was I doing?", desc: "Save my place and the next step", blob: "bg-gold-soft" },
-  { to: "/tabs", icon: "tabs", title: "My brain has 37 tabs open", desc: "A one-minute pause, then one thing", blob: "bg-plum-soft" },
-  { to: "/little-win", icon: "win", title: "Give me a little win", desc: "A short, untimed puzzle", blob: "bg-sage-soft" },
-  { to: "/wind-down", icon: "wind", title: "Help me wind down", desc: "Quiet, no scores", blob: "bg-plum-soft" },
-  { to: "/laugh", icon: "laugh", title: "I need a laugh", desc: "An everyday scene to sort out", blob: "bg-gold-soft" },
-  { to: "/remember", icon: "vit", title: "Help me remember", desc: "The Very Important Thing Department", blob: "bg-rose-soft" },
+type Choice = { to: "/side-quest" | "/tabs" | "/little-win" | "/wind-down" | "/laugh" | "/remember"; icon: ChoiceIcon; title: string; desc: string; blob: string };
+
+const GROUPS: { label: string; choices: Choice[] }[] = [
+  {
+    label: "Practical tools",
+    choices: [
+      { to: "/side-quest", icon: "quest", title: "What was I doing?", desc: "Save my place and the next step", blob: "bg-gold-soft" },
+      { to: "/remember", icon: "vit", title: "Help me remember", desc: "The Very Important Thing Department", blob: "bg-rose-soft" },
+    ],
+  },
+  {
+    label: "Calming moments",
+    choices: [
+      { to: "/tabs", icon: "tabs", title: "My brain has 37 tabs open", desc: "A one-minute pause, then one thing", blob: "bg-plum-soft" },
+      { to: "/wind-down", icon: "wind", title: "Help me wind down", desc: "Quiet, no scores", blob: "bg-plum-soft" },
+    ],
+  },
+  {
+    label: "Playful challenges",
+    choices: [
+      { to: "/little-win", icon: "win", title: "Give me a little win", desc: "A short, untimed puzzle", blob: "bg-sage-soft" },
+      { to: "/laugh", icon: "laugh", title: "I need a laugh", desc: "An everyday scene to sort out", blob: "bg-gold-soft" },
+    ],
+  },
 ];
 
 function useGreeting() {
