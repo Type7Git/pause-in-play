@@ -35,6 +35,21 @@ export type Database = {
         }
         Relationships: []
       }
+      cron_tokens: {
+        Row: {
+          name: string
+          token: string
+        }
+        Insert: {
+          name: string
+          token?: string
+        }
+        Update: {
+          name?: string
+          token?: string
+        }
+        Relationships: []
+      }
       library_entries: {
         Row: {
           approved_at: string | null
