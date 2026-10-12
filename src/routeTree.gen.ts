@@ -12,7 +12,9 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as LaughRouteImport } from './routes/laugh'
 import { Route as LittleWinRouteImport } from './routes/little-win'
+import { Route as PrivacyRouteImport } from './routes/privacy'
 import { Route as RememberRouteImport } from './routes/remember'
+import { Route as SettingsRouteImport } from './routes/settings'
 import { Route as SideQuestRouteImport } from './routes/side-quest'
 import { Route as TabsRouteImport } from './routes/tabs'
 import { Route as WindDownRouteImport } from './routes/wind-down'
@@ -32,9 +34,19 @@ const LittleWinRoute = LittleWinRouteImport.update({
   path: '/little-win',
   getParentRoute: () => rootRouteImport,
 } as any)
+const PrivacyRoute = PrivacyRouteImport.update({
+  id: '/privacy',
+  path: '/privacy',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const RememberRoute = RememberRouteImport.update({
   id: '/remember',
   path: '/remember',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SettingsRoute = SettingsRouteImport.update({
+  id: '/settings',
+  path: '/settings',
   getParentRoute: () => rootRouteImport,
 } as any)
 const SideQuestRoute = SideQuestRouteImport.update({
@@ -57,7 +69,9 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/laugh': typeof LaughRoute
   '/little-win': typeof LittleWinRoute
+  '/privacy': typeof PrivacyRoute
   '/remember': typeof RememberRoute
+  '/settings': typeof SettingsRoute
   '/side-quest': typeof SideQuestRoute
   '/tabs': typeof TabsRoute
   '/wind-down': typeof WindDownRoute
@@ -66,7 +80,9 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/laugh': typeof LaughRoute
   '/little-win': typeof LittleWinRoute
+  '/privacy': typeof PrivacyRoute
   '/remember': typeof RememberRoute
+  '/settings': typeof SettingsRoute
   '/side-quest': typeof SideQuestRoute
   '/tabs': typeof TabsRoute
   '/wind-down': typeof WindDownRoute
@@ -76,7 +92,9 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/laugh': typeof LaughRoute
   '/little-win': typeof LittleWinRoute
+  '/privacy': typeof PrivacyRoute
   '/remember': typeof RememberRoute
+  '/settings': typeof SettingsRoute
   '/side-quest': typeof SideQuestRoute
   '/tabs': typeof TabsRoute
   '/wind-down': typeof WindDownRoute
@@ -87,7 +105,9 @@ export interface FileRouteTypes {
     | '/'
     | '/laugh'
     | '/little-win'
+    | '/privacy'
     | '/remember'
+    | '/settings'
     | '/side-quest'
     | '/tabs'
     | '/wind-down'
@@ -96,7 +116,9 @@ export interface FileRouteTypes {
     | '/'
     | '/laugh'
     | '/little-win'
+    | '/privacy'
     | '/remember'
+    | '/settings'
     | '/side-quest'
     | '/tabs'
     | '/wind-down'
@@ -105,7 +127,9 @@ export interface FileRouteTypes {
     | '/'
     | '/laugh'
     | '/little-win'
+    | '/privacy'
     | '/remember'
+    | '/settings'
     | '/side-quest'
     | '/tabs'
     | '/wind-down'
@@ -115,7 +139,9 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   LaughRoute: typeof LaughRoute
   LittleWinRoute: typeof LittleWinRoute
+  PrivacyRoute: typeof PrivacyRoute
   RememberRoute: typeof RememberRoute
+  SettingsRoute: typeof SettingsRoute
   SideQuestRoute: typeof SideQuestRoute
   TabsRoute: typeof TabsRoute
   WindDownRoute: typeof WindDownRoute
@@ -144,11 +170,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LittleWinRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/privacy': {
+      id: '/privacy'
+      path: '/privacy'
+      fullPath: '/privacy'
+      preLoaderRoute: typeof PrivacyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/remember': {
       id: '/remember'
       path: '/remember'
       fullPath: '/remember'
       preLoaderRoute: typeof RememberRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/settings': {
+      id: '/settings'
+      path: '/settings'
+      fullPath: '/settings'
+      preLoaderRoute: typeof SettingsRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/side-quest': {
@@ -179,7 +219,9 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   LaughRoute: LaughRoute,
   LittleWinRoute: LittleWinRoute,
+  PrivacyRoute: PrivacyRoute,
   RememberRoute: RememberRoute,
+  SettingsRoute: SettingsRoute,
   SideQuestRoute: SideQuestRoute,
   TabsRoute: TabsRoute,
   WindDownRoute: WindDownRoute,

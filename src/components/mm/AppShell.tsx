@@ -43,11 +43,17 @@ export function AppShell({ children }: { children: ReactNode }) {
               <LogoMark className="size-[26px]" />
               Midlife Mind
             </Link>
-            <div className={quiet ? "invisible" : undefined} aria-hidden={quiet || undefined}><Meter /></div>
+            <div className={`flex items-center gap-2 ${quiet ? "invisible" : ""}`} aria-hidden={quiet || undefined}>
+              <Meter />
+              <Link to="/settings" aria-label="Settings and account" className="press grid size-[38px] place-items-center rounded-full border border-line bg-card text-plum shadow-soft">
+                <svg viewBox="0 0 24 24" className="size-5" aria-hidden="true" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round"><circle cx="12" cy="8" r="4" /><path d="M4 21c1.5-4 4.5-6 8-6s6.5 2 8 6" /></svg>
+              </Link>
+            </div>
           </header>
           <main className="flex flex-1 flex-col gap-[18px] px-5 pb-7 pt-2">{children}</main>
           <footer className="px-5 pb-5 text-center text-xs text-muted-foreground">
-            Education and skills, not medical advice or treatment. If you are in crisis, call Lifeline 13 11 14 or 000.
+            Education and skills, not medical advice or treatment. If you are in crisis, call Lifeline 13 11 14 or 000.{" "}
+            <Link to="/privacy" className="underline underline-offset-2">Privacy</Link>
           </footer>
         </div>
       </div>

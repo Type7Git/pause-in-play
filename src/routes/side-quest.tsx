@@ -1,8 +1,8 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useRef, useState, type FormEvent } from "react";
 import { BackButton } from "@/components/mm/BackButton";
-import { Card, Chip, Field, Muted, Pill, Row, ScreenTitle, useStoredList } from "@/components/mm/ui";
-import { useRewards } from "@/lib/rewards";
+import { Card, Chip, Field, Muted, Pill, Row, ScreenTitle } from "@/components/mm/ui";
+import { remindAtFor, useRewards } from "@/lib/rewards";
 
 export const Route = createFileRoute("/side-quest")({
   head: () => ({
@@ -19,11 +19,9 @@ export const Route = createFileRoute("/side-quest")({
 });
 
 const REMINDERS = ["No reminder", "In 10 min", "In 30 min", "Tonight"];
-type Quest = { doing: string; next: string; remind: string };
 
 function SideQuest() {
-  const { earn } = useRewards();
-  const [quests, setQuests] = useStoredList<Quest>("midlife-mind:quests", []);
+  const { earn, quests, addQuest, completeQuest } = useRewards();
   const [doing, setDoing] = useState("");
   const [next, setNext] = useState("");
   const [remind, setRemind] = useState<string>("No reminder");
@@ -37,7 +35,7 @@ function SideQuest() {
       doingRef.current?.focus();
       return;
     }
-    setQuests((q) => [{ doing: doing.trim(), next: next.trim(), remind }, ...q]);
+    addQuest({ doing: doing.trim(), next: next.trim(), remindAt: remindAtFor(remind) });
     setDoing("");
     setNext("");
     setError("");
@@ -66,17 +64,17 @@ function SideQuest() {
         <h3>Parked missions</h3>
         <ul className="flex flex-col gap-2">
           {quests.length ? (
-            quests.map((q, i) => (
-              <Row key={i}>
+            quests.map((q) => (
+              <Row key={q.id}>
                 <span className="min-w-0">
                   <b>{q.doing}</b>
                   <br />
                   <small className="text-[12.5px] text-muted-foreground">
                     Next: {q.next || "Pick up where I left off"}
-                    {q.remind !== "No reminder" && ` · ${q.remind}`}
+                    {q.remindAt && ` · Nudge ${new Date(q.remindAt).toLocaleTimeString([], { hour: "numeric", minute: "2-digit" })}`}
                   </small>
                 </span>
-                <Pill variant="sage" size="sm" onClick={() => { setQuests((l) => l.filter((_, j) => j !== i)); earn(4, "Mission complete. You came back to it"); }}>
+                <Pill variant="sage" size="sm" onClick={() => { completeQuest(q.id); earn(4, "Mission complete. You came back to it"); }}>
                   Done
                 </Pill>
               </Row>
