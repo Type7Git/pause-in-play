@@ -97,6 +97,8 @@ export function RewardsProvider({ children }: { children: ReactNode }) {
   const timer = useRef<ReturnType<typeof setTimeout>>(undefined);
   const userRef = useRef<User | null>(null);
   const loadedFor = useRef<string | null | undefined>(undefined);
+  const earnedRef = useRef<string[]>(["first_seedling"]);
+  useEffect(() => { earnedRef.current = earned; }, [earned]);
 
   const applyLocal = () => {
     const l = readLocal();
@@ -149,11 +151,11 @@ export function RewardsProvider({ children }: { children: ReactNode }) {
     const bkey = badge ? keyFor(badge) : undefined;
     setPetals((p) => p + n);
     let msg = `+${n} petals · ${message}`;
-    setEarned((bs) => {
-      if (!bkey || bs.includes(bkey)) return bs;
+    if (bkey && !earnedRef.current.includes(bkey)) {
       msg += ` · New badge: ${badge}`;
-      return [...bs, bkey];
-    });
+      earnedRef.current = [...earnedRef.current, bkey];
+      setEarned(earnedRef.current);
+    }
     if (u) {
       void supabase.from("petal_events").insert({ user_id: u.id, amount: n, reason: message.slice(0, 120) });
       if (bkey) void supabase.from("badges_earned").upsert({ user_id: u.id, badge_key: bkey }, { onConflict: "user_id,badge_key", ignoreDuplicates: true });
