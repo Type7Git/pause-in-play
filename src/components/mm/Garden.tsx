@@ -42,7 +42,7 @@ export function GardenScene({ petals }: { petals: number }) {
       <path d="M0 146 Q 110 128 220 144 T 340 140 V170 H0z" fill="var(--mm-hill)" />
       {SLOTS.map(([x, h], i) =>
         stages[i] ? (
-          <Flower key={i} x={x} h={h} stage={stages[i]} col={COLS[i % 3]} />
+          <Flower key={i} x={x} h={h} stage={stages[i]} col={COLS[i % 3]!} />
         ) : (
           <g key={i}>
             <ellipse cx={x} cy="151" rx="8" ry="3" fill="var(--mm-hill-2)" />

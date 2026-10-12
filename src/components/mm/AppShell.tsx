@@ -1,4 +1,4 @@
-import { Link } from "@tanstack/react-router";
+import { Link, useLocation } from "@tanstack/react-router";
 import type { ReactNode } from "react";
 import { getLevel } from "@/lib/levels";
 import { useRewards } from "@/lib/rewards";
@@ -29,10 +29,11 @@ function Meter() {
 }
 
 export function AppShell({ children }: { children: ReactNode }) {
+  const quiet = useLocation({ select: (l) => l.pathname }) === "/wind-down";
   return (
     <div className="px-4 py-6">
       <div className="mx-auto flex max-w-[440px] flex-col">
-        <div className="relative flex min-h-[760px] flex-col overflow-hidden rounded-[32px] border border-line bg-shell shadow-lift">
+        <div className={`relative flex min-h-[760px] flex-col overflow-hidden rounded-[32px] border border-line bg-shell shadow-lift transition-colors duration-500 ${quiet ? "quiet" : ""}`}>
           <header className="flex items-center justify-between gap-3 px-5 pb-1.5 pt-[22px]">
             <Link
               to="/"
@@ -42,7 +43,7 @@ export function AppShell({ children }: { children: ReactNode }) {
               <LogoMark className="size-[26px]" />
               Midlife Mind
             </Link>
-            <Meter />
+            <div className={quiet ? "invisible" : undefined} aria-hidden={quiet || undefined}><Meter /></div>
           </header>
           <main className="flex flex-1 flex-col gap-[18px] px-5 pb-7 pt-2">{children}</main>
           <footer className="px-5 pb-5 text-center text-xs text-muted-foreground">
