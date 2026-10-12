@@ -5,6 +5,7 @@ import { BackButton } from "@/components/mm/BackButton";
 import { Card, Chip, Muted, Pill, ScreenTitle } from "@/components/mm/ui";
 import { ExampleLabel, trackingHead } from "@/components/mm/TrackingShared";
 import { Sprout } from "@/components/mm/Sprout";
+import { PublishedLearn } from "@/components/mm/PublishedLearn";
 
 export const Route = createFileRoute("/learn")({ head: () => trackingHead("Learn", "Explore sample articles, videos and quizzes for Pause and Play. Content is awaiting clinical review."), component: Learn });
 const items = [
@@ -26,7 +27,7 @@ function Learn() {
   const [finished, setFinished] = useState(false);
   const item = items.find(i => i.id === opened);
   const question = questions[index];
-  return <><BackButton /><ScreenTitle eyebrow="Learn" title="Short, trustworthy and made for real life." /><div className="border-l-4 border-sage bg-sage-soft p-3.5 text-sm"><ExampleLabel /><p className="mt-1 text-muted-foreground">Sample library. Articles, videos and quizzes need Erin's review before release.</p></div>
+  return <><BackButton /><ScreenTitle eyebrow="Learn" title="Short, trustworthy and made for real life." /><PublishedLearn /><div className="border-l-4 border-sage bg-sage-soft p-3.5 text-sm"><ExampleLabel /><p className="mt-1 text-muted-foreground">Sample library. Articles, videos and quizzes need Erin's review before release.</p></div>
     {!item ? <><div className="flex flex-wrap gap-2">{["All", "Videos", "Articles", "Quizzes"].map(t => <Chip key={t} pressed={type === t} onClick={() => setType(t)}>{t}</Chip>)}</div><div className="flex flex-wrap gap-1.5">{["All topics","Sleep","Mood","Brain fog","Body","Relationships","Work","Treatment questions"].map(t => <Chip key={t} pressed={topic === t} onClick={() => setTopic(t)} className="px-3 text-xs">{t}</Chip>)}</div>
       <div className="flex flex-col gap-3">{items.filter(i => (type === "All" || i.type === type) && (topic === "All topics" || i.topic === topic)).map(i => { const Icon = i.type === "Articles" ? BookOpen : i.type === "Videos" ? Play : HelpCircle; return <Card key={i.id}><div className={`flex aspect-[2.6] items-center justify-center gap-5 rounded-xl ${i.type === "Videos" ? "bg-plum-soft" : i.type === "Quizzes" ? "bg-gold-soft" : "bg-sage-soft"}`}><Sprout size={60} mood="wave" /><Icon className="size-10 text-plum" aria-hidden="true" /></div><div className="flex justify-between text-xs font-bold text-muted-foreground"><span>{i.type.slice(0,-1)} · {i.topic}</span>{i.tier === "plus" && <span className="text-plum">PLUS</span>}</div><h3>{i.title}</h3><Muted>Sample content · {i.duration} · Awaiting review</Muted><Pill variant="ghost" onClick={() => { setOpened(i.id); setIndex(0); setAnswer(null); setFinished(false); }}>{i.tier === "plus" ? <LockKeyhole className="size-4" /> : <Icon className="size-4" />}{i.tier === "plus" ? "View Plus preview" : "Open example"}</Pill></Card>; })}</div>
       {!items.some(i => (type === "All" || i.type === type) && (topic === "All topics" || i.topic === topic)) && <Muted>No example content in this topic yet.</Muted>}

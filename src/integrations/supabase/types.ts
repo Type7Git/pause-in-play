@@ -62,6 +62,51 @@ export type Database = {
         }
         Relationships: []
       }
+      learn_content: {
+        Row: {
+          approved_at: string | null
+          approved_by: string | null
+          body: string
+          id: string
+          kind: string
+          quiz: Json
+          status: string
+          summary: string
+          tier: string
+          title: string
+          updated_at: string
+          video_url: string | null
+        }
+        Insert: {
+          approved_at?: string | null
+          approved_by?: string | null
+          body?: string
+          id?: string
+          kind: string
+          quiz?: Json
+          status?: string
+          summary?: string
+          tier?: string
+          title: string
+          updated_at?: string
+          video_url?: string | null
+        }
+        Update: {
+          approved_at?: string | null
+          approved_by?: string | null
+          body?: string
+          id?: string
+          kind?: string
+          quiz?: Json
+          status?: string
+          summary?: string
+          tier?: string
+          title?: string
+          updated_at?: string
+          video_url?: string | null
+        }
+        Relationships: []
+      }
       library_entries: {
         Row: {
           approved_at: string | null
