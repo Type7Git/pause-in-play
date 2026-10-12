@@ -23,6 +23,7 @@ const STORED: [string, string][] = [
   ["Parked missions", "What you were doing, the next step and an optional nudge time, so you can come back to it."],
   ["Very Important Things", "The things you file and where they live, so you can search them."],
   ["Reminder settings", "A label, when it repeats and whether it's on."],
+  ["A notification token for this device", "So we can send nudges you've asked for. Removed when you delete your account."],
 ];
 
 function Privacy() {

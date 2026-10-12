@@ -15,6 +15,13 @@
       "when": 1791794516842,
       "tag": "0001_sprout_library",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1791798296494,
+      "tag": "0002_push_tokens_and_quest_notified",
+      "breakpoints": true
     }
   ]
 }
