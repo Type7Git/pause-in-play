@@ -2,6 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { ErinAvatar } from "@/components/mm/Erin";
 import { Sprout } from "@/components/mm/Sprout";
+import { AddToHomeCard } from "@/components/mm/AddToHomeCard";
 import { GardenScene } from "@/components/mm/Garden";
 import { BadgeGlyphShape, ChoiceGlyph, type ChoiceIcon } from "@/components/mm/icons";
 import { erin } from "@/content/erin";
@@ -71,6 +72,7 @@ function Home() {
           Practical tools, calming moments and playful challenges for perimenopause and beyond.
         </p>
       </div>
+      <AddToHomeCard />
 
       {GROUPS.map((g) => (
         <section key={g.label} className="flex flex-col gap-2.5">
