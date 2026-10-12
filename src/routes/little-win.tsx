@@ -1,7 +1,9 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useRef, useState } from "react";
 import { BackButton } from "@/components/mm/BackButton";
+import { WhyThisHelps } from "@/components/mm/Erin";
 import { Card, Muted, ScreenTitle } from "@/components/mm/ui";
+import { whyThisHelps } from "@/content/erin";
 import { useRewards } from "@/lib/rewards";
 
 export const Route = createFileRoute("/little-win")({
@@ -37,6 +39,7 @@ function LittleWin() {
       <ScreenTitle eyebrow="A little win" title="No timer. No rush. Just one small thing done." />
       <Washing winLine={winLine} />
       <Pairs winLine={winLine} />
+      <WhyThisHelps>{whyThisHelps.littleWin}</WhyThisHelps>
     </>
   );
 }

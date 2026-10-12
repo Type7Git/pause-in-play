@@ -1,7 +1,9 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useRef, useState, type KeyboardEvent, type ReactNode } from "react";
 import { BackButton } from "@/components/mm/BackButton";
+import { WhyThisHelps } from "@/components/mm/Erin";
 import { Card, Chip, Muted, ScreenTitle } from "@/components/mm/ui";
+import { whyThisHelps } from "@/content/erin";
 import { useRewards } from "@/lib/rewards";
 
 export const Route = createFileRoute("/laugh")({
@@ -131,6 +133,7 @@ function Laugh() {
         </div>
         <p className="text-sm text-muted-foreground" aria-live="polite">{bagMsg}</p>
       </Card>
+      <WhyThisHelps>{whyThisHelps.laugh}</WhyThisHelps>
     </>
   );
 }

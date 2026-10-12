@@ -1,8 +1,10 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useRef, useState } from "react";
 import { BackButton } from "@/components/mm/BackButton";
+import { WhyThisHelps } from "@/components/mm/Erin";
 import { ChoiceGlyph } from "@/components/mm/icons";
 import { Card, Muted, Pill, ScreenTitle, prefersReducedMotion } from "@/components/mm/ui";
+import { whyThisHelps } from "@/content/erin";
 import { useRewards } from "@/lib/rewards";
 
 export const Route = createFileRoute("/tabs")({
@@ -90,6 +92,8 @@ function Tabs() {
           </ol>
         </details>
       </Card>
+
+      <WhyThisHelps>{whyThisHelps.tabs}</WhyThisHelps>
 
       {showTabs && (
         <Card ref={tabsRef}>
