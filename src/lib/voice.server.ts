@@ -1,7 +1,7 @@
 import { createOpenAI } from "@ai-sdk/openai";
 import { streamText } from "ai";
 import { CRISIS_REPLY, isCrisis } from "./sprout-guard";
-import { sanitiseFiled, type Filed } from "./voice-file";
+import { looksMidTask, sanitiseFiled, type Filed } from "./voice-file";
 
 const GATEWAY = "https://ai.gateway.lovable.dev";
 const MODEL = "openai/gpt-6-astra";
@@ -42,7 +42,8 @@ export async function fileNote(text: string): Promise<Filed> {
   }
   try {
     const raw = await ask(key, INSTRUCTIONS, `Note (JSON reply): ${text}`);
-    return sanitiseFiled(JSON.parse(raw.slice(raw.indexOf("{"), raw.lastIndexOf("}") + 1)));
+    const f = sanitiseFiled(JSON.parse(raw.slice(raw.indexOf("{"), raw.lastIndexOf("}") + 1)));
+    return f.type === "quest" && !looksMidTask(text) ? { ...f, type: "unsure" } : f;
   } catch {
     return sanitiseFiled({});
   }

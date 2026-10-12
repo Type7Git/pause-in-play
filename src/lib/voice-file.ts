@@ -25,3 +25,8 @@ export function sanitiseFiled(raw: unknown): Filed {
   if (type === "vit" && (!f.thing || !f.location)) type = "unsure";
   return { type, ...f };
 }
+
+/** A "quest" needs some sign the person is already mid-task; a bare to-do ("Buy milk") is unsure. */
+export function looksMidTask(note: string) {
+  return /\b(i'?m|i am|i was|we'?re|i'?ve|in the middle|halfway|started|next\b)|\w{3,}ing\b/i.test(note);
+}

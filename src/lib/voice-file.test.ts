@@ -17,3 +17,9 @@ describe("Tell Sprout sorting", () => {
     expect(sanitiseFiled("nonsense")).toMatchObject({ type: "unsure", remind: "none" });
   });
 });
+
+import { looksMidTask } from "./voice-file";
+describe("mid-task check", () => {
+  it("'Buy milk' is not mid-task", () => expect(looksMidTask("Buy milk")).toBe(false));
+  it("'I was emptying the dishwasher' is mid-task", () => expect(looksMidTask("I was emptying the dishwasher")).toBe(true));
+});
