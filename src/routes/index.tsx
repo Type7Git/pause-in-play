@@ -66,23 +66,33 @@ function Home() {
       <div>
         <p className="eyebrow">{greeting}</p>
         <h1>What do you need right now?</h1>
+        <p className="mt-1.5 text-sm text-muted-foreground">
+          Practical tools, calming moments and playful challenges for perimenopause and beyond.
+        </p>
       </div>
 
-      <div className="grid grid-cols-1 gap-2.5 min-[361px]:grid-cols-2">
-        {CHOICES.map((c) => (
-          <Link
-            key={c.to}
-            to={c.to}
-            className="lift flex min-w-0 flex-col gap-1.5 rounded-[20px] border border-line bg-card p-3.5 text-left shadow-soft"
-          >
-            <div className={`mb-1 grid size-[46px] place-items-center rounded-[15px] ${c.blob}`}>
-              <ChoiceGlyph name={c.icon} />
-            </div>
-            <b className="font-display text-[15.5px] leading-tight">{c.title}</b>
-            <span className="text-[12.5px] leading-snug text-muted-foreground">{c.desc}</span>
-          </Link>
-        ))}
-      </div>
+      {GROUPS.map((g) => (
+        <section key={g.label} className="flex flex-col gap-2.5">
+          <h2 className="flex items-center gap-2.5 text-[13px] font-bold uppercase tracking-[0.1em] text-muted-foreground after:h-px after:flex-1 after:bg-line">
+            {g.label}
+          </h2>
+          <div className="grid grid-cols-1 gap-2.5 min-[361px]:grid-cols-2">
+            {g.choices.map((c) => (
+              <Link
+                key={c.to}
+                to={c.to}
+                className="lift flex min-w-0 flex-col gap-1.5 rounded-[20px] border border-line bg-card p-3.5 text-left shadow-soft"
+              >
+                <div className={`mb-1 grid size-[46px] place-items-center rounded-[15px] ${c.blob}`}>
+                  <ChoiceGlyph name={c.icon} />
+                </div>
+                <b className="font-display text-[15.5px] leading-tight">{c.title}</b>
+                <span className="text-[12.5px] leading-snug text-muted-foreground">{c.desc}</span>
+              </Link>
+            ))}
+          </div>
+        </section>
+      ))}
 
       <section className="mm-card overflow-hidden">
         <GardenScene petals={petals} />
@@ -134,13 +144,16 @@ function Home() {
 
       <Link
         to="/erin"
-        className="lift flex items-center gap-3 rounded-[22px] border border-line bg-card p-[18px] text-left shadow-soft"
+        className="lift flex items-center gap-3.5 rounded-[22px] border border-line bg-card p-[18px] text-left shadow-soft"
       >
         <ErinAvatar size={56} />
-        <span className="min-w-0">
-          <b className="font-display text-[15.5px] leading-tight">Created by {erin.name}</b>
-          <span className="block text-[12.5px] text-muted-foreground">{erin.role} · read her note</span>
+        <span className="flex min-w-0 flex-1 flex-col gap-0.5">
+          <b className="font-display text-base">Created by {erin.name}</b>
+          <span className="text-[13px] leading-snug text-muted-foreground">
+            {erin.role} (PhD). Every tool here is built on her clinical work.
+          </span>
         </span>
+        <span className="whitespace-nowrap text-sm font-bold text-plum">Meet Erin →</span>
       </Link>
     </>
   );
