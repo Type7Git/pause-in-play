@@ -2,7 +2,6 @@ import { createServerFn } from "@tanstack/react-start";
 import { z } from "zod";
 import { requireSupabaseAuth } from "@/integrations/supabase/auth-middleware";
 
-const GATEWAY_URL = "https://connector-gateway.lovable.dev/firebase_messaging";
 
 /** Store (or refresh) this device's push registration token for the signed-in user. */
 export const savePushToken = createServerFn({ method: "POST" })
