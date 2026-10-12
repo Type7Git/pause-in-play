@@ -106,7 +106,7 @@ function Tabs() {
             <div className="flex flex-wrap gap-1.5">
               {open.length > 1 ? (
                 open.map((t, i) => (
-                  <button key={t} onClick={() => close(i)} aria-label={`Close tab: ${t}`} className="group flex max-w-full items-center gap-2 rounded-t-xl rounded-b-md border border-line bg-card py-[7px] pl-2.5 pr-2 text-[13px] text-ink">
+                  <button key={t} onClick={() => close(i)} aria-label={`Close tab: ${t}`} className="group flex min-h-11 max-w-full items-center gap-2 rounded-t-xl rounded-b-md border border-line bg-card py-[7px] pl-2.5 pr-2 text-[13px] text-ink">
                     {t}
                     <i className="grid size-[18px] place-items-center rounded-full bg-sunk text-xs font-bold not-italic text-muted-foreground group-hover:bg-rose-soft group-hover:text-rose">×</i>
                   </button>
