@@ -83,6 +83,34 @@ function Home() {
           Practical tools, calming moments and playful challenges for perimenopause and beyond.
         </p>
       </div>
+      <section className="mm-card overflow-hidden">
+        <GardenScene petals={petals} />
+        <div className="flex flex-col gap-2 px-[18px] pb-4 pt-3.5">
+          <div className="flex items-baseline justify-between gap-2 text-[13px] text-muted-foreground">
+            <b className="font-display text-[17px] text-ink">{L.name}</b>
+            <span>{L.next ? `${L.next.remaining} petals to ${L.next.name}` : "Top level"}</span>
+          </div>
+          <div className="h-2.5 overflow-hidden rounded-full bg-sunk" role="progressbar" aria-label={L.next ? `Progress to ${L.next.name}` : "Top level reached"} aria-valuemin={0} aria-valuemax={100} aria-valuenow={Math.round(L.pct * 100)}>
+            <i className="petal-bar block h-full rounded-full transition-[width] duration-500" style={{ width: `${Math.round(L.pct * 100)}%` }} />
+          </div>
+        </div>
+      </section>
+
+
+      <div className="grid grid-cols-2 gap-2.5">
+        <Link to="/sprout" className="lift flex min-w-0 flex-col items-center gap-2 rounded-tile border border-line bg-sage-soft p-3.5 text-center shadow-soft">
+          <Sprout size={48} mood="wave" />
+          <b className="font-display text-base">Ask Sprout</b>
+          <span className="text-xs leading-snug text-muted-foreground">A little kindness from Erin's library</span>
+          <span className="mt-auto text-sm font-bold text-plum">Chat →</span>
+        </Link>
+        <Link to="/erin" className="lift flex min-w-0 flex-col items-center gap-2 rounded-tile border border-line bg-card p-3.5 text-center shadow-soft">
+          <ErinAvatar size={56} />
+          <b className="font-display text-base">{erin.name}</b>
+          <span className="text-xs leading-snug text-muted-foreground">{erin.role} (PhD)</span>
+          <span className="mt-auto text-sm font-bold text-plum">Meet Erin →</span>
+        </Link>
+      </div>
       <Today />
       <AddToHomeCard />
 
@@ -109,19 +137,6 @@ function Home() {
         </section>
       ))}
 
-      <section className="mm-card overflow-hidden">
-        <GardenScene petals={petals} />
-        <div className="flex flex-col gap-2 px-[18px] pb-4 pt-3.5">
-          <div className="flex items-baseline justify-between gap-2 text-[13px] text-muted-foreground">
-            <b className="font-display text-[17px] text-ink">{L.name}</b>
-            <span>{L.next ? `${L.next.remaining} petals to ${L.next.name}` : "Top level"}</span>
-          </div>
-          <div className="h-2.5 overflow-hidden rounded-full bg-sunk" role="progressbar" aria-label={L.next ? `Progress to ${L.next.name}` : "Top level reached"} aria-valuemin={0} aria-valuemax={100} aria-valuenow={Math.round(L.pct * 100)}>
-            <i className="petal-bar block h-full rounded-full transition-[width] duration-500" style={{ width: `${Math.round(L.pct * 100)}%` }} />
-          </div>
-          <p className="text-sm text-muted-foreground">Every small act of looking after yourself grows your garden.</p>
-        </div>
-      </section>
 
       <section className="mm-card flex flex-col gap-3 p-[18px]">
         <div className="flex items-center justify-between">
@@ -157,30 +172,7 @@ function Home() {
         </ul>
       </section>
 
-      <Link
-        to="/erin"
-        className="lift flex items-center gap-3.5 rounded-[22px] border border-line bg-card p-[18px] text-left shadow-soft"
-      >
-        <ErinAvatar size={56} />
-        <span className="flex min-w-0 flex-1 flex-col gap-0.5">
-          <b className="font-display text-base">Created by {erin.name}</b>
-          <span className="text-[13px] leading-snug text-muted-foreground">
-            {erin.role} (PhD). Every tool here is built on her clinical work.
-          </span>
-        </span>
-        <span className="whitespace-nowrap text-sm font-bold text-plum">Meet Erin →</span>
-      </Link>
-      <Link
-        to="/sprout"
-        className="press lift flex items-center gap-3.5 rounded-[22px] border border-line bg-gradient-to-br from-sage-soft to-card p-4 shadow-soft"
-      >
-        <Sprout size={56} mood="wave" />
-        <span className="flex flex-1 flex-col gap-0.5">
-          <b className="font-display text-base">Ask Sprout</b>
-          <span className="text-[13px] leading-snug text-muted-foreground">Your little guide. Answers come only from Dr Erin Kelly's library.</span>
-        </span>
-        <span className="whitespace-nowrap text-sm font-bold text-plum">Chat →</span>
-      </Link>
+
     </>
   );
 }
