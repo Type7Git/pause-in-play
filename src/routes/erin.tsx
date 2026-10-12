@@ -6,10 +6,10 @@ import { erin, erinBio } from "@/content/erin";
 export const Route = createFileRoute("/erin")({
   head: () => ({
     meta: [
-      { title: "Dr Erin Kelly · Midlife Mind" },
-      { name: "description", content: "Who built Midlife Mind: Dr Erin Kelly, Clinical Psychologist." },
-      { property: "og:title", content: "Dr Erin Kelly · Midlife Mind" },
-      { property: "og:description", content: "Who built Midlife Mind and why." },
+      { title: "Dr Erin Kelly · Pause and Play" },
+      { name: "description", content: "Who built Pause and Play: Dr Erin Kelly, Clinical Psychologist." },
+      { property: "og:title", content: "Dr Erin Kelly · Pause and Play" },
+      { property: "og:description", content: "Who built Pause and Play and why." },
       { property: "og:type", content: "profile" },
       { name: "twitter:card", content: "summary" },
     ],
@@ -43,7 +43,7 @@ function ErinProfile() {
       </Card>
 
       <Muted className="text-center">
-        Midlife Mind is education and skills, not medical advice, diagnosis or treatment.
+        Pause and Play is education and skills, not medical advice, diagnosis or treatment.
       </Muted>
     </>
   );

@@ -9,7 +9,7 @@ import { useRewards } from "@/lib/rewards";
 export const Route = createFileRoute("/remember")({
   head: () => ({
     meta: [
-      { title: "The Very Important Thing Department · Midlife Mind" },
+      { title: "The Very Important Thing Department · Pause and Play" },
       { name: "description", content: "Keep a searchable list of important things and where they live." },
       { property: "og:title", content: "The Very Important Thing Department" },
       { property: "og:description", content: "Open 24 hours. No questions asked." },

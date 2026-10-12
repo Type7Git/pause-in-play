@@ -37,11 +37,11 @@ export function AppShell({ children }: { children: ReactNode }) {
           <header className="flex items-center justify-between gap-3 px-5 pb-1.5 pt-[22px]">
             <Link
               to="/"
-              aria-label="Midlife Mind, go to home"
+              aria-label="Pause and Play, go to home"
               className="flex items-center gap-2 font-display text-xl font-extrabold tracking-[-0.01em] text-plum"
             >
               <LogoMark className="size-[26px]" />
-              Midlife Mind
+              Pause and Play
             </Link>
             <div className={`flex items-center gap-2 ${quiet ? "invisible" : ""}`} aria-hidden={quiet || undefined}>
               <Meter />

@@ -10,9 +10,9 @@ import { useRewards } from "@/lib/rewards";
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Midlife Mind · What do you need right now?" },
+      { title: "Pause and Play · What do you need right now?" },
       { name: "description", content: "A warm, playful self-care companion for women in perimenopause. Small skills, gentle encouragement." },
-      { property: "og:title", content: "Midlife Mind" },
+      { property: "og:title", content: "Pause and Play" },
       { property: "og:description", content: "Small skills and gentle encouragement for perimenopause brain days." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },

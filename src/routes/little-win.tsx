@@ -9,9 +9,9 @@ import { useRewards } from "@/lib/rewards";
 export const Route = createFileRoute("/little-win")({
   head: () => ({
     meta: [
-      { title: "A little win · Midlife Mind" },
+      { title: "A little win · Pause and Play" },
       { name: "description", content: "Sort the washing or match lost things to where they turned up. No timer, no rush." },
-      { property: "og:title", content: "A little win · Midlife Mind" },
+      { property: "og:title", content: "A little win · Pause and Play" },
       { property: "og:description", content: "No timer. No rush. Just one small thing done." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
