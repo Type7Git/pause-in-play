@@ -10,6 +10,7 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AdminRouteImport } from './routes/admin'
 import { Route as ErinRouteImport } from './routes/erin'
 import { Route as LaughRouteImport } from './routes/laugh'
 import { Route as LittleWinRouteImport } from './routes/little-win'
@@ -17,12 +18,18 @@ import { Route as PrivacyRouteImport } from './routes/privacy'
 import { Route as RememberRouteImport } from './routes/remember'
 import { Route as SettingsRouteImport } from './routes/settings'
 import { Route as SideQuestRouteImport } from './routes/side-quest'
+import { Route as SproutRouteImport } from './routes/sprout'
 import { Route as TabsRouteImport } from './routes/tabs'
 import { Route as WindDownRouteImport } from './routes/wind-down'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminRoute = AdminRouteImport.update({
+  id: '/admin',
+  path: '/admin',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ErinRoute = ErinRouteImport.update({
@@ -60,6 +67,11 @@ const SideQuestRoute = SideQuestRouteImport.update({
   path: '/side-quest',
   getParentRoute: () => rootRouteImport,
 } as any)
+const SproutRoute = SproutRouteImport.update({
+  id: '/sprout',
+  path: '/sprout',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const TabsRoute = TabsRouteImport.update({
   id: '/tabs',
   path: '/tabs',
@@ -73,6 +85,7 @@ const WindDownRoute = WindDownRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/admin': typeof AdminRoute
   '/erin': typeof ErinRoute
   '/laugh': typeof LaughRoute
   '/little-win': typeof LittleWinRoute
@@ -80,11 +93,13 @@ export interface FileRoutesByFullPath {
   '/remember': typeof RememberRoute
   '/settings': typeof SettingsRoute
   '/side-quest': typeof SideQuestRoute
+  '/sprout': typeof SproutRoute
   '/tabs': typeof TabsRoute
   '/wind-down': typeof WindDownRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/admin': typeof AdminRoute
   '/erin': typeof ErinRoute
   '/laugh': typeof LaughRoute
   '/little-win': typeof LittleWinRoute
@@ -92,12 +107,14 @@ export interface FileRoutesByTo {
   '/remember': typeof RememberRoute
   '/settings': typeof SettingsRoute
   '/side-quest': typeof SideQuestRoute
+  '/sprout': typeof SproutRoute
   '/tabs': typeof TabsRoute
   '/wind-down': typeof WindDownRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/admin': typeof AdminRoute
   '/erin': typeof ErinRoute
   '/laugh': typeof LaughRoute
   '/little-win': typeof LittleWinRoute
@@ -105,6 +122,7 @@ export interface FileRoutesById {
   '/remember': typeof RememberRoute
   '/settings': typeof SettingsRoute
   '/side-quest': typeof SideQuestRoute
+  '/sprout': typeof SproutRoute
   '/tabs': typeof TabsRoute
   '/wind-down': typeof WindDownRoute
 }
@@ -112,6 +130,7 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/admin'
     | '/erin'
     | '/laugh'
     | '/little-win'
@@ -119,11 +138,13 @@ export interface FileRouteTypes {
     | '/remember'
     | '/settings'
     | '/side-quest'
+    | '/sprout'
     | '/tabs'
     | '/wind-down'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/admin'
     | '/erin'
     | '/laugh'
     | '/little-win'
@@ -131,11 +152,13 @@ export interface FileRouteTypes {
     | '/remember'
     | '/settings'
     | '/side-quest'
+    | '/sprout'
     | '/tabs'
     | '/wind-down'
   id:
     | '__root__'
     | '/'
+    | '/admin'
     | '/erin'
     | '/laugh'
     | '/little-win'
@@ -143,12 +166,14 @@ export interface FileRouteTypes {
     | '/remember'
     | '/settings'
     | '/side-quest'
+    | '/sprout'
     | '/tabs'
     | '/wind-down'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AdminRoute: typeof AdminRoute
   ErinRoute: typeof ErinRoute
   LaughRoute: typeof LaughRoute
   LittleWinRoute: typeof LittleWinRoute
@@ -156,6 +181,7 @@ export interface RootRouteChildren {
   RememberRoute: typeof RememberRoute
   SettingsRoute: typeof SettingsRoute
   SideQuestRoute: typeof SideQuestRoute
+  SproutRoute: typeof SproutRoute
   TabsRoute: typeof TabsRoute
   WindDownRoute: typeof WindDownRoute
 }
@@ -167,6 +193,13 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin': {
+      id: '/admin'
+      path: '/admin'
+      fullPath: '/admin'
+      preLoaderRoute: typeof AdminRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/erin': {
@@ -218,6 +251,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof SideQuestRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/sprout': {
+      id: '/sprout'
+      path: '/sprout'
+      fullPath: '/sprout'
+      preLoaderRoute: typeof SproutRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/tabs': {
       id: '/tabs'
       path: '/tabs'
@@ -237,6 +277,7 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AdminRoute: AdminRoute,
   ErinRoute: ErinRoute,
   LaughRoute: LaughRoute,
   LittleWinRoute: LittleWinRoute,
@@ -244,6 +285,7 @@ const rootRouteChildren: RootRouteChildren = {
   RememberRoute: RememberRoute,
   SettingsRoute: SettingsRoute,
   SideQuestRoute: SideQuestRoute,
+  SproutRoute: SproutRoute,
   TabsRoute: TabsRoute,
   WindDownRoute: WindDownRoute,
 }
