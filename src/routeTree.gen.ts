@@ -11,9 +11,12 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AdminRouteImport } from './routes/admin'
+import { Route as CycleRouteImport } from './routes/cycle'
 import { Route as ErinRouteImport } from './routes/erin'
 import { Route as LaughRouteImport } from './routes/laugh'
 import { Route as LittleWinRouteImport } from './routes/little-win'
+import { Route as MedicinesRouteImport } from './routes/medicines'
+import { Route as MoodRouteImport } from './routes/mood'
 import { Route as PrivacyRouteImport } from './routes/privacy'
 import { Route as RememberRouteImport } from './routes/remember'
 import { Route as SettingsRouteImport } from './routes/settings'
@@ -34,6 +37,11 @@ const AdminRoute = AdminRouteImport.update({
   path: '/admin',
   getParentRoute: () => rootRouteImport,
 } as any)
+const CycleRoute = CycleRouteImport.update({
+  id: '/cycle',
+  path: '/cycle',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ErinRoute = ErinRouteImport.update({
   id: '/erin',
   path: '/erin',
@@ -47,6 +55,16 @@ const LaughRoute = LaughRouteImport.update({
 const LittleWinRoute = LittleWinRouteImport.update({
   id: '/little-win',
   path: '/little-win',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const MedicinesRoute = MedicinesRouteImport.update({
+  id: '/medicines',
+  path: '/medicines',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const MoodRoute = MoodRouteImport.update({
+  id: '/mood',
+  path: '/mood',
   getParentRoute: () => rootRouteImport,
 } as any)
 const PrivacyRoute = PrivacyRouteImport.update({
@@ -99,9 +117,12 @@ const ApiPublicHooksSendNudgesRoute =
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/admin': typeof AdminRoute
+  '/cycle': typeof CycleRoute
   '/erin': typeof ErinRoute
   '/laugh': typeof LaughRoute
   '/little-win': typeof LittleWinRoute
+  '/medicines': typeof MedicinesRoute
+  '/mood': typeof MoodRoute
   '/privacy': typeof PrivacyRoute
   '/remember': typeof RememberRoute
   '/settings': typeof SettingsRoute
@@ -115,9 +136,12 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/admin': typeof AdminRoute
+  '/cycle': typeof CycleRoute
   '/erin': typeof ErinRoute
   '/laugh': typeof LaughRoute
   '/little-win': typeof LittleWinRoute
+  '/medicines': typeof MedicinesRoute
+  '/mood': typeof MoodRoute
   '/privacy': typeof PrivacyRoute
   '/remember': typeof RememberRoute
   '/settings': typeof SettingsRoute
@@ -132,9 +156,12 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/admin': typeof AdminRoute
+  '/cycle': typeof CycleRoute
   '/erin': typeof ErinRoute
   '/laugh': typeof LaughRoute
   '/little-win': typeof LittleWinRoute
+  '/medicines': typeof MedicinesRoute
+  '/mood': typeof MoodRoute
   '/privacy': typeof PrivacyRoute
   '/remember': typeof RememberRoute
   '/settings': typeof SettingsRoute
@@ -150,9 +177,12 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/admin'
+    | '/cycle'
     | '/erin'
     | '/laugh'
     | '/little-win'
+    | '/medicines'
+    | '/mood'
     | '/privacy'
     | '/remember'
     | '/settings'
@@ -166,9 +196,12 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/admin'
+    | '/cycle'
     | '/erin'
     | '/laugh'
     | '/little-win'
+    | '/medicines'
+    | '/mood'
     | '/privacy'
     | '/remember'
     | '/settings'
@@ -182,9 +215,12 @@ export interface FileRouteTypes {
     | '__root__'
     | '/'
     | '/admin'
+    | '/cycle'
     | '/erin'
     | '/laugh'
     | '/little-win'
+    | '/medicines'
+    | '/mood'
     | '/privacy'
     | '/remember'
     | '/settings'
@@ -199,9 +235,12 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AdminRoute: typeof AdminRoute
+  CycleRoute: typeof CycleRoute
   ErinRoute: typeof ErinRoute
   LaughRoute: typeof LaughRoute
   LittleWinRoute: typeof LittleWinRoute
+  MedicinesRoute: typeof MedicinesRoute
+  MoodRoute: typeof MoodRoute
   PrivacyRoute: typeof PrivacyRoute
   RememberRoute: typeof RememberRoute
   SettingsRoute: typeof SettingsRoute
@@ -229,6 +268,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/cycle': {
+      id: '/cycle'
+      path: '/cycle'
+      fullPath: '/cycle'
+      preLoaderRoute: typeof CycleRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/erin': {
       id: '/erin'
       path: '/erin'
@@ -248,6 +294,20 @@ declare module '@tanstack/react-router' {
       path: '/little-win'
       fullPath: '/little-win'
       preLoaderRoute: typeof LittleWinRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/medicines': {
+      id: '/medicines'
+      path: '/medicines'
+      fullPath: '/medicines'
+      preLoaderRoute: typeof MedicinesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/mood': {
+      id: '/mood'
+      path: '/mood'
+      fullPath: '/mood'
+      preLoaderRoute: typeof MoodRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/privacy': {
@@ -319,9 +379,12 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AdminRoute: AdminRoute,
+  CycleRoute: CycleRoute,
   ErinRoute: ErinRoute,
   LaughRoute: LaughRoute,
   LittleWinRoute: LittleWinRoute,
+  MedicinesRoute: MedicinesRoute,
+  MoodRoute: MoodRoute,
   PrivacyRoute: PrivacyRoute,
   RememberRoute: RememberRoute,
   SettingsRoute: SettingsRoute,
