@@ -32,11 +32,15 @@ export async function enablePush(): Promise<PushResult> {
     return { status: "denied" };
   }
 
-  const query = new URLSearchParams(
-    Object.fromEntries(Object.entries(firebaseConfig).map(([k, v]) => [k, v ?? ""])),
-  ).toString();
+  const config = {
+    apiKey: firebaseConfig.apiKey!,
+    projectId: firebaseConfig.projectId!,
+    appId: appId!,
+    messagingSenderId: firebaseConfig.messagingSenderId,
+  };
+  const query = new URLSearchParams(config).toString();
   const serviceWorkerRegistration = await navigator.serviceWorker.register(`/firebase-messaging-sw.js?${query}`);
-  const messaging = getMessaging(initializeApp(firebaseConfig));
+  const messaging = getMessaging(initializeApp(config));
   const token = await getToken(messaging, { vapidKey, serviceWorkerRegistration });
   return token ? { status: "registered", token } : { status: "denied" };
 }
