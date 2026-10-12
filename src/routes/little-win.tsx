@@ -26,7 +26,7 @@ const MATCH_LINES = ["Found. Exactly where you left it.", "Another one turned up
 
 function useWinLine() {
   const n = useRef(0);
-  return () => WIN_LINES[n.current++ % WIN_LINES.length];
+  return () => WIN_LINES[n.current++ % WIN_LINES.length]!;
 }
 
 function LittleWin() {
@@ -61,7 +61,7 @@ function Washing({ winLine }: { winLine: () => string }) {
 
   const drop = (bin: Bin) => {
     if (sel === null) return setMsg("Pick an item first.");
-    const [name, right] = LAUNDRY[sel];
+    const [name, right] = LAUNDRY[sel]!;
     if (right !== bin) return setMsg(`Hmm, the ${name.toLowerCase()} might be happier in the other basket.`);
     const rest = left.filter((i) => i !== sel);
     setCounts((c) => ({ ...c, [bin]: c[bin] + 1 }));
@@ -81,7 +81,7 @@ function Washing({ winLine }: { winLine: () => string }) {
       <div className="flex flex-wrap gap-2">
         {left.length ? left.map((i) => (
           <button key={i} aria-pressed={sel === i} onClick={() => setSel(i)} className="rounded-xl border-[1.5px] border-line bg-card px-3 py-2 text-sm text-ink transition-transform aria-pressed:-translate-y-0.5 aria-pressed:border-gold aria-pressed:bg-gold-soft aria-pressed:font-bold">
-            {LAUNDRY[i][0]}
+            {LAUNDRY[i]![0]}
           </button>
         )) : <Muted>Basket empty.</Muted>}
       </div>
@@ -119,12 +119,12 @@ function Pairs({ winLine }: { winLine: () => string }) {
     const nu = [...up, i];
     setUp(nu);
     if (nu.length < 2) return;
-    const [a, b] = nu;
-    if (cards[a].k === cards[b].k) {
+    const a = nu[0]!, b = nu[1]!;
+    if (cards[a]!.k === cards[b]!.k) {
       const nd = [...done, a, b];
       setDone(nd);
       setUp([]);
-      setMsg(MATCH_LINES[nd.length / 2 - 1]);
+      setMsg(MATCH_LINES[nd.length / 2 - 1]!);
       if (nd.length === cards.length) earn(5, winLine(), "Small victories");
     } else {
       timer.current = setTimeout(() => { setUp([]); setMsg("Not that one. Try another."); }, 900);

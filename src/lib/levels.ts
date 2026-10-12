@@ -11,7 +11,7 @@ export function getLevel(petals: number) {
   LEVELS.forEach(([min], i) => {
     if (petals >= min) idx = i;
   });
-  const [min, name] = LEVELS[idx];
+  const [min, name] = LEVELS[idx]!;
   const next = LEVELS[idx + 1] ?? null;
   return {
     name,
