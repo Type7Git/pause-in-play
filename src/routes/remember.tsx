@@ -1,7 +1,9 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useState, type FormEvent } from "react";
 import { BackButton } from "@/components/mm/BackButton";
+import { WhyThisHelps } from "@/components/mm/Erin";
 import { Card, Field, Muted, Pill, Row, ScreenTitle } from "@/components/mm/ui";
+import { whyThisHelps } from "@/content/erin";
 import { useRewards } from "@/lib/rewards";
 
 export const Route = createFileRoute("/remember")({
@@ -68,6 +70,7 @@ function Remember() {
         {error && <p className="text-sm font-bold text-rose">{error}</p>}
         <Pill type="submit">File it</Pill>
       </Card>
+      <WhyThisHelps>{whyThisHelps.remember}</WhyThisHelps>
     </>
   );
 }
