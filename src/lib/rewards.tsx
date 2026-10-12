@@ -1,4 +1,4 @@
-import { createContext, useCallback, useContext, useEffect, useRef, useState, type ReactNode } from "react";
+import { createContext, useCallback, useContext, useEffect, useRef, useState, type ReactNode, type Context } from "react";
 import type { User } from "@supabase/supabase-js";
 import { PetalIcon } from "@/components/mm/icons";
 import { SaveGardenDialog } from "@/components/mm/SaveGardenDialog";
@@ -85,7 +85,7 @@ type Ctx = {
   openSave: () => void;
 };
 // Keep one context instance across hot reloads so provider and consumers always match.
-const g = globalThis as unknown as { __pnpRewardsCtx?: React.Context<Ctx | null> };
+const g = globalThis as unknown as { __pnpRewardsCtx?: Context<Ctx | null> };
 const RewardsContext = (g.__pnpRewardsCtx ??= createContext<Ctx | null>(null));
 
 export function RewardsProvider({ children }: { children: ReactNode }) {
