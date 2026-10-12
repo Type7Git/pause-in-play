@@ -9,6 +9,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { TOOLS, type ToolKey } from "@/lib/sprout-guard";
 import { useRewards } from "@/lib/rewards";
 import { LearnAdmin, PaymentsAdmin, UsersAdmin } from "@/components/mm/AdminSections";
+import { LibraryUpload } from "@/components/mm/LibraryUpload";
 
 export const Route = createFileRoute("/admin")({
   head: () => ({
@@ -97,6 +98,7 @@ function Library({ onEdit }: { onEdit: (e: Entry) => void }) {
   const rows = (entries.data ?? []).filter((e) => (status === "all" || e.status === status) && (!q || `${e.title} ${e.body} ${e.category} ${e.keywords.join(" ")}`.toLowerCase().includes(q.toLowerCase())));
   return (
     <section className="flex flex-col gap-3">
+      <LibraryUpload />
       <div className="flex flex-wrap gap-2">
         <input value={q} onChange={(e) => setQ(e.target.value)} placeholder="Search the library…" className="min-w-[240px] flex-1 rounded-[14px] border border-line bg-sunk px-3 py-2" />
         <select value={status} onChange={(e) => setStatus(e.target.value as typeof status)} className="rounded-[14px] border border-line bg-sunk px-3 py-2">
