@@ -11,7 +11,8 @@ function Meter() {
   return (
     <div
       id="petal-meter"
-      aria-label={`${petals} petals, ${L.name}`}
+      role="img"
+      aria-label={`${petals} petals. Level: ${L.name}.${L.next ? ` ${L.next.remaining} petals to ${L.next.name}.` : ""}`}
       className="flex items-center gap-2 rounded-full border border-line bg-card py-1 pl-1 pr-3 font-bold tabular-nums shadow-soft"
     >
       <svg viewBox="0 0 30 30" aria-hidden="true" className="size-[30px]">
@@ -59,7 +60,7 @@ export function AppShell({ children }: { children: ReactNode }) {
               </Link>
             </div>
           </header>
-          <main className="flex flex-1 flex-col gap-[18px] px-5 pb-7 pt-2">{children}</main>
+          <main key={path} className="mm-page flex flex-1 flex-col gap-[18px] px-5 pb-7 pt-2">{children}</main>
           <footer className="px-5 pb-5 text-center text-xs text-muted-foreground">
             Education and skills, not medical advice or treatment. If you are in crisis, call Lifeline 13 11 14 or 000.{" "}
             <Link to="/privacy" className="underline underline-offset-2">Privacy</Link>
