@@ -16,3 +16,4 @@
 - Sprout admin (/admin) uses the browser client and relies on RLS via `has_role(..., 'admin')` in `user_roles`; why: access is enforced by the database, not by hiding links.
 - Sprout chat uses custom bubbles rather than AI Elements because replies are guarded, non-streamed JSON results; why: fixed safety messages and source lines need their own layout.
 - Offline support uses vite-plugin-pwa (generateSW, NetworkFirst for home + six tool pages) registered only from src/lib/pwa.ts, which refuses dev, preview and iframes; why: a stale service worker in preview would serve old code.
+- "Tell Sprout" voice filing runs through public server functions (fileVoiceNote, transcribeVoice) that apply the Sprout crisis screen first, only sort text into fields, and never store audio; why: voice is error-prone and private, so nothing saves without the user confirming.
