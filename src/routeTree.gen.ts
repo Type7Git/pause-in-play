@@ -17,6 +17,7 @@ import { Route as PrivacyRouteImport } from './routes/privacy'
 import { Route as RememberRouteImport } from './routes/remember'
 import { Route as SettingsRouteImport } from './routes/settings'
 import { Route as SideQuestRouteImport } from './routes/side-quest'
+import { Route as SproutRouteImport } from './routes/sprout'
 import { Route as TabsRouteImport } from './routes/tabs'
 import { Route as WindDownRouteImport } from './routes/wind-down'
 
@@ -60,6 +61,11 @@ const SideQuestRoute = SideQuestRouteImport.update({
   path: '/side-quest',
   getParentRoute: () => rootRouteImport,
 } as any)
+const SproutRoute = SproutRouteImport.update({
+  id: '/sprout',
+  path: '/sprout',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const TabsRoute = TabsRouteImport.update({
   id: '/tabs',
   path: '/tabs',
@@ -80,6 +86,7 @@ export interface FileRoutesByFullPath {
   '/remember': typeof RememberRoute
   '/settings': typeof SettingsRoute
   '/side-quest': typeof SideQuestRoute
+  '/sprout': typeof SproutRoute
   '/tabs': typeof TabsRoute
   '/wind-down': typeof WindDownRoute
 }
@@ -92,6 +99,7 @@ export interface FileRoutesByTo {
   '/remember': typeof RememberRoute
   '/settings': typeof SettingsRoute
   '/side-quest': typeof SideQuestRoute
+  '/sprout': typeof SproutRoute
   '/tabs': typeof TabsRoute
   '/wind-down': typeof WindDownRoute
 }
@@ -105,6 +113,7 @@ export interface FileRoutesById {
   '/remember': typeof RememberRoute
   '/settings': typeof SettingsRoute
   '/side-quest': typeof SideQuestRoute
+  '/sprout': typeof SproutRoute
   '/tabs': typeof TabsRoute
   '/wind-down': typeof WindDownRoute
 }
@@ -119,6 +128,7 @@ export interface FileRouteTypes {
     | '/remember'
     | '/settings'
     | '/side-quest'
+    | '/sprout'
     | '/tabs'
     | '/wind-down'
   fileRoutesByTo: FileRoutesByTo
@@ -131,6 +141,7 @@ export interface FileRouteTypes {
     | '/remember'
     | '/settings'
     | '/side-quest'
+    | '/sprout'
     | '/tabs'
     | '/wind-down'
   id:
@@ -143,6 +154,7 @@ export interface FileRouteTypes {
     | '/remember'
     | '/settings'
     | '/side-quest'
+    | '/sprout'
     | '/tabs'
     | '/wind-down'
   fileRoutesById: FileRoutesById
@@ -156,6 +168,7 @@ export interface RootRouteChildren {
   RememberRoute: typeof RememberRoute
   SettingsRoute: typeof SettingsRoute
   SideQuestRoute: typeof SideQuestRoute
+  SproutRoute: typeof SproutRoute
   TabsRoute: typeof TabsRoute
   WindDownRoute: typeof WindDownRoute
 }
@@ -218,6 +231,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof SideQuestRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/sprout': {
+      id: '/sprout'
+      path: '/sprout'
+      fullPath: '/sprout'
+      preLoaderRoute: typeof SproutRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/tabs': {
       id: '/tabs'
       path: '/tabs'
@@ -244,6 +264,7 @@ const rootRouteChildren: RootRouteChildren = {
   RememberRoute: RememberRoute,
   SettingsRoute: SettingsRoute,
   SideQuestRoute: SideQuestRoute,
+  SproutRoute: SproutRoute,
   TabsRoute: TabsRoute,
   WindDownRoute: WindDownRoute,
 }
