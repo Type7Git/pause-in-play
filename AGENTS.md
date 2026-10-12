@@ -8,3 +8,5 @@
 > Commits you push to the connected branch sync back to Lovable and show up in
 > the editor, so keep the branch in a working state.
 <!-- LOVABLE:END -->
+
+- Rewards (petals, level, badges) live in a React context persisted to localStorage via `useRewards().earn()`; why: a database will replace storage later without touching screens.
