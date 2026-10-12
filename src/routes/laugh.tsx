@@ -33,7 +33,7 @@ const BAG: [string, number][] = [["Receipt", 7], ["Lip balm", 3], ["Hair tie", 4
 function Hot({ spot, label, onLook, children }: { spot: Spot; label: string; onLook: (s: Spot) => void; children: ReactNode }) {
   const key = (e: KeyboardEvent) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); onLook(spot); } };
   return (
-    <g role="button" tabIndex={0} aria-label={label} onClick={() => onLook(spot)} onKeyDown={key} className="cursor-pointer transition-opacity hover:opacity-80">
+    <g role="button" tabIndex={0} aria-label={label} onClick={() => onLook(spot)} onKeyDown={key} stroke="transparent" strokeWidth={16} pointerEvents="all" className="mm-hot cursor-pointer transition-opacity hover:opacity-80">
       {children}
     </g>
   );

@@ -53,7 +53,7 @@ function Privacy() {
       <Card>
         <h3>Deleting your data</h3>
         <Muted>You can delete your account and everything with it at any time from Settings. It's permanent and immediate.</Muted>
-        <Link to="/settings" className="self-start text-sm font-bold text-plum underline-offset-2 hover:underline">Go to Settings</Link>
+        <Link to="/settings" className="inline-flex min-h-11 items-center self-start text-sm font-bold text-plum underline underline-offset-2">Go to Settings</Link>
       </Card>
     </>
   );

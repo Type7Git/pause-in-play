@@ -33,8 +33,11 @@ function Flower({ x, stage, col, h: full }: { x: number; stage: number; col: str
 
 export function GardenScene({ petals }: { petals: number }) {
   const stages = plantStages(petals);
+  const flowers = stages.filter((s) => s >= 3).length;
+  const growing = stages.filter((s) => s > 0 && s < 3).length;
+  const label = `Your garden has ${flowers} ${flowers === 1 ? "flower" : "flowers"}${growing ? ` and ${growing} growing ${growing === 1 ? "plant" : "plants"}` : ""}`;
   return (
-    <svg viewBox="0 0 340 170" role="img" aria-label="Your garden" className="block w-full">
+    <svg viewBox="0 0 340 170" role="img" aria-label={label} className="block w-full">
       <rect width="340" height="170" fill="var(--mm-sky)" />
       <circle cx="286" cy="38" r="18" fill="var(--mm-gold-soft)" />
       <circle cx="286" cy="38" r="11" fill="var(--mm-gold)" opacity=".55" />

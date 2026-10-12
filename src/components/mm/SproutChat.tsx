@@ -71,14 +71,14 @@ export function SproutChat({ compact = false }: { compact?: boolean }) {
                     <ErinAvatar size={22} />From Erin's library: {m.reply.entry.title}
                   </span>
                   {m.reply.entry.linked_tool && (
-                    <Link to={`/${m.reply.entry.linked_tool}` as "/tabs"} className="press self-start rounded-full bg-sage px-4 py-2 text-sm font-bold text-shell">
+                    <Link to={`/${m.reply.entry.linked_tool}` as "/tabs"} className="press inline-flex min-h-11 items-center self-start rounded-full bg-sage px-4 py-2 text-sm font-bold text-shell">
                       Open {TOOLS[m.reply.entry.linked_tool]} →
                     </Link>
                   )}
                 </>
               )}
               {m.reply?.kind === "crisis" && (
-                <a href="tel:131114" className="press self-start rounded-full bg-rose px-4 py-2 text-sm font-bold text-shell">Call Lifeline 13 11 14</a>
+                <a href="tel:131114" className="press inline-flex min-h-11 items-center self-start rounded-full bg-rose px-4 py-2 text-sm font-bold text-shell">Call Lifeline 13 11 14</a>
               )}
             </div>
           </div>
@@ -97,7 +97,7 @@ export function SproutChat({ compact = false }: { compact?: boolean }) {
       {!started && (
         <div className="flex flex-wrap gap-2">
           {QUICK.map((q) => (
-            <button key={q} onClick={() => send(q)} className="press lift rounded-full border border-line bg-card px-3.5 py-2 text-sm font-bold text-plum shadow-soft">{q}</button>
+            <button key={q} onClick={() => send(q)} className="press lift min-h-11 rounded-full border border-line bg-card px-4 py-2 text-sm font-bold text-plum shadow-soft">{q}</button>
           ))}
         </div>
       )}
@@ -108,13 +108,13 @@ export function SproutChat({ compact = false }: { compact?: boolean }) {
           <div className="flex flex-wrap gap-1.5" role="tablist">
             {topics.data.map(([c]) => (
               <button key={c} role="tab" aria-selected={cat === c} onClick={() => setCat(cat === c ? null : c)}
-                className={`press rounded-full px-3 py-1.5 text-[13px] font-bold ${cat === c ? "bg-plum text-shell" : "border border-line bg-card text-plum"}`}>{c}</button>
+                className={`press min-h-11 rounded-full px-3.5 py-2 text-[13px] font-bold ${cat === c ? "bg-plum text-shell" : "border border-line bg-card text-plum"}`}>{c}</button>
             ))}
           </div>
           {cat && (
             <div className="mm-rise flex flex-col gap-1.5">
               {topics.data.find(([c]) => c === cat)?.[1].map((t) => (
-                <button key={t} onClick={() => send(`Tell me about: ${t}`)} className="press rounded-[14px] border border-line bg-card px-3 py-2 text-left text-sm">{t}</button>
+                <button key={t} onClick={() => send(`Tell me about: ${t}`)} className="press min-h-11 rounded-[14px] border border-line bg-card px-3 py-2 text-left text-sm">{t}</button>
               ))}
             </div>
           )}
@@ -128,9 +128,9 @@ export function SproutChat({ compact = false }: { compact?: boolean }) {
           onChange={(e) => setText(e.target.value)}
           onKeyDown={(e) => { if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); send(text); } }}
           placeholder="Ask Sprout something…"
-          className="max-h-32 min-h-[40px] flex-1 resize-none rounded-[14px] bg-transparent px-2 py-2 text-[15px] outline-none"
+          className="max-h-32 min-h-11 flex-1 resize-none rounded-[14px] bg-transparent px-2 py-2 text-[15px] outline-none"
         />
-        <button type="submit" disabled={busy || !text.trim()} aria-label="Send" className="press grid size-10 shrink-0 place-items-center rounded-full bg-plum text-shell disabled:opacity-40">
+        <button type="submit" disabled={busy || !text.trim()} aria-label="Send" className="press grid size-11 shrink-0 place-items-center rounded-full bg-plum text-shell disabled:opacity-40">
           <svg viewBox="0 0 24 24" className="size-5" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" /></svg>
         </button>
       </form>

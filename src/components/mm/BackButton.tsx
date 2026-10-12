@@ -4,7 +4,7 @@ export function BackButton() {
   return (
     <Link
       to="/"
-      className="press inline-flex items-center gap-1.5 self-start rounded-full border border-line bg-card py-1.5 pl-2.5 pr-3.5 text-sm font-bold text-plum shadow-soft"
+      className="press inline-flex min-h-11 items-center gap-1.5 self-start rounded-full border border-line bg-card py-1.5 pl-2.5 pr-3.5 text-sm font-bold text-plum shadow-soft"
     >
       <svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true">
         <path d="M10 3L5 8l5 5" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />

@@ -38,7 +38,7 @@ function Admin() {
   const [tab, setTab] = useState<"library" | "questions" | "test">("library");
   const [editing, setEditing] = useState<Entry | null>(null);
 
-  if (!ready || (user && isAdmin.isLoading)) return <p className="p-10 text-muted-foreground">Loading…</p>;
+  if (!ready || (user && isAdmin.isLoading)) return <p role="status" className="p-10 text-muted-foreground">Opening the library…</p>;
   if (!user) return <div className="mx-auto flex max-w-md flex-col gap-4 p-10"><h1 className="font-display text-2xl font-extrabold">Sign in to the Sprout library</h1><SignInForm /></div>;
   if (!isAdmin.data) return (
     <div className="mx-auto flex max-w-md flex-col items-center gap-3 p-10 text-center">
@@ -111,11 +111,11 @@ function Library({ onEdit }: { onEdit: (e: Entry) => void }) {
                 <td className="px-4 py-2.5 text-muted-foreground">{e.category}</td>
                 <td className="px-4 py-2.5 font-bold">{e.title}</td>
                 <td className="px-4 py-2.5">{e.linked_tool ? TOOLS[e.linked_tool] : "—"}</td>
-                <td className="px-4 py-2.5"><span className={`rounded-full px-2.5 py-0.5 text-xs font-bold ${e.status === "approved" ? "bg-sage-soft text-sage" : "bg-gold-soft text-gold"}`}>{e.status === "approved" ? "Approved" : "Draft"}</span></td>
+                <td className="px-4 py-2.5"><span className={`rounded-full px-2.5 py-0.5 text-xs font-bold ${e.status === "approved" ? "bg-sage-soft text-sage" : "bg-gold-soft text-ink"}`}>{e.status === "approved" ? "Approved" : "Draft"}</span></td>
                 <td className="px-4 py-2.5 text-muted-foreground">{e.updated_at ? new Date(e.updated_at).toLocaleDateString("en-AU") : ""}</td>
               </tr>
             ))}
-            {!rows.length && <tr><td colSpan={5} className="px-4 py-6 text-center text-muted-foreground">{entries.isLoading ? "Loading…" : "No entries match."}</td></tr>}
+            {!rows.length && <tr><td colSpan={5} className="px-4 py-6 text-center text-muted-foreground">{entries.isLoading ? "Fetching the library…" : "Nothing matches that search. Try a different word, or start a new entry."}</td></tr>}
           </tbody>
         </table>
       </div>
@@ -143,7 +143,7 @@ function Editor({ entry, userId, onClose }: { entry: Entry; userId: string; onCl
     };
     const { error } = e.id ? await supabase.from("library_entries").update(row).eq("id", e.id) : await supabase.from("library_entries").insert(row);
     setBusy(false);
-    if (error) { toast.error(error.message); return; }
+    if (error) { toast.error("That didn't save. Your changes are still here, so check your connection and try again."); return; }
     toast.success(approve ? "Approved. Sprout can use it now." : "Saved as a draft. Sprout won't use it yet.");
     await qc.invalidateQueries({ queryKey: ["admin-library"] });
     await qc.invalidateQueries({ queryKey: ["sprout-topics"] });
@@ -152,7 +152,7 @@ function Editor({ entry, userId, onClose }: { entry: Entry; userId: string; onCl
   async function remove() {
     if (!e.id || !confirm("Delete this entry for good?")) return undefined;
     const { error } = await supabase.from("library_entries").delete().eq("id", e.id);
-    if (error) { toast.error(error.message); return; }
+    if (error) { toast.error("That entry couldn't be deleted just now. Please try again in a moment."); return; }
     await qc.invalidateQueries({ queryKey: ["admin-library"] });
     onClose();
   }
@@ -221,7 +221,7 @@ function Questions({ onWrite }: { onWrite: (q: string) => void }) {
   }, [qs.data]);
   async function handled(ids: string[]) {
     const { error } = await supabase.from("unanswered_questions").update({ handled: true }).in("id", ids);
-    if (error) { toast.error(error.message); return; }
+    if (error) { toast.error("We couldn't mark that as handled. Please try again in a moment."); return; }
     await qc.invalidateQueries({ queryKey: ["admin-questions"] });
   }
   return (
@@ -236,7 +236,7 @@ function Questions({ onWrite }: { onWrite: (q: string) => void }) {
           <button onClick={() => handled(g.ids)} className="press rounded-full border border-line px-3.5 py-1.5 text-sm font-bold text-plum">Mark handled</button>
         </div>
       ))}
-      {!groups.length && <p className="rounded-[16px] border border-line bg-card px-4 py-6 text-center text-muted-foreground">{qs.isLoading ? "Loading…" : "Nothing waiting. Sprout's doing well."}</p>}
+      {!groups.length && <p className="rounded-[16px] border border-line bg-card px-4 py-6 text-center text-muted-foreground">{qs.isLoading ? "Checking for new questions…" : "Nothing waiting. Sprout's doing well."}</p>}
     </section>
   );
 }

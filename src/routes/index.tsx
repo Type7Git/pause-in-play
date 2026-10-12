@@ -2,6 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { ErinAvatar } from "@/components/mm/Erin";
 import { Sprout } from "@/components/mm/Sprout";
+import { AddToHomeCard } from "@/components/mm/AddToHomeCard";
 import { GardenScene } from "@/components/mm/Garden";
 import { BadgeGlyphShape, ChoiceGlyph, type ChoiceIcon } from "@/components/mm/icons";
 import { erin } from "@/content/erin";
@@ -71,6 +72,7 @@ function Home() {
           Practical tools, calming moments and playful challenges for perimenopause and beyond.
         </p>
       </div>
+      <AddToHomeCard />
 
       {GROUPS.map((g) => (
         <section key={g.label} className="flex flex-col gap-2.5">
@@ -102,7 +104,7 @@ function Home() {
             <b className="font-display text-[17px] text-ink">{L.name}</b>
             <span>{L.next ? `${L.next.remaining} petals to ${L.next.name}` : "Top level"}</span>
           </div>
-          <div className="h-2.5 overflow-hidden rounded-full bg-sunk">
+          <div className="h-2.5 overflow-hidden rounded-full bg-sunk" role="progressbar" aria-label={L.next ? `Progress to ${L.next.name}` : "Top level reached"} aria-valuemin={0} aria-valuemax={100} aria-valuenow={Math.round(L.pct * 100)}>
             <i className="petal-bar block h-full rounded-full transition-[width] duration-500" style={{ width: `${Math.round(L.pct * 100)}%` }} />
           </div>
           <p className="text-sm text-muted-foreground">Every small act of looking after yourself grows your garden.</p>
@@ -116,10 +118,11 @@ function Home() {
             {badges.filter((b) => b.earned).length} of {badges.length}
           </span>
         </div>
-        <div className="grid grid-cols-3 gap-x-2 gap-y-3">
+        <ul className="grid grid-cols-3 gap-x-2 gap-y-3" aria-label="Badge medallions">
           {badges.map((b) => (
-            <div
+            <li
               key={b.name}
+              aria-label={`${b.name} medallion, ${b.earned ? "earned" : "not earned yet"}`}
               className={`flex flex-col items-center gap-1.5 text-center text-xs leading-tight ${b.earned ? "font-bold text-ink" : "text-muted-foreground"}`}
             >
               <svg viewBox="0 0 56 56" aria-hidden="true" className="size-[52px]">
@@ -137,10 +140,9 @@ function Home() {
                 </g>
               </svg>
               {b.name}
-              <span className="sr-only">{b.earned ? "(earned)" : "(locked)"}</span>
-            </div>
+            </li>
           ))}
-        </div>
+        </ul>
       </section>
 
       <Link

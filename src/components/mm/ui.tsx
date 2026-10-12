@@ -11,7 +11,7 @@ const pill = cva(
         ghost: "border-[1.5px] border-line bg-card text-plum",
         sage: "bg-sage text-shell shadow-soft",
       },
-      size: { md: "px-5 py-3", sm: "px-3.5 py-2 text-sm" },
+      size: { md: "min-h-11 px-5 py-3", sm: "min-h-11 px-4 py-2 text-sm" },
     },
     defaultVariants: { variant: "primary", size: "md" },
   },
@@ -35,7 +35,7 @@ export function Chip({ pressed, className, ...p }: ButtonHTMLAttributes<HTMLButt
       type="button"
       aria-pressed={pressed}
       className={cn(
-        "rounded-full border-[1.5px] border-line bg-card px-3.5 py-[7px] text-sm text-ink transition-colors aria-pressed:border-plum aria-pressed:bg-plum-soft aria-pressed:font-bold",
+        "press min-h-11 rounded-full border-[1.5px] border-line bg-card px-4 py-2 text-sm text-ink transition-colors aria-pressed:border-plum aria-pressed:bg-plum-soft aria-pressed:font-bold",
         className,
       )}
       {...p}

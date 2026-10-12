@@ -44,7 +44,7 @@ function Settings() {
       localStorage.clear();
       navigate({ to: "/", replace: true });
     } catch (e) {
-      setError(e instanceof Error ? e.message : "Something went wrong. Please try again.");
+      setError("We couldn't delete your account just now. Nothing has been removed. Check your connection and try again.");
       setBusy(false);
     }
   };
@@ -81,7 +81,7 @@ function Settings() {
       ) : (
         <Card><SignInForm /></Card>
       )}
-      <Link to="/privacy" className="self-start text-sm font-bold text-plum underline-offset-2 hover:underline">What we store and why</Link>
+      <Link to="/privacy" className="inline-flex min-h-11 items-center self-start text-sm font-bold text-plum underline underline-offset-2">What we store and why</Link>
     </>
   );
 }
