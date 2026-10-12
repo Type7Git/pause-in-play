@@ -17,3 +17,4 @@
 - Sprout chat uses custom bubbles rather than AI Elements because replies are guarded, non-streamed JSON results; why: fixed safety messages and source lines need their own layout.
 - Offline support uses vite-plugin-pwa (generateSW, NetworkFirst for home + six tool pages) registered only from src/lib/pwa.ts, which refuses dev, preview and iframes; why: a stale service worker in preview would serve old code.
 - "Tell Sprout" voice filing runs through public server functions (fileVoiceNote, transcribeVoice) that apply the Sprout crisis screen first, only sort text into fields, and never store audio; why: voice is error-prone and private, so nothing saves without the user confirming.
+- Closed-app push nudges are sent by a 5-minute pg_cron job calling /api/public/hooks/send-nudges, authorised by a token stored only in the service-role-only `cron_tokens` table; why: public routes need a caller secret the browser can never read.
