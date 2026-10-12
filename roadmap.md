@@ -1,5 +1,7 @@
 # Roadmap
 
+- [ ] Collapse Today, move the garden and compact guide links up, and add interactive kindness messages
+
 - [x] Confirm safeguarded health tracking and example-first rollout
 - [x] Build labelled examples: Today, Mood Mapper, Medicine Cabinet, Cycle Tracker, Learn, notification/calendar settings and team workspace
 - [ ] Enable personal tracking, consent and full exports/deletion: blocked until Australian hosting is established and verified

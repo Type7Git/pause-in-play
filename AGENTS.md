@@ -11,6 +11,7 @@
 
 - All user data (petals, badges, quests, VIT items) flows through the `useRewards()` store: localStorage when signed out, Lovable Cloud tables when signed in, with a one-time local→account migration on first sign-in; why: screens stay storage-agnostic.
 - Petal totals are derived from summing `petal_events`, never stored as a counter; why: append-only history avoids lost updates across devices.
+- Garden encouragement uses component-local SVG hotspots with keyboard access and live messages, without saving or awarding rewards; why: exploring kindness should not alter progress or user data.
 - Account deletion runs in a server function that removes every user-owned row before deleting the auth user; why: app tables hold plain user_id UUIDs without auth FKs.
 - Sprout chat runs through a public `askSprout` server function that applies crisis and clinical screens before any AI call and answers only from approved `library_entries`; why: safety rules must hold regardless of the model.
 - Sprout admin (/admin) uses the browser client and relies on RLS via `has_role(..., 'admin')` in `user_roles`; why: access is enforced by the database, not by hiding links.
