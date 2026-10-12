@@ -7,6 +7,17 @@ export function SignInForm() {
   const [email, setEmail] = useState("");
   const [state, setState] = useState<"idle" | "sending" | "sent">("idle");
   const [error, setError] = useState("");
+  const [password, setPassword] = useState("");
+  const [usePassword, setUsePassword] = useState(false);
+
+  const passwordSignIn = async (e: FormEvent) => {
+    e.preventDefault();
+    setError("");
+    setState("sending");
+    const { error } = await supabase.auth.signInWithPassword({ email: email.trim(), password });
+    setState("idle");
+    if (error) setError(/confirm/i.test(error.message) ? "Please confirm your email first — check your inbox for the link." : "That email and password didn't match. Please try again.");
+  };
 
   const sendLink = async (e: FormEvent) => {
     e.preventDefault();
@@ -47,12 +58,14 @@ export function SignInForm() {
         Continue with Google
       </Pill>
       <div className="flex items-center gap-3 text-xs text-muted-foreground"><span className="h-px flex-1 bg-line" />or<span className="h-px flex-1 bg-line" /></div>
-      <form onSubmit={sendLink} noValidate className="flex flex-col gap-3">
+      <form onSubmit={usePassword ? passwordSignIn : sendLink} noValidate className="flex flex-col gap-3">
         <Field label="Email" type="email" autoComplete="email" placeholder="you@example.com" value={email} onChange={(e) => setEmail(e.target.value)} />
-        <Pill type="submit" disabled={state === "sending"}>{state === "sending" ? "Sending…" : "Email me a sign-in link"}</Pill>
+        {usePassword && <Field label="Password" type="password" autoComplete="current-password" value={password} onChange={(e) => setPassword(e.target.value)} />}
+        <Pill type="submit" disabled={state === "sending"}>{state === "sending" ? "One moment…" : usePassword ? "Sign in" : "Email me a sign-in link"}</Pill>
+        <button type="button" onClick={() => setUsePassword((v) => !v)} className="min-h-11 text-sm font-bold text-plum underline">{usePassword ? "Use an email link instead" : "Sign in with a password"}</button>
       </form>
       {error && <p className="text-sm font-bold text-rose" role="alert">{error}</p>}
-      <Muted className="text-xs">No password needed. We only store what your garden needs.</Muted>
+      <Muted className="text-xs">No password needed for email links. We only store what your garden needs.</Muted>
     </div>
   );
 }
