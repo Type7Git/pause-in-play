@@ -35,6 +35,45 @@ export type Database = {
         }
         Relationships: []
       }
+      library_entries: {
+        Row: {
+          approved_at: string | null
+          approved_by: string | null
+          body: string
+          category: string
+          id: string
+          keywords: string[]
+          linked_tool: string | null
+          status: string
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          approved_at?: string | null
+          approved_by?: string | null
+          body: string
+          category?: string
+          id?: string
+          keywords?: string[]
+          linked_tool?: string | null
+          status?: string
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          approved_at?: string | null
+          approved_by?: string | null
+          body?: string
+          category?: string
+          id?: string
+          keywords?: string[]
+          linked_tool?: string | null
+          status?: string
+          title?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
       petal_events: {
         Row: {
           amount: number
@@ -131,6 +170,63 @@ export type Database = {
         }
         Relationships: []
       }
+      sprout_usage: {
+        Row: {
+          bucket: string
+          count: number
+          window_start: string
+        }
+        Insert: {
+          bucket: string
+          count?: number
+          window_start: string
+        }
+        Update: {
+          bucket?: string
+          count?: number
+          window_start?: string
+        }
+        Relationships: []
+      }
+      unanswered_questions: {
+        Row: {
+          created_at: string
+          handled: boolean
+          id: string
+          question_text: string
+        }
+        Insert: {
+          created_at?: string
+          handled?: boolean
+          id?: string
+          question_text: string
+        }
+        Update: {
+          created_at?: string
+          handled?: boolean
+          id?: string
+          question_text?: string
+        }
+        Relationships: []
+      }
+      user_roles: {
+        Row: {
+          id: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Insert: {
+          id?: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Update: {
+          id?: string
+          role?: Database["public"]["Enums"]["app_role"]
+          user_id?: string
+        }
+        Relationships: []
+      }
       vit_items: {
         Row: {
           created_at: string
@@ -160,10 +256,38 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      has_role: {
+        Args: {
+          _role: Database["public"]["Enums"]["app_role"]
+          _user_id: string
+        }
+        Returns: boolean
+      }
+      search_library: {
+        Args: { q: string }
+        Returns: {
+          approved_at: string | null
+          approved_by: string | null
+          body: string
+          category: string
+          id: string
+          keywords: string[]
+          linked_tool: string | null
+          status: string
+          title: string
+          updated_at: string
+        }[]
+        SetofOptions: {
+          from: "*"
+          to: "library_entries"
+          isOneToOne: false
+          isSetofReturn: true
+        }
+      }
+      sprout_hit: { Args: { _bucket: string }; Returns: number }
     }
     Enums: {
-      [_ in never]: never
+      app_role: "admin"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -290,6 +414,8 @@ export type CompositeTypes<
 
 export const Constants = {
   public: {
-    Enums: {},
+    Enums: {
+      app_role: ["admin"],
+    },
   },
 } as const
