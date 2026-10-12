@@ -10,33 +10,115 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as LaughRouteImport } from './routes/laugh'
+import { Route as LittleWinRouteImport } from './routes/little-win'
+import { Route as RememberRouteImport } from './routes/remember'
+import { Route as SideQuestRouteImport } from './routes/side-quest'
+import { Route as TabsRouteImport } from './routes/tabs'
+import { Route as WindDownRouteImport } from './routes/wind-down'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const LaughRoute = LaughRouteImport.update({
+  id: '/laugh',
+  path: '/laugh',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LittleWinRoute = LittleWinRouteImport.update({
+  id: '/little-win',
+  path: '/little-win',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const RememberRoute = RememberRouteImport.update({
+  id: '/remember',
+  path: '/remember',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SideQuestRoute = SideQuestRouteImport.update({
+  id: '/side-quest',
+  path: '/side-quest',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const TabsRoute = TabsRouteImport.update({
+  id: '/tabs',
+  path: '/tabs',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const WindDownRoute = WindDownRouteImport.update({
+  id: '/wind-down',
+  path: '/wind-down',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/laugh': typeof LaughRoute
+  '/little-win': typeof LittleWinRoute
+  '/remember': typeof RememberRoute
+  '/side-quest': typeof SideQuestRoute
+  '/tabs': typeof TabsRoute
+  '/wind-down': typeof WindDownRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/laugh': typeof LaughRoute
+  '/little-win': typeof LittleWinRoute
+  '/remember': typeof RememberRoute
+  '/side-quest': typeof SideQuestRoute
+  '/tabs': typeof TabsRoute
+  '/wind-down': typeof WindDownRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/laugh': typeof LaughRoute
+  '/little-win': typeof LittleWinRoute
+  '/remember': typeof RememberRoute
+  '/side-quest': typeof SideQuestRoute
+  '/tabs': typeof TabsRoute
+  '/wind-down': typeof WindDownRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/laugh'
+    | '/little-win'
+    | '/remember'
+    | '/side-quest'
+    | '/tabs'
+    | '/wind-down'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    | '/'
+    | '/laugh'
+    | '/little-win'
+    | '/remember'
+    | '/side-quest'
+    | '/tabs'
+    | '/wind-down'
+  id:
+    | '__root__'
+    | '/'
+    | '/laugh'
+    | '/little-win'
+    | '/remember'
+    | '/side-quest'
+    | '/tabs'
+    | '/wind-down'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  LaughRoute: typeof LaughRoute
+  LittleWinRoute: typeof LittleWinRoute
+  RememberRoute: typeof RememberRoute
+  SideQuestRoute: typeof SideQuestRoute
+  TabsRoute: typeof TabsRoute
+  WindDownRoute: typeof WindDownRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -48,11 +130,59 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/laugh': {
+      id: '/laugh'
+      path: '/laugh'
+      fullPath: '/laugh'
+      preLoaderRoute: typeof LaughRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/little-win': {
+      id: '/little-win'
+      path: '/little-win'
+      fullPath: '/little-win'
+      preLoaderRoute: typeof LittleWinRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/remember': {
+      id: '/remember'
+      path: '/remember'
+      fullPath: '/remember'
+      preLoaderRoute: typeof RememberRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/side-quest': {
+      id: '/side-quest'
+      path: '/side-quest'
+      fullPath: '/side-quest'
+      preLoaderRoute: typeof SideQuestRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/tabs': {
+      id: '/tabs'
+      path: '/tabs'
+      fullPath: '/tabs'
+      preLoaderRoute: typeof TabsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/wind-down': {
+      id: '/wind-down'
+      path: '/wind-down'
+      fullPath: '/wind-down'
+      preLoaderRoute: typeof WindDownRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  LaughRoute: LaughRoute,
+  LittleWinRoute: LittleWinRoute,
+  RememberRoute: RememberRoute,
+  SideQuestRoute: SideQuestRoute,
+  TabsRoute: TabsRoute,
+  WindDownRoute: WindDownRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
