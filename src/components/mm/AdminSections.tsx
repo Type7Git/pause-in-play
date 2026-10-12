@@ -61,9 +61,9 @@ function LearnEditor({ item, userId, onClose }: { item: LearnItem; userId: strin
   const setQ = (n: number, patch: Partial<QuizQ>) => set("quiz", e.quiz.map((q, i) => (i === n ? { ...q, ...patch } : q)));
 
   async function save(approve: boolean) {
-    if (!e.title.trim()) return toast.error("Give it a title first.");
-    if (e.kind === "video" && e.video_url && !/^https:\/\//.test(e.video_url)) return toast.error("Video link must start with https://");
-    if (e.kind === "quiz" && e.quiz.some((q) => !q.q.trim() || q.answers.filter((a) => a.trim()).length < 2)) return toast.error("Each question needs wording and at least two answers.");
+    if (!e.title.trim()) { toast.error("Give it a title first."); return; }
+    if (e.kind === "video" && e.video_url && !/^https:\/\//.test(e.video_url)) { toast.error("Video link must start with https://"); return; }
+    if (e.kind === "quiz" && e.quiz.some((q) => !q.q.trim() || q.answers.filter((a) => a.trim()).length < 2)) { toast.error("Each question needs wording and at least two answers."); return; }
     setBusy(true);
     const now = new Date().toISOString();
     const row = {
@@ -75,7 +75,7 @@ function LearnEditor({ item, userId, onClose }: { item: LearnItem; userId: strin
     };
     const { error } = e.id ? await supabase.from("learn_content").update(row).eq("id", e.id) : await supabase.from("learn_content").insert(row);
     setBusy(false);
-    if (error) return toast.error("That didn't save. Please try again.");
+    if (error) { toast.error("That didn't save. Please try again."); return; }
     toast.success(approve ? "Approved and published to Learn." : "Saved as a draft.");
     qc.invalidateQueries({ queryKey: ["admin-learn"] });
     qc.invalidateQueries({ queryKey: ["learn-published"] });
@@ -84,7 +84,7 @@ function LearnEditor({ item, userId, onClose }: { item: LearnItem; userId: strin
   async function remove() {
     if (!e.id || !confirm("Delete this item for good?")) return;
     const { error } = await supabase.from("learn_content").delete().eq("id", e.id);
-    if (error) return toast.error("That didn't delete. Please try again.");
+    if (error) { toast.error("That didn't delete. Please try again."); return; }
     qc.invalidateQueries({ queryKey: ["admin-learn"] });
     qc.invalidateQueries({ queryKey: ["learn-published"] });
     onClose();
