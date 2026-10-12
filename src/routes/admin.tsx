@@ -133,7 +133,7 @@ function Editor({ entry, userId, onClose }: { entry: Entry; userId: string; onCl
   const n = words(e.body);
 
   async function save(approve: boolean) {
-    if (!e.title.trim() || !e.body.trim() || !e.category.trim()) return toast.error("Category, title and body are all needed.");
+    if (!e.title.trim() || !e.body.trim() || !e.category.trim()) { toast.error("Category, title and body are all needed."); return; }
     setBusy(true);
     const now = new Date().toISOString();
     const row = {
@@ -143,16 +143,16 @@ function Editor({ entry, userId, onClose }: { entry: Entry; userId: string; onCl
     };
     const { error } = e.id ? await supabase.from("library_entries").update(row).eq("id", e.id) : await supabase.from("library_entries").insert(row);
     setBusy(false);
-    if (error) return toast.error(error.message);
+    if (error) { toast.error(error.message); return; }
     toast.success(approve ? "Approved. Sprout can use it now." : "Saved as a draft. Sprout won't use it yet.");
     await qc.invalidateQueries({ queryKey: ["admin-library"] });
     await qc.invalidateQueries({ queryKey: ["sprout-topics"] });
     onClose();
   }
   async function remove() {
-    if (!e.id || !confirm("Delete this entry for good?")) return;
+    if (!e.id || !confirm("Delete this entry for good?")) return undefined;
     const { error } = await supabase.from("library_entries").delete().eq("id", e.id);
-    if (error) return toast.error(error.message);
+    if (error) { toast.error(error.message); return; }
     await qc.invalidateQueries({ queryKey: ["admin-library"] });
     onClose();
   }
@@ -221,7 +221,7 @@ function Questions({ onWrite }: { onWrite: (q: string) => void }) {
   }, [qs.data]);
   async function handled(ids: string[]) {
     const { error } = await supabase.from("unanswered_questions").update({ handled: true }).in("id", ids);
-    if (error) return toast.error(error.message);
+    if (error) { toast.error(error.message); return; }
     await qc.invalidateQueries({ queryKey: ["admin-questions"] });
   }
   return (

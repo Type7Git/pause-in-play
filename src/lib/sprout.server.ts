@@ -50,7 +50,7 @@ export async function handleSprout(message: string, history: Turn[], bucket: str
 
   // Step 1: safety, before any AI call.
   if (isCrisis(message)) return { kind: "crisis", text: CRISIS_REPLY };
-  const key = process.env.LOVABLE_API_KEY;
+  const key = process.env["LOVABLE_API_KEY"];
   if (!key) return { kind: "error", text: "Sprout isn't set up yet. Please try again later." };
   try {
     const verdict = await ask(key, "Does this message suggest risk of self-harm or harm to others? Answer only yes or no.", [{ role: "user", content: message }]);
