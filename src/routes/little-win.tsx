@@ -83,7 +83,7 @@ function Washing({ winLine }: { winLine: () => string }) {
       <Muted>Tap an item, then tap its basket.</Muted>
       <div className="flex flex-wrap gap-2">
         {left.length ? left.map((i) => (
-          <button key={i} aria-pressed={sel === i} onClick={() => setSel(i)} className="rounded-xl border-[1.5px] border-line bg-card px-3 py-2 text-sm text-ink transition-transform aria-pressed:-translate-y-0.5 aria-pressed:border-gold aria-pressed:bg-gold-soft aria-pressed:font-bold">
+          <button key={i} aria-pressed={sel === i} onClick={() => setSel(i)} className="min-h-11 rounded-xl border-[1.5px] border-line bg-card px-3 py-2 text-sm text-ink transition-transform aria-pressed:-translate-y-0.5 aria-pressed:border-gold aria-pressed:bg-gold-soft aria-pressed:font-bold">
             {LAUNDRY[i]![0]}
           </button>
         )) : <Muted>Basket empty.</Muted>}
