@@ -22,6 +22,7 @@ import { Route as SproutRouteImport } from './routes/sprout'
 import { Route as TabsRouteImport } from './routes/tabs'
 import { Route as TellSproutRouteImport } from './routes/tell-sprout'
 import { Route as WindDownRouteImport } from './routes/wind-down'
+import { Route as ApiPublicHooksSendNudgesRouteImport } from './routes/api/public/hooks/send-nudges'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -88,6 +89,12 @@ const WindDownRoute = WindDownRouteImport.update({
   path: '/wind-down',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApiPublicHooksSendNudgesRoute =
+  ApiPublicHooksSendNudgesRouteImport.update({
+    id: '/api/public/hooks/send-nudges',
+    path: '/api/public/hooks/send-nudges',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -103,6 +110,7 @@ export interface FileRoutesByFullPath {
   '/tabs': typeof TabsRoute
   '/tell-sprout': typeof TellSproutRoute
   '/wind-down': typeof WindDownRoute
+  '/api/public/hooks/send-nudges': typeof ApiPublicHooksSendNudgesRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -118,6 +126,7 @@ export interface FileRoutesByTo {
   '/tabs': typeof TabsRoute
   '/tell-sprout': typeof TellSproutRoute
   '/wind-down': typeof WindDownRoute
+  '/api/public/hooks/send-nudges': typeof ApiPublicHooksSendNudgesRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -134,6 +143,7 @@ export interface FileRoutesById {
   '/tabs': typeof TabsRoute
   '/tell-sprout': typeof TellSproutRoute
   '/wind-down': typeof WindDownRoute
+  '/api/public/hooks/send-nudges': typeof ApiPublicHooksSendNudgesRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -151,6 +161,7 @@ export interface FileRouteTypes {
     | '/tabs'
     | '/tell-sprout'
     | '/wind-down'
+    | '/api/public/hooks/send-nudges'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -166,6 +177,7 @@ export interface FileRouteTypes {
     | '/tabs'
     | '/tell-sprout'
     | '/wind-down'
+    | '/api/public/hooks/send-nudges'
   id:
     | '__root__'
     | '/'
@@ -181,6 +193,7 @@ export interface FileRouteTypes {
     | '/tabs'
     | '/tell-sprout'
     | '/wind-down'
+    | '/api/public/hooks/send-nudges'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -197,6 +210,7 @@ export interface RootRouteChildren {
   TabsRoute: typeof TabsRoute
   TellSproutRoute: typeof TellSproutRoute
   WindDownRoute: typeof WindDownRoute
+  ApiPublicHooksSendNudgesRoute: typeof ApiPublicHooksSendNudgesRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -292,6 +306,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof WindDownRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/public/hooks/send-nudges': {
+      id: '/api/public/hooks/send-nudges'
+      path: '/api/public/hooks/send-nudges'
+      fullPath: '/api/public/hooks/send-nudges'
+      preLoaderRoute: typeof ApiPublicHooksSendNudgesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -309,6 +330,7 @@ const rootRouteChildren: RootRouteChildren = {
   TabsRoute: TabsRoute,
   TellSproutRoute: TellSproutRoute,
   WindDownRoute: WindDownRoute,
+  ApiPublicHooksSendNudgesRoute: ApiPublicHooksSendNudgesRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
