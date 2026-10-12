@@ -4,6 +4,8 @@ import { BackButton } from "@/components/mm/BackButton";
 import { WhyThisHelps } from "@/components/mm/Erin";
 import { Card, Chip, Field, Muted, Pill, Row, ScreenTitle } from "@/components/mm/ui";
 import { whyThisHelps } from "@/content/erin";
+import { enablePush } from "@/lib/push";
+import { savePushToken } from "@/lib/push.functions";
 import { remindAtFor, useRewards } from "@/lib/rewards";
 
 export const Route = createFileRoute("/side-quest")({
@@ -23,11 +25,12 @@ export const Route = createFileRoute("/side-quest")({
 const REMINDERS = ["No reminder", "In 10 min", "In 30 min", "Tonight"];
 
 function SideQuest() {
-  const { earn, quests, addQuest, completeQuest } = useRewards();
+  const { earn, quests, addQuest, completeQuest, user } = useRewards();
   const [doing, setDoing] = useState("");
   const [next, setNext] = useState("");
   const [remind, setRemind] = useState<string>("No reminder");
   const [error, setError] = useState("");
+  const [pushNote, setPushNote] = useState("");
   const doingRef = useRef<HTMLInputElement>(null);
 
   const submit = (e: FormEvent) => {
@@ -37,11 +40,26 @@ function SideQuest() {
       doingRef.current?.focus();
       return;
     }
-    addQuest({ doing: doing.trim(), next: next.trim(), remindAt: remindAtFor(remind) });
+    const remindAt = remindAtFor(remind);
+    addQuest({ doing: doing.trim(), next: next.trim(), remindAt });
     setDoing("");
     setNext("");
     setError("");
     earn(3, "Mission parked. Go handle the side quest", "Side Quest Saver");
+    // Ask for notification permission only now — a user gesture, after the
+    // first reminder is set, never on first load.
+    if (remindAt && user && Notification.permission === "default") {
+      void enablePush().then(async (r) => {
+        if (r.status === "registered") {
+          await savePushToken({ data: { token: r.token } });
+          setPushNote("Nudge is on. We'll send a gentle reminder to this device.");
+        } else if (r.status === "open-in-new-tab") {
+          setPushNote("To get nudges, open the app in its own tab and park the mission again.");
+        } else if (r.status === "denied") {
+          setPushNote("No nudge this time — notifications are off for this browser.");
+        }
+      });
+    }
   };
 
   return (
@@ -61,6 +79,7 @@ function SideQuest() {
           </div>
         </div>
         <Pill type="submit">Park this mission</Pill>
+        {pushNote && <p className="text-sm font-bold text-sage" role="status">{pushNote}</p>}
       </Card>
       <Card>
         <h3>Parked missions</h3>

@@ -3,6 +3,7 @@ import type { User } from "@supabase/supabase-js";
 import { PetalIcon } from "@/components/mm/icons";
 import { SaveGardenDialog } from "@/components/mm/SaveGardenDialog";
 import { supabase } from "@/integrations/supabase/client";
+import { sendDueReminders } from "@/lib/push.functions";
 
 export type BadgeGlyph = "leaf" | "flag" | "tab" | "star" | "glasses" | "key";
 export type Badge = { key: string; name: string; earned: boolean; glyph: BadgeGlyph };
@@ -124,6 +125,8 @@ export function RewardsProvider({ children }: { children: ReactNode }) {
         r = await loadRemote();
       }
       setPetals(r.petals); setEarned(r.badges); setQuests(r.quests); setVit(r.vit);
+      // Deliver any due Side Quest nudges to this user's devices.
+      void sendDueReminders().catch(() => {});
     } catch (e) {
       console.error(e);
     }
