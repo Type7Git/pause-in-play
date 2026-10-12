@@ -20,6 +20,7 @@ import { Route as SettingsRouteImport } from './routes/settings'
 import { Route as SideQuestRouteImport } from './routes/side-quest'
 import { Route as SproutRouteImport } from './routes/sprout'
 import { Route as TabsRouteImport } from './routes/tabs'
+import { Route as TellSproutRouteImport } from './routes/tell-sprout'
 import { Route as WindDownRouteImport } from './routes/wind-down'
 
 const IndexRoute = IndexRouteImport.update({
@@ -77,6 +78,11 @@ const TabsRoute = TabsRouteImport.update({
   path: '/tabs',
   getParentRoute: () => rootRouteImport,
 } as any)
+const TellSproutRoute = TellSproutRouteImport.update({
+  id: '/tell-sprout',
+  path: '/tell-sprout',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const WindDownRoute = WindDownRouteImport.update({
   id: '/wind-down',
   path: '/wind-down',
@@ -95,6 +101,7 @@ export interface FileRoutesByFullPath {
   '/side-quest': typeof SideQuestRoute
   '/sprout': typeof SproutRoute
   '/tabs': typeof TabsRoute
+  '/tell-sprout': typeof TellSproutRoute
   '/wind-down': typeof WindDownRoute
 }
 export interface FileRoutesByTo {
@@ -109,6 +116,7 @@ export interface FileRoutesByTo {
   '/side-quest': typeof SideQuestRoute
   '/sprout': typeof SproutRoute
   '/tabs': typeof TabsRoute
+  '/tell-sprout': typeof TellSproutRoute
   '/wind-down': typeof WindDownRoute
 }
 export interface FileRoutesById {
@@ -124,6 +132,7 @@ export interface FileRoutesById {
   '/side-quest': typeof SideQuestRoute
   '/sprout': typeof SproutRoute
   '/tabs': typeof TabsRoute
+  '/tell-sprout': typeof TellSproutRoute
   '/wind-down': typeof WindDownRoute
 }
 export interface FileRouteTypes {
@@ -140,6 +149,7 @@ export interface FileRouteTypes {
     | '/side-quest'
     | '/sprout'
     | '/tabs'
+    | '/tell-sprout'
     | '/wind-down'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -154,6 +164,7 @@ export interface FileRouteTypes {
     | '/side-quest'
     | '/sprout'
     | '/tabs'
+    | '/tell-sprout'
     | '/wind-down'
   id:
     | '__root__'
@@ -168,6 +179,7 @@ export interface FileRouteTypes {
     | '/side-quest'
     | '/sprout'
     | '/tabs'
+    | '/tell-sprout'
     | '/wind-down'
   fileRoutesById: FileRoutesById
 }
@@ -183,6 +195,7 @@ export interface RootRouteChildren {
   SideQuestRoute: typeof SideQuestRoute
   SproutRoute: typeof SproutRoute
   TabsRoute: typeof TabsRoute
+  TellSproutRoute: typeof TellSproutRoute
   WindDownRoute: typeof WindDownRoute
 }
 
@@ -265,6 +278,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof TabsRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/tell-sprout': {
+      id: '/tell-sprout'
+      path: '/tell-sprout'
+      fullPath: '/tell-sprout'
+      preLoaderRoute: typeof TellSproutRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/wind-down': {
       id: '/wind-down'
       path: '/wind-down'
@@ -287,6 +307,7 @@ const rootRouteChildren: RootRouteChildren = {
   SideQuestRoute: SideQuestRoute,
   SproutRoute: SproutRoute,
   TabsRoute: TabsRoute,
+  TellSproutRoute: TellSproutRoute,
   WindDownRoute: WindDownRoute,
 }
 export const routeTree = rootRouteImport

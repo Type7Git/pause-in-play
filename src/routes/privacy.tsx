@@ -32,6 +32,10 @@ function Privacy() {
       <BackButton />
       <ScreenTitle eyebrow="Privacy" title="What we store, and why." sub="Short version: only what your garden needs." />
       <Card>
+        <h3>Tell Sprout (voice)</h3>
+        <Muted>Your voice is turned into text and never stored. The recording is thrown away straight after. Only the text you check and save is kept.</Muted>
+      </Card>
+      <Card>
         <h3>If you don't sign in</h3>
         <Muted>Everything stays on this device only. Nothing is sent to us.</Muted>
       </Card>

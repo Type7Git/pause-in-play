@@ -122,6 +122,9 @@ export function SproutChat({ compact = false }: { compact?: boolean }) {
       )}
 
       <form onSubmit={(e) => { e.preventDefault(); send(text); }} className="flex items-end gap-2 rounded-[22px] border border-line bg-card p-2 shadow-soft">
+        <Link to="/tell-sprout" aria-label="Tell Sprout by voice" className="press grid size-11 shrink-0 place-items-center rounded-full bg-sage-soft text-sage">
+          <svg viewBox="0 0 24 24" className="size-5" aria-hidden="true" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round"><rect x="9" y="3" width="6" height="11" rx="3" /><path d="M5 11a7 7 0 0 0 14 0M12 18v3" /></svg>
+        </Link>
         <label htmlFor="sprout-input" className="sr-only">Message Sprout</label>
         <textarea
           id="sprout-input" ref={inputRef} autoFocus rows={1} maxLength={600} value={text}
