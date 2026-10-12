@@ -1,7 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useState, type FormEvent } from "react";
 import { BackButton } from "@/components/mm/BackButton";
-import { Card, Field, Muted, Pill, Row, ScreenTitle, useStoredList } from "@/components/mm/ui";
+import { Card, Field, Muted, Pill, Row, ScreenTitle } from "@/components/mm/ui";
 import { useRewards } from "@/lib/rewards";
 
 export const Route = createFileRoute("/remember")({
@@ -18,32 +18,24 @@ export const Route = createFileRoute("/remember")({
   component: Remember,
 });
 
-type Thing = { t: string; w: string; example?: boolean };
-const SEED: Thing[] = [
-  { t: "Passport", w: "Top drawer, under the tea towels", example: true },
-  { t: "Spare house key", w: "Blue mug on the bookshelf", example: true },
-  { t: "Car", w: "Westfield, level 3, near the lifts", example: true },
-];
 const VIT_BADGE_AT = 6;
 
 function Remember() {
-  const { earn } = useRewards();
-  const [things, setThings] = useStoredList<Thing>("midlife-mind:vit", SEED);
+  const { earn, vit: things, addVit, removeVit } = useRewards();
   const [q, setQ] = useState("");
   const [t, setT] = useState("");
   const [w, setW] = useState("");
   const [error, setError] = useState("");
 
   const ql = q.trim().toLowerCase();
-  const shown = things.filter((x) => `${x.t} ${x.w}`.toLowerCase().includes(ql));
+  const shown = things.filter((x) => `${x.thing} ${x.location}`.toLowerCase().includes(ql));
 
   const submit = (e: FormEvent) => {
     e.preventDefault();
     if (!t.trim() || !w.trim()) return setError("Add the thing and where it lives.");
-    const next = [{ t: t.trim(), w: w.trim() }, ...things];
-    setThings(next);
+    const count = addVit(t.trim(), w.trim());
     setT(""); setW(""); setQ(""); setError("");
-    earn(3, "Filed. The department thanks you", next.length >= VIT_BADGE_AT ? "VIT Department head" : undefined);
+    earn(3, "Filed. The department thanks you", count >= VIT_BADGE_AT ? "VIT Department head" : undefined);
   };
 
   return (
@@ -54,13 +46,13 @@ function Remember() {
         <Field label="Search the department" type="search" placeholder="Try 'key' or 'car'" value={q} onChange={(e) => setQ(e.target.value)} />
         <ul className="flex flex-col gap-2">
           {shown.length ? shown.map((x) => (
-            <Row key={`${x.t}|${x.w}`}>
+            <Row key={x.id}>
               <span className="min-w-0">
-                <b>{x.t}</b>
+                <b>{x.thing}</b>
                 {x.example && <span className="ml-2 rounded-full bg-plum-soft px-2 py-0.5 text-[11px] font-bold text-plum">Example</span>}
-                <br /><small className="text-[12.5px] text-muted-foreground">{x.w}</small>
+                <br /><small className="text-[12.5px] text-muted-foreground">{x.location}</small>
               </span>
-              <Pill variant="ghost" size="sm" aria-label={`Remove ${x.t}`} onClick={() => setThings((l) => l.filter((y) => y !== x))}>Remove</Pill>
+              <Pill variant="ghost" size="sm" aria-label={`Remove ${x.thing}`} onClick={() => removeVit(x.id)}>Remove</Pill>
             </Row>
           )) : (
             <li className="p-3 text-center">
