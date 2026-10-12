@@ -7,6 +7,7 @@ import { Card, Muted, Pill, ScreenTitle } from "@/components/mm/ui";
 import { supabase } from "@/integrations/supabase/client";
 import { deleteMyAccount } from "@/lib/account.functions";
 import { useRewards } from "@/lib/rewards";
+import { TrackingSettings } from "@/components/mm/TrackingSettings";
 
 export const Route = createFileRoute("/settings")({
   head: () => ({
@@ -82,6 +83,8 @@ function Settings() {
         <Card><SignInForm /></Card>
       )}
       <Link to="/privacy" className="inline-flex min-h-11 items-center self-start text-sm font-bold text-plum underline underline-offset-2">What we store and why</Link>
+      <TrackingSettings />
+      <Link to="/team-preview" className="inline-flex min-h-11 items-center self-start text-sm font-bold text-plum underline underline-offset-2">Team workspace example →</Link>
     </>
   );
 }

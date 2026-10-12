@@ -8,6 +8,8 @@ import { BadgeGlyphShape, ChoiceGlyph, type ChoiceIcon } from "@/components/mm/i
 import { erin } from "@/content/erin";
 import { getLevel } from "@/lib/levels";
 import { useRewards } from "@/lib/rewards";
+import { Today } from "@/components/mm/Today";
+import { TrackingGlyph } from "@/components/mm/TrackingShared";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -23,7 +25,7 @@ export const Route = createFileRoute("/")({
   component: Home,
 });
 
-type Choice = { to: "/side-quest" | "/tabs" | "/little-win" | "/wind-down" | "/laugh" | "/remember"; icon: ChoiceIcon; title: string; desc: string; blob: string };
+type Choice = { to: "/side-quest" | "/tabs" | "/little-win" | "/wind-down" | "/laugh" | "/remember" | "/mood" | "/medicines" | "/cycle" | "/learn"; icon: ChoiceIcon | "mood" | "medicines" | "cycle" | "learn"; title: string; desc: string; blob: string };
 
 const GROUPS: { label: string; choices: Choice[] }[] = [
   {
@@ -45,6 +47,15 @@ const GROUPS: { label: string; choices: Choice[] }[] = [
     choices: [
       { to: "/little-win", icon: "win", title: "Give me a little win", desc: "A short, untimed puzzle", blob: "bg-sage-soft" },
       { to: "/laugh", icon: "laugh", title: "I need a laugh", desc: "An everyday scene to sort out", blob: "bg-gold-soft" },
+    ],
+  },
+  {
+    label: "Support & tracking",
+    choices: [
+      { to: "/mood", icon: "mood", title: "Mood Mapper", desc: "Two taps to log how you feel", blob: "bg-rose-soft" },
+      { to: "/medicines", icon: "medicines", title: "Medicine Cabinet", desc: "Your reminders, your way", blob: "bg-plum-soft" },
+      { to: "/cycle", icon: "cycle", title: "Cycle Tracker", desc: "Periods, spotting and symptoms", blob: "bg-rose-soft" },
+      { to: "/learn", icon: "learn", title: "Learn", desc: "Videos, articles and quizzes", blob: "bg-sage-soft" },
     ],
   },
 ];
@@ -72,6 +83,7 @@ function Home() {
           Practical tools, calming moments and playful challenges for perimenopause and beyond.
         </p>
       </div>
+      <Today />
       <AddToHomeCard />
 
       {GROUPS.map((g) => (
@@ -87,7 +99,7 @@ function Home() {
                 className="lift flex min-w-0 flex-col gap-1.5 rounded-[20px] border border-line bg-card p-3.5 text-left shadow-soft"
               >
                 <div className={`mb-1 grid size-[46px] place-items-center rounded-[15px] ${c.blob}`}>
-                  <ChoiceGlyph name={c.icon} />
+                  {c.icon === "mood" || c.icon === "medicines" || c.icon === "cycle" || c.icon === "learn" ? <TrackingGlyph name={c.icon} /> : <ChoiceGlyph name={c.icon} />}
                 </div>
                 <b className="font-display text-[15.5px] leading-tight">{c.title}</b>
                 <span className="text-[12.5px] leading-snug text-muted-foreground">{c.desc}</span>

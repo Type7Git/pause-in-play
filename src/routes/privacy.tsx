@@ -31,6 +31,7 @@ function Privacy() {
     <>
       <BackButton />
       <ScreenTitle eyebrow="Privacy" title="What we store, and why." sub="Short version: only what your garden needs." />
+      <Card><h3>Support & tracking examples</h3><Muted>Mood Mapper, Medicine Cabinet and Cycle Tracker currently show labelled example data only, for signed-in and signed-out users alike. Personal health saving is disabled. Example selections are temporary; nothing is sent or stored.</Muted><Muted>Before personal tracking becomes available, Australian hosting must be verified and you must give explicit consent. You will be able to download and delete your records. Health records will never be sold, used for advertising or shown to the team.</Muted></Card>
       <Card>
         <h3>Tell Sprout (voice)</h3>
         <Muted>Your voice is turned into text and never stored. The recording is thrown away straight after. Only the text you check and save is kept.</Muted>
@@ -53,7 +54,7 @@ function Privacy() {
       </Card>
       <Card>
         <h3>What we never store</h3>
-        <Muted>Moods, symptoms, health conditions, or any "how I feel" notes. The wind-down sessions keep no record at all.</Muted>
+        <Muted>Currently, we do not store personal moods, symptoms, cycles, medicines, health conditions or "how I feel" notes. Future personal tracking requires the safeguards described above. The wind-down sessions keep no record at all.</Muted>
       </Card>
       <Card>
         <h3>Deleting your data</h3>

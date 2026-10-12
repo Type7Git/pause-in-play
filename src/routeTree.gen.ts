@@ -11,15 +11,20 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AdminRouteImport } from './routes/admin'
+import { Route as CycleRouteImport } from './routes/cycle'
 import { Route as ErinRouteImport } from './routes/erin'
 import { Route as LaughRouteImport } from './routes/laugh'
+import { Route as LearnRouteImport } from './routes/learn'
 import { Route as LittleWinRouteImport } from './routes/little-win'
+import { Route as MedicinesRouteImport } from './routes/medicines'
+import { Route as MoodRouteImport } from './routes/mood'
 import { Route as PrivacyRouteImport } from './routes/privacy'
 import { Route as RememberRouteImport } from './routes/remember'
 import { Route as SettingsRouteImport } from './routes/settings'
 import { Route as SideQuestRouteImport } from './routes/side-quest'
 import { Route as SproutRouteImport } from './routes/sprout'
 import { Route as TabsRouteImport } from './routes/tabs'
+import { Route as TeamPreviewRouteImport } from './routes/team-preview'
 import { Route as TellSproutRouteImport } from './routes/tell-sprout'
 import { Route as WindDownRouteImport } from './routes/wind-down'
 import { Route as ApiPublicHooksSendNudgesRouteImport } from './routes/api/public/hooks/send-nudges'
@@ -34,6 +39,11 @@ const AdminRoute = AdminRouteImport.update({
   path: '/admin',
   getParentRoute: () => rootRouteImport,
 } as any)
+const CycleRoute = CycleRouteImport.update({
+  id: '/cycle',
+  path: '/cycle',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ErinRoute = ErinRouteImport.update({
   id: '/erin',
   path: '/erin',
@@ -44,9 +54,24 @@ const LaughRoute = LaughRouteImport.update({
   path: '/laugh',
   getParentRoute: () => rootRouteImport,
 } as any)
+const LearnRoute = LearnRouteImport.update({
+  id: '/learn',
+  path: '/learn',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const LittleWinRoute = LittleWinRouteImport.update({
   id: '/little-win',
   path: '/little-win',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const MedicinesRoute = MedicinesRouteImport.update({
+  id: '/medicines',
+  path: '/medicines',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const MoodRoute = MoodRouteImport.update({
+  id: '/mood',
+  path: '/mood',
   getParentRoute: () => rootRouteImport,
 } as any)
 const PrivacyRoute = PrivacyRouteImport.update({
@@ -79,6 +104,11 @@ const TabsRoute = TabsRouteImport.update({
   path: '/tabs',
   getParentRoute: () => rootRouteImport,
 } as any)
+const TeamPreviewRoute = TeamPreviewRouteImport.update({
+  id: '/team-preview',
+  path: '/team-preview',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const TellSproutRoute = TellSproutRouteImport.update({
   id: '/tell-sprout',
   path: '/tell-sprout',
@@ -99,15 +129,20 @@ const ApiPublicHooksSendNudgesRoute =
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/admin': typeof AdminRoute
+  '/cycle': typeof CycleRoute
   '/erin': typeof ErinRoute
   '/laugh': typeof LaughRoute
+  '/learn': typeof LearnRoute
   '/little-win': typeof LittleWinRoute
+  '/medicines': typeof MedicinesRoute
+  '/mood': typeof MoodRoute
   '/privacy': typeof PrivacyRoute
   '/remember': typeof RememberRoute
   '/settings': typeof SettingsRoute
   '/side-quest': typeof SideQuestRoute
   '/sprout': typeof SproutRoute
   '/tabs': typeof TabsRoute
+  '/team-preview': typeof TeamPreviewRoute
   '/tell-sprout': typeof TellSproutRoute
   '/wind-down': typeof WindDownRoute
   '/api/public/hooks/send-nudges': typeof ApiPublicHooksSendNudgesRoute
@@ -115,15 +150,20 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/admin': typeof AdminRoute
+  '/cycle': typeof CycleRoute
   '/erin': typeof ErinRoute
   '/laugh': typeof LaughRoute
+  '/learn': typeof LearnRoute
   '/little-win': typeof LittleWinRoute
+  '/medicines': typeof MedicinesRoute
+  '/mood': typeof MoodRoute
   '/privacy': typeof PrivacyRoute
   '/remember': typeof RememberRoute
   '/settings': typeof SettingsRoute
   '/side-quest': typeof SideQuestRoute
   '/sprout': typeof SproutRoute
   '/tabs': typeof TabsRoute
+  '/team-preview': typeof TeamPreviewRoute
   '/tell-sprout': typeof TellSproutRoute
   '/wind-down': typeof WindDownRoute
   '/api/public/hooks/send-nudges': typeof ApiPublicHooksSendNudgesRoute
@@ -132,15 +172,20 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/admin': typeof AdminRoute
+  '/cycle': typeof CycleRoute
   '/erin': typeof ErinRoute
   '/laugh': typeof LaughRoute
+  '/learn': typeof LearnRoute
   '/little-win': typeof LittleWinRoute
+  '/medicines': typeof MedicinesRoute
+  '/mood': typeof MoodRoute
   '/privacy': typeof PrivacyRoute
   '/remember': typeof RememberRoute
   '/settings': typeof SettingsRoute
   '/side-quest': typeof SideQuestRoute
   '/sprout': typeof SproutRoute
   '/tabs': typeof TabsRoute
+  '/team-preview': typeof TeamPreviewRoute
   '/tell-sprout': typeof TellSproutRoute
   '/wind-down': typeof WindDownRoute
   '/api/public/hooks/send-nudges': typeof ApiPublicHooksSendNudgesRoute
@@ -150,15 +195,20 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/admin'
+    | '/cycle'
     | '/erin'
     | '/laugh'
+    | '/learn'
     | '/little-win'
+    | '/medicines'
+    | '/mood'
     | '/privacy'
     | '/remember'
     | '/settings'
     | '/side-quest'
     | '/sprout'
     | '/tabs'
+    | '/team-preview'
     | '/tell-sprout'
     | '/wind-down'
     | '/api/public/hooks/send-nudges'
@@ -166,15 +216,20 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/admin'
+    | '/cycle'
     | '/erin'
     | '/laugh'
+    | '/learn'
     | '/little-win'
+    | '/medicines'
+    | '/mood'
     | '/privacy'
     | '/remember'
     | '/settings'
     | '/side-quest'
     | '/sprout'
     | '/tabs'
+    | '/team-preview'
     | '/tell-sprout'
     | '/wind-down'
     | '/api/public/hooks/send-nudges'
@@ -182,15 +237,20 @@ export interface FileRouteTypes {
     | '__root__'
     | '/'
     | '/admin'
+    | '/cycle'
     | '/erin'
     | '/laugh'
+    | '/learn'
     | '/little-win'
+    | '/medicines'
+    | '/mood'
     | '/privacy'
     | '/remember'
     | '/settings'
     | '/side-quest'
     | '/sprout'
     | '/tabs'
+    | '/team-preview'
     | '/tell-sprout'
     | '/wind-down'
     | '/api/public/hooks/send-nudges'
@@ -199,15 +259,20 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AdminRoute: typeof AdminRoute
+  CycleRoute: typeof CycleRoute
   ErinRoute: typeof ErinRoute
   LaughRoute: typeof LaughRoute
+  LearnRoute: typeof LearnRoute
   LittleWinRoute: typeof LittleWinRoute
+  MedicinesRoute: typeof MedicinesRoute
+  MoodRoute: typeof MoodRoute
   PrivacyRoute: typeof PrivacyRoute
   RememberRoute: typeof RememberRoute
   SettingsRoute: typeof SettingsRoute
   SideQuestRoute: typeof SideQuestRoute
   SproutRoute: typeof SproutRoute
   TabsRoute: typeof TabsRoute
+  TeamPreviewRoute: typeof TeamPreviewRoute
   TellSproutRoute: typeof TellSproutRoute
   WindDownRoute: typeof WindDownRoute
   ApiPublicHooksSendNudgesRoute: typeof ApiPublicHooksSendNudgesRoute
@@ -229,6 +294,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/cycle': {
+      id: '/cycle'
+      path: '/cycle'
+      fullPath: '/cycle'
+      preLoaderRoute: typeof CycleRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/erin': {
       id: '/erin'
       path: '/erin'
@@ -243,11 +315,32 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LaughRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/learn': {
+      id: '/learn'
+      path: '/learn'
+      fullPath: '/learn'
+      preLoaderRoute: typeof LearnRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/little-win': {
       id: '/little-win'
       path: '/little-win'
       fullPath: '/little-win'
       preLoaderRoute: typeof LittleWinRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/medicines': {
+      id: '/medicines'
+      path: '/medicines'
+      fullPath: '/medicines'
+      preLoaderRoute: typeof MedicinesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/mood': {
+      id: '/mood'
+      path: '/mood'
+      fullPath: '/mood'
+      preLoaderRoute: typeof MoodRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/privacy': {
@@ -292,6 +385,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof TabsRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/team-preview': {
+      id: '/team-preview'
+      path: '/team-preview'
+      fullPath: '/team-preview'
+      preLoaderRoute: typeof TeamPreviewRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/tell-sprout': {
       id: '/tell-sprout'
       path: '/tell-sprout'
@@ -319,15 +419,20 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AdminRoute: AdminRoute,
+  CycleRoute: CycleRoute,
   ErinRoute: ErinRoute,
   LaughRoute: LaughRoute,
+  LearnRoute: LearnRoute,
   LittleWinRoute: LittleWinRoute,
+  MedicinesRoute: MedicinesRoute,
+  MoodRoute: MoodRoute,
   PrivacyRoute: PrivacyRoute,
   RememberRoute: RememberRoute,
   SettingsRoute: SettingsRoute,
   SideQuestRoute: SideQuestRoute,
   SproutRoute: SproutRoute,
   TabsRoute: TabsRoute,
+  TeamPreviewRoute: TeamPreviewRoute,
   TellSproutRoute: TellSproutRoute,
   WindDownRoute: WindDownRoute,
   ApiPublicHooksSendNudgesRoute: ApiPublicHooksSendNudgesRoute,

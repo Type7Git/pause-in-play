@@ -1,7 +1,9 @@
 # Roadmap
 
-- [ ] Support & tracking update: confirm replacement of no-health-data rule and verify Australian hosting before storing health records
-- [ ] Plan Today, Mood Mapper, Medicine Cabinet, Cycle Tracker, Learn, notification/calendar settings and team admin from the attached pack
+- [x] Confirm safeguarded health tracking and example-first rollout
+- [x] Build labelled examples: Today, Mood Mapper, Medicine Cabinet, Cycle Tracker, Learn, notification/calendar settings and team workspace
+- [ ] Enable personal tracking, consent and full exports/deletion: blocked until Australian hosting is established and verified
+- [ ] Connect calendars and live team content/campaigns/plans: blocked pending provider configuration, authorised team accounts and reviewed content
 
 - [x] Installable app: manifest, icons, offline tools, iPhone Add to Home Screen card
 - [x] Push reminders for Side Quests via Firebase: token storage, permission after first nudge, gentle copy, due-nudge send on app load
