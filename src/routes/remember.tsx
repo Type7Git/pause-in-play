@@ -24,7 +24,7 @@ const SEED: Thing[] = [
   { t: "Spare house key", w: "Blue mug on the bookshelf", example: true },
   { t: "Car", w: "Westfield, level 3, near the lifts", example: true },
 ];
-export const VIT_BADGE_AT = 6;
+const VIT_BADGE_AT = 6;
 
 function Remember() {
   const { earn } = useRewards();

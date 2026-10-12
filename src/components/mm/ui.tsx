@@ -1,5 +1,5 @@
 import { cva, type VariantProps } from "class-variance-authority";
-import { useEffect, useState, type ButtonHTMLAttributes, type InputHTMLAttributes, type ReactNode } from "react";
+import { useEffect, useState, type ButtonHTMLAttributes, type ComponentProps, type ReactNode } from "react";
 import { cn } from "@/lib/utils";
 
 const pill = cva(
@@ -43,7 +43,7 @@ export function Chip({ pressed, className, ...p }: ButtonHTMLAttributes<HTMLButt
   );
 }
 
-export function Field({ label, ...p }: { label: string } & InputHTMLAttributes<HTMLInputElement>) {
+export function Field({ label, ...p }: { label: string } & ComponentProps<"input">) {
   return (
     <label className="flex flex-col gap-1.5 text-[13px] font-bold text-muted-foreground">
       {label}
