@@ -15,3 +15,4 @@
 - Sprout chat runs through a public `askSprout` server function that applies crisis and clinical screens before any AI call and answers only from approved `library_entries`; why: safety rules must hold regardless of the model.
 - Sprout admin (/admin) uses the browser client and relies on RLS via `has_role(..., 'admin')` in `user_roles`; why: access is enforced by the database, not by hiding links.
 - Sprout chat uses custom bubbles rather than AI Elements because replies are guarded, non-streamed JSON results; why: fixed safety messages and source lines need their own layout.
+- Offline support uses vite-plugin-pwa (generateSW, NetworkFirst for home + six tool pages) registered only from src/lib/pwa.ts, which refuses dev, preview and iframes; why: a stale service worker in preview would serve old code.
