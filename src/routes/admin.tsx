@@ -111,7 +111,7 @@ function Library({ onEdit }: { onEdit: (e: Entry) => void }) {
                 <td className="px-4 py-2.5 text-muted-foreground">{e.category}</td>
                 <td className="px-4 py-2.5 font-bold">{e.title}</td>
                 <td className="px-4 py-2.5">{e.linked_tool ? TOOLS[e.linked_tool] : "—"}</td>
-                <td className="px-4 py-2.5"><span className={`rounded-full px-2.5 py-0.5 text-xs font-bold ${e.status === "approved" ? "bg-sage-soft text-sage" : "bg-gold-soft text-gold"}`}>{e.status === "approved" ? "Approved" : "Draft"}</span></td>
+                <td className="px-4 py-2.5"><span className={`rounded-full px-2.5 py-0.5 text-xs font-bold ${e.status === "approved" ? "bg-sage-soft text-sage" : "bg-gold-soft text-ink"}`}>{e.status === "approved" ? "Approved" : "Draft"}</span></td>
                 <td className="px-4 py-2.5 text-muted-foreground">{e.updated_at ? new Date(e.updated_at).toLocaleDateString("en-AU") : ""}</td>
               </tr>
             ))}
