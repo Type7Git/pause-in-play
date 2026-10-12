@@ -24,6 +24,7 @@ import { Route as SettingsRouteImport } from './routes/settings'
 import { Route as SideQuestRouteImport } from './routes/side-quest'
 import { Route as SproutRouteImport } from './routes/sprout'
 import { Route as TabsRouteImport } from './routes/tabs'
+import { Route as TeamPreviewRouteImport } from './routes/team-preview'
 import { Route as TellSproutRouteImport } from './routes/tell-sprout'
 import { Route as WindDownRouteImport } from './routes/wind-down'
 import { Route as ApiPublicHooksSendNudgesRouteImport } from './routes/api/public/hooks/send-nudges'
@@ -103,6 +104,11 @@ const TabsRoute = TabsRouteImport.update({
   path: '/tabs',
   getParentRoute: () => rootRouteImport,
 } as any)
+const TeamPreviewRoute = TeamPreviewRouteImport.update({
+  id: '/team-preview',
+  path: '/team-preview',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const TellSproutRoute = TellSproutRouteImport.update({
   id: '/tell-sprout',
   path: '/tell-sprout',
@@ -136,6 +142,7 @@ export interface FileRoutesByFullPath {
   '/side-quest': typeof SideQuestRoute
   '/sprout': typeof SproutRoute
   '/tabs': typeof TabsRoute
+  '/team-preview': typeof TeamPreviewRoute
   '/tell-sprout': typeof TellSproutRoute
   '/wind-down': typeof WindDownRoute
   '/api/public/hooks/send-nudges': typeof ApiPublicHooksSendNudgesRoute
@@ -156,6 +163,7 @@ export interface FileRoutesByTo {
   '/side-quest': typeof SideQuestRoute
   '/sprout': typeof SproutRoute
   '/tabs': typeof TabsRoute
+  '/team-preview': typeof TeamPreviewRoute
   '/tell-sprout': typeof TellSproutRoute
   '/wind-down': typeof WindDownRoute
   '/api/public/hooks/send-nudges': typeof ApiPublicHooksSendNudgesRoute
@@ -177,6 +185,7 @@ export interface FileRoutesById {
   '/side-quest': typeof SideQuestRoute
   '/sprout': typeof SproutRoute
   '/tabs': typeof TabsRoute
+  '/team-preview': typeof TeamPreviewRoute
   '/tell-sprout': typeof TellSproutRoute
   '/wind-down': typeof WindDownRoute
   '/api/public/hooks/send-nudges': typeof ApiPublicHooksSendNudgesRoute
@@ -199,6 +208,7 @@ export interface FileRouteTypes {
     | '/side-quest'
     | '/sprout'
     | '/tabs'
+    | '/team-preview'
     | '/tell-sprout'
     | '/wind-down'
     | '/api/public/hooks/send-nudges'
@@ -219,6 +229,7 @@ export interface FileRouteTypes {
     | '/side-quest'
     | '/sprout'
     | '/tabs'
+    | '/team-preview'
     | '/tell-sprout'
     | '/wind-down'
     | '/api/public/hooks/send-nudges'
@@ -239,6 +250,7 @@ export interface FileRouteTypes {
     | '/side-quest'
     | '/sprout'
     | '/tabs'
+    | '/team-preview'
     | '/tell-sprout'
     | '/wind-down'
     | '/api/public/hooks/send-nudges'
@@ -260,6 +272,7 @@ export interface RootRouteChildren {
   SideQuestRoute: typeof SideQuestRoute
   SproutRoute: typeof SproutRoute
   TabsRoute: typeof TabsRoute
+  TeamPreviewRoute: typeof TeamPreviewRoute
   TellSproutRoute: typeof TellSproutRoute
   WindDownRoute: typeof WindDownRoute
   ApiPublicHooksSendNudgesRoute: typeof ApiPublicHooksSendNudgesRoute
@@ -372,6 +385,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof TabsRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/team-preview': {
+      id: '/team-preview'
+      path: '/team-preview'
+      fullPath: '/team-preview'
+      preLoaderRoute: typeof TeamPreviewRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/tell-sprout': {
       id: '/tell-sprout'
       path: '/tell-sprout'
@@ -412,6 +432,7 @@ const rootRouteChildren: RootRouteChildren = {
   SideQuestRoute: SideQuestRoute,
   SproutRoute: SproutRoute,
   TabsRoute: TabsRoute,
+  TeamPreviewRoute: TeamPreviewRoute,
   TellSproutRoute: TellSproutRoute,
   WindDownRoute: WindDownRoute,
   ApiPublicHooksSendNudgesRoute: ApiPublicHooksSendNudgesRoute,
