@@ -140,3 +140,17 @@ export function BadgeGlyphShape({ glyph }: { glyph: BadgeGlyph }) {
       );
   }
 }
+
+/** Mic with Sprout's leaf sprig on top and his gold pot as the base — every mic reads as Sprout. */
+export function SproutMic({ className = "" }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 24 24" className={className} aria-hidden="true" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <rect x="9" y="4" width="6" height="10.5" rx="3" />
+      <path d="M5 11.5a7 7 0 0 0 14 0" />
+      <path d="M12 18.5v1.4" />
+      <path d="M11.7 4.6C9.9 4.5 8.6 3.2 8.3 1.3c2 .2 3.3 1.4 3.4 3.3Z" fill="currentColor" stroke="none" />
+      <path d="M12.3 4.6c1.8-.1 3.1-1.4 3.4-3.3-2 .2-3.3 1.4-3.4 3.3Z" fill="currentColor" stroke="none" />
+      <path d="M9.4 20.6h5.2l-.75 2.6h-3.7z" fill="var(--mm-gold)" stroke="none" />
+    </svg>
+  );
+}
