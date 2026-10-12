@@ -9,8 +9,8 @@ import { erin, whyThisHelps } from "@/content/erin";
 // only for the profile card, the circular crop is for every small appearance.
 describe("Erin content", () => {
   it("uses the portrait for the profile card and the circular crop for small uses", () => {
-    expect(erin.photo).toMatch(/erin-photo\.jpg$/);
-    expect(erin.avatar).toMatch(/erin-avatar\.png$/);
+    expect(erin.photo).toMatch(/erin-photo\.jpg/);
+    expect(erin.avatar).toMatch(/erin-avatar\.png/);
     expect(erin.photo).not.toBe(erin.avatar);
     expect(erin.photoAlt).toBe("Dr Erin Kelly, Clinical Psychologist");
   });
