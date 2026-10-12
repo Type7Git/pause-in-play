@@ -1,6 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useEffect, useRef, useState } from "react";
 import { BackButton } from "@/components/mm/BackButton";
+import { SproutMic } from "@/components/mm/icons";
 import { Sprout } from "@/components/mm/Sprout";
 import { Card, Chip, Field, Muted, Pill, Row } from "@/components/mm/ui";
 import { enablePush } from "@/lib/push";
@@ -167,7 +168,7 @@ function TellSprout() {
             className="press relative grid size-24 place-items-center rounded-full bg-sage text-card shadow-lift disabled:opacity-60"
           >
             {listening && <><span className="mm-ring absolute inset-0 rounded-full border-2 border-sage" /><span className="mm-ring mm-ring-2 absolute inset-0 rounded-full border-2 border-sage" /></>}
-            <MicIcon className="size-10" />
+            <SproutMic className="size-10" />
           </button>
           <p role="status" className="font-bold text-muted-foreground">{note || "Tap the mic and just say it."}</p>
         </div>
@@ -256,13 +257,5 @@ function TellSprout() {
 
       <p className="text-center text-sm text-muted-foreground">Your voice is turned into text and not stored. Only the text you save is kept.</p>
     </>
-  );
-}
-
-export function MicIcon({ className = "" }: { className?: string }) {
-  return (
-    <svg viewBox="0 0 24 24" className={className} aria-hidden="true" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-      <rect x="9" y="3" width="6" height="11" rx="3" /><path d="M5 11a7 7 0 0 0 14 0M12 18v3" />
-    </svg>
   );
 }

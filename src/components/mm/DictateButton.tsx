@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { MicIcon } from "@/routes/tell-sprout";
+import { SproutMic } from "@/components/mm/icons";
 import { transcribeVoice } from "@/lib/voice.functions";
 
 type SR = {
@@ -87,7 +87,7 @@ export function DictateButton({ onText, label }: { onText: (text: string) => voi
         className="press relative grid size-11 place-items-center rounded-full border-[1.5px] border-line bg-card text-plum aria-pressed:border-sage aria-pressed:bg-sage-soft aria-pressed:text-sage"
       >
         {listening && <span className="mm-ring absolute inset-0 rounded-full border-2 border-sage" />}
-        <MicIcon className="size-5" />
+        <SproutMic className="size-5" />
       </button>
       {note && <span role="status" className="text-xs font-bold text-muted-foreground">{note}</span>}
     </span>

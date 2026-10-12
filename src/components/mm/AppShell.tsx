@@ -2,7 +2,7 @@ import { Link, useLocation } from "@tanstack/react-router";
 import type { ReactNode } from "react";
 import { getLevel } from "@/lib/levels";
 import { useRewards } from "@/lib/rewards";
-import { LogoMark, PetalShape } from "./icons";
+import { LogoMark, PetalShape, SproutMic } from "./icons";
 
 function Meter() {
   const { petals } = useRewards();
@@ -55,7 +55,7 @@ export function AppShell({ children }: { children: ReactNode }) {
             </Link>
             <div className={`flex items-center gap-2 ${quiet ? "invisible" : ""}`} aria-hidden={quiet || undefined}>
               <Link to="/tell-sprout" aria-label="Tell Sprout by voice" className="press grid size-11 place-items-center rounded-full border border-line bg-card text-sage shadow-soft">
-                <svg viewBox="0 0 24 24" className="size-5" aria-hidden="true" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round"><rect x="9" y="3" width="6" height="11" rx="3" /><path d="M5 11a7 7 0 0 0 14 0M12 18v3" /></svg>
+                <SproutMic className="size-5" />
               </Link>
               <Meter />
               <Link to="/settings" aria-label="Settings and account" className="press grid size-11 place-items-center rounded-full border border-line bg-card text-plum shadow-soft">
