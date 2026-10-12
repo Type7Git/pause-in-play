@@ -14,6 +14,7 @@ import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
 import { RewardsProvider } from "@/lib/rewards";
 import { AppShell } from "@/components/mm/AppShell";
+import { registerOfflineWorker } from "@/lib/pwa";
 
 function NotFoundComponent() {
   return (
@@ -80,6 +81,10 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
+      { name: "theme-color", content: "#5B3A6B" },
+      { name: "apple-mobile-web-app-capable", content: "yes" },
+      { name: "apple-mobile-web-app-title", content: "Pause and Play" },
+      { name: "apple-mobile-web-app-status-bar-style", content: "default" },
       { title: "Pause and Play" },
       { name: "description", content: "A warm, playful self-care companion for women in perimenopause." },
       { property: "og:title", content: "Pause and Play" },
@@ -96,6 +101,8 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       },
       { rel: "stylesheet", href: appCss },
       { rel: "icon", href: "/favicon.ico", type: "image/x-icon" },
+      { rel: "manifest", href: "/manifest.webmanifest" },
+      { rel: "apple-touch-icon", href: "/apple-touch-icon.png" },
     ],
   }),
   shellComponent: RootShell,
@@ -120,6 +127,7 @@ function RootShell({ children }: { children: ReactNode }) {
 
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
+  useEffect(() => { void registerOfflineWorker(); }, []);
 
   return (
     <QueryClientProvider client={queryClient}>
