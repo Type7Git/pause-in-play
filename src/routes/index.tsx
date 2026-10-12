@@ -1,6 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { ErinAvatar } from "@/components/mm/Erin";
+import { Sprout } from "@/components/mm/Sprout";
 import { GardenScene } from "@/components/mm/Garden";
 import { BadgeGlyphShape, ChoiceGlyph, type ChoiceIcon } from "@/components/mm/icons";
 import { erin } from "@/content/erin";
@@ -154,6 +155,17 @@ function Home() {
           </span>
         </span>
         <span className="whitespace-nowrap text-sm font-bold text-plum">Meet Erin →</span>
+      </Link>
+      <Link
+        to="/sprout"
+        className="press lift flex items-center gap-3.5 rounded-[22px] border border-line bg-gradient-to-br from-sage-soft to-card p-4 shadow-soft"
+      >
+        <Sprout size={56} mood="wave" />
+        <span className="flex flex-1 flex-col gap-0.5">
+          <b className="font-display text-base">Ask Sprout</b>
+          <span className="text-[13px] leading-snug text-muted-foreground">Your little guide. Answers come only from Dr Erin Kelly's library.</span>
+        </span>
+        <span className="whitespace-nowrap text-sm font-bold text-plum">Chat →</span>
       </Link>
     </>
   );
