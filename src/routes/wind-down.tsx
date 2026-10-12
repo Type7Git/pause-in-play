@@ -50,7 +50,7 @@ function WindDown() {
     setIdx(0);
     setVisible(true);
     let i = 0;
-    const n = SESSIONS[s].lines.length;
+    const n = SESSIONS[s]!.lines.length;
     iv.current = setInterval(() => {
       i++;
       if (i > n) return clearInterval(iv.current);
@@ -59,7 +59,7 @@ function WindDown() {
     requestAnimationFrame(() => player.current?.scrollIntoView({ behavior: prefersReducedMotion() ? "auto" : "smooth", block: "center" }));
   };
 
-  const session = active !== null ? SESSIONS[active] : null;
+  const session = active !== null ? SESSIONS[active]! : null;
   const line = session ? (idx < session.lines.length ? session.lines[idx] : "Rest well.") : "";
 
   return (

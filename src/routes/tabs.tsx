@@ -43,7 +43,7 @@ function Tabs() {
     setRunning(true);
     let round = 0, ph = 0;
     const run = () => {
-      const [label, s, sc] = STEPS[ph];
+      const [label, s, sc] = STEPS[ph]!;
       setCue(label);
       setOrb({ scale: sc, dur: s });
       timer.current = setTimeout(() => {

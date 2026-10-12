@@ -26,7 +26,7 @@ function SideQuest() {
   const [quests, setQuests] = useStoredList<Quest>("midlife-mind:quests", []);
   const [doing, setDoing] = useState("");
   const [next, setNext] = useState("");
-  const [remind, setRemind] = useState(REMINDERS[0]);
+  const [remind, setRemind] = useState<string>("No reminder");
   const [error, setError] = useState("");
   const doingRef = useRef<HTMLInputElement>(null);
 
