@@ -17,14 +17,14 @@ export function SignInForm() {
       email: email.trim(),
       options: { emailRedirectTo: `${window.location.origin}/settings` },
     });
-    if (error) { setState("idle"); setError("We couldn't send the link just now. Please try again."); return; }
+    if (error) { setState("idle"); setError("We couldn't send your sign-in link just now. Check the email address and try again in a moment."); return; }
     setState("sent");
   };
 
   const google = async () => {
     setError("");
     const r = await lovable.auth.signInWithOAuth("google", { redirect_uri: window.location.origin });
-    if (r.error) setError("Google sign-in didn't finish. Please try again.");
+    if (r.error) setError("Google sign-in didn't finish, so you're still signed out. Please try again.");
   };
 
   if (state === "sent")

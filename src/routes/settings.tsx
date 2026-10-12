@@ -44,7 +44,7 @@ function Settings() {
       localStorage.clear();
       navigate({ to: "/", replace: true });
     } catch (e) {
-      setError(e instanceof Error ? e.message : "Something went wrong. Please try again.");
+      setError("We couldn't delete your account just now. Nothing has been removed. Check your connection and try again.");
       setBusy(false);
     }
   };
