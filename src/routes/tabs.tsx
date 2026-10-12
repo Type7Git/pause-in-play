@@ -10,9 +10,9 @@ import { useRewards } from "@/lib/rewards";
 export const Route = createFileRoute("/tabs")({
   head: () => ({
     meta: [
-      { title: "37 tabs open · Midlife Mind" },
+      { title: "37 tabs open · Pause and Play" },
       { name: "description", content: "A one-minute breathing pause, then close tabs until only one next action remains." },
-      { property: "og:title", content: "37 tabs open · Midlife Mind" },
+      { property: "og:title", content: "37 tabs open · Pause and Play" },
       { property: "og:description", content: "Let's close a few. You only need one." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },

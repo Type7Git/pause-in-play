@@ -9,9 +9,9 @@ import { remindAtFor, useRewards } from "@/lib/rewards";
 export const Route = createFileRoute("/side-quest")({
   head: () => ({
     meta: [
-      { title: "Side Quest Saver · Midlife Mind" },
+      { title: "Side Quest Saver · Pause and Play" },
       { name: "description", content: "Park what you were doing and the very next step, so you can come back to it." },
-      { property: "og:title", content: "Side Quest Saver · Midlife Mind" },
+      { property: "og:title", content: "Side Quest Saver · Pause and Play" },
       { property: "og:description", content: "Your original mission is safely parked here." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },

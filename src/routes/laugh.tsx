@@ -9,9 +9,9 @@ import { useRewards } from "@/lib/rewards";
 export const Route = createFileRoute("/laugh")({
   head: () => ({
     meta: [
-      { title: "I need a laugh · Midlife Mind" },
+      { title: "I need a laugh · Pause and Play" },
       { name: "description", content: "She's looked everywhere. Can you find her glasses? Plus the great handbag audit." },
-      { property: "og:title", content: "I need a laugh · Midlife Mind" },
+      { property: "og:title", content: "I need a laugh · Pause and Play" },
       { property: "og:description", content: "She's looked everywhere. Can you find her glasses?" },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },

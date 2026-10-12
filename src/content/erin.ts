@@ -2,7 +2,7 @@ import erinPhoto from "@/assets/erin-photo.jpg";
 import erinAvatar from "@/assets/erin-avatar.png";
 
 /**
- * Dr Erin Kelly — the clinician Midlife Mind is built with.
+ * Dr Erin Kelly — the clinician Pause and Play is built with.
  *
  * `photo`  : the full portrait. Used ONLY on the /erin profile card.
  * `avatar` : the small circular crop. Used everywhere Erin appears small
@@ -19,7 +19,7 @@ export const erin = {
 
 /** Short note shown on the /erin profile card. */
 export const erinBio = [
-  "I'm a clinical psychologist, and Midlife Mind came out of the things women in perimenopause kept telling me they needed: somewhere to put a thought down, one small thing to finish, and a way to switch off at the end of the day.",
+  "I'm a clinical psychologist, and Pause and Play came out of the things women in perimenopause kept telling me they needed: somewhere to put a thought down, one small thing to finish, and a way to switch off at the end of the day.",
   "Everything here is education and skills. It isn't assessment, diagnosis or treatment, and it doesn't replace your doctor — think of it as the pocket-sized version of good advice, in my voice.",
 ] as const;
 

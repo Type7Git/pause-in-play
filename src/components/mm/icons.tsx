@@ -24,11 +24,13 @@ export function PetalIcon({ className }: { className?: string }) {
 export function LogoMark({ className }: { className?: string }) {
   return (
     <svg viewBox="0 0 32 32" aria-hidden="true" className={className}>
-      <circle cx="16" cy="9" r="6" fill="var(--mm-gold)" />
-      <circle cx="9" cy="16" r="6" fill="var(--mm-rose)" opacity=".85" />
-      <circle cx="23" cy="16" r="6" fill="var(--mm-plum-2)" opacity=".85" />
-      <circle cx="16" cy="22" r="6" fill="var(--mm-sage)" opacity=".85" />
-      <circle cx="16" cy="15.5" r="3.4" fill="var(--mm-shell)" />
+      <circle cx="16" cy="16" r="15" fill="var(--mm-gold-soft)" />
+      <rect x="7.5" y="10" width="3.6" height="12" rx="1.8" fill="var(--mm-plum)" />
+      <rect x="13" y="10" width="3.6" height="12" rx="1.8" fill="var(--mm-plum-2)" />
+      <path
+        d="M19.5 10.6v10.8a.9.9 0 0 0 1.4.75l7.6-5.4a.9.9 0 0 0 0-1.5l-7.6-5.4a.9.9 0 0 0-1.4.75z"
+        fill="var(--mm-gold)"
+      />
     </svg>
   );
 }

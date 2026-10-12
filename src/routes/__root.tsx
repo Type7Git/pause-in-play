@@ -80,9 +80,9 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Midlife Mind" },
+      { title: "Pause and Play" },
       { name: "description", content: "A warm, playful self-care companion for women in perimenopause." },
-      { property: "og:title", content: "Midlife Mind" },
+      { property: "og:title", content: "Pause and Play" },
       { property: "og:description", content: "A warm, playful self-care companion for women in perimenopause." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },

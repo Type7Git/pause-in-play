@@ -5,9 +5,9 @@ import { Card, Muted, ScreenTitle } from "@/components/mm/ui";
 export const Route = createFileRoute("/privacy")({
   head: () => ({
     meta: [
-      { title: "Privacy · Midlife Mind" },
-      { name: "description", content: "What Midlife Mind stores, why, and how to delete it. We never store moods, symptoms or health information." },
-      { property: "og:title", content: "Privacy · Midlife Mind" },
+      { title: "Privacy · Pause and Play" },
+      { name: "description", content: "What Pause and Play stores, why, and how to delete it. We never store moods, symptoms or health information." },
+      { property: "og:title", content: "Privacy · Pause and Play" },
       { property: "og:description", content: "What we store, why, and how to delete it." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
