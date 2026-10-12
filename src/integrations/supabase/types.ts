@@ -14,7 +14,147 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      badges_earned: {
+        Row: {
+          badge_key: string
+          earned_at: string
+          id: string
+          user_id: string
+        }
+        Insert: {
+          badge_key: string
+          earned_at?: string
+          id?: string
+          user_id?: string
+        }
+        Update: {
+          badge_key?: string
+          earned_at?: string
+          id?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      petal_events: {
+        Row: {
+          amount: number
+          created_at: string
+          id: string
+          reason: string
+          user_id: string
+        }
+        Insert: {
+          amount: number
+          created_at?: string
+          id?: string
+          reason: string
+          user_id?: string
+        }
+        Update: {
+          amount?: number
+          created_at?: string
+          id?: string
+          reason?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      profiles: {
+        Row: {
+          created_at: string
+          display_name: string | null
+          id: string
+        }
+        Insert: {
+          created_at?: string
+          display_name?: string | null
+          id: string
+        }
+        Update: {
+          created_at?: string
+          display_name?: string | null
+          id?: string
+        }
+        Relationships: []
+      }
+      reminders: {
+        Row: {
+          enabled: boolean
+          id: string
+          label: string
+          schedule: string
+          user_id: string
+        }
+        Insert: {
+          enabled?: boolean
+          id?: string
+          label: string
+          schedule: string
+          user_id?: string
+        }
+        Update: {
+          enabled?: boolean
+          id?: string
+          label?: string
+          schedule?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      side_quests: {
+        Row: {
+          created_at: string
+          doing: string
+          done_at: string | null
+          id: string
+          next_step: string | null
+          remind_at: string | null
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          doing: string
+          done_at?: string | null
+          id?: string
+          next_step?: string | null
+          remind_at?: string | null
+          user_id?: string
+        }
+        Update: {
+          created_at?: string
+          doing?: string
+          done_at?: string | null
+          id?: string
+          next_step?: string | null
+          remind_at?: string | null
+          user_id?: string
+        }
+        Relationships: []
+      }
+      vit_items: {
+        Row: {
+          created_at: string
+          id: string
+          location: string
+          thing: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          location: string
+          thing: string
+          user_id?: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          location?: string
+          thing?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
