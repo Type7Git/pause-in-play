@@ -1,6 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useRef, useState, type FormEvent } from "react";
 import { BackButton } from "@/components/mm/BackButton";
+import { DictateButton } from "@/components/mm/DictateButton";
 import { WhyThisHelps } from "@/components/mm/Erin";
 import { Card, Chip, Field, Muted, Pill, Row, ScreenTitle } from "@/components/mm/ui";
 import { whyThisHelps } from "@/content/erin";
@@ -67,7 +68,12 @@ function SideQuest() {
       <BackButton />
       <ScreenTitle eyebrow="Side Quest Saver" title="Your original mission is safely parked here." />
       <Card as="form" onSubmit={submit} noValidate>
-        <Field ref={doingRef} label="What I'm doing" required placeholder="e.g. Filling in the school form" value={doing} onChange={(e) => setDoing(e.target.value)} aria-invalid={!!error} />
+        <div className="flex items-end gap-2">
+          <div className="flex-1">
+            <Field ref={doingRef} label="What I'm doing" required placeholder="e.g. Filling in the school form" value={doing} onChange={(e) => setDoing(e.target.value)} aria-invalid={!!error} />
+          </div>
+          <DictateButton label="what I'm doing" onText={(t) => setDoing((d) => (d ? `${d} ${t}` : t))} />
+        </div>
         {error && <p className="text-sm font-bold text-rose">{error}</p>}
         <Field label="The very next step" placeholder="e.g. Find Mia's Medicare number" value={next} onChange={(e) => setNext(e.target.value)} />
         <div className="flex flex-col gap-1.5 text-[13px] font-bold text-muted-foreground" role="group" aria-label="Nudge me">

@@ -1,6 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useState, type FormEvent } from "react";
 import { BackButton } from "@/components/mm/BackButton";
+import { DictateButton } from "@/components/mm/DictateButton";
 import { WhyThisHelps } from "@/components/mm/Erin";
 import { Card, Field, Muted, Pill, Row, ScreenTitle } from "@/components/mm/ui";
 import { whyThisHelps } from "@/content/erin";
@@ -65,7 +66,12 @@ function Remember() {
       </Card>
       <Card as="form" onSubmit={submit} noValidate>
         <h3>File something new</h3>
-        <Field label="The thing" placeholder="e.g. Birth certificates" value={t} onChange={(e) => setT(e.target.value)} />
+        <div className="flex items-end gap-2">
+          <div className="flex-1">
+            <Field label="The thing" placeholder="e.g. Birth certificates" value={t} onChange={(e) => setT(e.target.value)} />
+          </div>
+          <DictateButton label="the thing" onText={(x) => setT((v) => (v ? `${v} ${x}` : x))} />
+        </div>
         <Field label="Where it lives" placeholder="e.g. Grey folder, study shelf" value={w} onChange={(e) => setW(e.target.value)} />
         {error && <p className="text-sm font-bold text-rose">{error}</p>}
         <Pill type="submit">File it</Pill>
