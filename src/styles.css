@@ -171,3 +171,4 @@
 @keyframes mm-page-in { from { opacity: 0; transform: translateY(8px) } to { opacity: 1; transform: none } }
 .mm-page { animation: mm-page-in 260ms cubic-bezier(.2,.7,.2,1) both; }
 @media (prefers-reduced-motion: reduce) { .mm-page { animation: none !important; } }
+.mm-hot:focus-visible { outline: 3px solid var(--mm-gold); outline-offset: 3px; border-radius: 6px; }
