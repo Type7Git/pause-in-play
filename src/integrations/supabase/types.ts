@@ -116,6 +116,30 @@ export type Database = {
         }
         Relationships: []
       }
+      push_tokens: {
+        Row: {
+          created_at: string
+          id: string
+          last_seen_at: string
+          token: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          last_seen_at?: string
+          token: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          last_seen_at?: string
+          token?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       reminders: {
         Row: {
           enabled: boolean
@@ -147,6 +171,7 @@ export type Database = {
           done_at: string | null
           id: string
           next_step: string | null
+          notified_at: string | null
           remind_at: string | null
           user_id: string
         }
@@ -156,6 +181,7 @@ export type Database = {
           done_at?: string | null
           id?: string
           next_step?: string | null
+          notified_at?: string | null
           remind_at?: string | null
           user_id?: string
         }
@@ -165,6 +191,7 @@ export type Database = {
           done_at?: string | null
           id?: string
           next_step?: string | null
+          notified_at?: string | null
           remind_at?: string | null
           user_id?: string
         }
