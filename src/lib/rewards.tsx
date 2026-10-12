@@ -84,7 +84,9 @@ type Ctx = {
   removeVit: (id: string) => void;
   openSave: () => void;
 };
-const RewardsContext = createContext<Ctx | null>(null);
+// Keep one context instance across hot reloads so provider and consumers always match.
+const g = globalThis as unknown as { __pnpRewardsCtx?: React.Context<Ctx | null> };
+const RewardsContext = (g.__pnpRewardsCtx ??= createContext<Ctx | null>(null));
 
 export function RewardsProvider({ children }: { children: ReactNode }) {
   const [ready, setReady] = useState(false);
