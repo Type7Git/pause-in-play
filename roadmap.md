@@ -1,6 +1,6 @@
 # Roadmap
 
-- [ ] Collapse Today, move the garden and compact guide links up, and add interactive kindness messages
+- [x] Collapse Today, move the garden and compact guide links up, and add interactive kindness messages
 
 - [x] Confirm safeguarded health tracking and example-first rollout
 - [x] Build labelled examples: Today, Mood Mapper, Medicine Cabinet, Cycle Tracker, Learn, notification/calendar settings and team workspace
