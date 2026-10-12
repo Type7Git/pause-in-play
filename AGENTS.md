@@ -9,4 +9,6 @@
 > the editor, so keep the branch in a working state.
 <!-- LOVABLE:END -->
 
-- Rewards (petals, level, badges) live in a React context persisted to localStorage via `useRewards().earn()`; why: a database will replace storage later without touching screens.
+- All user data (petals, badges, quests, VIT items) flows through the `useRewards()` store: localStorage when signed out, Lovable Cloud tables when signed in, with a one-time local→account migration on first sign-in; why: screens stay storage-agnostic.
+- Petal totals are derived from summing `petal_events`, never stored as a counter; why: append-only history avoids lost updates across devices.
+- Account deletion runs in a server function that removes every user-owned row before deleting the auth user; why: app tables hold plain user_id UUIDs without auth FKs.
