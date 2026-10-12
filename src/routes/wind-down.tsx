@@ -1,6 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useRef, useState } from "react";
 import { BackButton } from "@/components/mm/BackButton";
+import { RecordedByErin } from "@/components/mm/Erin";
 import { Card, Muted, Pill, Row, ScreenTitle, prefersReducedMotion } from "@/components/mm/ui";
 
 export const Route = createFileRoute("/wind-down")({
@@ -81,12 +82,14 @@ function WindDown() {
             </Row>
           ))}
         </ul>
+        <RecordedByErin />
         <p className="rounded-xl bg-gold-soft px-3 py-2 text-[12.5px] text-muted-foreground">Erin-recorded audio goes here. Text is shown for now.</p>
       </Card>
 
       {session && (
         <Card ref={player}>
           <p className="eyebrow">{session.title}</p>
+          <RecordedByErin />
           {session.audio && <audio ref={audio} src={session.audio} autoPlay controls className="w-full" />}
           <p className={`min-h-[140px] font-display text-[22px] font-medium leading-normal transition-opacity duration-700 ${visible ? "opacity-100" : "opacity-0"}`} aria-live="polite">{line}</p>
           <div className="h-1 overflow-hidden rounded-full bg-sunk">

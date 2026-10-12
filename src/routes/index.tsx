@@ -1,7 +1,9 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
+import { ErinAvatar } from "@/components/mm/Erin";
 import { GardenScene } from "@/components/mm/Garden";
 import { BadgeGlyphShape, ChoiceGlyph, type ChoiceIcon } from "@/components/mm/icons";
+import { erin } from "@/content/erin";
 import { getLevel } from "@/lib/levels";
 import { useRewards } from "@/lib/rewards";
 
@@ -112,6 +114,17 @@ function Home() {
           ))}
         </div>
       </section>
+
+      <Link
+        to="/erin"
+        className="lift flex items-center gap-3 rounded-[22px] border border-line bg-card p-[18px] text-left shadow-soft"
+      >
+        <ErinAvatar size={56} />
+        <span className="min-w-0">
+          <b className="font-display text-[15.5px] leading-tight">Created by {erin.name}</b>
+          <span className="block text-[12.5px] text-muted-foreground">{erin.role} · read her note</span>
+        </span>
+      </Link>
     </>
   );
 }

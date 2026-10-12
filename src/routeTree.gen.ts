@@ -10,6 +10,7 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as ErinRouteImport } from './routes/erin'
 import { Route as LaughRouteImport } from './routes/laugh'
 import { Route as LittleWinRouteImport } from './routes/little-win'
 import { Route as PrivacyRouteImport } from './routes/privacy'
@@ -22,6 +23,11 @@ import { Route as WindDownRouteImport } from './routes/wind-down'
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ErinRoute = ErinRouteImport.update({
+  id: '/erin',
+  path: '/erin',
   getParentRoute: () => rootRouteImport,
 } as any)
 const LaughRoute = LaughRouteImport.update({
@@ -67,6 +73,7 @@ const WindDownRoute = WindDownRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/erin': typeof ErinRoute
   '/laugh': typeof LaughRoute
   '/little-win': typeof LittleWinRoute
   '/privacy': typeof PrivacyRoute
@@ -78,6 +85,7 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/erin': typeof ErinRoute
   '/laugh': typeof LaughRoute
   '/little-win': typeof LittleWinRoute
   '/privacy': typeof PrivacyRoute
@@ -90,6 +98,7 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/erin': typeof ErinRoute
   '/laugh': typeof LaughRoute
   '/little-win': typeof LittleWinRoute
   '/privacy': typeof PrivacyRoute
@@ -103,6 +112,7 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/erin'
     | '/laugh'
     | '/little-win'
     | '/privacy'
@@ -114,6 +124,7 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/erin'
     | '/laugh'
     | '/little-win'
     | '/privacy'
@@ -125,6 +136,7 @@ export interface FileRouteTypes {
   id:
     | '__root__'
     | '/'
+    | '/erin'
     | '/laugh'
     | '/little-win'
     | '/privacy'
@@ -137,6 +149,7 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  ErinRoute: typeof ErinRoute
   LaughRoute: typeof LaughRoute
   LittleWinRoute: typeof LittleWinRoute
   PrivacyRoute: typeof PrivacyRoute
@@ -154,6 +167,13 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/erin': {
+      id: '/erin'
+      path: '/erin'
+      fullPath: '/erin'
+      preLoaderRoute: typeof ErinRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/laugh': {
@@ -217,6 +237,7 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  ErinRoute: ErinRoute,
   LaughRoute: LaughRoute,
   LittleWinRoute: LittleWinRoute,
   PrivacyRoute: PrivacyRoute,

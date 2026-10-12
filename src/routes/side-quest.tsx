@@ -1,7 +1,9 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useRef, useState, type FormEvent } from "react";
 import { BackButton } from "@/components/mm/BackButton";
+import { WhyThisHelps } from "@/components/mm/Erin";
 import { Card, Chip, Field, Muted, Pill, Row, ScreenTitle } from "@/components/mm/ui";
+import { whyThisHelps } from "@/content/erin";
 import { remindAtFor, useRewards } from "@/lib/rewards";
 
 export const Route = createFileRoute("/side-quest")({
@@ -84,6 +86,7 @@ function SideQuest() {
           )}
         </ul>
       </Card>
+      <WhyThisHelps>{whyThisHelps.sideQuest}</WhyThisHelps>
     </>
   );
 }
