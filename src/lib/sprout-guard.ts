@@ -8,6 +8,14 @@ export const TOOLS = {
   "little-win": "Give me a little win",
   laugh: "I need a laugh",
   erin: "About Erin",
+  panel: "Our clinical panel",
+  medicines: "Medicine Cabinet",
+  mood: "Mood Mapper",
+  learn: "Learn",
+  cycle: "Cycle Tracker",
+  settings: "Settings",
+  sprout: "Ask Sprout",
+  "tell-sprout": "Tell Sprout",
 } as const;
 export type ToolKey = keyof typeof TOOLS;
 export const isToolKey = (v: unknown): v is ToolKey => typeof v === "string" && v in TOOLS;
