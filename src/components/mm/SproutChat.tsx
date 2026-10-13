@@ -72,7 +72,7 @@ export function SproutChat({ compact = false }: { compact?: boolean }) {
                     <ErinAvatar size={22} />From Erin's library: {m.reply.entry.title}
                   </span>
                   {m.reply.entry.linked_tool && (
-                    <Link to={`/${m.reply.entry.linked_tool}` as "/tabs"} className="press inline-flex min-h-11 items-center self-start rounded-full bg-sage px-4 py-2 text-sm font-bold text-shell">
+                    <Link to={`/${m.reply.entry.linked_tool === "panel" ? "erin" : m.reply.entry.linked_tool}` as "/tabs"} className="press inline-flex min-h-11 items-center self-start rounded-full bg-sage px-4 py-2 text-sm font-bold text-shell">
                       Open {TOOLS[m.reply.entry.linked_tool]} →
                     </Link>
                   )}
