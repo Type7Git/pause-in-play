@@ -69,7 +69,7 @@ function Admin() {
           <button key={k} role="tab" aria-selected={tab === k} onClick={() => setTab(k)} className={`press rounded-full px-4 py-2 text-sm font-bold ${tab === k ? "bg-plum text-shell" : "text-plum"}`}>{l}</button>
         ))}
       </nav>
-      {tab === "library" && <Library onEdit={setEditing} />}
+      {tab === "library" && <Library userId={user.id} onEdit={setEditing} />}
       {tab === "questions" && <Questions onWrite={(q) => { setEditing({ ...blank, title: q }); setTab("library"); }} />}
       {tab === "test" && <div className="max-w-xl rounded-[22px] border border-line bg-shell p-4"><SproutChat compact /></div>}
       {tab === "learn" && <LearnAdmin userId={user.id} />}
@@ -91,11 +91,29 @@ function useEntries() {
   });
 }
 
-function Library({ onEdit }: { onEdit: (e: Entry) => void }) {
+function Library({ userId, onEdit }: { userId: string; onEdit: (e: Entry) => void }) {
   const entries = useEntries();
+  const qc = useQueryClient();
   const [q, setQ] = useState("");
   const [status, setStatus] = useState<"all" | "draft" | "approved">("all");
+  const [toggling, setToggling] = useState<string | null>(null);
   const rows = (entries.data ?? []).filter((e) => (status === "all" || e.status === status) && (!q || `${e.title} ${e.body} ${e.category} ${e.keywords.join(" ")}`.toLowerCase().includes(q.toLowerCase())));
+
+  async function setApproved(e: Entry, approved: boolean) {
+    if (!e.id) return;
+    setToggling(e.id);
+    const now = new Date().toISOString();
+    const { error } = await supabase.from("library_entries").update({
+      status: approved ? "approved" : "draft",
+      updated_at: now,
+      approved_by: approved ? userId : null,
+      approved_at: approved ? now : null,
+    }).eq("id", e.id);
+    setToggling(null);
+    if (error) { toast.error("Couldn't update that entry. Try again."); return; }
+    toast.success(approved ? "Approved. Sprout can use it now." : "Back to draft. Sprout won't use it.");
+    qc.invalidateQueries({ queryKey: ["admin-library"] });
+  }
   return (
     <section className="flex flex-col gap-3">
       <LibraryUpload />
@@ -109,7 +127,7 @@ function Library({ onEdit }: { onEdit: (e: Entry) => void }) {
       <div className="overflow-hidden rounded-[18px] border border-line bg-card">
         <table className="w-full text-left text-sm">
           <thead className="bg-sunk text-xs uppercase tracking-wider text-muted-foreground">
-            <tr><th className="px-4 py-2">Category</th><th className="px-4 py-2">Title</th><th className="px-4 py-2">Tool</th><th className="px-4 py-2">Status</th><th className="px-4 py-2">Updated</th></tr>
+            <tr><th className="px-4 py-2">Category</th><th className="px-4 py-2">Title</th><th className="px-4 py-2">Tool</th><th className="px-4 py-2">Status</th><th className="px-4 py-2">Approved</th><th className="px-4 py-2">Updated</th></tr>
           </thead>
           <tbody>
             {rows.map((e) => (
@@ -118,10 +136,22 @@ function Library({ onEdit }: { onEdit: (e: Entry) => void }) {
                 <td className="px-4 py-2.5 font-bold">{e.title}</td>
                 <td className="px-4 py-2.5">{e.linked_tool ? TOOLS[e.linked_tool] : "—"}</td>
                 <td className="px-4 py-2.5"><span className={`rounded-full px-2.5 py-0.5 text-xs font-bold ${e.status === "approved" ? "bg-sage-soft text-sage" : "bg-gold-soft text-ink"}`}>{e.status === "approved" ? "Approved" : "Draft"}</span></td>
+                <td className="px-4 py-2.5" onClick={(ev) => ev.stopPropagation()}>
+                  <label className="flex min-h-11 items-center gap-2">
+                    <input
+                      type="checkbox"
+                      checked={e.status === "approved"}
+                      disabled={toggling === e.id}
+                      onChange={(ev) => setApproved(e, ev.target.checked)}
+                      aria-label={`${e.status === "approved" ? "Unapprove" : "Approve"} ${e.title}`}
+                      className="size-5 accent-[var(--mm-sage)]"
+                    />
+                  </label>
+                </td>
                 <td className="px-4 py-2.5 text-muted-foreground">{e.updated_at ? new Date(e.updated_at).toLocaleDateString("en-AU") : ""}</td>
               </tr>
             ))}
-            {!rows.length && <tr><td colSpan={5} className="px-4 py-6 text-center text-muted-foreground">{entries.isLoading ? "Fetching the library…" : "Nothing matches that search. Try a different word, or start a new entry."}</td></tr>}
+            {!rows.length && <tr><td colSpan={6} className="px-4 py-6 text-center text-muted-foreground">{entries.isLoading ? "Fetching the library…" : "Nothing matches that search. Try a different word, or start a new entry."}</td></tr>}
           </tbody>
         </table>
       </div>
