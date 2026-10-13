@@ -1,7 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useRef, useState } from "react";
 import { BackButton } from "@/components/mm/BackButton";
-import { WhyThisHelps } from "@/components/mm/Erin";
+import { WhyThisHelps } from "@/components/mm/Panel";
 import { ChoiceGlyph } from "@/components/mm/icons";
 import { Card, Muted, Pill, ScreenTitle, prefersReducedMotion } from "@/components/mm/ui";
 import { whyThisHelps } from "@/content/erin";

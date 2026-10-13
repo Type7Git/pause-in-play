@@ -1,11 +1,10 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
-import { ErinAvatar } from "@/components/mm/Erin";
+import { PanelBadge } from "@/components/mm/Panel";
 import { Sprout } from "@/components/mm/Sprout";
 import { AddToHomeCard } from "@/components/mm/AddToHomeCard";
 import { GardenScene } from "@/components/mm/Garden";
 import { BadgeGlyphShape, ChoiceGlyph, type ChoiceIcon } from "@/components/mm/icons";
-import { erin } from "@/content/erin";
 import { getLevel } from "@/lib/levels";
 import { useRewards } from "@/lib/rewards";
 import { Today } from "@/components/mm/Today";
@@ -101,14 +100,14 @@ function Home() {
         <Link to="/sprout" className="lift flex min-w-0 flex-col items-center gap-2 rounded-tile border border-line bg-sage-soft p-3.5 text-center shadow-soft">
           <Sprout size={48} mood="wave" />
           <b className="font-display text-base">Ask Sprout</b>
-          <span className="text-xs leading-snug text-muted-foreground">A little kindness from Erin's library</span>
+          <span className="text-xs leading-snug text-muted-foreground">Answers come only from the Pause and Play library, clinically reviewed</span>
           <span className="mt-auto text-sm font-bold text-plum">Chat →</span>
         </Link>
         <Link to="/erin" className="lift flex min-w-0 flex-col items-center gap-2 rounded-tile border border-line bg-card p-3.5 text-center shadow-soft">
-          <ErinAvatar size={56} />
-          <b className="font-display text-base">{erin.name}</b>
-          <span className="text-xs leading-snug text-muted-foreground">{erin.role} (PhD)</span>
-          <span className="mt-auto text-sm font-bold text-plum">Meet Erin →</span>
+          <PanelBadge size={56} />
+          <b className="font-display text-base">Our clinical panel</b>
+          <span className="text-xs leading-snug text-muted-foreground">Every tool is clinically reviewed</span>
+          <span className="mt-auto text-sm font-bold text-plum">Meet the panel →</span>
         </Link>
       </div>
       <Today />
