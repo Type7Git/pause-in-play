@@ -1,7 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useRef, useState, type KeyboardEvent, type ReactNode } from "react";
 import { BackButton } from "@/components/mm/BackButton";
-import { WhyThisHelps } from "@/components/mm/Erin";
+import { WhyThisHelps } from "@/components/mm/Panel";
 import { Card, Chip, Muted, ScreenTitle } from "@/components/mm/ui";
 import { whyThisHelps } from "@/content/erin";
 import { useRewards } from "@/lib/rewards";

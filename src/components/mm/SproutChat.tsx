@@ -5,7 +5,7 @@ import { useEffect, useRef, useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { askSprout } from "@/lib/sprout.functions";
 import { TOOLS, type SproutReply } from "@/lib/sprout-guard";
-import { ErinAvatar } from "./Erin";
+import { PanelBadge } from "./Panel";
 import { SproutMic } from "./icons";
 import { Sprout } from "./Sprout";
 
@@ -69,7 +69,7 @@ export function SproutChat({ compact = false }: { compact?: boolean }) {
               {m.reply?.kind === "answer" && m.reply.entry && (
                 <>
                   <span className="flex items-center gap-2 border-t border-line pt-2 text-xs text-muted-foreground">
-                    <ErinAvatar size={22} />From Erin's library: {m.reply.entry.title}
+                    <PanelBadge size={22} className="shrink-0" />From the Pause and Play library: {m.reply.entry.title} · clinically reviewed
                   </span>
                   {m.reply.entry.linked_tool && (
                     <Link to={`/${m.reply.entry.linked_tool === "panel" ? "erin" : m.reply.entry.linked_tool}` as "/tabs"} className="press inline-flex min-h-11 items-center self-start rounded-full bg-sage px-4 py-2 text-sm font-bold text-shell">
