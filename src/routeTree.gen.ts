@@ -14,6 +14,7 @@ import { Route as AdminRouteImport } from './routes/admin'
 import { Route as ColourRouteImport } from './routes/colour'
 import { Route as CycleRouteImport } from './routes/cycle'
 import { Route as ErinRouteImport } from './routes/erin'
+import { Route as FoodRouteImport } from './routes/food'
 import { Route as GardenRouteImport } from './routes/garden'
 import { Route as IntimacyRouteImport } from './routes/intimacy'
 import { Route as LaughRouteImport } from './routes/laugh'
@@ -23,6 +24,7 @@ import { Route as MedicinesRouteImport } from './routes/medicines'
 import { Route as MoodRouteImport } from './routes/mood'
 import { Route as PanelRouteImport } from './routes/panel'
 import { Route as PartnersRouteImport } from './routes/partners'
+import { Route as PelvicRouteImport } from './routes/pelvic'
 import { Route as PrivacyRouteImport } from './routes/privacy'
 import { Route as RememberRouteImport } from './routes/remember'
 import { Route as SettingsRouteImport } from './routes/settings'
@@ -33,6 +35,7 @@ import { Route as TeamPreviewRouteImport } from './routes/team-preview'
 import { Route as TellSproutRouteImport } from './routes/tell-sprout'
 import { Route as WindDownRouteImport } from './routes/wind-down'
 import { Route as WouldYouRatherRouteImport } from './routes/would-you-rather'
+import { Route as BodyWhyRouteImport } from './routes/body.why'
 import { Route as IntimacyIndexRouteImport } from './routes/intimacy.index'
 import { Route as IntimacyCardsRouteImport } from './routes/intimacy.cards'
 import { Route as IntimacyCheckInRouteImport } from './routes/intimacy.check-in'
@@ -70,6 +73,11 @@ const CycleRoute = CycleRouteImport.update({
 const ErinRoute = ErinRouteImport.update({
   id: '/erin',
   path: '/erin',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const FoodRoute = FoodRouteImport.update({
+  id: '/food',
+  path: '/food',
   getParentRoute: () => rootRouteImport,
 } as any)
 const GardenRoute = GardenRouteImport.update({
@@ -115,6 +123,11 @@ const PanelRoute = PanelRouteImport.update({
 const PartnersRoute = PartnersRouteImport.update({
   id: '/partners',
   path: '/partners',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PelvicRoute = PelvicRouteImport.update({
+  id: '/pelvic',
+  path: '/pelvic',
   getParentRoute: () => rootRouteImport,
 } as any)
 const PrivacyRoute = PrivacyRouteImport.update({
@@ -165,6 +178,11 @@ const WindDownRoute = WindDownRouteImport.update({
 const WouldYouRatherRoute = WouldYouRatherRouteImport.update({
   id: '/would-you-rather',
   path: '/would-you-rather',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const BodyWhyRoute = BodyWhyRouteImport.update({
+  id: '/body/why',
+  path: '/body/why',
   getParentRoute: () => rootRouteImport,
 } as any)
 const IntimacyIndexRoute = IntimacyIndexRouteImport.update({
@@ -240,6 +258,7 @@ export interface FileRoutesByFullPath {
   '/colour': typeof ColourRoute
   '/cycle': typeof CycleRoute
   '/erin': typeof ErinRoute
+  '/food': typeof FoodRoute
   '/garden': typeof GardenRoute
   '/intimacy': typeof IntimacyRouteWithChildren
   '/laugh': typeof LaughRoute
@@ -249,6 +268,7 @@ export interface FileRoutesByFullPath {
   '/mood': typeof MoodRoute
   '/panel': typeof PanelRoute
   '/partners': typeof PartnersRoute
+  '/pelvic': typeof PelvicRoute
   '/privacy': typeof PrivacyRoute
   '/remember': typeof RememberRoute
   '/settings': typeof SettingsRoute
@@ -259,6 +279,7 @@ export interface FileRoutesByFullPath {
   '/tell-sprout': typeof TellSproutRoute
   '/wind-down': typeof WindDownRoute
   '/would-you-rather': typeof WouldYouRatherRoute
+  '/body/why': typeof BodyWhyRoute
   '/intimacy/cards': typeof IntimacyCardsRoute
   '/intimacy/check-in': typeof IntimacyCheckInRoute
   '/intimacy/library': typeof IntimacyLibraryRoute
@@ -279,6 +300,7 @@ export interface FileRoutesByTo {
   '/colour': typeof ColourRoute
   '/cycle': typeof CycleRoute
   '/erin': typeof ErinRoute
+  '/food': typeof FoodRoute
   '/garden': typeof GardenRoute
   '/laugh': typeof LaughRoute
   '/learn': typeof LearnRoute
@@ -287,6 +309,7 @@ export interface FileRoutesByTo {
   '/mood': typeof MoodRoute
   '/panel': typeof PanelRoute
   '/partners': typeof PartnersRoute
+  '/pelvic': typeof PelvicRoute
   '/privacy': typeof PrivacyRoute
   '/remember': typeof RememberRoute
   '/settings': typeof SettingsRoute
@@ -297,6 +320,7 @@ export interface FileRoutesByTo {
   '/tell-sprout': typeof TellSproutRoute
   '/wind-down': typeof WindDownRoute
   '/would-you-rather': typeof WouldYouRatherRoute
+  '/body/why': typeof BodyWhyRoute
   '/intimacy/cards': typeof IntimacyCardsRoute
   '/intimacy/check-in': typeof IntimacyCheckInRoute
   '/intimacy/library': typeof IntimacyLibraryRoute
@@ -318,6 +342,7 @@ export interface FileRoutesById {
   '/colour': typeof ColourRoute
   '/cycle': typeof CycleRoute
   '/erin': typeof ErinRoute
+  '/food': typeof FoodRoute
   '/garden': typeof GardenRoute
   '/intimacy': typeof IntimacyRouteWithChildren
   '/laugh': typeof LaughRoute
@@ -327,6 +352,7 @@ export interface FileRoutesById {
   '/mood': typeof MoodRoute
   '/panel': typeof PanelRoute
   '/partners': typeof PartnersRoute
+  '/pelvic': typeof PelvicRoute
   '/privacy': typeof PrivacyRoute
   '/remember': typeof RememberRoute
   '/settings': typeof SettingsRoute
@@ -337,6 +363,7 @@ export interface FileRoutesById {
   '/tell-sprout': typeof TellSproutRoute
   '/wind-down': typeof WindDownRoute
   '/would-you-rather': typeof WouldYouRatherRoute
+  '/body/why': typeof BodyWhyRoute
   '/intimacy/cards': typeof IntimacyCardsRoute
   '/intimacy/check-in': typeof IntimacyCheckInRoute
   '/intimacy/library': typeof IntimacyLibraryRoute
@@ -359,6 +386,7 @@ export interface FileRouteTypes {
     | '/colour'
     | '/cycle'
     | '/erin'
+    | '/food'
     | '/garden'
     | '/intimacy'
     | '/laugh'
@@ -368,6 +396,7 @@ export interface FileRouteTypes {
     | '/mood'
     | '/panel'
     | '/partners'
+    | '/pelvic'
     | '/privacy'
     | '/remember'
     | '/settings'
@@ -378,6 +407,7 @@ export interface FileRouteTypes {
     | '/tell-sprout'
     | '/wind-down'
     | '/would-you-rather'
+    | '/body/why'
     | '/intimacy/cards'
     | '/intimacy/check-in'
     | '/intimacy/library'
@@ -398,6 +428,7 @@ export interface FileRouteTypes {
     | '/colour'
     | '/cycle'
     | '/erin'
+    | '/food'
     | '/garden'
     | '/laugh'
     | '/learn'
@@ -406,6 +437,7 @@ export interface FileRouteTypes {
     | '/mood'
     | '/panel'
     | '/partners'
+    | '/pelvic'
     | '/privacy'
     | '/remember'
     | '/settings'
@@ -416,6 +448,7 @@ export interface FileRouteTypes {
     | '/tell-sprout'
     | '/wind-down'
     | '/would-you-rather'
+    | '/body/why'
     | '/intimacy/cards'
     | '/intimacy/check-in'
     | '/intimacy/library'
@@ -436,6 +469,7 @@ export interface FileRouteTypes {
     | '/colour'
     | '/cycle'
     | '/erin'
+    | '/food'
     | '/garden'
     | '/intimacy'
     | '/laugh'
@@ -445,6 +479,7 @@ export interface FileRouteTypes {
     | '/mood'
     | '/panel'
     | '/partners'
+    | '/pelvic'
     | '/privacy'
     | '/remember'
     | '/settings'
@@ -455,6 +490,7 @@ export interface FileRouteTypes {
     | '/tell-sprout'
     | '/wind-down'
     | '/would-you-rather'
+    | '/body/why'
     | '/intimacy/cards'
     | '/intimacy/check-in'
     | '/intimacy/library'
@@ -476,6 +512,7 @@ export interface RootRouteChildren {
   ColourRoute: typeof ColourRoute
   CycleRoute: typeof CycleRoute
   ErinRoute: typeof ErinRoute
+  FoodRoute: typeof FoodRoute
   GardenRoute: typeof GardenRoute
   IntimacyRoute: typeof IntimacyRouteWithChildren
   LaughRoute: typeof LaughRoute
@@ -485,6 +522,7 @@ export interface RootRouteChildren {
   MoodRoute: typeof MoodRoute
   PanelRoute: typeof PanelRoute
   PartnersRoute: typeof PartnersRoute
+  PelvicRoute: typeof PelvicRoute
   PrivacyRoute: typeof PrivacyRoute
   RememberRoute: typeof RememberRoute
   SettingsRoute: typeof SettingsRoute
@@ -495,6 +533,7 @@ export interface RootRouteChildren {
   TellSproutRoute: typeof TellSproutRoute
   WindDownRoute: typeof WindDownRoute
   WouldYouRatherRoute: typeof WouldYouRatherRoute
+  BodyWhyRoute: typeof BodyWhyRoute
   MoveKeyRoute: typeof MoveKeyRoute
   PalCodeRoute: typeof PalCodeRoute
   PalsIdRoute: typeof PalsIdRoute
@@ -539,6 +578,13 @@ declare module '@tanstack/react-router' {
       path: '/erin'
       fullPath: '/erin'
       preLoaderRoute: typeof ErinRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/food': {
+      id: '/food'
+      path: '/food'
+      fullPath: '/food'
+      preLoaderRoute: typeof FoodRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/garden': {
@@ -602,6 +648,13 @@ declare module '@tanstack/react-router' {
       path: '/partners'
       fullPath: '/partners'
       preLoaderRoute: typeof PartnersRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/pelvic': {
+      id: '/pelvic'
+      path: '/pelvic'
+      fullPath: '/pelvic'
+      preLoaderRoute: typeof PelvicRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/privacy': {
@@ -672,6 +725,13 @@ declare module '@tanstack/react-router' {
       path: '/would-you-rather'
       fullPath: '/would-you-rather'
       preLoaderRoute: typeof WouldYouRatherRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/body/why': {
+      id: '/body/why'
+      path: '/body/why'
+      fullPath: '/body/why'
+      preLoaderRoute: typeof BodyWhyRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/intimacy/': {
@@ -796,6 +856,7 @@ const rootRouteChildren: RootRouteChildren = {
   ColourRoute: ColourRoute,
   CycleRoute: CycleRoute,
   ErinRoute: ErinRoute,
+  FoodRoute: FoodRoute,
   GardenRoute: GardenRoute,
   IntimacyRoute: IntimacyRouteWithChildren,
   LaughRoute: LaughRoute,
@@ -805,6 +866,7 @@ const rootRouteChildren: RootRouteChildren = {
   MoodRoute: MoodRoute,
   PanelRoute: PanelRoute,
   PartnersRoute: PartnersRoute,
+  PelvicRoute: PelvicRoute,
   PrivacyRoute: PrivacyRoute,
   RememberRoute: RememberRoute,
   SettingsRoute: SettingsRoute,
@@ -815,6 +877,7 @@ const rootRouteChildren: RootRouteChildren = {
   TellSproutRoute: TellSproutRoute,
   WindDownRoute: WindDownRoute,
   WouldYouRatherRoute: WouldYouRatherRoute,
+  BodyWhyRoute: BodyWhyRoute,
   MoveKeyRoute: MoveKeyRoute,
   PalCodeRoute: PalCodeRoute,
   PalsIdRoute: PalsIdRoute,

@@ -12,6 +12,8 @@ export const panel: PanelMember[] = [
   { name: "[Name]", role: "Clinical Psychologist", covers: "Psychological skills, mood, sleep and wellbeing content", initials: "CP", tile: "bg-plum-soft" },
   { name: "[Name]", role: "General Practitioner, menopause training", covers: "Medical content: hormones, medicines, bleeding, bones and heart", initials: "GP", tile: "bg-sage-soft" },
   { name: "[Name]", role: "Pelvic Health Physiotherapist", covers: "Bladder, pelvic floor and movement content", initials: "PT", tile: "bg-gold-soft" },
+  { name: "[Name]", role: "Accredited Exercise Physiologist", covers: "Movement sessions and exercise safety", initials: "EP", tile: "bg-sage-soft" },
+  { name: "[Name]", role: "Accredited Practising Dietitian", covers: "Food and nutrition content", initials: "DT", tile: "bg-gold-soft" },
   { name: "[Name]", role: "Psychosexual therapist or sexologist", covers: "Intimacy, desire and relationships content", initials: "ST", tile: "bg-rose-soft" },
 ];
 

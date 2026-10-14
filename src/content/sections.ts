@@ -30,6 +30,10 @@ export const ACTIVITIES: Record<ActivityKey, Activity> = {
   mood: { key: "mood", title: "Mood Mapper", desc: "Two taps to log how you feel", to: "/mood", icon: "mood", blob: "bg-rose-soft" },
   meds: { key: "meds", title: "Medicine Cabinet", desc: "Your reminders, your way", to: "/medicines", icon: "medicines", blob: "bg-plum-soft" },
   cycle: { key: "cycle", title: "Cycle Tracker", desc: "Periods, spotting and symptoms", to: "/cycle", icon: "cycle", blob: "bg-rose-soft" },
+  move: { key: "move", title: "Move today", desc: "Short sessions, when you feel you can", to: "/move", icon: "move", blob: "bg-sage-soft" },
+  pelvic: { key: "pelvic", title: "Pelvic floor trainer", desc: "Squeeze, lift and let go", to: "/pelvic", icon: "pelvic", blob: "bg-rose-soft" },
+  food: { key: "food", title: "Food for this stage", desc: "Add in, never cut out", to: "/food", icon: "food", blob: "bg-gold-soft" },
+  bodylearn: { key: "bodylearn", title: "Why it helps", desc: "The why behind moving and eating well", to: "/body/why", icon: "bodylearn", blob: "bg-plum-soft" },
   learn: { key: "learn", title: "Learn", desc: "Videos, articles and quizzes", to: "/learn", icon: "learn", blob: "bg-sage-soft" },
 };
 
@@ -50,6 +54,7 @@ export const SECTIONS: Section[] = [
   { key: "fog", name: "Brain fog helpers", blurb: "For the 'why did I walk in here?' moments.", icon: "brain", blob: "bg-gold-soft", activities: ["quest", "vit", "voice"] },
   { key: "calm", name: "Calming moments", blurb: "Settle your body. Quiet your mind.", icon: "calm", blob: "bg-plum-soft", activities: ["tabs", "wind", "colour"] },
   { key: "play", name: "Playful challenges", blurb: "Small wins and a good laugh.", icon: "play", blob: "bg-sage-soft", activities: ["wyr", "colour", "win", "laugh"] },
+  { key: "body", name: "Resilient body", blurb: "Move and nourish, when you feel you can.", icon: "body", blob: "bg-sage-soft", activities: ["move", "pelvic", "food", "bodylearn"] },
   {
     key: "love", name: "Intimacy & relationships", blurb: "Private, practical and kind.", icon: "love", blob: "bg-rose-soft",
     activities: ["reflect", "talk", "kindly", "partner", "ilearn"],
