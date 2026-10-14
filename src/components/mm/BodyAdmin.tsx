@@ -32,9 +32,10 @@ function useSetStatus(table: "movement_sessions" | "food_tips", userId: string, 
   const qc = useQueryClient();
   return async (match: Record<string, string>, s: Status) => {
     const patch = s === "approved" ? { status: s, approved_by: userId, approved_at: new Date().toISOString(), updated_at: new Date().toISOString() } : { status: s, approved_by: null, approved_at: null, updated_at: new Date().toISOString() };
-    const q = supabase.from(table).update(patch);
-    const { error } = await (table === "movement_sessions" ? q.eq("key", match.key!) : q.eq("id", match.id!));
-    if (error) return toast.error(error.message);
+    const { error } = table === "movement_sessions"
+      ? await supabase.from("movement_sessions").update(patch).eq("key", match["key"]!)
+      : await supabase.from("food_tips").update(patch).eq("id", match["id"]!);
+    if (error) { toast.error(error.message); return; }
     toast.success(s === "approved" ? "Approved — now live in the app" : "Moved back to draft");
     void qc.invalidateQueries({ queryKey: [qk] });
   };
@@ -60,7 +61,7 @@ function Sessions({ userId, status }: { userId: string; status: "all" | Status }
   const list = (data?.sessions ?? []).filter((s) => status === "all" || s.status === status);
   const save = async (key: string) => {
     const { error } = await supabase.from("movement_sessions").update({ ...edit[key]!, updated_at: new Date().toISOString() }).eq("key", key);
-    if (error) return toast.error(error.message);
+    if (error) { toast.error(error.message); return; }
     toast.success("Saved"); setEdit(({ [key]: _, ...r }) => r); void qc.invalidateQueries({ queryKey: ["admin-sessions"] });
   };
   if (!list.length) return <p className="text-muted-foreground">Nothing here.</p>;
@@ -122,7 +123,7 @@ function Tips({ userId, status }: { userId: string; status: "all" | Status }) {
   const list = (data ?? []).filter((t) => status === "all" || t.status === status);
   const save = async (id: string) => {
     const { error } = await supabase.from("food_tips").update({ ...edit[id]!, updated_at: new Date().toISOString() }).eq("id", id);
-    if (error) return toast.error(error.message);
+    if (error) { toast.error(error.message); return; }
     toast.success("Saved"); setEdit(({ [id]: _, ...r }) => r); void qc.invalidateQueries({ queryKey: ["admin-tips"] });
   };
   if (!list.length) return <p className="text-muted-foreground">Nothing here.</p>;
