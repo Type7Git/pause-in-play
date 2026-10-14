@@ -52,7 +52,7 @@ export function AppShell({ children }: { children: ReactNode }) {
               className="flex items-center gap-2 font-display text-xl font-extrabold tracking-[-0.01em] text-plum"
             >
               <LogoMark className="size-[26px]" />
-              Pause in Play
+              <span className="whitespace-nowrap">Pause <span className="wordmark-in text-rose">in</span> Play</span>
             </Link>
             <div className={`flex items-center gap-2 ${quiet ? "invisible" : ""}`} aria-hidden={quiet || undefined}>
               <Link to="/settings" aria-label="Settings and account" className="press grid size-11 place-items-center rounded-full border border-line bg-card text-plum shadow-soft"><Settings className="size-5" /></Link>
