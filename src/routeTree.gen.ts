@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AdminRouteImport } from './routes/admin'
+import { Route as ColourRouteImport } from './routes/colour'
 import { Route as CycleRouteImport } from './routes/cycle'
 import { Route as ErinRouteImport } from './routes/erin'
 import { Route as GardenRouteImport } from './routes/garden'
@@ -38,6 +39,11 @@ const IndexRoute = IndexRouteImport.update({
 const AdminRoute = AdminRouteImport.update({
   id: '/admin',
   path: '/admin',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ColourRoute = ColourRouteImport.update({
+  id: '/colour',
+  path: '/colour',
   getParentRoute: () => rootRouteImport,
 } as any)
 const CycleRoute = CycleRouteImport.update({
@@ -135,6 +141,7 @@ const ApiPublicHooksSendNudgesRoute =
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/admin': typeof AdminRoute
+  '/colour': typeof ColourRoute
   '/cycle': typeof CycleRoute
   '/erin': typeof ErinRoute
   '/garden': typeof GardenRoute
@@ -157,6 +164,7 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/admin': typeof AdminRoute
+  '/colour': typeof ColourRoute
   '/cycle': typeof CycleRoute
   '/erin': typeof ErinRoute
   '/garden': typeof GardenRoute
@@ -180,6 +188,7 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/admin': typeof AdminRoute
+  '/colour': typeof ColourRoute
   '/cycle': typeof CycleRoute
   '/erin': typeof ErinRoute
   '/garden': typeof GardenRoute
@@ -204,6 +213,7 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/admin'
+    | '/colour'
     | '/cycle'
     | '/erin'
     | '/garden'
@@ -226,6 +236,7 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/admin'
+    | '/colour'
     | '/cycle'
     | '/erin'
     | '/garden'
@@ -248,6 +259,7 @@ export interface FileRouteTypes {
     | '__root__'
     | '/'
     | '/admin'
+    | '/colour'
     | '/cycle'
     | '/erin'
     | '/garden'
@@ -271,6 +283,7 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AdminRoute: typeof AdminRoute
+  ColourRoute: typeof ColourRoute
   CycleRoute: typeof CycleRoute
   ErinRoute: typeof ErinRoute
   GardenRoute: typeof GardenRoute
@@ -305,6 +318,13 @@ declare module '@tanstack/react-router' {
       path: '/admin'
       fullPath: '/admin'
       preLoaderRoute: typeof AdminRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/colour': {
+      id: '/colour'
+      path: '/colour'
+      fullPath: '/colour'
+      preLoaderRoute: typeof ColourRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/cycle': {
@@ -439,6 +459,7 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AdminRoute: AdminRoute,
+  ColourRoute: ColourRoute,
   CycleRoute: CycleRoute,
   ErinRoute: ErinRoute,
   GardenRoute: GardenRoute,
