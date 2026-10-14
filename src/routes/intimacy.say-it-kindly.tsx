@@ -1,4 +1,4 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
 import { Card, Chip, Pill, ScreenTitle } from "@/components/mm/ui";
@@ -36,7 +36,7 @@ function Kindly() {
       </label>
       <div className="flex flex-wrap gap-2">
         <Pill onClick={copy}>Copy</Pill>
-        <Pill variant="ghost" onClick={() => toast("Invite your partner as a PeriPal first")}>Send to a PeriPal</Pill>
+        <Link to="/pals" className="press inline-flex min-h-11 items-center rounded-full border-[1.5px] border-line bg-card px-5 font-bold text-plum">Send to a PeriPal</Link>
       </div>
     </>
   );

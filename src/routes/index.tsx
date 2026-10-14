@@ -105,7 +105,7 @@ function Home() {
         {section.palsStrip && (
           <div className="flex items-center gap-3 rounded-2xl border border-line bg-gold-soft p-3 text-sm">
             <Users className="size-5 shrink-0 text-plum" aria-hidden="true" />
-            <p className="min-w-0 flex-1"><b>Example PeriPal:</b> "Thinking of you today. Cup of tea Thursday?"</p>
+            <p className="min-w-0 flex-1">You choose exactly what each PeriPal sees, and you can pause or remove anyone at any time.</p>
           </div>
         )}
         {items.length ? (
