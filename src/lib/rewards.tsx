@@ -4,6 +4,7 @@ import { PetalIcon } from "@/components/mm/icons";
 import { SaveGardenDialog } from "@/components/mm/SaveGardenDialog";
 import { supabase } from "@/integrations/supabase/client";
 import { sendDueReminders } from "@/lib/push.functions";
+import { DEFAULT_FLOWERS, FLOWERS, MAX_FLOWERS, type FlowerKey } from "@/content/garden";
 
 export type BadgeGlyph = "leaf" | "flag" | "tab" | "star" | "glasses" | "key" | "palette" | "crown" | "heart";
 export type Badge = { key: string; name: string; earned: boolean; glyph: BadgeGlyph };
@@ -34,7 +35,18 @@ const SEED_VIT: VitItem[] = [
 const LOCAL = "midlife-mind:local-v2";
 const PROMPTED = "midlife-mind:save-prompted";
 export const DEFAULT_FAVOURITES = ["quest", "tabs", "colour"];
-type Local = { petals: number; badges: string[]; quests: Quest[]; vit: VitItem[]; favourites: string[]; dirty: boolean };
+/** Garden choices: which flowers she picked and when she last watered. Not health data. */
+export type GardenPrefs = { flowers?: FlowerKey[] | undefined; wateredAt?: number | undefined };
+type Local = { petals: number; badges: string[]; quests: Quest[]; vit: VitItem[]; favourites: string[]; dirty: boolean; garden?: GardenPrefs; lastEarnedAt?: number | undefined };
+const cleanFlowers = (v: unknown): FlowerKey[] | undefined => {
+  if (!Array.isArray(v)) return undefined;
+  const keys = v.filter((k): k is FlowerKey => FLOWERS.some((f) => f.key === k)).slice(0, MAX_FLOWERS);
+  return keys.length ? keys : undefined;
+};
+const cleanGarden = (v: unknown): GardenPrefs => {
+  const o = (v && typeof v === "object" ? v : {}) as Record<string, unknown>;
+  return { flowers: cleanFlowers(o["flowers"]), wateredAt: typeof o["wateredAt"] === "number" ? o["wateredAt"] : undefined };
+};
 const freshLocal = (): Local => ({ petals: 18, badges: ["first_seedling"], quests: [], vit: SEED_VIT, favourites: DEFAULT_FAVOURITES, dirty: false });
 function readLocal(): Local {
   try {
@@ -49,7 +61,7 @@ const uid = () => (crypto.randomUUID ? crypto.randomUUID() : String(Date.now() +
 /* ---------- account storage ---------- */
 async function loadRemote() {
   const [p, b, q, v, f] = await Promise.all([
-    supabase.from("petal_events").select("amount"),
+    supabase.from("petal_events").select("amount, created_at"),
     supabase.from("badges_earned").select("badge_key"),
     supabase.from("side_quests").select("id, doing, next_step, remind_at").is("done_at", null).order("created_at", { ascending: false }),
     supabase.from("vit_items").select("id, thing, location").order("created_at", { ascending: false }),
@@ -58,6 +70,7 @@ async function loadRemote() {
   return {
     hasEvents: (p.data?.length ?? 0) > 0,
     petals: (p.data ?? []).reduce((s, r) => s + r.amount, 0),
+    lastEarnedAt: (p.data ?? []).reduce<number | undefined>((m, r) => { const t = Date.parse(r.created_at); return m === undefined || t > m ? t : m; }, undefined),
     badges: (b.data ?? []).map((r) => r.badge_key),
     quests: (q.data ?? []).map((r) => ({ id: r.id, doing: r.doing, next: r.next_step ?? "", remindAt: r.remind_at })),
     vit: (v.data ?? []).map((r) => ({ id: r.id, thing: r.thing, location: r.location })),
@@ -94,6 +107,13 @@ type Ctx = {
   favourites: string[];
   toggleFavourite: (key: string, title: string) => void;
   openSave: () => void;
+  /** Flowers shown in the garden (her picks, or a default trio until she chooses). */
+  flowers: FlowerKey[];
+  flowersChosen: boolean;
+  setFlowers: (keys: FlowerKey[]) => void;
+  /** Last time she earned petals or watered, whichever is later. Drives the "a little thirsty" look. */
+  lastCareAt: number | null;
+  water: () => void;
 };
 // Keep one context instance across hot reloads so provider and consumers always match.
 const g = globalThis as unknown as { __pnpRewardsCtx?: Context<Ctx | null> };
@@ -107,6 +127,9 @@ export function RewardsProvider({ children }: { children: ReactNode }) {
   const [quests, setQuests] = useState<Quest[]>([]);
   const [vit, setVit] = useState<VitItem[]>(SEED_VIT);
   const [favourites, setFavourites] = useState<string[]>(DEFAULT_FAVOURITES);
+  const [garden, setGarden] = useState<GardenPrefs>({});
+  const gardenRef = useRef<GardenPrefs>({});
+  const [lastEarnedAt, setLastEarnedAt] = useState<number | undefined>(undefined);
   const favRef = useRef<string[]>(DEFAULT_FAVOURITES);
   useEffect(() => { favRef.current = favourites; }, [favourites]);
   const [toast, setToast] = useState<{ id: number; msg: string; heart?: boolean } | null>(null);
@@ -120,6 +143,7 @@ export function RewardsProvider({ children }: { children: ReactNode }) {
   const applyLocal = () => {
     const l = readLocal();
     setPetals(l.petals); setEarned(l.badges); setQuests(l.quests); setVit(l.vit); setFavourites(l.favourites);
+    gardenRef.current = cleanGarden(l.garden); setGarden(gardenRef.current); setLastEarnedAt(l.lastEarnedAt);
   };
 
   const hydrate = useCallback(async (u: User | null) => {
@@ -132,6 +156,14 @@ export function RewardsProvider({ children }: { children: ReactNode }) {
     try {
       let r = await loadRemote();
       const local = readLocal();
+      // Garden choices live on the account itself (auth metadata), so no extra table is needed.
+      let gp = cleanGarden(u.user_metadata?.["garden"]);
+      const lg = cleanGarden(local.garden);
+      if (!gp.flowers && lg.flowers) {
+        gp = { ...gp, flowers: lg.flowers, wateredAt: gp.wateredAt ?? lg.wateredAt };
+        void supabase.auth.updateUser({ data: { garden: gp } });
+      }
+      gardenRef.current = gp; setGarden(gp);
       if (local.dirty || (!r.hasEvents && localStorage.getItem(LOCAL))) {
         await migrateLocal(u.id, local);
         r = await loadRemote();
@@ -141,7 +173,7 @@ export function RewardsProvider({ children }: { children: ReactNode }) {
         await supabase.from("user_favourites").upsert(DEFAULT_FAVOURITES.map((k, i) => ({ user_id: u.id, activity_key: k, position: i })), { onConflict: "user_id,activity_key", ignoreDuplicates: true });
         r = await loadRemote();
       }
-      setPetals(r.petals); setEarned(r.badges); setQuests(r.quests); setVit(r.vit); setFavourites(r.favourites);
+      setPetals(r.petals); setEarned(r.badges); setQuests(r.quests); setVit(r.vit); setFavourites(r.favourites); setLastEarnedAt(r.lastEarnedAt);
       // Deliver any due Side Quest nudges to this user's devices.
       void sendDueReminders().catch(() => {});
     } catch (e) {
@@ -170,6 +202,7 @@ export function RewardsProvider({ children }: { children: ReactNode }) {
     const u = userRef.current;
     const bkey = badge ? keyFor(badge) : undefined;
     setPetals((p) => p + n);
+    setLastEarnedAt(Date.now());
     let msg = `+${n} petals · ${message}`;
     if (bkey && !earnedRef.current.includes(bkey)) {
       msg += ` · New badge: ${badge}`;
@@ -180,7 +213,7 @@ export function RewardsProvider({ children }: { children: ReactNode }) {
       void supabase.from("petal_events").insert({ user_id: u.id, amount: n, reason: message.slice(0, 120) });
       if (bkey) void supabase.from("badges_earned").upsert({ user_id: u.id, badge_key: bkey }, { onConflict: "user_id,badge_key", ignoreDuplicates: true });
     } else {
-      writeLocal((() => { const l = readLocal(); return { ...l, petals: l.petals + n, badges: bkey && !l.badges.includes(bkey) ? [...l.badges, bkey] : l.badges, dirty: true }; })());
+      writeLocal((() => { const l = readLocal(); return { ...l, petals: l.petals + n, lastEarnedAt: Date.now(), badges: bkey && !l.badges.includes(bkey) ? [...l.badges, bkey] : l.badges, dirty: true }; })());
       if (!localStorage.getItem(PROMPTED)) {
         localStorage.setItem(PROMPTED, "1");
         setTimeout(() => setSaveOpen(true), 1800);
@@ -243,8 +276,19 @@ export function RewardsProvider({ children }: { children: ReactNode }) {
 
   const badges = BADGES.map((b) => ({ ...b, earned: earned.includes(b.key) }));
 
+  const saveGarden = (next: GardenPrefs) => {
+    gardenRef.current = next;
+    setGarden(next);
+    if (userRef.current) void supabase.auth.updateUser({ data: { garden: next } });
+    else local((l) => ({ ...l, garden: next }));
+  };
+  const setFlowers: Ctx["setFlowers"] = (keys) => saveGarden({ ...gardenRef.current, flowers: cleanFlowers(keys) });
+  const water = () => saveGarden({ ...gardenRef.current, wateredAt: Date.now() });
+  const careTimes = [lastEarnedAt, garden.wateredAt].filter((t): t is number => typeof t === "number");
+  const lastCareAt = careTimes.length ? Math.max(...careTimes) : null;
+
   return (
-    <RewardsContext.Provider value={{ ready, user, petals, badges, quests, vit, earn, addQuest, completeQuest, addVit, removeVit, favourites, toggleFavourite, openSave: () => setSaveOpen(true) }}>
+    <RewardsContext.Provider value={{ ready, user, petals, badges, quests, vit, earn, addQuest, completeQuest, addVit, removeVit, favourites, toggleFavourite, openSave: () => setSaveOpen(true), flowers: garden.flowers ?? DEFAULT_FLOWERS, flowersChosen: !!garden.flowers, setFlowers, lastCareAt, water }}>
       {children}
       <SaveGardenDialog open={saveOpen} onOpenChange={setSaveOpen} />
       {toast && (

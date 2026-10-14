@@ -79,7 +79,7 @@ function Tile({ a }: { a: Activity }) {
 }
 
 function Home() {
-  const { petals, favourites } = useRewards();
+  const { petals, favourites, flowers } = useRewards();
   const greeting = useGreeting();
   const L = getLevel(petals);
   const [selected, setSelected] = useState("favourites");
@@ -128,7 +128,7 @@ function Home() {
       </Link>
 
       <Link to="/garden" className="mm-card lift overflow-hidden">
-        <div className="flex h-[112px] items-end overflow-hidden" inert aria-hidden="true"><div className="w-full [&_[role=status]]:hidden"><GardenScene petals={petals} /></div></div>
+        <div className="flex h-[128px] items-end overflow-hidden" inert aria-hidden="true"><div className="w-full"><GardenScene petals={petals} flowers={flowers} /></div></div>
         <div className="flex flex-col gap-2 px-[18px] pb-4 pt-3">
           <div className="flex items-baseline justify-between gap-2 text-[13px] text-muted-foreground">
             <b className="font-display text-[17px] text-ink">{L.name}</b>

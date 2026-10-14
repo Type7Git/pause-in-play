@@ -11,7 +11,9 @@
 
 - All user data (petals, badges, quests, VIT items) flows through the `useRewards()` store: localStorage when signed out, Lovable Cloud tables when signed in, with a one-time local→account migration on first sign-in; why: screens stay storage-agnostic.
 - Petal totals are derived from summing `petal_events`, never stored as a counter; why: append-only history avoids lost updates across devices.
-- Garden encouragement uses component-local SVG hotspots with keyboard access and live messages, without saving or awarding rewards; why: exploring kindness should not alter progress or user data.
+- Garden play (src/components/mm/GardenPlay.tsx) never awards petals or badges; flower picks and last-watered time are the only saved garden state, kept in useRewards (auth user_metadata.garden when signed in, localStorage when signed out) and weather is session-only; why: tending is kindness, not a points engine, and weather is mood-like so it is never stored.
+- Garden "top X%" and badge rarity come from the public gardenStanding server function, which returns aggregates only, waits for 25+ gardens and never ranks a garden outside the top half; why: comparison should encourage, never shame.
+- Sprout sits top right in the header (src/components/mm/SproutMenu.tsx) as one entry point with two options, Ask Sprout (/sprout) and File it (/tell-sprout); why: one friendly front door instead of two icon buttons.
 - Account deletion runs in a server function that removes every user-owned row before deleting the auth user; why: app tables hold plain user_id UUIDs without auth FKs.
 - Sprout chat runs through a public `askSprout` server function that applies crisis and clinical screens before any AI call and answers only from approved `library_entries`; why: safety rules must hold regardless of the model.
 - Sprout admin (/admin) uses the browser client and relies on RLS via `has_role(..., 'admin')` in `user_roles`; why: access is enforced by the database, not by hiding links.

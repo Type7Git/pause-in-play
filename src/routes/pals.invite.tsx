@@ -56,7 +56,7 @@ export function NeverShared() {
 }
 
 function Invite() {
-  const { user } = useRewards();
+  const { user, earn } = useRewards();
   const [name, setName] = useState("");
   const [rel, setRel] = useState("Friend");
   const [perms, setPerms] = useState<Record<string, boolean>>({ messages: true });
@@ -72,6 +72,7 @@ function Invite() {
     setBusy(false);
     if (error) { toast(friendlyError(error)); return; }
     setLink(`${window.location.origin}/pal/${data.code}`);
+    earn(3, "Reaching out counts", "PeriPal");
   };
 
   const sees = PERMS.filter((p) => !("soon" in p) && perms[p.key]).map((p) => p.label);

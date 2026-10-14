@@ -4,7 +4,8 @@ import { Settings } from "lucide-react";
 import { getLevel } from "@/lib/levels";
 import { useRewards } from "@/lib/rewards";
 import { usePelvicReminders } from "@/lib/body";
-import { LogoMark, PetalShape, SproutMic } from "./icons";
+import { LogoMark, PetalShape } from "./icons";
+import { SproutMenu } from "./SproutMenu";
 
 function Meter() {
   const { petals } = useRewards();
@@ -15,9 +16,9 @@ function Meter() {
       id="petal-meter"
       role="img"
       aria-label={`${petals} petals. Level: ${L.name}.${L.next ? ` ${L.next.remaining} petals to ${L.next.name}.` : ""}`}
-      className="flex items-center gap-2 rounded-full border border-line bg-card py-1 pl-1 pr-2.5 font-bold tabular-nums shadow-soft min-[400px]:pr-3"
+      className="flex items-center gap-1.5 rounded-full border border-line bg-card py-1 pl-1 pr-2.5 font-bold tabular-nums shadow-soft min-[400px]:gap-2 min-[400px]:pr-3"
     >
-      <svg viewBox="0 0 30 30" aria-hidden="true" className="size-[30px]">
+      <svg viewBox="0 0 30 30" aria-hidden="true" className="size-[28px] min-[400px]:size-[30px]">
         <circle cx="15" cy="15" r="12" fill="none" stroke="var(--mm-sunk)" strokeWidth="3.5" />
         <circle
           cx="15" cy="15" r="12" fill="none" stroke="var(--mm-gold)" strokeWidth="3.5" strokeLinecap="round"
@@ -52,17 +53,15 @@ export function AppShell({ children }: { children: ReactNode }) {
             <Link
               to="/"
               aria-label="Pause in Play, go to home"
-              className="flex items-center gap-1.5 font-display text-[18px] font-extrabold tracking-[-0.01em] text-plum min-[400px]:gap-2 min-[400px]:text-xl"
+              className="flex items-center gap-1 font-display text-[17px] font-extrabold tracking-[-0.01em] text-plum min-[400px]:gap-2 min-[400px]:text-xl"
             >
-              <LogoMark className="size-[24px] min-[400px]:size-[26px]" />
+              <LogoMark className="size-[22px] min-[400px]:size-[26px]" />
               <span className="whitespace-nowrap">Pause <span className="wordmark-in text-rose">in</span> Play</span>
             </Link>
             <div className={`flex items-center gap-1.5 min-[400px]:gap-2 ${quiet ? "invisible" : ""}`} aria-hidden={quiet || undefined}>
               <Link to="/settings" aria-label="Settings and account" className="press grid size-11 place-items-center rounded-full border border-line bg-card text-plum shadow-soft"><Settings className="size-5" /></Link>
-              <Link to="/tell-sprout" aria-label="Tell Sprout by voice" className="press grid size-11 place-items-center rounded-full border border-line bg-card text-sage shadow-soft">
-                <SproutMic className="size-5" />
-              </Link>
               <Meter />
+              <SproutMenu />
             </div>
           </header>
           <main key={path} className="mm-page flex flex-1 flex-col gap-[18px] px-4 pb-7 pt-2 sm:px-5">{children}</main>

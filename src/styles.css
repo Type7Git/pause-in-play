@@ -182,3 +182,66 @@
 @keyframes heart-pop { 0% { transform: scale(1); } 40% { transform: scale(1.35); } 100% { transform: scale(1); } }
 .animate-heart-pop { animation: heart-pop 260ms ease-out; }
 @media (prefers-reduced-motion: reduce) { .animate-heart-pop { animation: none; } }
+
+/* Sprout menu: options pop in one after the other */
+@keyframes sprout-option-in { from { opacity: 0; transform: translateY(6px) scale(.97); } to { opacity: 1; transform: none; } }
+.sprout-option { animation: sprout-option-in 240ms cubic-bezier(.2,.8,.2,1.2) both; }
+
+/* Garden: everything gently alive. The global reduced-motion rule stills all of it. */
+@keyframes garden-sway { 0%,100% { transform: rotate(-1.6deg); } 50% { transform: rotate(1.6deg); } }
+@keyframes garden-sway-wind { 0%,100% { transform: rotate(-3deg); } 40% { transform: rotate(9deg); } 60% { transform: rotate(6deg); } }
+.garden-sway { animation: garden-sway 4.2s ease-in-out infinite; }
+.garden-windy .garden-sway { animation: garden-sway-wind 1.6s ease-in-out infinite; }
+@keyframes garden-grow { 0% { transform: scale(.2); opacity: 0; } 60% { transform: scale(1.12); opacity: 1; } 100% { transform: scale(1); } }
+.garden-grow { animation: garden-grow 900ms cubic-bezier(.2,.8,.3,1.3) both; }
+@keyframes garden-pop { 0% { transform: scale(1); } 35% { transform: scale(1.14, .92); } 65% { transform: scale(.96, 1.06); } 100% { transform: scale(1); } }
+.garden-pop { animation: garden-pop 520ms ease-out; }
+@keyframes garden-spin { to { transform: rotate(360deg); } }
+.garden-spin { animation: garden-spin 40s linear infinite; }
+@keyframes garden-sunburst { 0% { transform: scale(.6); opacity: .7; } 100% { transform: scale(4.5); opacity: 0; } }
+.garden-sunburst { animation: garden-sunburst 1.3s ease-out forwards; }
+@keyframes garden-drift { from { transform: translateX(-60px); } to { transform: translateX(400px); } }
+.garden-drift { animation: garden-drift 52s linear infinite; }
+.garden-drift-fast { animation: garden-drift 14s linear infinite; }
+@keyframes garden-flash { 0%,90%,94%,100% { opacity: 0; } 91% { opacity: .55; } 93% { opacity: .1; } 92.5% { opacity: .45; } }
+.garden-flash { animation: garden-flash 7s linear infinite; opacity: 0; }
+@keyframes garden-rain { from { transform: translateY(-10px); } to { transform: translateY(200px); } }
+.garden-rain { animation: garden-rain .9s linear infinite; }
+@keyframes garden-gust { from { transform: translateX(-140px); opacity: 0; } 30% { opacity: .7; } to { transform: translateX(380px); opacity: 0; } }
+.garden-gust { animation: garden-gust 3.3s ease-in infinite; }
+@keyframes garden-flutter {
+  0% { transform: translate(60px, 110px); } 20% { transform: translate(130px, 70px); } 40% { transform: translate(200px, 105px); }
+  60% { transform: translate(260px, 78px); } 80% { transform: translate(150px, 120px); } 100% { transform: translate(60px, 110px); }
+}
+.garden-flutter { animation: garden-flutter 22s ease-in-out infinite; }
+@keyframes garden-buzz {
+  0% { transform: translate(300px, 120px); } 25% { transform: translate(230px, 96px); } 50% { transform: translate(110px, 112px); }
+  75% { transform: translate(190px, 132px); } 100% { transform: translate(300px, 120px); }
+}
+.garden-buzz { animation: garden-buzz 15s ease-in-out infinite; }
+@keyframes garden-flap { 0%,100% { transform: scaleX(1); } 50% { transform: scaleX(.35); } }
+.garden-flap { animation: garden-flap .28s ease-in-out infinite; transform-box: fill-box; transform-origin: center; }
+@keyframes garden-can { 0% { transform: translateX(-40px); } 100% { transform: translateX(370px); } }
+.garden-can { animation: garden-can 2.6s ease-in-out forwards; }
+@keyframes garden-drip { from { transform: translate(0, 0); opacity: 1; } to { transform: translate(4px, 90px); opacity: 0; } }
+.garden-drip { animation: garden-drip .6s ease-in infinite; }
+@keyframes garden-soak { 0% { opacity: 0; } 40% { opacity: .35; } 100% { opacity: .12; } }
+.garden-soak { animation: garden-soak 2.8s ease-out forwards; }
+@keyframes garden-pull { 0% { transform: none; } 30% { transform: translateY(4px) scaleY(.85); } 100% { transform: translateY(-40px) rotate(25deg); opacity: 0; } }
+.garden-pull { animation: garden-pull 600ms cubic-bezier(.3,.7,.4,1) forwards; }
+@keyframes garden-bubble { 0% { transform: translate(-50%, var(--bubble-shift, -100%)) scale(.7); opacity: 0; } 70% { transform: translate(-50%, var(--bubble-shift, -100%)) scale(1.04); opacity: 1; } 100% { transform: translate(-50%, var(--bubble-shift, -100%)) scale(1); } }
+.garden-bubble { transform: translate(-50%, var(--bubble-shift, -100%)); animation: garden-bubble 320ms cubic-bezier(.2,.8,.3,1.2) both; }
+@keyframes badge-pop { 0% { transform: scale(.3) rotate(-25deg); opacity: 0; } 60% { transform: scale(1.12) rotate(6deg); opacity: 1; } 100% { transform: scale(1) rotate(0); } }
+.badge-pop { animation: badge-pop 650ms cubic-bezier(.2,.8,.3,1.2) both; }
+@keyframes badge-rays { to { transform: rotate(360deg); } }
+.badge-rays { animation: badge-rays 18s linear infinite; }
+@keyframes badge-new { 0%,100% { box-shadow: 0 0 0 0 color-mix(in srgb, var(--mm-gold) 55%, transparent); } 50% { box-shadow: 0 0 0 8px transparent; } }
+.badge-new { animation: badge-new 1.8s ease-out infinite; }
+@media (prefers-reduced-motion: reduce) {
+  .garden-flutter { transform: translate(196px, 92px); }
+  .garden-buzz { transform: translate(112px, 116px); }
+  .garden-drift, .garden-drift-fast { transform: translateX(70px); }
+  .garden-gust, .garden-can { display: none; }
+}
+@keyframes garden-strip { 0% { opacity: 0; transform: translateY(-6px) scale(.98); } 100% { opacity: 1; transform: none; } }
+.garden-strip { animation: garden-strip 300ms cubic-bezier(.2,.8,.3,1.2) both; }

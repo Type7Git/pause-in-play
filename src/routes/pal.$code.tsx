@@ -5,6 +5,7 @@ import { PalsGate } from "@/components/mm/PalsGate";
 import { Card, Muted, Pill } from "@/components/mm/ui";
 import { supabase } from "@/integrations/supabase/client";
 import { friendlyError, PERMS } from "@/lib/pals";
+import { useRewards } from "@/lib/rewards";
 
 export const Route = createFileRoute("/pal/$code")({
   head: () => ({
@@ -29,6 +30,7 @@ export const Route = createFileRoute("/pal/$code")({
 function Accept() {
   const { code } = Route.useParams();
   const nav = useNavigate();
+  const { earn } = useRewards();
   const q = useQuery({ queryKey: ["invite", code], queryFn: async () => (await supabase.rpc("pal_invite_preview", { _code: code })).data?.[0] ?? null });
   if (q.isLoading) return <Muted>Loading…</Muted>;
   const i = q.data;
@@ -46,6 +48,7 @@ function Accept() {
           const { error } = await supabase.rpc("pal_accept_invite", { _code: code });
           if (error) { toast(friendlyError(error)); return; }
           toast(`Accepted. ${i.owner_name} will confirm you soon.`);
+          earn(3, "You've got a PeriPal", "PeriPal");
           nav({ to: "/pals" });
         }}>Accept</Pill>
         <Pill variant="ghost" onClick={() => nav({ to: "/" })}>Decline</Pill>
