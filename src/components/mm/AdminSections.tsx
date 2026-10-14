@@ -8,7 +8,7 @@ import { listAccounts } from "@/lib/admin.functions";
 export type QuizQ = { q: string; answers: string[]; correct: number; explanation: string };
 export type LearnItem = {
   id?: string; kind: "article" | "video" | "quiz"; title: string; summary: string; body: string;
-  video_url: string | null; quiz: QuizQ[]; tier: "free" | "plus"; status: "draft" | "approved"; updated_at?: string;
+  video_url: string | null; quiz: QuizQ[]; tier: "free" | "plus"; status: "draft" | "approved"; updated_at?: string; section?: string;
 };
 const blank: LearnItem = { kind: "article", title: "", summary: "", body: "", video_url: null, quiz: [], tier: "free", status: "draft" };
 const KIND = { article: "Article", video: "Video", quiz: "Quiz" } as const;
