@@ -70,7 +70,7 @@ export function SproutChat({ compact = false }: { compact?: boolean }) {
               {m.reply?.kind === "answer" && m.reply.entry && (
                 <>
                   <span className="flex items-center gap-2 border-t border-line pt-2 text-xs text-muted-foreground">
-                    <PanelBadge size={22} className="shrink-0" />From the Pause and Play library: {m.reply.entry.title} · clinically reviewed
+                    <PanelBadge size={22} className="shrink-0" />From the Pause in Play library: {m.reply.entry.title} · clinically reviewed
                   </span>
                   {m.reply.entry.linked_tool && (
                     <Link to={TOOL_ROUTES[m.reply.entry.linked_tool].to as "/"} onClick={() => { const s = TOOL_ROUTES[m.reply!.entry!.linked_tool!].section; if (s) localStorage.setItem(HOME_SECTION_KEY, s); }} className="press inline-flex min-h-11 items-center self-start rounded-full bg-sage px-4 py-2 text-sm font-bold text-shell">

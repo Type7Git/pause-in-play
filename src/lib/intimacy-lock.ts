@@ -18,8 +18,8 @@ export async function enableLock() {
   const cred = (await navigator.credentials.create({
     publicKey: {
       challenge: rand(),
-      rp: { name: "Pause and Play", id: location.hostname },
-      user: { id: rand(), name: "Pause and Play private section", displayName: "Pause and Play" },
+      rp: { name: "Pause in Play", id: location.hostname },
+      user: { id: rand(), name: "Pause in Play private section", displayName: "Pause in Play" },
       pubKeyCredParams: [{ type: "public-key", alg: -7 }, { type: "public-key", alg: -257 }],
       authenticatorSelection: { authenticatorAttachment: "platform", userVerification: "required", residentKey: "discouraged" },
       timeout: 60000,

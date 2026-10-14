@@ -8,9 +8,9 @@ import { useRewards } from "@/lib/rewards";
 export const Route = createFileRoute("/garden")({
   head: () => ({
     meta: [
-      { title: "Your garden and badges · Pause and Play" },
+      { title: "Your garden and badges · Pause in Play" },
       { name: "description", content: "See your garden grow, your level and every badge you've earned. No streaks, no penalties." },
-      { property: "og:title", content: "Your garden and badges · Pause and Play" },
+      { property: "og:title", content: "Your garden and badges · Pause in Play" },
       { property: "og:description", content: "Petals come from using the tools. No streaks, no penalties for missed days." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },

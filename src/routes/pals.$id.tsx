@@ -16,9 +16,9 @@ import { NeverShared, PermSwitches } from "./pals.invite";
 export const Route = createFileRoute("/pals/$id")({
   head: () => ({
     meta: [
-      { title: "PeriPal · Pause and Play" },
+      { title: "PeriPal · Pause in Play" },
       { name: "description", content: "Messages, nudges and what you share with this PeriPal." },
-      { property: "og:title", content: "PeriPal · Pause and Play" },
+      { property: "og:title", content: "PeriPal · Pause in Play" },
       { property: "og:description", content: "Messages, nudges and sharing choices." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },

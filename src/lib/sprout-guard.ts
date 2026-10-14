@@ -50,7 +50,7 @@ export const CLINICAL_REPLY =
   "That's an important question, and it needs someone who knows your health. I can't advise on medication, hormones, tests or symptoms. Your GP is the best place to start, and they can refer you on if needed.";
 
 export const NO_MATCH_REPLY =
-  "I don't have anything on that in the Pause and Play library yet. I've noted the question (anonymously) so the clinical team can consider adding it. In the meantime, swipe through the sections on the home screen to find a tool that fits.";
+  "I don't have anything on that in the Pause in Play library yet. I've noted the question (anonymously) so the clinical team can consider adding it. In the meantime, swipe through the sections on the home screen to find a tool that fits.";
 
 export const RATE_LIMIT_REPLY =
   "I need a little rest. You've sent lots of messages this hour, so let's pick this up a bit later. The tools on the home screen are always there.";

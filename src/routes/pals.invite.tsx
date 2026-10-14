@@ -13,9 +13,9 @@ import { useRewards } from "@/lib/rewards";
 export const Route = createFileRoute("/pals/invite")({
   head: () => ({
     meta: [
-      { title: "Invite a PeriPal · Pause and Play" },
+      { title: "Invite a PeriPal · Pause in Play" },
       { name: "description", content: "Invite someone you trust and choose exactly what they can see." },
-      { property: "og:title", content: "Invite a PeriPal · Pause and Play" },
+      { property: "og:title", content: "Invite a PeriPal · Pause in Play" },
       { property: "og:description", content: "Choose exactly what a trusted person can see." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },

@@ -16,9 +16,9 @@ import { LibraryUpload } from "@/components/mm/LibraryUpload";
 export const Route = createFileRoute("/admin")({
   head: () => ({
     meta: [
-      { title: "Sprout library admin · Pause and Play" },
+      { title: "Sprout library admin · Pause in Play" },
       { name: "description", content: "Erin's workspace for writing, approving and testing Sprout's library." },
-      { property: "og:title", content: "Sprout library admin · Pause and Play" },
+      { property: "og:title", content: "Sprout library admin · Pause in Play" },
       { property: "og:description", content: "Write, approve and test Sprout's answers." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
@@ -47,9 +47,9 @@ function Admin() {
   if (!isAdmin.data) return (
     <div className="mx-auto flex max-w-md flex-col items-center gap-3 p-10 text-center">
       <Sprout size={64} mood="thinking" />
-      <h1 className="font-display text-2xl font-extrabold">This area is just for the Pause and Play team</h1>
+      <h1 className="font-display text-2xl font-extrabold">This area is just for the Pause in Play team</h1>
       <p className="text-muted-foreground">Your account doesn't have library access.</p>
-      <Link to="/" className="font-bold text-plum underline">Back to Pause and Play</Link>
+      <Link to="/" className="font-bold text-plum underline">Back to Pause in Play</Link>
     </div>
   );
 

@@ -5,7 +5,7 @@ import { CHECKIN_RESULTS, CHECKIN_STATEMENTS, GP_KEYS } from "@/content/intimacy
 import { useRewards } from "@/lib/rewards";
 
 export const Route = createFileRoute("/intimacy/check-in")({
-  head: () => ({ meta: [{ title: "What's changed for me · Pause and Play" }, { name: "description", content: "A private check-in on desire, body and heart, with ideas that might help." }, { property: "og:title", content: "What's changed for me · Pause and Play" }, { property: "og:description", content: "A private check-in with ideas that might help." }, { property: "og:type", content: "website" }, { name: "twitter:card", content: "summary" }, { name: "robots", content: "noindex" }] }),
+  head: () => ({ meta: [{ title: "What's changed for me · Pause in Play" }, { name: "description", content: "A private check-in on desire, body and heart, with ideas that might help." }, { property: "og:title", content: "What's changed for me · Pause in Play" }, { property: "og:description", content: "A private check-in with ideas that might help." }, { property: "og:type", content: "website" }, { name: "twitter:card", content: "summary" }, { name: "robots", content: "noindex" }] }),
   component: CheckIn,
 });
 

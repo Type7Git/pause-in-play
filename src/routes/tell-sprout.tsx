@@ -13,9 +13,9 @@ import { fileVoiceNote, transcribeVoice } from "@/lib/voice.functions";
 export const Route = createFileRoute("/tell-sprout")({
   head: () => ({
     meta: [
-      { title: "Tell Sprout · Pause and Play" },
+      { title: "Tell Sprout · Pause in Play" },
       { name: "description", content: "Say what you're doing or where you put something, and Sprout files it for you to check." },
-      { property: "og:title", content: "Tell Sprout · Pause and Play" },
+      { property: "og:title", content: "Tell Sprout · Pause in Play" },
       { property: "og:description", content: "Speak a note; Sprout sorts it into Side Quest Saver or the VIT Department." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },

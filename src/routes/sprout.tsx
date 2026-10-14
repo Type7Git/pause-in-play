@@ -6,10 +6,10 @@ import { SproutChat } from "@/components/mm/SproutChat";
 export const Route = createFileRoute("/sprout")({
   head: () => ({
     meta: [
-      { title: "Ask Sprout · Pause and Play" },
+      { title: "Ask Sprout · Pause in Play" },
       { name: "description", content: "Sprout is a friendly AI guide that answers only from Dr Erin Kelly's approved library and points you to the right tool." },
-      { property: "og:title", content: "Ask Sprout · Pause and Play" },
-      { property: "og:description", content: "Your little guide to Pause and Play." },
+      { property: "og:title", content: "Ask Sprout · Pause in Play" },
+      { property: "og:description", content: "Your little guide to Pause in Play." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
     ],
@@ -25,7 +25,7 @@ function SproutScreen() {
         <Sprout size={64} mood="wave" />
         <div>
           <p className="eyebrow">Ask Sprout</p>
-          <h1 className="font-display text-[28px] font-extrabold leading-tight tracking-[-0.02em]">Your little guide to Pause and Play</h1>
+          <h1 className="font-display text-[28px] font-extrabold leading-tight tracking-[-0.02em]">Your little guide to Pause in Play</h1>
         </div>
       </div>
       <p role="note" className="rounded-[18px] border border-line bg-sunk px-4 py-3 text-[13px] leading-snug text-muted-foreground">
