@@ -78,6 +78,13 @@
       "when": 1791937677873,
       "tag": "0010_learn_sections",
       "breakpoints": true
+    },
+    {
+      "idx": 11,
+      "version": "7",
+      "when": 1791938128965,
+      "tag": "0011_peripals",
+      "breakpoints": true
     }
   ]
 }

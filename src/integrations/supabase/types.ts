@@ -217,6 +217,235 @@ export type Database = {
         }
         Relationships: []
       }
+      pal_blocks: {
+        Row: {
+          blocked_id: string
+          blocker_id: string
+          created_at: string
+        }
+        Insert: {
+          blocked_id: string
+          blocker_id?: string
+          created_at?: string
+        }
+        Update: {
+          blocked_id?: string
+          blocker_id?: string
+          created_at?: string
+        }
+        Relationships: []
+      }
+      pal_invites: {
+        Row: {
+          code: string
+          created_at: string
+          expires_at: string
+          id: string
+          name: string
+          owner_id: string
+          permissions: Json
+          relationship: string
+          used_at: string | null
+          used_by: string | null
+        }
+        Insert: {
+          code?: string
+          created_at?: string
+          expires_at: string
+          id?: string
+          name: string
+          owner_id?: string
+          permissions?: Json
+          relationship?: string
+          used_at?: string | null
+          used_by?: string | null
+        }
+        Update: {
+          code?: string
+          created_at?: string
+          expires_at?: string
+          id?: string
+          name?: string
+          owner_id?: string
+          permissions?: Json
+          relationship?: string
+          used_at?: string | null
+          used_by?: string | null
+        }
+        Relationships: []
+      }
+      pal_links: {
+        Row: {
+          created_at: string
+          id: string
+          owner_id: string
+          pal_id: string
+          relationship: string
+          status: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          owner_id: string
+          pal_id: string
+          relationship?: string
+          status?: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          owner_id?: string
+          pal_id?: string
+          relationship?: string
+          status?: string
+        }
+        Relationships: []
+      }
+      pal_messages: {
+        Row: {
+          body: string
+          created_at: string
+          id: string
+          kind: string
+          read_at: string | null
+          recipient_id: string
+          reported: boolean
+          sender_id: string
+        }
+        Insert: {
+          body: string
+          created_at?: string
+          id?: string
+          kind?: string
+          read_at?: string | null
+          recipient_id: string
+          reported?: boolean
+          sender_id?: string
+        }
+        Update: {
+          body?: string
+          created_at?: string
+          id?: string
+          kind?: string
+          read_at?: string | null
+          recipient_id?: string
+          reported?: boolean
+          sender_id?: string
+        }
+        Relationships: []
+      }
+      pal_permissions: {
+        Row: {
+          cycle_summary: boolean
+          garden: boolean
+          link_id: string
+          med_checkins: boolean
+          messages: boolean
+          miss_alert: boolean
+          shared_reminders: boolean
+          status: boolean
+        }
+        Insert: {
+          cycle_summary?: boolean
+          garden?: boolean
+          link_id: string
+          med_checkins?: boolean
+          messages?: boolean
+          miss_alert?: boolean
+          shared_reminders?: boolean
+          status?: boolean
+        }
+        Update: {
+          cycle_summary?: boolean
+          garden?: boolean
+          link_id?: string
+          med_checkins?: boolean
+          messages?: boolean
+          miss_alert?: boolean
+          shared_reminders?: boolean
+          status?: boolean
+        }
+        Relationships: [
+          {
+            foreignKeyName: "pal_permissions_link_id_fkey"
+            columns: ["link_id"]
+            isOneToOne: true
+            referencedRelation: "pal_links"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      pal_reports: {
+        Row: {
+          created_at: string
+          handled_at: string | null
+          id: string
+          message_id: string
+          reason: string
+          reporter_id: string
+        }
+        Insert: {
+          created_at?: string
+          handled_at?: string | null
+          id?: string
+          message_id: string
+          reason?: string
+          reporter_id?: string
+        }
+        Update: {
+          created_at?: string
+          handled_at?: string | null
+          id?: string
+          message_id?: string
+          reason?: string
+          reporter_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "pal_reports_message_id_fkey"
+            columns: ["message_id"]
+            isOneToOne: false
+            referencedRelation: "pal_messages"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      pal_settings: {
+        Row: {
+          adult_confirmed_at: string | null
+          paused_all: boolean
+          user_id: string
+        }
+        Insert: {
+          adult_confirmed_at?: string | null
+          paused_all?: boolean
+          user_id: string
+        }
+        Update: {
+          adult_confirmed_at?: string | null
+          paused_all?: boolean
+          user_id?: string
+        }
+        Relationships: []
+      }
+      pal_status: {
+        Row: {
+          status: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          status: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          status?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       petal_events: {
         Row: {
           amount: number
@@ -548,6 +777,49 @@ export type Database = {
           _user_id: string
         }
         Returns: boolean
+      }
+      pal_accept_invite: { Args: { _code: string }; Returns: string }
+      pal_blocked: { Args: { _a: string; _b: string }; Returns: boolean }
+      pal_can_message: { Args: { _a: string; _b: string }; Returns: boolean }
+      pal_can_see: {
+        Args: { _owner: string; _perm: string; _viewer: string }
+        Returns: boolean
+      }
+      pal_garden: {
+        Args: { _owner: string }
+        Returns: {
+          badges: string[]
+          petals: number
+        }[]
+      }
+      pal_invite_preview: {
+        Args: { _code: string }
+        Returns: {
+          is_mine: boolean
+          owner_name: string
+          pal_name: string
+          permissions: Json
+          relationship: string
+          valid: boolean
+        }[]
+      }
+      pal_mark_read: { Args: { _other: string }; Returns: undefined }
+      pal_overview: {
+        Args: never
+        Returns: {
+          blocked: boolean
+          i_share_link: string
+          i_share_status: string
+          last_at: string
+          last_body: string
+          other_id: string
+          other_name: string
+          relationship: string
+          their_status: string
+          they_share_link: string
+          they_share_status: string
+          unread: number
+        }[]
       }
       search_library: {
         Args: { q: string }
