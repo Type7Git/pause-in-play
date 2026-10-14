@@ -127,6 +127,36 @@ export type Database = {
         }
         Relationships: []
       }
+      food_tips: {
+        Row: {
+          focus: string
+          id: string
+          sort: number
+          status: string
+          text: string
+          title: string
+          try_these: string
+        }
+        Insert: {
+          focus: string
+          id?: string
+          sort?: number
+          status?: string
+          text: string
+          title: string
+          try_these?: string
+        }
+        Update: {
+          focus?: string
+          id?: string
+          sort?: number
+          status?: string
+          text?: string
+          title?: string
+          try_these?: string
+        }
+        Relationships: []
+      }
       learn_content: {
         Row: {
           approved_at: string | null
@@ -214,6 +244,48 @@ export type Database = {
           status?: string
           title?: string
           updated_at?: string
+        }
+        Relationships: []
+      }
+      movement_sessions: {
+        Row: {
+          benefit_tags: string[]
+          description: string
+          energy: string
+          is_plus: boolean
+          key: string
+          minutes: number
+          sort: number
+          status: string
+          title: string
+          type: string
+          video_url: string | null
+        }
+        Insert: {
+          benefit_tags?: string[]
+          description?: string
+          energy: string
+          is_plus?: boolean
+          key: string
+          minutes: number
+          sort?: number
+          status?: string
+          title: string
+          type: string
+          video_url?: string | null
+        }
+        Update: {
+          benefit_tags?: string[]
+          description?: string
+          energy?: string
+          is_plus?: boolean
+          key?: string
+          minutes?: number
+          sort?: number
+          status?: string
+          title?: string
+          type?: string
+          video_url?: string | null
         }
         Relationships: []
       }
@@ -535,6 +607,53 @@ export type Database = {
           user_id?: string
         }
         Relationships: []
+      }
+      session_moves: {
+        Row: {
+          caution_flag: string | null
+          caution_text: string | null
+          easier_version: string | null
+          how: string
+          id: string
+          move: string
+          order: number
+          seconds: number
+          session_key: string
+          video_url: string | null
+        }
+        Insert: {
+          caution_flag?: string | null
+          caution_text?: string | null
+          easier_version?: string | null
+          how?: string
+          id?: string
+          move: string
+          order: number
+          seconds: number
+          session_key: string
+          video_url?: string | null
+        }
+        Update: {
+          caution_flag?: string | null
+          caution_text?: string | null
+          easier_version?: string | null
+          how?: string
+          id?: string
+          move?: string
+          order?: number
+          seconds?: number
+          session_key?: string
+          video_url?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "session_moves_session_key_fkey"
+            columns: ["session_key"]
+            isOneToOne: false
+            referencedRelation: "movement_sessions"
+            referencedColumns: ["key"]
+          },
+        ]
       }
       side_quests: {
         Row: {
