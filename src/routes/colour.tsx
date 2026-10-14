@@ -24,9 +24,9 @@ export const Route = createFileRoute("/colour")({
 type Scene = { id: string; key: string; name: string; svg: string; layer_order: { name: string; svg_id: string }[] };
 
 export const PALETTE: [string, string][] = [
-  ["#E8A0A8", "Blush pink"], ["#C0584E", "Brick red"], ["#F2B36B", "Apricot"], ["#E9C46A", "Sunflower"], ["#F6E7A1", "Butter"], ["#A7C4A0", "Sage"], ["#5E8C61", "Fern"], ["#2F5D50", "Forest"],
-  ["#A8D5E2", "Sky"], ["#5B8DB8", "Cornflower"], ["#2E4A7D", "Navy"], ["#C7B6E0", "Lavender"], ["#8B6BB1", "Violet"], ["#5B3A6B", "Plum"], ["#9C6B4E", "Cocoa"], ["#5A3E2B", "Chestnut"],
-  ["#FBE3D3", "Fair skin"], ["#EFC6A4", "Light skin"], ["#D19A6E", "Medium skin"], ["#A56C43", "Tan skin"], ["#5E3A22", "Deep skin"], ["#C0C4CC", "Silver"], ["#3B3A40", "Charcoal"], ["#FFFFFF", "White"],
+  ["#F28B82", "Coral"], ["#D9577F", "Raspberry"], ["#F2A7C8", "Pink"], ["#C7B3E6", "Lavender"], ["#8E6BBF", "Purple"], ["#7FC28E", "Green"], ["#3E8E64", "Deep green"], ["#C9E7A7", "Lime"],
+  ["#9ED8E8", "Sky blue"], ["#5AA9D6", "Blue"], ["#2F5E9E", "Navy"], ["#FDE58A", "Lemon"], ["#FBBC7A", "Apricot"], ["#E08A3C", "Orange"], ["#C99A6B", "Sand"], ["#8A5A3C", "Brown"],
+  ["#F5D3BC", "Skin tone 1"], ["#E7B99A", "Skin tone 2"], ["#C68E6A", "Skin tone 3"], ["#8D5B3E", "Skin tone 4"], ["#5C3A28", "Skin tone 5"], ["#CFCBD6", "Silver"], ["#6B5B73", "Charcoal"], ["#FFFFFF", "White"],
 ];
 const BRUSHES: [string, number][] = [["Fine", 6], ["Medium", 14], ["Big", 28]];
 const S = 2; // backing scale: 600×600 for a 300×300 viewBox
@@ -176,7 +176,7 @@ function Colour() {
     <>
       <BackButton />
       <ScreenTitle eyebrow="Colour me calm" title="No rush. No going over the lines." sub="Colour in. No going over the lines." />
-      <WhyThisHelps>Slow, repetitive colouring gives busy thoughts a gentle place to rest. There's no right way and nothing to finish by.</WhyThisHelps>
+      <WhyThisHelps>Colouring inside a shape asks for just enough attention to quiet a busy mind, without asking anything else of you. Slow, repetitive movement can help your body settle. There is no wrong way to do it, and nobody is marking it.</WhyThisHelps>
 
       <div className="-mx-5 flex gap-2.5 overflow-x-auto px-5 pb-1" role="radiogroup" aria-label="Choose a picture">
         {scenes.map((s, i) => (
