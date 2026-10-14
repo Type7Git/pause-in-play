@@ -17,7 +17,7 @@ export const ACTIVITIES: Record<ActivityKey, Activity> = {
   tabs: { key: "tabs", title: "My brain has 37 tabs open", desc: "A one-minute pause, then one thing", to: "/tabs", icon: "tabs", blob: "bg-plum-soft" },
   wind: { key: "wind", title: "Help me wind down", desc: "Quiet, no scores", to: "/wind-down", icon: "wind", blob: "bg-plum-soft" },
   colour: { key: "colour", title: "Colour me calm", desc: "Colour in. No going over the lines", to: "/colour", icon: "colour", blob: "bg-gold-soft" },
-  wyr: { key: "wyr", title: "Would you rather", desc: "Quick, silly choices", icon: "wyr", blob: "bg-rose-soft" },
+  wyr: { key: "wyr", title: "Would you rather?", desc: "Swipe to find out who you'd rather be", to: "/would-you-rather", icon: "wyr", blob: "bg-rose-soft" },
   win: { key: "win", title: "Give me a little win", desc: "A short, untimed puzzle", to: "/little-win", icon: "win", blob: "bg-sage-soft" },
   laugh: { key: "laugh", title: "I need a laugh", desc: "An everyday scene to sort out", to: "/laugh", icon: "laugh", blob: "bg-gold-soft" },
   reflect: { key: "reflect", title: "Reflect privately", desc: "A few gentle prompts, just for you", icon: "reflect", blob: "bg-rose-soft" },
