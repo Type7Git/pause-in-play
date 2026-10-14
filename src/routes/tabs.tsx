@@ -7,7 +7,7 @@ import { Card, Muted, Pill, ScreenTitle, prefersReducedMotion } from "@/componen
 import { whyThisHelps } from "@/content/panel";
 import { useRewards } from "@/lib/rewards";
 import { DictateButton } from "@/components/mm/DictateButton";
-import { addTab, closeTab, emptyBasket, readTabs, restoreAll, restoreTab, syncVit, writeTabs, type TabState } from "@/lib/tabs";
+import { addTab, closeTab, emptyBasket, readTabs, removeTab, restoreAll, restoreTab, syncVit, writeTabs, type TabState } from "@/lib/tabs";
 
 export const Route = createFileRoute("/tabs")({
   head: () => ({
@@ -184,7 +184,7 @@ function Tabs() {
           <Basket count={basket.length} />
           <div className="min-w-0 flex-1">
             <h3>The basket</h3>
-            <Muted>{basket.length ? "Closed tabs wait here. Bring any back when you're ready." : "Closed tabs land here, safe until you want them."}</Muted>
+            <Muted>{basket.length ? "Closed tabs wait here. Restore any you want back, or remove them for good." : "Closed tabs land here, safe until you want them."}</Muted>
           </div>
         </div>
         {basket.length > 0 && (
@@ -196,7 +196,8 @@ function Tabs() {
                     {t.text}
                     {(t.done || t.vitId) && <span className="block text-[11px] text-muted-foreground no-underline">{t.done ? "Done" : "Help me remember"}</span>}
                   </span>
-                  <button type="button" onClick={() => update((s) => restoreTab(s, t.id))} aria-label={`Restore ${t.text}`} className="press min-h-11 rounded-full px-3 text-sm font-bold text-plum">Restore</button>
+                  <button type="button" onClick={() => update((s) => restoreTab(s, t.id))} aria-label={`Restore ${t.text}`} className="press min-h-11 rounded-full px-2.5 text-sm font-bold text-plum">Restore</button>
+                  <button type="button" onClick={() => update((s) => removeTab(s, t.id))} aria-label={`Remove ${t.text} for good`} className="press min-h-11 rounded-full px-2.5 text-sm font-bold text-muted-foreground">Remove</button>
                 </li>
               ))}
             </ul>

@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { addTab, closeTab, emptyBasket, restoreAll, restoreTab, syncVit, type TabState } from "./tabs";
+import { addTab, closeTab, emptyBasket, removeTab, restoreAll, restoreTab, syncVit, type TabState } from "./tabs";
 
 const empty: TabState = { open: [], basket: [], clearedVit: [] };
 
@@ -30,6 +30,14 @@ describe("37 tabs", () => {
     expect(s.open).toHaveLength(1);
     s = syncVit(s, []);
     expect(s.open).toHaveLength(0);
+  });
+  it("removes a single basket item, and a remembered one stays gone from tabs", () => {
+    const vit = [{ id: "v1", thing: "Passport", location: "Top drawer" }];
+    let s = addTab(syncVit(empty, vit), "Call Mum");
+    s = closeTab(closeTab(s, s.open[0]!.id), s.open[1]!.id);
+    s = removeTab(removeTab(s, s.basket[0]!.id), s.basket[1]!.id);
+    expect(s.basket).toHaveLength(0);
+    expect(syncVit(s, vit).open).toHaveLength(0);
   });
   it("emptying the basket stops remembered items coming back", () => {
     const vit = [{ id: "v1", thing: "Passport", location: "Top drawer" }];

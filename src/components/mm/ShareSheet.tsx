@@ -1,6 +1,6 @@
 import { Link } from "@tanstack/react-router";
 import { useEffect, useRef, useState } from "react";
-import { Check, Copy, Download, MessageCircle, Share2, Users, X } from "lucide-react";
+import { Check, Copy, Download, ImageUp, MessageCircle, Share2, Users, X } from "lucide-react";
 import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
 import { useRewards } from "@/lib/rewards";
@@ -56,6 +56,7 @@ export function ShareSheet({ open, onClose, payload, pals = true }: { open: bool
     if (!payload) return;
     const r = await systemShare(payload);
     if (r === "copied") toast("Copied. Paste it wherever you like.");
+    if (r === "saved") toast("Picture saved and link copied. Attach the picture and paste the link.");
     if (r === "shared") onClose();
   };
 
@@ -79,12 +80,23 @@ export function ShareSheet({ open, onClose, payload, pals = true }: { open: bool
           </div>
           {preview && <img src={preview} alt="" className="mx-auto max-h-[220px] w-auto rounded-2xl border border-line shadow-soft" />}
           {!showPals ? (
-            <div className="grid grid-cols-3 gap-2">
-              {pals && <button type="button" className={opt} onClick={() => void loadPals()}><Users className="size-6 text-plum" aria-hidden="true" />A PeriPal</button>}
-              <button type="button" className={opt} onClick={() => openOutside(whatsappHref(payload))}><MessageCircle className="size-6 text-[#1f9d55]" aria-hidden="true" />WhatsApp</button>
-              <button type="button" className={opt} onClick={() => void more()}><Share2 className="size-6 text-plum" aria-hidden="true" />More options</button>
-              <button type="button" className={opt} onClick={async () => toast((await copyText(`${payload.text} ${shareUrl(payload)}`)) ? "Copied" : "Couldn't copy on this device")}><Copy className="size-6 text-plum" aria-hidden="true" />Copy</button>
-              {payload.image && !hasPlugin("Share") && <button type="button" className={opt} onClick={() => void downloadImage(payload)}><Download className="size-6 text-plum" aria-hidden="true" />Save picture</button>}
+            <div className="flex flex-col gap-2">
+              {payload.image && (
+                <button type="button" onClick={() => void more()} className="press flex min-h-[64px] items-center gap-3 rounded-2xl bg-plum px-4 text-left text-shell">
+                  <ImageUp className="size-6 shrink-0" aria-hidden="true" />
+                  <span className="flex flex-col">
+                    <b className="text-[15px] leading-tight">Share picture + link</b>
+                    <span className="text-[12.5px] opacity-85">WhatsApp, Messages, Instagram and more</span>
+                  </span>
+                </button>
+              )}
+              <div className="grid grid-cols-3 gap-2">
+                {pals && <button type="button" className={opt} onClick={() => void loadPals()}><Users className="size-6 text-plum" aria-hidden="true" />A PeriPal</button>}
+                {!payload.image && <button type="button" className={opt} onClick={() => openOutside(whatsappHref(payload))}><MessageCircle className="size-6 text-[#1f9d55]" aria-hidden="true" />WhatsApp</button>}
+                {!payload.image && <button type="button" className={opt} onClick={() => void more()}><Share2 className="size-6 text-plum" aria-hidden="true" />More options</button>}
+                <button type="button" className={opt} onClick={async () => toast((await copyText(`${payload.text} ${shareUrl(payload)}`)) ? "Copied" : "Couldn't copy on this device")}><Copy className="size-6 text-plum" aria-hidden="true" />{payload.image ? "Copy link" : "Copy"}</button>
+                {payload.image && !hasPlugin("Share") && <button type="button" className={opt} onClick={() => void downloadImage(payload)}><Download className="size-6 text-plum" aria-hidden="true" />Save picture</button>}
+              </div>
             </div>
           ) : (
             <div className="flex flex-col gap-2">

@@ -40,6 +40,13 @@ export const restoreTab = (s: TabState, id: string): TabState => {
 
 export const restoreAll = (s: TabState): TabState => ({ ...s, basket: [], open: [...s.open, ...s.basket.map((t) => ({ ...t, done: undefined, closedAt: undefined }))] });
 
+/** Remove one item from the basket for good (a remembered item stays in Help me remember, just not here). */
+export const removeTab = (s: TabState, id: string): TabState => {
+  const t = s.basket.find((x) => x.id === id);
+  if (!t) return s;
+  return { ...s, basket: s.basket.filter((x) => x.id !== id), clearedVit: t.vitId ? [...new Set([...s.clearedVit, t.vitId])] : s.clearedVit };
+};
+
 /** Emptying the basket forgets typed tabs for good; Help me remember items stay in that list and don't come back here. */
 export const emptyBasket = (s: TabState): TabState => ({ ...s, basket: [], clearedVit: [...new Set([...s.clearedVit, ...s.basket.flatMap((t) => (t.vitId ? [t.vitId] : []))])] });
 

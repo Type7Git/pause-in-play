@@ -30,38 +30,70 @@ export function openOutside(href: string) {
   else window.open(href, "_blank", "noopener");
 }
 
-export type ShareResult = "shared" | "copied" | "cancelled" | "failed";
+export type ShareResult = "shared" | "copied" | "saved" | "cancelled" | "failed";
 
-/** The phone's own share sheet: native plugin in the app, Web Share in browsers, copy as a last resort. */
+async function blobToBase64(b: Blob) {
+  const bytes = new Uint8Array(await b.arrayBuffer());
+  let out = "";
+  for (let i = 0; i < bytes.length; i += 0x8000) out += String.fromCharCode(...bytes.subarray(i, i + 0x8000));
+  return btoa(out);
+}
+
+/** In the phone app: put the picture in the app's cache so the share sheet can attach it. Older app builds without Filesystem skip this. */
+async function nativeImageUri(p: SharePayload): Promise<string | null> {
+  if (!p.image || !hasPlugin("Filesystem")) return null;
+  const blob = await p.image();
+  if (!blob) return null;
+  const r = await callNative<{ uri: string }>("Filesystem", "writeFile", {
+    path: `share/${p.fileName ?? "pause-in-play.png"}`,
+    data: await blobToBase64(blob),
+    directory: "CACHE",
+    recursive: true,
+  });
+  return r.uri;
+}
+
+/**
+ * The phone's own share sheet. Picture cards go with their message and link attached;
+ * link-only shares (articles, guides, invites) send just the words and link.
+ */
 export async function systemShare(p: SharePayload): Promise<ShareResult> {
   const url = shareUrl(p);
+  const message = `${p.text} ${url}`;
   if (hasPlugin("Share")) {
     try {
-      await callNative("Share", "share", { title: p.title, text: p.text, url, dialogTitle: p.title });
+      const uri = await nativeImageUri(p).catch(() => null);
+      await callNative("Share", "share", uri
+        ? { title: p.title, text: message, files: [uri], dialogTitle: p.title }
+        : { title: p.title, text: p.text, url, dialogTitle: p.title });
       return "shared";
     } catch {
       return "cancelled";
     }
   }
-  if (typeof navigator !== "undefined" && navigator.share) {
-    try {
-      if (p.image && navigator.canShare) {
-        const blob = await p.image();
-        if (blob) {
-          const file = new File([blob], p.fileName ?? "pause-in-play.png", { type: "image/png" });
-          if (navigator.canShare({ files: [file] })) {
-            await navigator.share({ files: [file], text: `${p.text} ${url}`, title: p.title });
-            return "shared";
-          }
+  try {
+    if (p.image) {
+      const blob = await p.image();
+      if (blob) {
+        const file = new File([blob], p.fileName ?? "pause-in-play.png", { type: "image/png" });
+        if (navigator.canShare?.({ files: [file] })) {
+          await navigator.share({ files: [file], text: message, title: p.title });
+          return "shared";
         }
+        // No picture sharing here (most desktop browsers): save the picture and copy the link instead.
+        await downloadImage(p);
+        await copyText(message);
+        return "saved";
       }
+    }
+    if (navigator.share) {
       await navigator.share({ title: p.title, text: p.text, url });
       return "shared";
-    } catch (e) {
-      return (e as Error)?.name === "AbortError" ? "cancelled" : "failed";
     }
+  } catch (e) {
+    return (e as Error)?.name === "AbortError" ? "cancelled" : "failed";
   }
-  return (await copyText(`${p.text} ${url}`)) ? "copied" : "failed";
+  return (await copyText(message)) ? "copied" : "failed";
 }
 
 export async function copyText(t: string) {
