@@ -7,7 +7,7 @@ export const deleteMyAccount = createServerFn({ method: "POST" })
   .handler(async ({ context }) => {
     const { userId } = context;
     const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
-    for (const table of ["side_quests", "vit_items", "petal_events", "badges_earned", "reminders", "push_tokens"] as const) {
+    for (const table of ["side_quests", "vit_items", "petal_events", "badges_earned", "reminders", "push_tokens", "user_favourites"] as const) {
       const { error } = await supabaseAdmin.from(table).delete().eq("user_id", userId);
       if (error) throw new Error("Could not delete your data. Nothing further was removed.");
     }
