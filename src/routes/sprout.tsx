@@ -7,7 +7,7 @@ export const Route = createFileRoute("/sprout")({
   head: () => ({
     meta: [
       { title: "Ask Sprout · Pause in Play" },
-      { name: "description", content: "Sprout is a friendly AI guide that answers only from Dr Erin Kelly's approved library and points you to the right tool." },
+      { name: "description", content: "Chat with Sprout about the program, explore the clinically reviewed Pause in Play library, or find a tool that fits." },
       { property: "og:title", content: "Ask Sprout · Pause in Play" },
       { property: "og:description", content: "Your little guide to Pause in Play." },
       { property: "og:type", content: "website" },
@@ -25,13 +25,13 @@ function SproutScreen() {
         <Sprout size={64} mood="wave" />
         <div>
           <p className="eyebrow">Ask Sprout</p>
-          <h1 className="font-display text-[28px] font-extrabold leading-tight tracking-[-0.02em]">Your little guide to Pause in Play</h1>
+          <h1 className="font-display text-[28px] font-extrabold leading-tight">Your little guide to Pause in Play</h1>
         </div>
       </div>
-      <p role="note" className="rounded-[18px] border border-line bg-sunk px-4 py-3 text-[13px] leading-snug text-muted-foreground">
-        Sprout is an AI guide, not a person or a therapist. It only answers from information approved by Dr Erin Kelly, and can't give medical or personal advice. In crisis, call Lifeline <a href="tel:131114" className="font-bold underline">13 11 14</a> or 000.
-      </p>
       <SproutChat />
+      <p role="note" className="text-[13px] leading-snug text-muted-foreground">
+        Sprout is an AI guide, not a person or a therapist. Answers come only from the Pause in Play library, clinically reviewed by our advisory panel. It can't give medical or personal advice. In crisis, call Lifeline <a href="tel:131114" className="font-bold underline">13 11 14</a> or 000.
+      </p>
     </>
   );
 }
