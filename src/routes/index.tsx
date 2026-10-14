@@ -51,14 +51,17 @@ function useGreeting() {
 function Tile({ a }: { a: Activity }) {
   const { favourites, toggleFavourite } = useRewards();
   const on = favourites.includes(a.key);
+  // Full-width row: icon, then title and description (free to wrap), with room on the right for the heart.
   const body = (
     <>
-      <div className={`mb-1 grid size-[46px] place-items-center rounded-[15px] ${a.blob}`}><ActivityIcon icon={a.icon} /></div>
-      <b className="pr-8 font-display text-[15.5px] leading-tight">{a.title}</b>
-      <span className="text-[12.5px] leading-snug text-muted-foreground">{a.to ? a.desc : `${a.desc} · Coming soon`}</span>
+      <div className={`grid size-[52px] shrink-0 place-items-center rounded-[16px] ${a.blob}`}><ActivityIcon icon={a.icon} /></div>
+      <span className="flex min-w-0 flex-1 flex-col gap-0.5">
+        <b className="font-display text-[16px] leading-tight">{a.title}</b>
+        <span className="text-[13px] leading-snug text-muted-foreground">{a.to ? a.desc : `${a.desc} · Coming soon`}</span>
+      </span>
     </>
   );
-  const cls = "flex h-full min-w-0 flex-col gap-1.5 rounded-[20px] border border-line bg-card p-3.5 text-left shadow-soft";
+  const cls = "flex min-h-[76px] w-full min-w-0 items-center gap-3.5 rounded-[20px] border border-line bg-card py-3 pl-3 pr-14 text-left shadow-soft";
   return (
     <div className="relative min-w-0">
       {a.to ? <Link to={a.to} className={`lift ${cls}`}>{body}</Link> : <div className={`${cls} opacity-75`}>{body}</div>}
@@ -67,7 +70,7 @@ function Tile({ a }: { a: Activity }) {
         aria-label={on ? `Remove ${a.title} from favourites` : `Add ${a.title} to favourites`}
         aria-pressed={on}
         onClick={() => toggleFavourite(a.key, a.title)}
-        className="press absolute right-1 top-1 grid size-11 place-items-center rounded-full text-rose"
+        className="press absolute right-1.5 top-1/2 grid size-11 -translate-y-1/2 place-items-center rounded-full text-rose"
       >
         <Heart key={String(on)} className={`size-5 ${on ? "animate-heart-pop fill-current" : ""}`} aria-hidden="true" />
       </button>
@@ -94,7 +97,7 @@ function Home() {
       </div>
       <Today />
 
-      {mounted ? <SectionWheel sections={SECTIONS} selected={selected} onSelect={setSelected} /> : <div className="h-[178px]" aria-hidden="true" />}
+      {mounted ? <SectionWheel sections={SECTIONS} selected={selected} onSelect={setSelected} /> : <div className="h-[218px]" aria-hidden="true" />}
 
       <section id={panelId} role="tabpanel" aria-labelledby={`tab-${section.key}`} className="flex flex-col gap-2.5">
         <div>
@@ -109,7 +112,7 @@ function Home() {
           </div>
         )}
         {items.length ? (
-          <div className="grid grid-cols-2 gap-2.5">{items.map((a) => <Tile key={a.key} a={a} />)}</div>
+          <div className="flex flex-col gap-2.5">{items.map((a) => <Tile key={a.key} a={a} />)}</div>
         ) : (
           <p className="mm-card p-[18px] text-sm text-muted-foreground">Nothing here yet. Tap the heart on any activity and it will live here, ready when you need it.</p>
         )}

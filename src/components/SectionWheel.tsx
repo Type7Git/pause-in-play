@@ -35,7 +35,9 @@ export function SectionWheel({ sections, selected, onSelect }: { sections: Secti
       const w = c.offsetWidth || 1;
       const d = Math.min(2, Math.abs(c.offsetLeft + w / 2 - mid) / w);
       const sign = c.offsetLeft + w / 2 < mid ? 1 : -1;
-      c.style.transform = `scale(${1 - 0.12 * d})${reduced ? "" : ` rotateY(${sign * Math.min(14, d * 14)}deg)`}`;
+      // The centred section is 20% larger than its neighbours (1 vs 1/1.2), easing smoothly while scrolling.
+      const scale = 1 - (1 - 1 / 1.2) * Math.min(1, d);
+      c.style.transform = `scale(${scale.toFixed(3)})${reduced ? "" : ` rotateY(${sign * Math.min(14, d * 14)}deg)`}`;
       c.style.opacity = String(Math.max(0.2, 1 - 0.26 * d));
       if (d < bestD) { bestD = d; best = i; }
     });
@@ -72,13 +74,13 @@ export function SectionWheel({ sections, selected, onSelect }: { sections: Secti
   };
 
   return (
-    <div className="-mx-5 flex flex-col gap-2">
+    <div className="-mx-4 flex flex-col gap-2 sm:-mx-5">
       <div
         ref={scroller}
         role="tablist"
         aria-label="Sections"
         onScroll={onScroll}
-        className="flex snap-x snap-mandatory gap-1 overflow-x-auto px-[calc(50%-56px)] py-2 [perspective:600px] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+        className="flex snap-x snap-mandatory gap-0 overflow-x-auto px-[calc(50%-66px)] py-3 [perspective:600px] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
       >
         {sections.map((s, i) => {
           const Icon = ICONS[s.icon as keyof typeof ICONS] ?? Sparkles;
@@ -94,12 +96,12 @@ export function SectionWheel({ sections, selected, onSelect }: { sections: Secti
               tabIndex={i === centre ? 0 : -1}
               onClick={() => { scrollTo(i); if (reduced) onSelect(s.key); }}
               onKeyDown={(e) => onKey(e, i)}
-              className="flex w-[112px] shrink-0 snap-center flex-col items-center gap-2 text-center transition-opacity"
+              className="flex w-[132px] shrink-0 snap-center flex-col items-center gap-2.5 text-center transition-opacity"
             >
-              <span className={`grid size-[88px] place-items-center rounded-[26px] border-2 shadow-soft ${s.blob} ${sel ? "border-plum" : "border-transparent"}`}>
-                <Icon className="size-9 text-plum" aria-hidden="true" />
+              <span className={`grid size-[108px] place-items-center rounded-[32px] border-2 shadow-soft ${s.blob} ${sel ? "border-plum shadow-lift" : "border-transparent"}`}>
+                <Icon className="size-11 text-plum" aria-hidden="true" />
               </span>
-              <span className={`text-[13px] leading-tight ${sel ? "font-bold text-ink" : "text-muted-foreground"}`}>{s.name}</span>
+              <span className={`text-[14px] leading-tight ${sel ? "font-bold text-ink" : "text-muted-foreground"}`}>{s.name}</span>
             </button>
           );
         })}

@@ -15,7 +15,7 @@ function Meter() {
       id="petal-meter"
       role="img"
       aria-label={`${petals} petals. Level: ${L.name}.${L.next ? ` ${L.next.remaining} petals to ${L.next.name}.` : ""}`}
-      className="flex items-center gap-2 rounded-full border border-line bg-card py-1 pl-1 pr-3 font-bold tabular-nums shadow-soft"
+      className="flex items-center gap-2 rounded-full border border-line bg-card py-1 pl-1 pr-2.5 font-bold tabular-nums shadow-soft min-[400px]:pr-3"
     >
       <svg viewBox="0 0 30 30" aria-hidden="true" className="size-[30px]">
         <circle cx="15" cy="15" r="12" fill="none" stroke="var(--mm-sunk)" strokeWidth="3.5" />
@@ -44,19 +44,20 @@ export function AppShell({ children }: { children: ReactNode }) {
     );
   }
   return (
-    <div className="px-4 py-6">
-      <div className="mx-auto flex max-w-[440px] flex-col">
-        <div className={`relative flex min-h-[760px] flex-col overflow-hidden rounded-[32px] border border-line bg-shell shadow-lift transition-colors duration-500 ${quiet ? "quiet" : ""}`}>
-          <header className="flex flex-wrap items-center justify-between gap-2 px-5 pb-1.5 pt-[22px]">
+    // Phones (and the native app): edge to edge, no frame. Tablets and desktop: the framed phone-sized card.
+    <div className="bg-shell sm:bg-transparent sm:px-4 sm:py-6">
+      <div className="mx-auto flex w-full flex-col sm:max-w-[440px]">
+        <div className={`relative flex min-h-dvh flex-col overflow-hidden bg-shell transition-colors duration-500 sm:min-h-[760px] sm:rounded-[32px] sm:border sm:border-line sm:shadow-lift ${quiet ? "quiet" : ""}`}>
+          <header className="flex flex-wrap items-center justify-between gap-x-1 gap-y-2 px-4 min-[400px]:gap-2 pb-1.5 pt-[max(18px,env(safe-area-inset-top))] sm:px-5 sm:pt-[22px]">
             <Link
               to="/"
               aria-label="Pause in Play, go to home"
-              className="flex items-center gap-2 font-display text-xl font-extrabold tracking-[-0.01em] text-plum"
+              className="flex items-center gap-1.5 font-display text-[18px] font-extrabold tracking-[-0.01em] text-plum min-[400px]:gap-2 min-[400px]:text-xl"
             >
-              <LogoMark className="size-[26px]" />
+              <LogoMark className="size-[24px] min-[400px]:size-[26px]" />
               <span className="whitespace-nowrap">Pause <span className="wordmark-in text-rose">in</span> Play</span>
             </Link>
-            <div className={`flex items-center gap-2 ${quiet ? "invisible" : ""}`} aria-hidden={quiet || undefined}>
+            <div className={`flex items-center gap-1.5 min-[400px]:gap-2 ${quiet ? "invisible" : ""}`} aria-hidden={quiet || undefined}>
               <Link to="/settings" aria-label="Settings and account" className="press grid size-11 place-items-center rounded-full border border-line bg-card text-plum shadow-soft"><Settings className="size-5" /></Link>
               <Link to="/tell-sprout" aria-label="Tell Sprout by voice" className="press grid size-11 place-items-center rounded-full border border-line bg-card text-sage shadow-soft">
                 <SproutMic className="size-5" />
@@ -64,8 +65,8 @@ export function AppShell({ children }: { children: ReactNode }) {
               <Meter />
             </div>
           </header>
-          <main key={path} className="mm-page flex flex-1 flex-col gap-[18px] px-5 pb-7 pt-2">{children}</main>
-          <footer className="px-5 pb-5 text-center text-xs text-muted-foreground">
+          <main key={path} className="mm-page flex flex-1 flex-col gap-[18px] px-4 pb-7 pt-2 sm:px-5">{children}</main>
+          <footer className="px-4 pb-[max(20px,env(safe-area-inset-bottom))] text-center text-xs text-muted-foreground sm:px-5 sm:pb-5">
             Education and skills, not medical advice or treatment. If you are in crisis, call Lifeline 13 11 14 or 000.{" "}
             <Link to="/privacy" className="underline underline-offset-2">Privacy</Link>
           </footer>
