@@ -47,6 +47,71 @@ export type Database = {
         }
         Relationships: []
       }
+      colouring_saves: {
+        Row: {
+          image_url: string | null
+          layer_colours: Json
+          scene_id: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          image_url?: string | null
+          layer_colours?: Json
+          scene_id: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          image_url?: string | null
+          layer_colours?: Json
+          scene_id?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "colouring_saves_scene_id_fkey"
+            columns: ["scene_id"]
+            isOneToOne: false
+            referencedRelation: "colouring_scenes"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      colouring_scenes: {
+        Row: {
+          id: string
+          is_plus: boolean
+          key: string
+          layer_order: Json
+          name: string
+          published: boolean
+          sort: number
+          svg: string
+        }
+        Insert: {
+          id?: string
+          is_plus?: boolean
+          key: string
+          layer_order?: Json
+          name: string
+          published?: boolean
+          sort?: number
+          svg: string
+        }
+        Update: {
+          id?: string
+          is_plus?: boolean
+          key?: string
+          layer_order?: Json
+          name?: string
+          published?: boolean
+          sort?: number
+          svg?: string
+        }
+        Relationships: []
+      }
       cron_tokens: {
         Row: {
           name: string
