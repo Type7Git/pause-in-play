@@ -1,7 +1,8 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
 import { useEffect, useRef, useState } from "react";
-import { Check } from "lucide-react";
+import { Check, ChevronDown } from "lucide-react";
+import { MoveStrip, MoveThumb, hasFigure } from "@/components/mm/MoveFigure";
 import { BackButton } from "@/components/mm/BackButton";
 import { Card, Chip, Muted, Pill } from "@/components/mm/ui";
 import { supabase } from "@/integrations/supabase/client";
@@ -32,6 +33,7 @@ function SessionScreen() {
   const { earn } = useRewards();
   const [mode, setMode] = useState<"overview" | "play" | "done">("overview");
   const [feel, setFeel] = useState<string | null>(null);
+  const [open, setOpen] = useState<number | null>(null);
 
   if (isLoading) return <Muted>Getting ready…</Muted>;
   const s = data?.session;
@@ -73,12 +75,23 @@ function SessionScreen() {
         <span className="flex flex-wrap gap-1">{s.benefit_tags.map((t) => <span key={t} className="rounded-full bg-sunk px-2 py-0.5 text-xs">{t}</span>)}</span>
       </div>
       <Card>
+        <h3>The moves</h3>
+        <Muted>Tap a move to see how it's done.</Muted>
         <ol className="flex flex-col gap-2">
           {moves.map((m, i) => (
-            <li key={m.order} className="flex items-start gap-3">
-              <b className={`grid size-7 shrink-0 place-items-center rounded-full text-xs ${TYPE_STYLE[s.type].tile}`}>{i + 1}</b>
-              <span className="flex-1">{m.move}{m.caution_flag && <span className="ml-2 text-xs font-bold text-rose">check first</span>}</span>
-              <span className="text-sm text-muted-foreground">{m.seconds}s</span>
+            <li key={m.order} className="flex flex-col gap-2">
+              <button type="button" aria-expanded={open === i} onClick={() => setOpen(open === i ? null : i)} className="flex items-center gap-3 text-left">
+                {hasFigure(m.move) ? <MoveThumb name={m.move} /> : <b className={`grid size-7 shrink-0 place-items-center rounded-full text-xs ${TYPE_STYLE[s.type].tile}`}>{i + 1}</b>}
+                <span className="flex-1">{m.move}{m.caution_flag && <span className="ml-2 text-xs font-bold text-rose">check first</span>}</span>
+                <span className="text-sm text-muted-foreground">{m.seconds}s</span>
+                <ChevronDown className={`size-4 text-muted-foreground transition-transform ${open === i ? "rotate-180" : ""}`} aria-hidden="true" />
+              </button>
+              {open === i && (
+                <div className="flex flex-col gap-2 pb-2">
+                  <MoveStrip name={m.move} />
+                  <p className="text-sm">{m.how}</p>
+                </div>
+              )}
             </li>
           ))}
         </ol>
@@ -129,6 +142,7 @@ function Player({ session, moves, onExit, onFinish }: { session: Session; moves:
         <b className="absolute inset-0 grid place-items-center font-display text-4xl tabular-nums">{Math.max(0, left)}</b>
       </div>
       <h1 className="text-center" aria-live="polite">{m.move}</h1>
+      <MoveStrip name={m.move} />
       <p>{easier && m.easier_version ? m.easier_version : m.how}</p>
       {m.caution_flag && m.caution_text && <p className="rounded-2xl bg-rose-soft p-3 text-sm">{m.caution_text}</p>}
       {m.easier_version && <Chip pressed={easier} onClick={() => setEasier(!easier)}>Make it easier</Chip>}
