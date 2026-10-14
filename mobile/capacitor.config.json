@@ -1,0 +1,38 @@
+{
+  "appId": "au.com.type7.pauseinplay",
+  "appName": "Pause in Play",
+  "webDir": "www",
+  "server": {
+    "url": "https://pause-in-play.lovable.app",
+    "cleartext": false,
+    "androidScheme": "https",
+    "errorPath": "offline.html",
+    "allowNavigation": ["pause-in-play.lovable.app", "pauseinplay.com", "*.pauseinplay.com", "*.supabase.co", "*.lovable.app"]
+  },
+  "android": {
+    "backgroundColor": "#FAF7FB",
+    "allowMixedContent": false
+  },
+  "ios": {
+    "backgroundColor": "#FAF7FB",
+    "contentInset": "automatic"
+  },
+  "plugins": {
+    "SplashScreen": {
+      "launchShowDuration": 1200,
+      "launchAutoHide": true,
+      "backgroundColor": "#FAF7FB",
+      "androidScaleType": "CENTER_CROP",
+      "showSpinner": false
+    },
+    "StatusBar": {
+      "overlaysWebView": false,
+      "style": "DEFAULT",
+      "backgroundColor": "#FAF7FB"
+    },
+    "LocalNotifications": {
+      "smallIcon": "ic_stat_icon",
+      "iconColor": "#5B3A6B"
+    }
+  }
+}

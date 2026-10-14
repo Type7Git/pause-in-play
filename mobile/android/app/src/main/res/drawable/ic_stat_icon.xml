@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Notification icon: the Pause in Play glyph in white (Android tints it) -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="24dp" android:height="24dp" android:viewportWidth="32" android:viewportHeight="32">
+    <path android:fillColor="#FFFFFFFF" android:pathData="M9.3,10a1.8,1.8 0,0 1,1.8 1.8v8.4a1.8,1.8 0,0 1,-3.6 0v-8.4A1.8,1.8 0,0 1,9.3 10z"/>
+    <path android:fillColor="#FFFFFFFF" android:pathData="M14.8,10a1.8,1.8 0,0 1,1.8 1.8v8.4a1.8,1.8 0,0 1,-3.6 0v-8.4A1.8,1.8 0,0 1,14.8 10z"/>
+    <path android:fillColor="#FFFFFFFF" android:pathData="M19.5,10.6v10.8a0.9,0.9 0,0 0,1.4 0.75l7.6,-5.4a0.9,0.9 0,0 0,0 -1.5l-7.6,-5.4a0.9,0.9 0,0 0,-1.4 0.75z"/>
+</vector>
