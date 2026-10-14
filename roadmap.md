@@ -1,6 +1,6 @@
 # Roadmap
 
-- [ ] Simplify Sprout introduction, move the question box up, and collapse library browsing and popular prompts
+- [x] Simplify Sprout introduction, move the question box up, and collapse library browsing and popular prompts
 
 - [x] Collapse Today, move the garden and compact guide links up, and add interactive kindness messages
 
