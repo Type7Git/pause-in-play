@@ -1,4 +1,4 @@
-/** Intimacy & relationships copy from pause-and-play-v5-content.xlsx. All DRAFT until the panel's psychosexual therapist (and GP for medical lines) approves. */
+/** Intimacy & relationships copy from pause-in-play-v5-content.xlsx. All DRAFT until the panel's psychosexual therapist (and GP for medical lines) approves. */
 export const CONVERSATION_DECKS: Record<string, string[]> = {
  "Connection": [
   "When do you feel closest to me these days?",

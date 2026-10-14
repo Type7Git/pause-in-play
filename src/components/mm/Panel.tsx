@@ -5,7 +5,7 @@ import type { ReactNode } from "react";
  * The clinical advisory panel badge — replaces the former clinician avatar
  * everywhere the app used to show a small photo.
  */
-export function PanelBadge({ size = 30, alt = "Pause and Play clinical advisory panel", className }: { size?: number; alt?: string; className?: string }) {
+export function PanelBadge({ size = 30, alt = "Pause in Play clinical advisory panel", className }: { size?: number; alt?: string; className?: string }) {
   return (
     <img
       src={panelLogo}
@@ -28,7 +28,7 @@ export function WhyThisHelps({ children }: { children: ReactNode }) {
         <br />
         {children}
         <br />
-        <span className="text-[11.5px]">Pause and Play clinical team · reviewed by our clinical advisory panel</span>
+        <span className="text-[11.5px]">Pause in Play clinical team · reviewed by our clinical advisory panel</span>
       </span>
     </p>
   );

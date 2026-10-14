@@ -10,9 +10,9 @@ import { useRewards } from "@/lib/rewards";
 export const Route = createFileRoute("/colour")({
   head: () => ({
     meta: [
-      { title: "Colour me calm · Pause and Play" },
+      { title: "Colour me calm · Pause in Play" },
       { name: "description", content: "Colour in. No going over the lines. A slow, untimed colouring game." },
-      { property: "og:title", content: "Colour me calm · Pause and Play" },
+      { property: "og:title", content: "Colour me calm · Pause in Play" },
       { property: "og:description", content: "Colour in. No going over the lines." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },

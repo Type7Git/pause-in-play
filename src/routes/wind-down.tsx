@@ -6,9 +6,9 @@ import { Card, Muted, Pill, Row, ScreenTitle, prefersReducedMotion } from "@/com
 export const Route = createFileRoute("/wind-down")({
   head: () => ({
     meta: [
-      { title: "Wind down · Pause and Play" },
+      { title: "Wind down · Pause in Play" },
       { name: "description", content: "Quiet, guided wind-down sessions. Nothing to win here. Just rest." },
-      { property: "og:title", content: "Wind down · Pause and Play" },
+      { property: "og:title", content: "Wind down · Pause in Play" },
       { property: "og:description", content: "Nothing to win here. Just rest." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },

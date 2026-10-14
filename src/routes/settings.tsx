@@ -13,9 +13,9 @@ import { IntimacyLockSetting } from "@/components/mm/IntimacyLockSetting";
 export const Route = createFileRoute("/settings")({
   head: () => ({
     meta: [
-      { title: "Settings · Pause and Play" },
+      { title: "Settings · Pause in Play" },
       { name: "description", content: "Save your garden across devices, sign out, or delete your account and data." },
-      { property: "og:title", content: "Settings · Pause and Play" },
+      { property: "og:title", content: "Settings · Pause in Play" },
       { property: "og:description", content: "Your account, your garden, your choice." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },

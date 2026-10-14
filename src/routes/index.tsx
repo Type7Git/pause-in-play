@@ -16,9 +16,9 @@ import { ACTIVITIES, SECTIONS, type Activity } from "@/content/sections";
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Pause and Play · What do you need right now?" },
+      { title: "Pause in Play · What do you need right now?" },
       { name: "description", content: "A warm, playful self-care companion for women in perimenopause. Small skills, gentle encouragement." },
-      { property: "og:title", content: "Pause and Play" },
+      { property: "og:title", content: "Pause in Play" },
       { property: "og:description", content: "Small skills and gentle encouragement for perimenopause brain days." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
@@ -119,7 +119,7 @@ function Home() {
         <Sprout size={48} mood="wave" />
         <span className="flex min-w-0 flex-1 flex-col">
           <b className="font-display text-base">Ask Sprout</b>
-          <span className="text-xs leading-snug text-muted-foreground">Answers come only from the Pause and Play library, clinically reviewed.</span>
+          <span className="text-xs leading-snug text-muted-foreground">Answers come only from the Pause in Play library, clinically reviewed.</span>
         </span>
         <span className="text-sm font-bold text-plum">Chat →</span>
       </Link>

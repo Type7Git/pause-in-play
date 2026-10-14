@@ -9,10 +9,10 @@ import { friendlyError, PERMS } from "@/lib/pals";
 export const Route = createFileRoute("/pal/$code")({
   head: () => ({
     meta: [
-      { title: "You're invited to be a PeriPal · Pause and Play" },
-      { name: "description", content: "Someone you know has invited you to be their PeriPal on Pause and Play." },
+      { title: "You're invited to be a PeriPal · Pause in Play" },
+      { name: "description", content: "Someone you know has invited you to be their PeriPal on Pause in Play." },
       { property: "og:title", content: "You're invited to be a PeriPal" },
-      { property: "og:description", content: "Support that goes both ways, on Pause and Play." },
+      { property: "og:description", content: "Support that goes both ways, on Pause in Play." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
       { name: "robots", content: "noindex" },

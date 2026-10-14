@@ -7,7 +7,7 @@ const GATEWAY = "https://ai.gateway.lovable.dev";
 const MODEL = "openai/gpt-6-astra";
 const STT_MODEL = "openai/gpt-transcribe";
 
-const INSTRUCTIONS = `Classify this note from a Pause and Play user. Return JSON only:
+const INSTRUCTIONS = `Classify this note from a Pause in Play user. Return JSON only:
 { "type": "quest" | "vit" | "unsure", "doing": string, "next_step": string, "remind": "none" | "10min" | "30min" | "tonight", "thing": string, "location": string }
 'quest' = something they are ALREADY in the middle of doing (e.g. 'I'm booking the dentist, next I need my Medicare card').
 'unsure' = a bare to-do or shopping item with no sign they are already doing it (e.g. 'Buy milk', 'Call mum').

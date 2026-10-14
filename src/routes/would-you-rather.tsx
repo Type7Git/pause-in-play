@@ -10,9 +10,9 @@ import { WYR_TOPICS, pickRound, scoreRound } from "@/lib/wyr";
 export const Route = createFileRoute("/would-you-rather")({
   head: () => ({
     meta: [
-      { title: "Would you rather? · Pause and Play" },
+      { title: "Would you rather? · Pause in Play" },
       { name: "description", content: "Swipe to find out who you'd rather be. Ten quick choices, no wrong answers." },
-      { property: "og:title", content: "Would you rather? · Pause and Play" },
+      { property: "og:title", content: "Would you rather? · Pause in Play" },
       { property: "og:description", content: "Swipe to find out who you'd rather be." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
@@ -42,10 +42,10 @@ async function shareImage(c: Char) {
   x.font = "bold 44px sans-serif"; x.fillText("Today, I'd rather be…", 540, 130);
   x.drawImage(img, 290, 180, 500, 500);
   x.font = "bold 76px sans-serif"; x.fillText(c.name, 540, 790);
-  x.fillStyle = "#6E6479"; x.font = "36px sans-serif"; x.fillText("Would you rather? · Pause and Play", 540, 1000);
+  x.fillStyle = "#6E6479"; x.font = "36px sans-serif"; x.fillText("Would you rather? · Pause in Play", 540, 1000);
   const blob = await new Promise<Blob | null>((r) => cv.toBlob(r, "image/png"));
   if (!blob) return;
-  const file = new File([blob], "my-pause-and-play-result.png", { type: "image/png" });
+  const file = new File([blob], "my-pause-in-play-result.png", { type: "image/png" });
   const text = `Today, I'd rather be ${c.name}. ${c.result_text}`;
   if (navigator.canShare?.({ files: [file] })) { await navigator.share({ files: [file], text }).catch(() => {}); return; }
   const a = document.createElement("a"); a.href = URL.createObjectURL(blob); a.download = file.name; a.click();

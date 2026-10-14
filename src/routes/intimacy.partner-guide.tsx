@@ -4,7 +4,7 @@ import { PartnerGuide } from "@/components/mm/PartnerGuide";
 import { Pill, ScreenTitle } from "@/components/mm/ui";
 
 export const Route = createFileRoute("/intimacy/partner-guide")({
-  head: () => ({ meta: [{ title: "For your partner · Pause and Play" }, { name: "description", content: "A short guide for partners: what's happening and how to help." }, { property: "og:title", content: "For your partner · Pause and Play" }, { property: "og:description", content: "What's happening and how to help." }, { property: "og:type", content: "website" }, { name: "twitter:card", content: "summary" }, { name: "robots", content: "noindex" }] }),
+  head: () => ({ meta: [{ title: "For your partner · Pause in Play" }, { name: "description", content: "A short guide for partners: what's happening and how to help." }, { property: "og:title", content: "For your partner · Pause in Play" }, { property: "og:description", content: "What's happening and how to help." }, { property: "og:type", content: "website" }, { name: "twitter:card", content: "summary" }, { name: "robots", content: "noindex" }] }),
   component: Partner,
 });
 

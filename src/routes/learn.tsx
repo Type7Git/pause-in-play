@@ -7,7 +7,7 @@ import { ExampleLabel, trackingHead } from "@/components/mm/TrackingShared";
 import { Sprout } from "@/components/mm/Sprout";
 import { PublishedLearn } from "@/components/mm/PublishedLearn";
 
-export const Route = createFileRoute("/learn")({ head: () => trackingHead("Learn", "Explore sample articles, videos and quizzes for Pause and Play. Content is awaiting clinical review."), component: Learn });
+export const Route = createFileRoute("/learn")({ head: () => trackingHead("Learn", "Explore sample articles, videos and quizzes for Pause in Play. Content is awaiting clinical review."), component: Learn });
 const items = [
   { id: 1, type: "Articles", title: "Making space for a small pause", topic: "Sleep", duration: "5 min read", tier: "free" },
   { id: 2, type: "Videos", title: "A moment with Erin", topic: "Brain fog", duration: "6 min", tier: "free" },

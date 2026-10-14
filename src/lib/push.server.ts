@@ -55,7 +55,7 @@ export async function deliverDueNudges(supabase: SupabaseClient<any>, userId?: s
         body: JSON.stringify({
           message: {
             token: t.token,
-            notification: { title: "Pause and Play", body },
+            notification: { title: "Pause in Play", body },
             data: { path: "/side-quest" },
           },
         }),

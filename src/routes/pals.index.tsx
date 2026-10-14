@@ -12,9 +12,9 @@ import { useRewards } from "@/lib/rewards";
 export const Route = createFileRoute("/pals/")({
   head: () => ({
     meta: [
-      { title: "My PeriPals · Pause and Play" },
+      { title: "My PeriPals · Pause in Play" },
       { name: "description", content: "Support that goes both ways. Share only what you choose with the people you trust." },
-      { property: "og:title", content: "My PeriPals · Pause and Play" },
+      { property: "og:title", content: "My PeriPals · Pause in Play" },
       { property: "og:description", content: "Share only what you choose with the people you trust." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },

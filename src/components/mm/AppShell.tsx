@@ -48,11 +48,11 @@ export function AppShell({ children }: { children: ReactNode }) {
           <header className="flex flex-wrap items-center justify-between gap-2 px-5 pb-1.5 pt-[22px]">
             <Link
               to="/"
-              aria-label="Pause and Play, go to home"
+              aria-label="Pause in Play, go to home"
               className="flex items-center gap-2 font-display text-xl font-extrabold tracking-[-0.01em] text-plum"
             >
               <LogoMark className="size-[26px]" />
-              Pause and Play
+              Pause in Play
             </Link>
             <div className={`flex items-center gap-2 ${quiet ? "invisible" : ""}`} aria-hidden={quiet || undefined}>
               <Link to="/settings" aria-label="Settings and account" className="press grid size-11 place-items-center rounded-full border border-line bg-card text-plum shadow-soft"><Settings className="size-5" /></Link>

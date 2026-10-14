@@ -56,7 +56,7 @@ export const MEDICINES: SampleMedicine[] = [
   { id: "supplement", name: "Magnesium", amount: "1 tablet", form: "Supplement", summary: "Every day", time: "19:00", start: "2026-10-01", schedule: { kind: "daily" } },
   { id: "device", name: "Hormonal IUD", amount: "", form: "Device", summary: "Replacement due March 2029", time: "", start: "2026-01-01", schedule: { kind: "device", due: "2029-03-12" } },
 ];
-export const MEDICINE_NOTE = "Reminders only. Enter things exactly as your prescriber or the label says. Pause and Play never suggests medicines or doses. If you miss a dose, check the leaflet or ask your pharmacist.";
+export const MEDICINE_NOTE = "Reminders only. Enter things exactly as your prescriber or the label says. Pause in Play never suggests medicines or doses. If you miss a dose, check the leaflet or ask your pharmacist.";
 export const REFLECTION_NOTE = "Patterns are for your own reflection, not a diagnosis. You know your life best. If low days are sticking around, your GP is a good person to talk to.";
 export const TRACKING_REWARDS = { mood: 2, medicine: 0, quiz: 3 } as const;
 export const PERSONAL_TRACKING_ENABLED = false;
@@ -65,5 +65,5 @@ export function downloadExample(format: "json" | "csv") {
   const data = { example: true, reference_date: EXAMPLE_DAY, moods: MOODS, medicines: MEDICINES };
   const csv = ["Example data — not personal health records", "date,quadrant,tags", ...MOODS.map(m => `${m.date},${m.quadrant},"${m.tags.join("; ")}"`)].join("\n");
   const url = URL.createObjectURL(new Blob([format === "json" ? JSON.stringify(data, null, 2) : csv], { type: format === "json" ? "application/json" : "text/csv" }));
-  const a = document.createElement("a"); a.href = url; a.download = `pause-and-play-examples.${format}`; a.click(); setTimeout(() => URL.revokeObjectURL(url), 1000);
+  const a = document.createElement("a"); a.href = url; a.download = `pause-in-play-examples.${format}`; a.click(); setTimeout(() => URL.revokeObjectURL(url), 1000);
 }

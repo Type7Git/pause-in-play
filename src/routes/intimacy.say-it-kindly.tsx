@@ -5,7 +5,7 @@ import { Card, Chip, Pill, ScreenTitle } from "@/components/mm/ui";
 import { KINDLY_PARTS } from "@/content/intimacy";
 
 export const Route = createFileRoute("/intimacy/say-it-kindly")({
-  head: () => ({ meta: [{ title: "Say it kindly · Pause and Play" }, { name: "description", content: "Build gentle words for a tricky conversation with your partner." }, { property: "og:title", content: "Say it kindly · Pause and Play" }, { property: "og:description", content: "Gentle words for a tricky conversation." }, { property: "og:type", content: "website" }, { name: "twitter:card", content: "summary" }, { name: "robots", content: "noindex" }] }),
+  head: () => ({ meta: [{ title: "Say it kindly · Pause in Play" }, { name: "description", content: "Build gentle words for a tricky conversation with your partner." }, { property: "og:title", content: "Say it kindly · Pause in Play" }, { property: "og:description", content: "Gentle words for a tricky conversation." }, { property: "og:type", content: "website" }, { name: "twitter:card", content: "summary" }, { name: "robots", content: "noindex" }] }),
   component: Kindly,
 });
 
