@@ -23,10 +23,10 @@ export function WyrAdmin() {
   const name = (code: string) => data?.chars.find((c) => c.code === code)?.name ?? code;
 
   const save = async (status: "draft" | "live") => {
-    if (!form.option_a.trim() || !form.option_b.trim()) return toast.error("Both options are needed.");
+    if (!form.option_a.trim() || !form.option_b.trim()) { toast.error("Both options are needed."); return; }
     const row = { ...form, status };
     const { error } = form.id ? await supabase.from("wyr_questions").update(row).eq("id", form.id) : await supabase.from("wyr_questions").insert(row);
-    if (error) return toast.error("Couldn't save that question.");
+    if (error) { toast.error("Couldn't save that question."); return; }
     toast.success(status === "live" ? "Question published" : "Draft saved");
     setForm(blank); refresh();
   };
