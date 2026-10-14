@@ -7,7 +7,7 @@ import { Card, Chip, Muted, Pill } from "@/components/mm/ui";
 import { supabase } from "@/integrations/supabase/client";
 import { TYPE_STYLE, useBody, type Move, type Session } from "@/lib/body";
 import { useRewards } from "@/lib/rewards";
-import { SafetyCard } from "./move.index";
+import { SafetyCard } from "@/components/mm/MoveSafety";
 
 export const Route = createFileRoute("/move/$key")({
   head: () => ({ meta: [{ title: "Movement session · Pause in Play" }, { name: "description", content: "A short guided movement session with easier versions for every move." }, { property: "og:title", content: "Movement session · Pause in Play" }, { property: "og:description", content: "Short guided movement, at your pace." }, { property: "og:type", content: "website" }, { name: "twitter:card", content: "summary" }] }),

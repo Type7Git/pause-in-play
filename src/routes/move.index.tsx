@@ -2,6 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
 import { Check } from "lucide-react";
+import { SafetyCard } from "@/components/mm/MoveSafety";
 import { BackButton } from "@/components/mm/BackButton";
 import { WhyThisHelps } from "@/components/mm/Panel";
 import { Card, Chip, Muted, Pill, ScreenTitle } from "@/components/mm/ui";
@@ -17,21 +18,6 @@ export const Route = createFileRoute("/move/")({
   head: () => ({ meta: [{ title: "Move today · Pause in Play" }, { name: "description", content: "Short stretch, yoga, Pilates, strength and walking sessions. Move when you feel you can." }, { property: "og:title", content: "Move today · Pause in Play" }, { property: "og:description", content: "Gentle movement sessions for perimenopause. No streaks, no pressure." }, { property: "og:type", content: "website" }, { name: "twitter:card", content: "summary" }] }),
   component: MoveToday,
 });
-
-export function SafetyCard({ onDone }: { onDone: () => void }) {
-  return (
-    <Card className="border-gold bg-gold-soft">
-      <h3>Before you start</h3>
-      <p className="text-sm">These sessions are gentle, but please see your GP before starting if you have:</p>
-      <ul className="ml-5 list-disc text-sm">
-        <li>chest pain or a heart condition</li><li>dizziness or fainting</li><li>osteoporosis, or a fracture from a minor fall</li>
-        <li>prolapse, or leaking with exercise</li><li>had recent surgery</li><li>pain that gets worse with movement</li>
-      </ul>
-      <p className="text-sm">Stop if anything hurts. Easier versions are there for every move.</p>
-      <Pill onClick={onDone}>Got it</Pill>
-    </Card>
-  );
-}
 
 const DAYS = ["M", "T", "W", "T", "F", "S", "S"];
 
