@@ -15,11 +15,13 @@ import { Route as ColourRouteImport } from './routes/colour'
 import { Route as CycleRouteImport } from './routes/cycle'
 import { Route as ErinRouteImport } from './routes/erin'
 import { Route as GardenRouteImport } from './routes/garden'
+import { Route as IntimacyRouteImport } from './routes/intimacy'
 import { Route as LaughRouteImport } from './routes/laugh'
 import { Route as LearnRouteImport } from './routes/learn'
 import { Route as LittleWinRouteImport } from './routes/little-win'
 import { Route as MedicinesRouteImport } from './routes/medicines'
 import { Route as MoodRouteImport } from './routes/mood'
+import { Route as PartnersRouteImport } from './routes/partners'
 import { Route as PrivacyRouteImport } from './routes/privacy'
 import { Route as RememberRouteImport } from './routes/remember'
 import { Route as SettingsRouteImport } from './routes/settings'
@@ -30,6 +32,12 @@ import { Route as TeamPreviewRouteImport } from './routes/team-preview'
 import { Route as TellSproutRouteImport } from './routes/tell-sprout'
 import { Route as WindDownRouteImport } from './routes/wind-down'
 import { Route as WouldYouRatherRouteImport } from './routes/would-you-rather'
+import { Route as IntimacyIndexRouteImport } from './routes/intimacy.index'
+import { Route as IntimacyCardsRouteImport } from './routes/intimacy.cards'
+import { Route as IntimacyCheckInRouteImport } from './routes/intimacy.check-in'
+import { Route as IntimacyLibraryRouteImport } from './routes/intimacy.library'
+import { Route as IntimacyPartnerGuideRouteImport } from './routes/intimacy.partner-guide'
+import { Route as IntimacySayItKindlyRouteImport } from './routes/intimacy.say-it-kindly'
 import { Route as ApiPublicHooksSendNudgesRouteImport } from './routes/api/public/hooks/send-nudges'
 
 const IndexRoute = IndexRouteImport.update({
@@ -62,6 +70,11 @@ const GardenRoute = GardenRouteImport.update({
   path: '/garden',
   getParentRoute: () => rootRouteImport,
 } as any)
+const IntimacyRoute = IntimacyRouteImport.update({
+  id: '/intimacy',
+  path: '/intimacy',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const LaughRoute = LaughRouteImport.update({
   id: '/laugh',
   path: '/laugh',
@@ -85,6 +98,11 @@ const MedicinesRoute = MedicinesRouteImport.update({
 const MoodRoute = MoodRouteImport.update({
   id: '/mood',
   path: '/mood',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PartnersRoute = PartnersRouteImport.update({
+  id: '/partners',
+  path: '/partners',
   getParentRoute: () => rootRouteImport,
 } as any)
 const PrivacyRoute = PrivacyRouteImport.update({
@@ -137,6 +155,36 @@ const WouldYouRatherRoute = WouldYouRatherRouteImport.update({
   path: '/would-you-rather',
   getParentRoute: () => rootRouteImport,
 } as any)
+const IntimacyIndexRoute = IntimacyIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => IntimacyRoute,
+} as any)
+const IntimacyCardsRoute = IntimacyCardsRouteImport.update({
+  id: '/cards',
+  path: '/cards',
+  getParentRoute: () => IntimacyRoute,
+} as any)
+const IntimacyCheckInRoute = IntimacyCheckInRouteImport.update({
+  id: '/check-in',
+  path: '/check-in',
+  getParentRoute: () => IntimacyRoute,
+} as any)
+const IntimacyLibraryRoute = IntimacyLibraryRouteImport.update({
+  id: '/library',
+  path: '/library',
+  getParentRoute: () => IntimacyRoute,
+} as any)
+const IntimacyPartnerGuideRoute = IntimacyPartnerGuideRouteImport.update({
+  id: '/partner-guide',
+  path: '/partner-guide',
+  getParentRoute: () => IntimacyRoute,
+} as any)
+const IntimacySayItKindlyRoute = IntimacySayItKindlyRouteImport.update({
+  id: '/say-it-kindly',
+  path: '/say-it-kindly',
+  getParentRoute: () => IntimacyRoute,
+} as any)
 const ApiPublicHooksSendNudgesRoute =
   ApiPublicHooksSendNudgesRouteImport.update({
     id: '/api/public/hooks/send-nudges',
@@ -151,11 +199,13 @@ export interface FileRoutesByFullPath {
   '/cycle': typeof CycleRoute
   '/erin': typeof ErinRoute
   '/garden': typeof GardenRoute
+  '/intimacy': typeof IntimacyRouteWithChildren
   '/laugh': typeof LaughRoute
   '/learn': typeof LearnRoute
   '/little-win': typeof LittleWinRoute
   '/medicines': typeof MedicinesRoute
   '/mood': typeof MoodRoute
+  '/partners': typeof PartnersRoute
   '/privacy': typeof PrivacyRoute
   '/remember': typeof RememberRoute
   '/settings': typeof SettingsRoute
@@ -166,6 +216,12 @@ export interface FileRoutesByFullPath {
   '/tell-sprout': typeof TellSproutRoute
   '/wind-down': typeof WindDownRoute
   '/would-you-rather': typeof WouldYouRatherRoute
+  '/intimacy/cards': typeof IntimacyCardsRoute
+  '/intimacy/check-in': typeof IntimacyCheckInRoute
+  '/intimacy/library': typeof IntimacyLibraryRoute
+  '/intimacy/partner-guide': typeof IntimacyPartnerGuideRoute
+  '/intimacy/say-it-kindly': typeof IntimacySayItKindlyRoute
+  '/intimacy/': typeof IntimacyIndexRoute
   '/api/public/hooks/send-nudges': typeof ApiPublicHooksSendNudgesRoute
 }
 export interface FileRoutesByTo {
@@ -180,6 +236,7 @@ export interface FileRoutesByTo {
   '/little-win': typeof LittleWinRoute
   '/medicines': typeof MedicinesRoute
   '/mood': typeof MoodRoute
+  '/partners': typeof PartnersRoute
   '/privacy': typeof PrivacyRoute
   '/remember': typeof RememberRoute
   '/settings': typeof SettingsRoute
@@ -190,6 +247,12 @@ export interface FileRoutesByTo {
   '/tell-sprout': typeof TellSproutRoute
   '/wind-down': typeof WindDownRoute
   '/would-you-rather': typeof WouldYouRatherRoute
+  '/intimacy/cards': typeof IntimacyCardsRoute
+  '/intimacy/check-in': typeof IntimacyCheckInRoute
+  '/intimacy/library': typeof IntimacyLibraryRoute
+  '/intimacy/partner-guide': typeof IntimacyPartnerGuideRoute
+  '/intimacy/say-it-kindly': typeof IntimacySayItKindlyRoute
+  '/intimacy': typeof IntimacyIndexRoute
   '/api/public/hooks/send-nudges': typeof ApiPublicHooksSendNudgesRoute
 }
 export interface FileRoutesById {
@@ -200,11 +263,13 @@ export interface FileRoutesById {
   '/cycle': typeof CycleRoute
   '/erin': typeof ErinRoute
   '/garden': typeof GardenRoute
+  '/intimacy': typeof IntimacyRouteWithChildren
   '/laugh': typeof LaughRoute
   '/learn': typeof LearnRoute
   '/little-win': typeof LittleWinRoute
   '/medicines': typeof MedicinesRoute
   '/mood': typeof MoodRoute
+  '/partners': typeof PartnersRoute
   '/privacy': typeof PrivacyRoute
   '/remember': typeof RememberRoute
   '/settings': typeof SettingsRoute
@@ -215,6 +280,12 @@ export interface FileRoutesById {
   '/tell-sprout': typeof TellSproutRoute
   '/wind-down': typeof WindDownRoute
   '/would-you-rather': typeof WouldYouRatherRoute
+  '/intimacy/cards': typeof IntimacyCardsRoute
+  '/intimacy/check-in': typeof IntimacyCheckInRoute
+  '/intimacy/library': typeof IntimacyLibraryRoute
+  '/intimacy/partner-guide': typeof IntimacyPartnerGuideRoute
+  '/intimacy/say-it-kindly': typeof IntimacySayItKindlyRoute
+  '/intimacy/': typeof IntimacyIndexRoute
   '/api/public/hooks/send-nudges': typeof ApiPublicHooksSendNudgesRoute
 }
 export interface FileRouteTypes {
@@ -226,11 +297,13 @@ export interface FileRouteTypes {
     | '/cycle'
     | '/erin'
     | '/garden'
+    | '/intimacy'
     | '/laugh'
     | '/learn'
     | '/little-win'
     | '/medicines'
     | '/mood'
+    | '/partners'
     | '/privacy'
     | '/remember'
     | '/settings'
@@ -241,6 +314,12 @@ export interface FileRouteTypes {
     | '/tell-sprout'
     | '/wind-down'
     | '/would-you-rather'
+    | '/intimacy/cards'
+    | '/intimacy/check-in'
+    | '/intimacy/library'
+    | '/intimacy/partner-guide'
+    | '/intimacy/say-it-kindly'
+    | '/intimacy/'
     | '/api/public/hooks/send-nudges'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -255,6 +334,7 @@ export interface FileRouteTypes {
     | '/little-win'
     | '/medicines'
     | '/mood'
+    | '/partners'
     | '/privacy'
     | '/remember'
     | '/settings'
@@ -265,6 +345,12 @@ export interface FileRouteTypes {
     | '/tell-sprout'
     | '/wind-down'
     | '/would-you-rather'
+    | '/intimacy/cards'
+    | '/intimacy/check-in'
+    | '/intimacy/library'
+    | '/intimacy/partner-guide'
+    | '/intimacy/say-it-kindly'
+    | '/intimacy'
     | '/api/public/hooks/send-nudges'
   id:
     | '__root__'
@@ -274,11 +360,13 @@ export interface FileRouteTypes {
     | '/cycle'
     | '/erin'
     | '/garden'
+    | '/intimacy'
     | '/laugh'
     | '/learn'
     | '/little-win'
     | '/medicines'
     | '/mood'
+    | '/partners'
     | '/privacy'
     | '/remember'
     | '/settings'
@@ -289,6 +377,12 @@ export interface FileRouteTypes {
     | '/tell-sprout'
     | '/wind-down'
     | '/would-you-rather'
+    | '/intimacy/cards'
+    | '/intimacy/check-in'
+    | '/intimacy/library'
+    | '/intimacy/partner-guide'
+    | '/intimacy/say-it-kindly'
+    | '/intimacy/'
     | '/api/public/hooks/send-nudges'
   fileRoutesById: FileRoutesById
 }
@@ -299,11 +393,13 @@ export interface RootRouteChildren {
   CycleRoute: typeof CycleRoute
   ErinRoute: typeof ErinRoute
   GardenRoute: typeof GardenRoute
+  IntimacyRoute: typeof IntimacyRouteWithChildren
   LaughRoute: typeof LaughRoute
   LearnRoute: typeof LearnRoute
   LittleWinRoute: typeof LittleWinRoute
   MedicinesRoute: typeof MedicinesRoute
   MoodRoute: typeof MoodRoute
+  PartnersRoute: typeof PartnersRoute
   PrivacyRoute: typeof PrivacyRoute
   RememberRoute: typeof RememberRoute
   SettingsRoute: typeof SettingsRoute
@@ -361,6 +457,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof GardenRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/intimacy': {
+      id: '/intimacy'
+      path: '/intimacy'
+      fullPath: '/intimacy'
+      preLoaderRoute: typeof IntimacyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/laugh': {
       id: '/laugh'
       path: '/laugh'
@@ -394,6 +497,13 @@ declare module '@tanstack/react-router' {
       path: '/mood'
       fullPath: '/mood'
       preLoaderRoute: typeof MoodRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/partners': {
+      id: '/partners'
+      path: '/partners'
+      fullPath: '/partners'
+      preLoaderRoute: typeof PartnersRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/privacy': {
@@ -466,6 +576,48 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof WouldYouRatherRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/intimacy/': {
+      id: '/intimacy/'
+      path: '/'
+      fullPath: '/intimacy/'
+      preLoaderRoute: typeof IntimacyIndexRouteImport
+      parentRoute: typeof IntimacyRoute
+    }
+    '/intimacy/cards': {
+      id: '/intimacy/cards'
+      path: '/cards'
+      fullPath: '/intimacy/cards'
+      preLoaderRoute: typeof IntimacyCardsRouteImport
+      parentRoute: typeof IntimacyRoute
+    }
+    '/intimacy/check-in': {
+      id: '/intimacy/check-in'
+      path: '/check-in'
+      fullPath: '/intimacy/check-in'
+      preLoaderRoute: typeof IntimacyCheckInRouteImport
+      parentRoute: typeof IntimacyRoute
+    }
+    '/intimacy/library': {
+      id: '/intimacy/library'
+      path: '/library'
+      fullPath: '/intimacy/library'
+      preLoaderRoute: typeof IntimacyLibraryRouteImport
+      parentRoute: typeof IntimacyRoute
+    }
+    '/intimacy/partner-guide': {
+      id: '/intimacy/partner-guide'
+      path: '/partner-guide'
+      fullPath: '/intimacy/partner-guide'
+      preLoaderRoute: typeof IntimacyPartnerGuideRouteImport
+      parentRoute: typeof IntimacyRoute
+    }
+    '/intimacy/say-it-kindly': {
+      id: '/intimacy/say-it-kindly'
+      path: '/say-it-kindly'
+      fullPath: '/intimacy/say-it-kindly'
+      preLoaderRoute: typeof IntimacySayItKindlyRouteImport
+      parentRoute: typeof IntimacyRoute
+    }
     '/api/public/hooks/send-nudges': {
       id: '/api/public/hooks/send-nudges'
       path: '/api/public/hooks/send-nudges'
@@ -476,6 +628,28 @@ declare module '@tanstack/react-router' {
   }
 }
 
+interface IntimacyRouteChildren {
+  IntimacyCardsRoute: typeof IntimacyCardsRoute
+  IntimacyCheckInRoute: typeof IntimacyCheckInRoute
+  IntimacyLibraryRoute: typeof IntimacyLibraryRoute
+  IntimacyPartnerGuideRoute: typeof IntimacyPartnerGuideRoute
+  IntimacySayItKindlyRoute: typeof IntimacySayItKindlyRoute
+  IntimacyIndexRoute: typeof IntimacyIndexRoute
+}
+
+const IntimacyRouteChildren: IntimacyRouteChildren = {
+  IntimacyCardsRoute: IntimacyCardsRoute,
+  IntimacyCheckInRoute: IntimacyCheckInRoute,
+  IntimacyLibraryRoute: IntimacyLibraryRoute,
+  IntimacyPartnerGuideRoute: IntimacyPartnerGuideRoute,
+  IntimacySayItKindlyRoute: IntimacySayItKindlyRoute,
+  IntimacyIndexRoute: IntimacyIndexRoute,
+}
+
+const IntimacyRouteWithChildren = IntimacyRoute._addFileChildren(
+  IntimacyRouteChildren,
+)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AdminRoute: AdminRoute,
@@ -483,11 +657,13 @@ const rootRouteChildren: RootRouteChildren = {
   CycleRoute: CycleRoute,
   ErinRoute: ErinRoute,
   GardenRoute: GardenRoute,
+  IntimacyRoute: IntimacyRouteWithChildren,
   LaughRoute: LaughRoute,
   LearnRoute: LearnRoute,
   LittleWinRoute: LittleWinRoute,
   MedicinesRoute: MedicinesRoute,
   MoodRoute: MoodRoute,
+  PartnersRoute: PartnersRoute,
   PrivacyRoute: PrivacyRoute,
   RememberRoute: RememberRoute,
   SettingsRoute: SettingsRoute,
