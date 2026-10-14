@@ -9,7 +9,7 @@ export function PublishedLearn() {
   const q = useQuery({
     queryKey: ["learn-published"],
     queryFn: async () => {
-      const { data } = await supabase.from("learn_content").select("*").eq("status", "approved").order("updated_at", { ascending: false });
+      const { data } = await supabase.from("learn_content").select("*").eq("status", "approved").eq("section", "general").order("updated_at", { ascending: false });
       return (data ?? []) as unknown as LearnItem[];
     },
   });

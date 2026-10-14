@@ -14,6 +14,7 @@ import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
 import { RewardsProvider } from "@/lib/rewards";
 import { AppShell } from "@/components/mm/AppShell";
+import { Toaster } from "@/components/ui/sonner";
 import { registerOfflineWorker } from "@/lib/pwa";
 
 function NotFoundComponent() {
@@ -115,6 +116,7 @@ function RootComponent() {
         <AppShell>
           <Outlet />
         </AppShell>
+        <Toaster position="bottom-center" />
       </RewardsProvider>
     </QueryClientProvider>
   );
