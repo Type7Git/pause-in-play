@@ -76,8 +76,20 @@ do $$ begin
   update pal_permissions set med_checkins = true;
   raise exception 'FAILED: medicine sharing unlocked';
 exception when check_violation then null; end $$;
--- 12 block hides status even with an active link
-update pal_links set status = 'paused';
-update pal_links set status = 'active';
-exception_placeholder: select 1;
+-- 12 removed links cannot be quietly reactivated
+do $$ begin
+  update pal_links set status = 'active';
+  raise exception 'FAILED: removed link reactivated';
+exception when raise_exception then
+  if sqlerrm like 'FAILED%' then raise; end if;
+end $$;
+-- 13 a block hides status even with an active link
+delete from pal_links;
+insert into pal_links(id, owner_id, pal_id, status) select '00000000-0000-4000-8000-00000000f002', owner, pal, 'active' from t_ids;
+insert into pal_permissions(link_id, status) values ('00000000-0000-4000-8000-00000000f002', true);
+insert into pal_blocks(blocker_id, blocked_id) select owner, pal from t_ids;
+select pg_temp.as_user(pal) from t_ids;
+select pg_temp.check((select count(*) from pal_status) = 0, 'block hides status');
+reset role;
+select 'all PeriPals rules passed' as result;
 rollback;
