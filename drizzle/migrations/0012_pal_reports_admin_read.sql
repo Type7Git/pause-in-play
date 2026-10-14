@@ -1,0 +1,1 @@
+CREATE POLICY "admins read reported messages" ON public.pal_messages FOR SELECT TO authenticated USING (reported AND public.has_role(auth.uid(), 'admin'));

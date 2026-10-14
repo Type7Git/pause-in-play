@@ -85,6 +85,13 @@
       "when": 1791938128965,
       "tag": "0011_peripals",
       "breakpoints": true
+    },
+    {
+      "idx": 12,
+      "version": "7",
+      "when": 1791938659738,
+      "tag": "0012_pal_reports_admin_read",
+      "breakpoints": true
     }
   ]
 }

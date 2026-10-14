@@ -36,7 +36,7 @@ function Kindly() {
       </label>
       <div className="flex flex-wrap gap-2">
         <Pill onClick={copy}>Copy</Pill>
-        <Pill variant="ghost" onClick={() => toast("Invite your partner as a PeriPal first")}>Send to a PeriPal</Pill>
+        <Link to="/pals" className="press inline-flex min-h-11 items-center rounded-full border-[1.5px] border-line bg-card px-5 font-bold text-plum">Send to a PeriPal</Link>
       </div>
     </>
   );
