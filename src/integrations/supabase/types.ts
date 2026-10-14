@@ -129,31 +129,43 @@ export type Database = {
       }
       food_tips: {
         Row: {
+          approved_at: string | null
+          approved_by: string | null
           focus: string
           id: string
+          review_area: string
           sort: number
           status: string
           text: string
           title: string
           try_these: string
+          updated_at: string
         }
         Insert: {
+          approved_at?: string | null
+          approved_by?: string | null
           focus: string
           id?: string
+          review_area?: string
           sort?: number
           status?: string
           text: string
           title: string
           try_these?: string
+          updated_at?: string
         }
         Update: {
+          approved_at?: string | null
+          approved_by?: string | null
           focus?: string
           id?: string
+          review_area?: string
           sort?: number
           status?: string
           text?: string
           title?: string
           try_these?: string
+          updated_at?: string
         }
         Relationships: []
       }
@@ -249,42 +261,54 @@ export type Database = {
       }
       movement_sessions: {
         Row: {
+          approved_at: string | null
+          approved_by: string | null
           benefit_tags: string[]
           description: string
           energy: string
           is_plus: boolean
           key: string
           minutes: number
+          review_area: string
           sort: number
           status: string
           title: string
           type: string
+          updated_at: string
           video_url: string | null
         }
         Insert: {
+          approved_at?: string | null
+          approved_by?: string | null
           benefit_tags?: string[]
           description?: string
           energy: string
           is_plus?: boolean
           key: string
           minutes: number
+          review_area?: string
           sort?: number
           status?: string
           title: string
           type: string
+          updated_at?: string
           video_url?: string | null
         }
         Update: {
+          approved_at?: string | null
+          approved_by?: string | null
           benefit_tags?: string[]
           description?: string
           energy?: string
           is_plus?: boolean
           key?: string
           minutes?: number
+          review_area?: string
           sort?: number
           status?: string
           title?: string
           type?: string
+          updated_at?: string
           video_url?: string | null
         }
         Relationships: []
