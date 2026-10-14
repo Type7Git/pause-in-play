@@ -1,0 +1,2 @@
+ALTER TABLE public.learn_content ADD COLUMN IF NOT EXISTS section text NOT NULL DEFAULT 'general' CHECK (section IN ('general','intimacy'));
+ALTER TABLE public.learn_content ADD COLUMN IF NOT EXISTS review_label text CHECK (review_label IS NULL OR review_label IN ('Clinically reviewed','Medically reviewed'));

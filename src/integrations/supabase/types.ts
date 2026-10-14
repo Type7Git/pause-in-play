@@ -135,6 +135,8 @@ export type Database = {
           id: string
           kind: string
           quiz: Json
+          review_label: string | null
+          section: string
           status: string
           summary: string
           tier: string
@@ -149,6 +151,8 @@ export type Database = {
           id?: string
           kind: string
           quiz?: Json
+          review_label?: string | null
+          section?: string
           status?: string
           summary?: string
           tier?: string
@@ -163,6 +167,8 @@ export type Database = {
           id?: string
           kind?: string
           quiz?: Json
+          review_label?: string | null
+          section?: string
           status?: string
           summary?: string
           tier?: string
