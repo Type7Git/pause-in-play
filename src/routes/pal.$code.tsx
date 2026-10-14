@@ -44,7 +44,7 @@ function Accept() {
       <div className="flex gap-2">
         <Pill onClick={async () => {
           const { error } = await supabase.rpc("pal_accept_invite", { _code: code });
-          if (error) return toast(friendlyError(error));
+          if (error) { toast(friendlyError(error)); return; }
           toast(`Accepted. ${i.owner_name} will confirm you soon.`);
           nav({ to: "/pals" });
         }}>Accept</Pill>

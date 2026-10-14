@@ -42,7 +42,7 @@ function Pals() {
 
   const post = async (k: string) => {
     const { error } = await supabase.from("pal_status").upsert({ user_id: user!.id, status: k, updated_at: new Date().toISOString() });
-    if (error) return toast("Couldn't post that. Please try again.");
+    if (error) { toast("Couldn't post that. Please try again."); return; }
     qc.invalidateQueries({ queryKey: ["pal_status_mine"] });
     toast(`Posted '${statusLabel(k)!.label}' to your PeriPals`);
   };

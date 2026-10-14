@@ -12,7 +12,7 @@ export const deleteMyAccount = createServerFn({ method: "POST" })
       if (error) throw new Error("Could not delete your data. Nothing further was removed.");
     }
     for (const [t, cols] of [["pal_messages", ["sender_id", "recipient_id"]], ["pal_links", ["owner_id", "pal_id"]], ["pal_invites", ["owner_id"]], ["pal_blocks", ["blocker_id", "blocked_id"]], ["pal_reports", ["reporter_id"]]] as const)
-      for (const c of cols) await supabaseAdmin.from(t).delete().eq(c, userId);
+      for (const c of cols) await (supabaseAdmin.from(t).delete() as any).eq(c, userId);
     const { data: files } = await supabaseAdmin.storage.from("gallery").list(userId);
     if (files?.length) await supabaseAdmin.storage.from("gallery").remove(files.map((f) => `${userId}/${f.name}`));
     await supabaseAdmin.from("profiles").delete().eq("id", userId);

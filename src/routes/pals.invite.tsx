@@ -70,7 +70,7 @@ function Invite() {
       .insert({ owner_id: user!.id, name: name.trim(), relationship: rel, permissions: perms, expires_at: new Date(Date.now() + days * 864e5).toISOString() })
       .select("code").single();
     setBusy(false);
-    if (error) return toast(friendlyError(error));
+    if (error) { toast(friendlyError(error)); return; }
     setLink(`${window.location.origin}/pal/${data.code}`);
   };
 

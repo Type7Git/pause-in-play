@@ -111,7 +111,7 @@ function Messages({ me, other, name, blocked, theyShare }: { me: string; other: 
   const send = async (body: string, kind: "text" | "nudge") => {
     if (!body.trim()) return;
     const { error } = await supabase.from("pal_messages").insert({ sender_id: me, recipient_id: other, body: body.trim().slice(0, 1000), kind });
-    if (error) return toast(error.message.includes("rate_limited") ? "Slow down a little, then try again." : `You can't message ${name} right now.`);
+    if (error) { toast(error.message.includes("rate_limited") ? "Slow down a little, then try again." : `You can't message ${name} right now.`); return; }
     if (kind === "text") setText("");
     qc.invalidateQueries({ queryKey: key });
   };
@@ -169,7 +169,7 @@ function Sees({ linkId, status, name }: { linkId: string; status: string; name: 
   const nav = useNavigate();
   const perms = useQuery({ queryKey: ["pal_permissions", linkId], queryFn: async () => (await supabase.from("pal_permissions").select("*").eq("link_id", linkId).single()).data });
   const setPerm = async (k: string, v: boolean) => {
-    const { error } = await supabase.from("pal_permissions").update({ [k]: v }).eq("link_id", linkId);
+    const { error } = await supabase.from("pal_permissions").update({ [k]: v } as { garden: boolean }).eq("link_id", linkId);
     if (error) toast("Couldn't change that. Please try again.");
     qc.invalidateQueries({ queryKey: ["pal_permissions", linkId] });
   };
