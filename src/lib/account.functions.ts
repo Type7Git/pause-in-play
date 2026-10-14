@@ -7,10 +7,12 @@ export const deleteMyAccount = createServerFn({ method: "POST" })
   .handler(async ({ context }) => {
     const { userId } = context;
     const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
-    for (const table of ["side_quests", "vit_items", "petal_events", "badges_earned", "reminders", "push_tokens", "user_favourites", "colouring_saves", "wyr_results"] as const) {
+    for (const table of ["side_quests", "vit_items", "petal_events", "badges_earned", "reminders", "push_tokens", "user_favourites", "colouring_saves", "wyr_results", "pal_status", "pal_settings"] as const) {
       const { error } = await supabaseAdmin.from(table).delete().eq("user_id", userId);
       if (error) throw new Error("Could not delete your data. Nothing further was removed.");
     }
+    for (const [t, cols] of [["pal_messages", ["sender_id", "recipient_id"]], ["pal_links", ["owner_id", "pal_id"]], ["pal_invites", ["owner_id"]], ["pal_blocks", ["blocker_id", "blocked_id"]], ["pal_reports", ["reporter_id"]]] as const)
+      for (const c of cols) await supabaseAdmin.from(t).delete().eq(c, userId);
     const { data: files } = await supabaseAdmin.storage.from("gallery").list(userId);
     if (files?.length) await supabaseAdmin.storage.from("gallery").remove(files.map((f) => `${userId}/${f.name}`));
     await supabaseAdmin.from("profiles").delete().eq("id", userId);

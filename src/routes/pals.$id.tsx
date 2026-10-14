@@ -1,4 +1,4 @@
-import { createFileRoute, useNavigate } from "@tanstack/react-router";
+import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { useEffect, useRef, useState } from "react";
 import { toast } from "sonner";
@@ -58,7 +58,7 @@ function Pal() {
           </button>
         ))}
       </div>
-      {tab === "messages" ? <Messages me={user!.id} other={id} name={p.other_name} blocked={p.blocked} theyShare={p.they_share_status === "active"} /> : p.i_share_link ? <Sees linkId={p.i_share_link} status={p.i_share_status!} name={p.other_name} /> : <Card><Muted>You're not sharing anything with {p.other_name} yet.</Muted><a href="/pals/invite" className="font-bold text-plum underline">Invite {p.other_name} to share back</a></Card>}
+      {tab === "messages" ? <Messages me={user!.id} other={id} name={p.other_name} blocked={p.blocked} theyShare={p.they_share_status === "active"} /> : p.i_share_link ? <Sees linkId={p.i_share_link} status={p.i_share_status!} name={p.other_name} /> : <Card><Muted>You're not sharing anything with {p.other_name} yet.</Muted><Link to="/pals/invite" className="font-bold text-plum underline">Invite {p.other_name} to share back</Link></Card>}
     </>
   );
 }
