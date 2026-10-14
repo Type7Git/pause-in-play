@@ -131,6 +131,17 @@ export function BadgeGlyphShape({ glyph }: { glyph: BadgeGlyph }) {
           <path d="M27.5 28h1" {...s} />
         </>
       );
+    case "palette":
+      return (
+        <>
+          <path d="M28 18a10 10 0 1 0 0 20c2 0 2-2 1-3s0-3 2-3h3a4 4 0 0 0 4-4c0-5.5-4.5-10-10-10z" {...s} />
+          <circle cx="23" cy="25" r="1.6" fill="currentColor" /><circle cx="28" cy="22" r="1.6" fill="currentColor" /><circle cx="33" cy="25" r="1.6" fill="currentColor" />
+        </>
+      );
+    case "crown":
+      return <path d="M19 34l-1-12 5 5 5-8 5 8 5-5-1 12z" fill="currentColor" />;
+    case "heart":
+      return <path d="M28 36s-9-5.5-9-11.5a5 5 0 0 1 9-3 5 5 0 0 1 9 3C37 30.5 28 36 28 36z" fill="currentColor" />;
     case "key":
       return (
         <>
