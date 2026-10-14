@@ -1,6 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
-import { BookHeart, Brush, Heart, HeartHandshake, Lock, MessageCircleHeart, NotebookPen, Scale, Sparkle, UserPlus, Users } from "lucide-react";
+import { Apple, BookHeart, CircleDot, Footprints, Lightbulb, Brush, Heart, HeartHandshake, Lock, MessageCircleHeart, NotebookPen, Scale, Sparkle, UserPlus, Users } from "lucide-react";
 import { PanelBadge } from "@/components/mm/Panel";
 import { Sprout } from "@/components/mm/Sprout";
 import { AddToHomeCard } from "@/components/mm/AddToHomeCard";
@@ -29,7 +29,7 @@ export const Route = createFileRoute("/")({
 
 const CHOICE = new Set(["quest", "tabs", "win", "wind", "laugh", "vit"]);
 const TRACK = new Set(["mood", "medicines", "cycle", "learn"]);
-const LUCIDE = { colour: Brush, wyr: Scale, reflect: NotebookPen, talk: MessageCircleHeart, kindly: Sparkle, partner: HeartHandshake, ilearn: BookHeart, pals: Users, invite: UserPlus } as const;
+const LUCIDE = { colour: Brush, wyr: Scale, reflect: NotebookPen, talk: MessageCircleHeart, kindly: Sparkle, partner: HeartHandshake, ilearn: BookHeart, pals: Users, invite: UserPlus, move: Footprints, pelvic: CircleDot, food: Apple, bodylearn: Lightbulb } as const;
 
 function ActivityIcon({ icon }: { icon: string }) {
   if (CHOICE.has(icon)) return <ChoiceGlyph name={icon as ChoiceIcon} />;

@@ -6,8 +6,9 @@ import { routeTree } from "@/routeTree.gen";
 import { panel, whyThisHelps } from "@/content/panel";
 
 describe("Clinical advisory panel", () => {
-  it("lists four panel members including the psychosexual therapist", () => {
-    expect(panel).toHaveLength(4);
+  it("lists six panel members including the exercise physiologist and dietitian", () => {
+    expect(panel).toHaveLength(6);
+    expect(panel.map((p) => p.initials)).toEqual(expect.arrayContaining(["EP", "DT", "ST"]));
     const st = panel.find((m) => m.initials === "ST");
     expect(st?.role).toBe("Psychosexual therapist or sexologist");
     expect(st?.tile).toBe("bg-rose-soft");

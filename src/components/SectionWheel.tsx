@@ -1,8 +1,8 @@
 import { useCallback, useEffect, useRef, useState, type KeyboardEvent } from "react";
-import { Brain, ChevronLeft, ChevronRight, ClipboardList, Flower2, Heart, HeartHandshake, Sparkles, Users } from "lucide-react";
+import { Activity, Brain, ChevronLeft, ChevronRight, ClipboardList, Flower2, Heart, HeartHandshake, Sparkles, Users } from "lucide-react";
 import type { Section } from "@/content/sections";
 
-const ICONS = { heart: Heart, brain: Brain, calm: Flower2, play: Sparkles, love: HeartHandshake, pals: Users, track: ClipboardList } as const;
+const ICONS = { heart: Heart, brain: Brain, calm: Flower2, play: Sparkles, love: HeartHandshake, pals: Users, track: ClipboardList, body: Activity } as const;
 export const HOME_SECTION_KEY = "midlife-mind:home-section";
 
 export function readSavedSection(sections: Section[]) {

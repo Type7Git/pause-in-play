@@ -27,6 +27,9 @@ export const TOOLS = {
   "say-it-kindly": "Say it kindly",
   "partner-guide": "For your partner",
   "intimacy-library": "Intimacy library",
+  move: "Move today",
+  pelvic: "Pelvic floor trainer",
+  food: "Food for this stage",
 } as const;
 export type ToolKey = keyof typeof TOOLS;
 /** Where each linked tool opens. Section links open home with that section selected. */
@@ -38,6 +41,7 @@ export const TOOL_ROUTES: Record<ToolKey, { to: string; section?: string }> = {
   colour: { to: "/colour" }, "would-you-rather": { to: "/would-you-rather" }, peripals: { to: "/pals" }, intimacy: { to: "/", section: "love" },
   reflect: { to: "/intimacy/check-in" }, "talk-cards": { to: "/intimacy/cards" }, "say-it-kindly": { to: "/intimacy/say-it-kindly" },
   "partner-guide": { to: "/intimacy/partner-guide" }, "intimacy-library": { to: "/intimacy/library" },
+  move: { to: "/move" }, pelvic: { to: "/pelvic" }, food: { to: "/food" },
 };
 export const isToolKey = (v: unknown): v is ToolKey => typeof v === "string" && v in TOOLS;
 
