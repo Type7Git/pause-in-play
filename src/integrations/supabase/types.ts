@@ -436,6 +436,101 @@ export type Database = {
         }
         Relationships: []
       }
+      wyr_characters: {
+        Row: {
+          code: string
+          name: string
+          portrait_svg: string
+          result_text: string
+        }
+        Insert: {
+          code: string
+          name: string
+          portrait_svg?: string
+          result_text: string
+        }
+        Update: {
+          code?: string
+          name?: string
+          portrait_svg?: string
+          result_text?: string
+        }
+        Relationships: []
+      }
+      wyr_questions: {
+        Row: {
+          category: string
+          character_a: string
+          character_b: string
+          id: number
+          option_a: string
+          option_b: string
+          status: string
+        }
+        Insert: {
+          category: string
+          character_a: string
+          character_b: string
+          id?: number
+          option_a: string
+          option_b: string
+          status?: string
+        }
+        Update: {
+          category?: string
+          character_a?: string
+          character_b?: string
+          id?: number
+          option_a?: string
+          option_b?: string
+          status?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "wyr_questions_character_a_fkey"
+            columns: ["character_a"]
+            isOneToOne: false
+            referencedRelation: "wyr_characters"
+            referencedColumns: ["code"]
+          },
+          {
+            foreignKeyName: "wyr_questions_character_b_fkey"
+            columns: ["character_b"]
+            isOneToOne: false
+            referencedRelation: "wyr_characters"
+            referencedColumns: ["code"]
+          },
+        ]
+      }
+      wyr_results: {
+        Row: {
+          character_code: string
+          created_at: string
+          id: string
+          user_id: string
+        }
+        Insert: {
+          character_code: string
+          created_at?: string
+          id?: string
+          user_id: string
+        }
+        Update: {
+          character_code?: string
+          created_at?: string
+          id?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "wyr_results_character_code_fkey"
+            columns: ["character_code"]
+            isOneToOne: false
+            referencedRelation: "wyr_characters"
+            referencedColumns: ["code"]
+          },
+        ]
+      }
     }
     Views: {
       [_ in never]: never

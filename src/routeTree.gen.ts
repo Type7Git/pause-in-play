@@ -29,6 +29,7 @@ import { Route as TabsRouteImport } from './routes/tabs'
 import { Route as TeamPreviewRouteImport } from './routes/team-preview'
 import { Route as TellSproutRouteImport } from './routes/tell-sprout'
 import { Route as WindDownRouteImport } from './routes/wind-down'
+import { Route as WouldYouRatherRouteImport } from './routes/would-you-rather'
 import { Route as ApiPublicHooksSendNudgesRouteImport } from './routes/api/public/hooks/send-nudges'
 
 const IndexRoute = IndexRouteImport.update({
@@ -131,6 +132,11 @@ const WindDownRoute = WindDownRouteImport.update({
   path: '/wind-down',
   getParentRoute: () => rootRouteImport,
 } as any)
+const WouldYouRatherRoute = WouldYouRatherRouteImport.update({
+  id: '/would-you-rather',
+  path: '/would-you-rather',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ApiPublicHooksSendNudgesRoute =
   ApiPublicHooksSendNudgesRouteImport.update({
     id: '/api/public/hooks/send-nudges',
@@ -159,6 +165,7 @@ export interface FileRoutesByFullPath {
   '/team-preview': typeof TeamPreviewRoute
   '/tell-sprout': typeof TellSproutRoute
   '/wind-down': typeof WindDownRoute
+  '/would-you-rather': typeof WouldYouRatherRoute
   '/api/public/hooks/send-nudges': typeof ApiPublicHooksSendNudgesRoute
 }
 export interface FileRoutesByTo {
@@ -182,6 +189,7 @@ export interface FileRoutesByTo {
   '/team-preview': typeof TeamPreviewRoute
   '/tell-sprout': typeof TellSproutRoute
   '/wind-down': typeof WindDownRoute
+  '/would-you-rather': typeof WouldYouRatherRoute
   '/api/public/hooks/send-nudges': typeof ApiPublicHooksSendNudgesRoute
 }
 export interface FileRoutesById {
@@ -206,6 +214,7 @@ export interface FileRoutesById {
   '/team-preview': typeof TeamPreviewRoute
   '/tell-sprout': typeof TellSproutRoute
   '/wind-down': typeof WindDownRoute
+  '/would-you-rather': typeof WouldYouRatherRoute
   '/api/public/hooks/send-nudges': typeof ApiPublicHooksSendNudgesRoute
 }
 export interface FileRouteTypes {
@@ -231,6 +240,7 @@ export interface FileRouteTypes {
     | '/team-preview'
     | '/tell-sprout'
     | '/wind-down'
+    | '/would-you-rather'
     | '/api/public/hooks/send-nudges'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -254,6 +264,7 @@ export interface FileRouteTypes {
     | '/team-preview'
     | '/tell-sprout'
     | '/wind-down'
+    | '/would-you-rather'
     | '/api/public/hooks/send-nudges'
   id:
     | '__root__'
@@ -277,6 +288,7 @@ export interface FileRouteTypes {
     | '/team-preview'
     | '/tell-sprout'
     | '/wind-down'
+    | '/would-you-rather'
     | '/api/public/hooks/send-nudges'
   fileRoutesById: FileRoutesById
 }
@@ -301,6 +313,7 @@ export interface RootRouteChildren {
   TeamPreviewRoute: typeof TeamPreviewRoute
   TellSproutRoute: typeof TellSproutRoute
   WindDownRoute: typeof WindDownRoute
+  WouldYouRatherRoute: typeof WouldYouRatherRoute
   ApiPublicHooksSendNudgesRoute: typeof ApiPublicHooksSendNudgesRoute
 }
 
@@ -446,6 +459,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof WindDownRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/would-you-rather': {
+      id: '/would-you-rather'
+      path: '/would-you-rather'
+      fullPath: '/would-you-rather'
+      preLoaderRoute: typeof WouldYouRatherRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/api/public/hooks/send-nudges': {
       id: '/api/public/hooks/send-nudges'
       path: '/api/public/hooks/send-nudges'
@@ -477,6 +497,7 @@ const rootRouteChildren: RootRouteChildren = {
   TeamPreviewRoute: TeamPreviewRoute,
   TellSproutRoute: TellSproutRoute,
   WindDownRoute: WindDownRoute,
+  WouldYouRatherRoute: WouldYouRatherRoute,
   ApiPublicHooksSendNudgesRoute: ApiPublicHooksSendNudgesRoute,
 }
 export const routeTree = rootRouteImport
