@@ -177,3 +177,7 @@
 .mm-ring { animation: mm-ring 1.8s ease-out infinite; }
 .mm-ring-2 { animation-delay: .9s; }
 @media (prefers-reduced-motion: reduce) { .mm-ring { animation: none; transform: scale(1.15); opacity: .4; } .mm-ring-2 { display: none; } }
+
+@keyframes heart-pop { 0% { transform: scale(1); } 40% { transform: scale(1.35); } 100% { transform: scale(1); } }
+.animate-heart-pop { animation: heart-pop 260ms ease-out; }
+@media (prefers-reduced-motion: reduce) { .animate-heart-pop { animation: none; } }

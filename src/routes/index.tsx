@@ -1,14 +1,17 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
+import { BookHeart, Brush, Heart, HeartHandshake, Lock, MessageCircleHeart, NotebookPen, Scale, Sparkle, UserPlus, Users } from "lucide-react";
 import { PanelBadge } from "@/components/mm/Panel";
 import { Sprout } from "@/components/mm/Sprout";
 import { AddToHomeCard } from "@/components/mm/AddToHomeCard";
 import { GardenScene } from "@/components/mm/Garden";
-import { BadgeGlyphShape, ChoiceGlyph, type ChoiceIcon } from "@/components/mm/icons";
+import { ChoiceGlyph, SproutMic, type ChoiceIcon } from "@/components/mm/icons";
 import { getLevel } from "@/lib/levels";
 import { useRewards } from "@/lib/rewards";
 import { Today } from "@/components/mm/Today";
 import { TrackingGlyph } from "@/components/mm/TrackingShared";
+import { SectionWheel, panelId, readSavedSection } from "@/components/SectionWheel";
+import { ACTIVITIES, SECTIONS, type Activity } from "@/content/sections";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -24,40 +27,17 @@ export const Route = createFileRoute("/")({
   component: Home,
 });
 
-type Choice = { to: "/side-quest" | "/tabs" | "/little-win" | "/wind-down" | "/laugh" | "/remember" | "/mood" | "/medicines" | "/cycle" | "/learn"; icon: ChoiceIcon | "mood" | "medicines" | "cycle" | "learn"; title: string; desc: string; blob: string };
+const CHOICE = new Set(["quest", "tabs", "win", "wind", "laugh", "vit"]);
+const TRACK = new Set(["mood", "medicines", "cycle", "learn"]);
+const LUCIDE = { colour: Brush, wyr: Scale, reflect: NotebookPen, talk: MessageCircleHeart, kindly: Sparkle, partner: HeartHandshake, ilearn: BookHeart, pals: Users, invite: UserPlus } as const;
 
-const GROUPS: { label: string; choices: Choice[] }[] = [
-  {
-    label: "Practical tools",
-    choices: [
-      { to: "/side-quest", icon: "quest", title: "What was I doing?", desc: "Save my place and the next step", blob: "bg-gold-soft" },
-      { to: "/remember", icon: "vit", title: "Help me remember", desc: "The Very Important Thing Department", blob: "bg-rose-soft" },
-    ],
-  },
-  {
-    label: "Calming moments",
-    choices: [
-      { to: "/tabs", icon: "tabs", title: "My brain has 37 tabs open", desc: "A one-minute pause, then one thing", blob: "bg-plum-soft" },
-      { to: "/wind-down", icon: "wind", title: "Help me wind down", desc: "Quiet, no scores", blob: "bg-plum-soft" },
-    ],
-  },
-  {
-    label: "Playful challenges",
-    choices: [
-      { to: "/little-win", icon: "win", title: "Give me a little win", desc: "A short, untimed puzzle", blob: "bg-sage-soft" },
-      { to: "/laugh", icon: "laugh", title: "I need a laugh", desc: "An everyday scene to sort out", blob: "bg-gold-soft" },
-    ],
-  },
-  {
-    label: "Support & tracking",
-    choices: [
-      { to: "/mood", icon: "mood", title: "Mood Mapper", desc: "Two taps to log how you feel", blob: "bg-rose-soft" },
-      { to: "/medicines", icon: "medicines", title: "Medicine Cabinet", desc: "Your reminders, your way", blob: "bg-plum-soft" },
-      { to: "/cycle", icon: "cycle", title: "Cycle Tracker", desc: "Periods, spotting and symptoms", blob: "bg-rose-soft" },
-      { to: "/learn", icon: "learn", title: "Learn", desc: "Videos, articles and quizzes", blob: "bg-sage-soft" },
-    ],
-  },
-];
+function ActivityIcon({ icon }: { icon: string }) {
+  if (CHOICE.has(icon)) return <ChoiceGlyph name={icon as ChoiceIcon} />;
+  if (TRACK.has(icon)) return <TrackingGlyph name={icon as "mood"} />;
+  if (icon === "voice") return <SproutMic className="size-7 text-sage" />;
+  const I = LUCIDE[icon as keyof typeof LUCIDE] ?? Sparkle;
+  return <I className="size-7 text-plum" aria-hidden="true" />;
+}
 
 function useGreeting() {
   const [g, setG] = useState("Hello");
@@ -68,110 +48,102 @@ function useGreeting() {
   return g;
 }
 
+function Tile({ a }: { a: Activity }) {
+  const { favourites, toggleFavourite } = useRewards();
+  const on = favourites.includes(a.key);
+  const body = (
+    <>
+      <div className={`mb-1 grid size-[46px] place-items-center rounded-[15px] ${a.blob}`}><ActivityIcon icon={a.icon} /></div>
+      <b className="pr-8 font-display text-[15.5px] leading-tight">{a.title}</b>
+      <span className="text-[12.5px] leading-snug text-muted-foreground">{a.to ? a.desc : `${a.desc} · Coming soon`}</span>
+    </>
+  );
+  const cls = "flex h-full min-w-0 flex-col gap-1.5 rounded-[20px] border border-line bg-card p-3.5 text-left shadow-soft";
+  return (
+    <div className="relative min-w-0">
+      {a.to ? <Link to={a.to} className={`lift ${cls}`}>{body}</Link> : <div className={`${cls} opacity-75`}>{body}</div>}
+      <button
+        type="button"
+        aria-label={on ? `Remove ${a.title} from favourites` : `Add ${a.title} to favourites`}
+        aria-pressed={on}
+        onClick={() => toggleFavourite(a.key, a.title)}
+        className="press absolute right-1 top-1 grid size-11 place-items-center rounded-full text-rose"
+      >
+        <Heart key={String(on)} className={`size-5 ${on ? "animate-heart-pop fill-current" : ""}`} aria-hidden="true" />
+      </button>
+    </div>
+  );
+}
+
 function Home() {
-  const { petals, badges } = useRewards();
+  const { petals, favourites } = useRewards();
   const greeting = useGreeting();
   const L = getLevel(petals);
+  const [selected, setSelected] = useState("favourites");
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => { setSelected(readSavedSection(SECTIONS)); setMounted(true); }, []);
+  const section = SECTIONS.find((s) => s.key === selected) ?? SECTIONS[0]!;
+  const keys = section.key === "favourites" ? favourites : section.activities;
+  const items = keys.map((k) => ACTIVITIES[k]).filter((a): a is Activity => !!a);
 
   return (
     <>
       <div>
         <p className="eyebrow">{greeting}</p>
         <h1>What do you need right now?</h1>
-        <p className="mt-1.5 text-sm text-muted-foreground">
-          Practical tools, calming moments and playful challenges for perimenopause and beyond.
-        </p>
       </div>
-      <section className="mm-card overflow-hidden">
-        <GardenScene petals={petals} />
-        <div className="flex flex-col gap-2 px-[18px] pb-4 pt-3.5">
+      <Today />
+
+      {mounted ? <SectionWheel sections={SECTIONS} selected={selected} onSelect={setSelected} /> : <div className="h-[178px]" aria-hidden="true" />}
+
+      <section id={panelId} role="tabpanel" aria-labelledby={`tab-${section.key}`} className="flex flex-col gap-2.5">
+        <div>
+          <h2 className="font-display text-lg">{section.name}</h2>
+          <p className="text-sm text-muted-foreground">{section.blurb}</p>
+        </div>
+        {section.lockLine && <p className="flex items-start gap-2 rounded-2xl bg-sunk p-3 text-xs text-muted-foreground"><Lock className="mt-0.5 size-3.5 shrink-0 text-plum" aria-hidden="true" />{section.lockLine}</p>}
+        {section.palsStrip && (
+          <div className="flex items-center gap-3 rounded-2xl border border-line bg-gold-soft p-3 text-sm">
+            <Users className="size-5 shrink-0 text-plum" aria-hidden="true" />
+            <p className="min-w-0 flex-1"><b>Example PeriPal:</b> "Thinking of you today. Cup of tea Thursday?"</p>
+          </div>
+        )}
+        {items.length ? (
+          <div className="grid grid-cols-2 gap-2.5">{items.map((a) => <Tile key={a.key} a={a} />)}</div>
+        ) : (
+          <p className="mm-card p-[18px] text-sm text-muted-foreground">Nothing here yet. Tap the heart on any activity and it will live here, ready when you need it.</p>
+        )}
+      </section>
+
+      <Link to="/sprout" className="lift flex min-w-0 items-center gap-3 rounded-tile border border-line bg-sage-soft p-3.5 shadow-soft">
+        <Sprout size={48} mood="wave" />
+        <span className="flex min-w-0 flex-1 flex-col">
+          <b className="font-display text-base">Ask Sprout</b>
+          <span className="text-xs leading-snug text-muted-foreground">Answers come only from the Pause and Play library, clinically reviewed.</span>
+        </span>
+        <span className="text-sm font-bold text-plum">Chat →</span>
+      </Link>
+
+      <Link to="/garden" className="mm-card lift overflow-hidden">
+        <div className="flex h-[112px] items-end overflow-hidden" inert aria-hidden="true"><div className="w-full"><GardenScene petals={petals} /></div></div>
+        <div className="flex flex-col gap-2 px-[18px] pb-4 pt-3">
           <div className="flex items-baseline justify-between gap-2 text-[13px] text-muted-foreground">
             <b className="font-display text-[17px] text-ink">{L.name}</b>
             <span>{L.next ? `${L.next.remaining} petals to ${L.next.name}` : "Top level"}</span>
           </div>
           <div className="h-2.5 overflow-hidden rounded-full bg-sunk" role="progressbar" aria-label={L.next ? `Progress to ${L.next.name}` : "Top level reached"} aria-valuemin={0} aria-valuemax={100} aria-valuenow={Math.round(L.pct * 100)}>
-            <i className="petal-bar block h-full rounded-full transition-[width] duration-500" style={{ width: `${Math.round(L.pct * 100)}%` }} />
+            <i className="petal-bar block h-full rounded-full" style={{ width: `${Math.round(L.pct * 100)}%` }} />
           </div>
+          <span className="text-sm font-bold text-plum">Your garden and badges →</span>
         </div>
-      </section>
+      </Link>
 
-
-      <div className="grid grid-cols-2 gap-2.5">
-        <Link to="/sprout" className="lift flex min-w-0 flex-col items-center gap-2 rounded-tile border border-line bg-sage-soft p-3.5 text-center shadow-soft">
-          <Sprout size={48} mood="wave" />
-          <b className="font-display text-base">Ask Sprout</b>
-          <span className="text-xs leading-snug text-muted-foreground">Answers come only from the Pause and Play library, clinically reviewed</span>
-          <span className="mt-auto text-sm font-bold text-plum">Chat →</span>
-        </Link>
-        <Link to="/erin" className="lift flex min-w-0 flex-col items-center gap-2 rounded-tile border border-line bg-card p-3.5 text-center shadow-soft">
-          <PanelBadge size={56} />
-          <b className="font-display text-base">Our clinical panel</b>
-          <span className="text-xs leading-snug text-muted-foreground">Every tool is clinically reviewed</span>
-          <span className="mt-auto text-sm font-bold text-plum">Meet the panel →</span>
-        </Link>
-      </div>
-      <Today />
+      <Link to="/erin" className="flex min-h-11 items-center gap-2.5 rounded-2xl border border-line bg-card px-3.5 py-2 text-sm shadow-soft">
+        <PanelBadge size={30} />
+        <span className="min-w-0 flex-1">Developed with our clinical advisory panel</span>
+        <b className="text-plum">Meet the panel →</b>
+      </Link>
       <AddToHomeCard />
-
-      {GROUPS.map((g) => (
-        <section key={g.label} className="flex flex-col gap-2.5">
-          <h2 className="flex items-center gap-2.5 text-[13px] font-bold uppercase tracking-[0.1em] text-muted-foreground after:h-px after:flex-1 after:bg-line">
-            {g.label}
-          </h2>
-          <div className="grid grid-cols-1 gap-2.5 min-[361px]:grid-cols-2">
-            {g.choices.map((c) => (
-              <Link
-                key={c.to}
-                to={c.to}
-                className="lift flex min-w-0 flex-col gap-1.5 rounded-[20px] border border-line bg-card p-3.5 text-left shadow-soft"
-              >
-                <div className={`mb-1 grid size-[46px] place-items-center rounded-[15px] ${c.blob}`}>
-                  {c.icon === "mood" || c.icon === "medicines" || c.icon === "cycle" || c.icon === "learn" ? <TrackingGlyph name={c.icon} /> : <ChoiceGlyph name={c.icon} />}
-                </div>
-                <b className="font-display text-[15.5px] leading-tight">{c.title}</b>
-                <span className="text-[12.5px] leading-snug text-muted-foreground">{c.desc}</span>
-              </Link>
-            ))}
-          </div>
-        </section>
-      ))}
-
-
-      <section className="mm-card flex flex-col gap-3 p-[18px]">
-        <div className="flex items-center justify-between">
-          <h3>Badges</h3>
-          <span className="text-sm text-muted-foreground">
-            {badges.filter((b) => b.earned).length} of {badges.length}
-          </span>
-        </div>
-        <ul className="grid grid-cols-3 gap-x-2 gap-y-3" aria-label="Badge medallions">
-          {badges.map((b) => (
-            <li
-              key={b.name}
-              aria-label={`${b.name} medallion, ${b.earned ? "earned" : "not earned yet"}`}
-              className={`flex flex-col items-center gap-1.5 text-center text-xs leading-tight ${b.earned ? "font-bold text-ink" : "text-muted-foreground"}`}
-            >
-              <svg viewBox="0 0 56 56" aria-hidden="true" className="size-[52px]">
-                {b.earned ? (
-                  <>
-                    <path d="M18 42l-4 12 8-3 4 5 2-14zM38 42l4 12-8-3-4 5-2-14z" fill="var(--mm-rose)" />
-                    <circle cx="28" cy="27" r="20" fill="var(--mm-gold)" />
-                    <circle cx="28" cy="27" r="15.5" fill="var(--mm-gold-soft)" />
-                  </>
-                ) : (
-                  <circle cx="28" cy="27" r="20" fill="none" stroke="var(--mm-line)" strokeWidth="2" strokeDasharray="4 4" />
-                )}
-                <g style={{ color: b.earned ? "var(--mm-gold)" : "var(--mm-line)" }}>
-                  <BadgeGlyphShape glyph={b.glyph} />
-                </g>
-              </svg>
-              {b.name}
-            </li>
-          ))}
-        </ul>
-      </section>
-
-
     </>
   );
 }
