@@ -3,7 +3,7 @@ import { useEffect, useRef, useState } from "react";
 import { BackButton } from "@/components/mm/BackButton";
 import { WhyThisHelps } from "@/components/mm/Panel";
 import { Card, Muted, ScreenTitle } from "@/components/mm/ui";
-import { whyThisHelps } from "@/content/erin";
+import { whyThisHelps } from "@/content/panel";
 import { useRewards } from "@/lib/rewards";
 
 export const Route = createFileRoute("/little-win")({

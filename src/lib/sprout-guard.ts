@@ -7,7 +7,7 @@ export const TOOLS = {
   "wind-down": "Help me wind down",
   "little-win": "Give me a little win",
   laugh: "I need a laugh",
-  erin: "About Erin",
+  erin: "Our clinical panel",
   panel: "Our clinical panel",
   medicines: "Medicine Cabinet",
   mood: "Mood Mapper",
@@ -16,8 +16,29 @@ export const TOOLS = {
   settings: "Settings",
   sprout: "Ask Sprout",
   "tell-sprout": "Tell Sprout",
+  home: "Home",
+  favourites: "Favourites",
+  colour: "Colour me calm",
+  "would-you-rather": "Would you rather?",
+  peripals: "PeriPals",
+  intimacy: "Intimacy & relationships",
+  reflect: "What's changed for me",
+  "talk-cards": "Conversation cards",
+  "say-it-kindly": "Say it kindly",
+  "partner-guide": "For your partner",
+  "intimacy-library": "Intimacy library",
 } as const;
 export type ToolKey = keyof typeof TOOLS;
+/** Where each linked tool opens. Section links open home with that section selected. */
+export const TOOL_ROUTES: Record<ToolKey, { to: string; section?: string }> = {
+  "side-quest": { to: "/side-quest" }, remember: { to: "/remember" }, tabs: { to: "/tabs" }, "wind-down": { to: "/wind-down" },
+  "little-win": { to: "/little-win" }, laugh: { to: "/laugh" }, erin: { to: "/panel" }, panel: { to: "/panel" },
+  medicines: { to: "/medicines" }, mood: { to: "/mood" }, learn: { to: "/learn" }, cycle: { to: "/cycle" }, settings: { to: "/settings" },
+  sprout: { to: "/sprout" }, "tell-sprout": { to: "/tell-sprout" }, home: { to: "/" }, favourites: { to: "/", section: "favourites" },
+  colour: { to: "/colour" }, "would-you-rather": { to: "/would-you-rather" }, peripals: { to: "/pals" }, intimacy: { to: "/", section: "love" },
+  reflect: { to: "/intimacy/check-in" }, "talk-cards": { to: "/intimacy/cards" }, "say-it-kindly": { to: "/intimacy/say-it-kindly" },
+  "partner-guide": { to: "/intimacy/partner-guide" }, "intimacy-library": { to: "/intimacy/library" },
+};
 export const isToolKey = (v: unknown): v is ToolKey => typeof v === "string" && v in TOOLS;
 
 export const CRISIS_REPLY = `I'm really glad you told me. I'm an AI and can't give you the support you deserve right now, but people can.
@@ -29,7 +50,7 @@ export const CLINICAL_REPLY =
   "That's an important question, and it needs someone who knows your health. I can't advise on medication, hormones, tests or symptoms. Your GP is the best place to start, and they can refer you on if needed.";
 
 export const NO_MATCH_REPLY =
-  "I don't have anything on that in Erin's library yet. I've noted the question (anonymously) so Erin can consider adding it. In the meantime, the home screen has six quick tools you might like.";
+  "I don't have anything on that in the Pause and Play library yet. I've noted the question (anonymously) so the clinical team can consider adding it. In the meantime, swipe through the sections on the home screen to find a tool that fits.";
 
 export const RATE_LIMIT_REPLY =
   "I need a little rest. You've sent lots of messages this hour, so let's pick this up a bit later. The tools on the home screen are always there.";

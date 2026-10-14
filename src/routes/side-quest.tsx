@@ -4,7 +4,7 @@ import { BackButton } from "@/components/mm/BackButton";
 import { DictateButton } from "@/components/mm/DictateButton";
 import { WhyThisHelps } from "@/components/mm/Panel";
 import { Card, Chip, Field, Muted, Pill, Row, ScreenTitle } from "@/components/mm/ui";
-import { whyThisHelps } from "@/content/erin";
+import { whyThisHelps } from "@/content/panel";
 import { enablePush } from "@/lib/push";
 import { savePushToken } from "@/lib/push.functions";
 import { remindAtFor, useRewards } from "@/lib/rewards";

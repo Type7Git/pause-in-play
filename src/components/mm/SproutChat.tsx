@@ -1,10 +1,11 @@
 import { Link } from "@tanstack/react-router";
+import { HOME_SECTION_KEY } from "@/components/SectionWheel";
 import { useServerFn } from "@tanstack/react-start";
 import { useQuery } from "@tanstack/react-query";
 import { useEffect, useRef, useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { askSprout } from "@/lib/sprout.functions";
-import { TOOLS, type SproutReply } from "@/lib/sprout-guard";
+import { TOOLS, TOOL_ROUTES, type SproutReply } from "@/lib/sprout-guard";
 import { PanelBadge } from "./Panel";
 import { SproutMic } from "./icons";
 import { Sprout } from "./Sprout";
@@ -72,7 +73,7 @@ export function SproutChat({ compact = false }: { compact?: boolean }) {
                     <PanelBadge size={22} className="shrink-0" />From the Pause and Play library: {m.reply.entry.title} · clinically reviewed
                   </span>
                   {m.reply.entry.linked_tool && (
-                    <Link to={`/${m.reply.entry.linked_tool === "panel" ? "erin" : m.reply.entry.linked_tool}` as "/tabs"} className="press inline-flex min-h-11 items-center self-start rounded-full bg-sage px-4 py-2 text-sm font-bold text-shell">
+                    <Link to={TOOL_ROUTES[m.reply.entry.linked_tool].to as "/"} onClick={() => { const s = TOOL_ROUTES[m.reply!.entry!.linked_tool!].section; if (s) localStorage.setItem(HOME_SECTION_KEY, s); }} className="press inline-flex min-h-11 items-center self-start rounded-full bg-sage px-4 py-2 text-sm font-bold text-shell">
                       Open {TOOLS[m.reply.entry.linked_tool]} →
                     </Link>
                   )}

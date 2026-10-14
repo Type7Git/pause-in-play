@@ -3,17 +3,17 @@ import { Brain, ChevronLeft, ChevronRight, ClipboardList, Flower2, Heart, HeartH
 import type { Section } from "@/content/sections";
 
 const ICONS = { heart: Heart, brain: Brain, calm: Flower2, play: Sparkles, love: HeartHandshake, pals: Users, track: ClipboardList } as const;
-const STORE = "midlife-mind:home-section";
+export const HOME_SECTION_KEY = "midlife-mind:home-section";
 
 export function readSavedSection(sections: Section[]) {
   try {
-    const v = localStorage.getItem(STORE);
+    const v = localStorage.getItem(HOME_SECTION_KEY);
     if (v && sections.some((s) => s.key === v)) return v;
   } catch {}
   return "favourites";
 }
 function saveSection(key: string) {
-  try { localStorage.setItem(STORE, key); } catch {}
+  try { localStorage.setItem(HOME_SECTION_KEY, key); } catch {}
 }
 
 export const panelId = "section-panel";

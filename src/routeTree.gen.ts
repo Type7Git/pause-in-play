@@ -21,6 +21,7 @@ import { Route as LearnRouteImport } from './routes/learn'
 import { Route as LittleWinRouteImport } from './routes/little-win'
 import { Route as MedicinesRouteImport } from './routes/medicines'
 import { Route as MoodRouteImport } from './routes/mood'
+import { Route as PanelRouteImport } from './routes/panel'
 import { Route as PartnersRouteImport } from './routes/partners'
 import { Route as PrivacyRouteImport } from './routes/privacy'
 import { Route as RememberRouteImport } from './routes/remember'
@@ -102,6 +103,11 @@ const MedicinesRoute = MedicinesRouteImport.update({
 const MoodRoute = MoodRouteImport.update({
   id: '/mood',
   path: '/mood',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PanelRoute = PanelRouteImport.update({
+  id: '/panel',
+  path: '/panel',
   getParentRoute: () => rootRouteImport,
 } as any)
 const PartnersRoute = PartnersRouteImport.update({
@@ -229,6 +235,7 @@ export interface FileRoutesByFullPath {
   '/little-win': typeof LittleWinRoute
   '/medicines': typeof MedicinesRoute
   '/mood': typeof MoodRoute
+  '/panel': typeof PanelRoute
   '/partners': typeof PartnersRoute
   '/privacy': typeof PrivacyRoute
   '/remember': typeof RememberRoute
@@ -264,6 +271,7 @@ export interface FileRoutesByTo {
   '/little-win': typeof LittleWinRoute
   '/medicines': typeof MedicinesRoute
   '/mood': typeof MoodRoute
+  '/panel': typeof PanelRoute
   '/partners': typeof PartnersRoute
   '/privacy': typeof PrivacyRoute
   '/remember': typeof RememberRoute
@@ -301,6 +309,7 @@ export interface FileRoutesById {
   '/little-win': typeof LittleWinRoute
   '/medicines': typeof MedicinesRoute
   '/mood': typeof MoodRoute
+  '/panel': typeof PanelRoute
   '/partners': typeof PartnersRoute
   '/privacy': typeof PrivacyRoute
   '/remember': typeof RememberRoute
@@ -339,6 +348,7 @@ export interface FileRouteTypes {
     | '/little-win'
     | '/medicines'
     | '/mood'
+    | '/panel'
     | '/partners'
     | '/privacy'
     | '/remember'
@@ -374,6 +384,7 @@ export interface FileRouteTypes {
     | '/little-win'
     | '/medicines'
     | '/mood'
+    | '/panel'
     | '/partners'
     | '/privacy'
     | '/remember'
@@ -410,6 +421,7 @@ export interface FileRouteTypes {
     | '/little-win'
     | '/medicines'
     | '/mood'
+    | '/panel'
     | '/partners'
     | '/privacy'
     | '/remember'
@@ -447,6 +459,7 @@ export interface RootRouteChildren {
   LittleWinRoute: typeof LittleWinRoute
   MedicinesRoute: typeof MedicinesRoute
   MoodRoute: typeof MoodRoute
+  PanelRoute: typeof PanelRoute
   PartnersRoute: typeof PartnersRoute
   PrivacyRoute: typeof PrivacyRoute
   RememberRoute: typeof RememberRoute
@@ -549,6 +562,13 @@ declare module '@tanstack/react-router' {
       path: '/mood'
       fullPath: '/mood'
       preLoaderRoute: typeof MoodRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/panel': {
+      id: '/panel'
+      path: '/panel'
+      fullPath: '/panel'
+      preLoaderRoute: typeof PanelRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/partners': {
@@ -743,6 +763,7 @@ const rootRouteChildren: RootRouteChildren = {
   LittleWinRoute: LittleWinRoute,
   MedicinesRoute: MedicinesRoute,
   MoodRoute: MoodRoute,
+  PanelRoute: PanelRoute,
   PartnersRoute: PartnersRoute,
   PrivacyRoute: PrivacyRoute,
   RememberRoute: RememberRoute,

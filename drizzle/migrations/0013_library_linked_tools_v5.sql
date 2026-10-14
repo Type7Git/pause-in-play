@@ -1,0 +1,2 @@
+ALTER TABLE public.library_entries DROP CONSTRAINT library_entries_linked_tool_check;
+ALTER TABLE public.library_entries ADD CONSTRAINT library_entries_linked_tool_check CHECK (linked_tool IS NULL OR linked_tool = ANY (ARRAY['side-quest','remember','tabs','wind-down','little-win','laugh','erin','panel','medicines','mood','learn','cycle','settings','sprout','tell-sprout','home','favourites','colour','would-you-rather','peripals','intimacy','reflect','talk-cards','say-it-kindly','partner-guide','intimacy-library']));

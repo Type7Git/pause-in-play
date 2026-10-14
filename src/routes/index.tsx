@@ -138,7 +138,7 @@ function Home() {
         </div>
       </Link>
 
-      <Link to="/erin" className="flex min-h-11 items-center gap-2.5 rounded-2xl border border-line bg-card px-3.5 py-2 text-sm shadow-soft">
+      <Link to="/panel" className="flex min-h-11 items-center gap-2.5 rounded-2xl border border-line bg-card px-3.5 py-2 text-sm shadow-soft">
         <PanelBadge size={30} />
         <span className="min-w-0 flex-1">Developed with our clinical advisory panel</span>
         <b className="text-plum">Meet the panel →</b>
