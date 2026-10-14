@@ -39,6 +39,7 @@ import { Route as IntimacyCheckInRouteImport } from './routes/intimacy.check-in'
 import { Route as IntimacyLibraryRouteImport } from './routes/intimacy.library'
 import { Route as IntimacyPartnerGuideRouteImport } from './routes/intimacy.partner-guide'
 import { Route as IntimacySayItKindlyRouteImport } from './routes/intimacy.say-it-kindly'
+import { Route as MoveIndexRouteImport } from './routes/move.index'
 import { Route as PalCodeRouteImport } from './routes/pal.$code'
 import { Route as PalsIndexRouteImport } from './routes/pals.index'
 import { Route as PalsIdRouteImport } from './routes/pals.$id'
@@ -195,6 +196,11 @@ const IntimacySayItKindlyRoute = IntimacySayItKindlyRouteImport.update({
   path: '/say-it-kindly',
   getParentRoute: () => IntimacyRoute,
 } as any)
+const MoveIndexRoute = MoveIndexRouteImport.update({
+  id: '/move/',
+  path: '/move/',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const PalCodeRoute = PalCodeRouteImport.update({
   id: '/pal/$code',
   path: '/pal/$code',
@@ -256,6 +262,7 @@ export interface FileRoutesByFullPath {
   '/pals/$id': typeof PalsIdRoute
   '/pals/invite': typeof PalsInviteRoute
   '/intimacy/': typeof IntimacyIndexRoute
+  '/move/': typeof MoveIndexRoute
   '/pals/': typeof PalsIndexRoute
   '/api/public/hooks/send-nudges': typeof ApiPublicHooksSendNudgesRoute
 }
@@ -292,6 +299,7 @@ export interface FileRoutesByTo {
   '/pals/$id': typeof PalsIdRoute
   '/pals/invite': typeof PalsInviteRoute
   '/intimacy': typeof IntimacyIndexRoute
+  '/move': typeof MoveIndexRoute
   '/pals': typeof PalsIndexRoute
   '/api/public/hooks/send-nudges': typeof ApiPublicHooksSendNudgesRoute
 }
@@ -330,6 +338,7 @@ export interface FileRoutesById {
   '/pals/$id': typeof PalsIdRoute
   '/pals/invite': typeof PalsInviteRoute
   '/intimacy/': typeof IntimacyIndexRoute
+  '/move/': typeof MoveIndexRoute
   '/pals/': typeof PalsIndexRoute
   '/api/public/hooks/send-nudges': typeof ApiPublicHooksSendNudgesRoute
 }
@@ -369,6 +378,7 @@ export interface FileRouteTypes {
     | '/pals/$id'
     | '/pals/invite'
     | '/intimacy/'
+    | '/move/'
     | '/pals/'
     | '/api/public/hooks/send-nudges'
   fileRoutesByTo: FileRoutesByTo
@@ -405,6 +415,7 @@ export interface FileRouteTypes {
     | '/pals/$id'
     | '/pals/invite'
     | '/intimacy'
+    | '/move'
     | '/pals'
     | '/api/public/hooks/send-nudges'
   id:
@@ -442,6 +453,7 @@ export interface FileRouteTypes {
     | '/pals/$id'
     | '/pals/invite'
     | '/intimacy/'
+    | '/move/'
     | '/pals/'
     | '/api/public/hooks/send-nudges'
   fileRoutesById: FileRoutesById
@@ -474,6 +486,7 @@ export interface RootRouteChildren {
   PalCodeRoute: typeof PalCodeRoute
   PalsIdRoute: typeof PalsIdRoute
   PalsInviteRoute: typeof PalsInviteRoute
+  MoveIndexRoute: typeof MoveIndexRoute
   PalsIndexRoute: typeof PalsIndexRoute
   ApiPublicHooksSendNudgesRoute: typeof ApiPublicHooksSendNudgesRoute
 }
@@ -690,6 +703,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IntimacySayItKindlyRouteImport
       parentRoute: typeof IntimacyRoute
     }
+    '/move/': {
+      id: '/move/'
+      path: '/move'
+      fullPath: '/move/'
+      preLoaderRoute: typeof MoveIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/pal/$code': {
       id: '/pal/$code'
       path: '/pal/$code'
@@ -778,6 +798,7 @@ const rootRouteChildren: RootRouteChildren = {
   PalCodeRoute: PalCodeRoute,
   PalsIdRoute: PalsIdRoute,
   PalsInviteRoute: PalsInviteRoute,
+  MoveIndexRoute: MoveIndexRoute,
   PalsIndexRoute: PalsIndexRoute,
   ApiPublicHooksSendNudgesRoute: ApiPublicHooksSendNudgesRoute,
 }

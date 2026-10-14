@@ -3,6 +3,7 @@ import type { ReactNode } from "react";
 import { Settings } from "lucide-react";
 import { getLevel } from "@/lib/levels";
 import { useRewards } from "@/lib/rewards";
+import { usePelvicReminders } from "@/lib/body";
 import { LogoMark, PetalShape, SproutMic } from "./icons";
 
 function Meter() {
@@ -33,6 +34,7 @@ function Meter() {
 export function AppShell({ children }: { children: ReactNode }) {
   const path = useLocation({ select: (l) => l.pathname });
   const quiet = path === "/wind-down";
+  usePelvicReminders();
   if (path.startsWith("/admin")) {
     return (
       <div className="min-h-screen bg-shell px-6 py-8">
