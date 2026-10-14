@@ -6,6 +6,9 @@ import { WhyThisHelps } from "@/components/mm/Panel";
 import { Card, Chip, Muted, Pill, ScreenTitle } from "@/components/mm/ui";
 import { supabase } from "@/integrations/supabase/client";
 import { useRewards } from "@/lib/rewards";
+import { ShareSheet } from "@/components/mm/ShareSheet";
+import { renderCard } from "@/lib/share-cards";
+import type { SharePayload } from "@/lib/share";
 
 export const Route = createFileRoute("/colour")({
   head: () => ({
@@ -68,6 +71,9 @@ function Colour() {
   const [swatches, setSwatches] = useState<Record<string, string>>({});
   const [msg, setMsg] = useState("");
   const [saving, setSaving] = useState(false);
+  const [done, setDone] = useState(false);
+  useEffect(() => setDone(false), [sceneIdx]);
+  const [sharing, setSharing] = useState<SharePayload | null>(null);
 
   const view = useRef<HTMLCanvasElement>(null);
   const colourCanvases = useRef<HTMLCanvasElement[]>([]);
@@ -166,6 +172,7 @@ function Colour() {
         setMsg("Lovely. Sign in to keep your pictures in a gallery.");
       }
       earn(4, "Colour me calm", "Calm colourist");
+      setDone(true);
     } catch {
       setMsg("That didn't save this time. Your picture is still here.");
     }
@@ -226,6 +233,23 @@ function Colour() {
           </div>
           <Pill onClick={finish} disabled={saving}>{saving ? "Saving…" : "I'm finished"}</Pill>
           {msg && <p role="status" className="text-sm text-muted-foreground">{msg}</p>}
+          {done && (
+            <Pill variant="ghost" onClick={() => {
+              const src = view.current?.toDataURL("image/png");
+              setSharing({
+                title: `My ${scene.name} colouring`,
+                text: "I coloured this in Pause in Play. Ten calm minutes, no going over the lines.",
+                palText: `🎨 I coloured "${scene.name}" in Pause in Play.`,
+                fileName: `${scene.key}-colouring.png`,
+                image: async () => {
+                  if (!src) return null;
+                  const img = new Image(); img.src = src; await img.decode();
+                  return renderCard({ eyebrow: "Coloured by me", title: scene.name, art: img, artShape: "wide", tint: "#E6F1E9" });
+                },
+              });
+            }}>Share my picture</Pill>
+          )}
+          <ShareSheet open={!!sharing} payload={sharing} onClose={() => setSharing(null)} />
         </Card>
       ) : (
         <Muted>Getting the pictures ready…</Muted>

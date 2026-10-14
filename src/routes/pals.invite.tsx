@@ -9,6 +9,8 @@ import { Switch } from "@/components/ui/switch";
 import { supabase } from "@/integrations/supabase/client";
 import { friendlyError, NEVER_SHARED, PERMS, RELATIONSHIPS } from "@/lib/pals";
 import { useRewards } from "@/lib/rewards";
+import { ShareSheet } from "@/components/mm/ShareSheet";
+import type { SharePayload } from "@/lib/share";
 
 export const Route = createFileRoute("/pals/invite")({
   head: () => ({
@@ -63,6 +65,7 @@ function Invite() {
   const [days, setDays] = useState(1);
   const [link, setLink] = useState<string | null>(null);
   const [busy, setBusy] = useState(false);
+  const [sharing, setSharing] = useState<SharePayload | null>(null);
 
   const create = async () => {
     setBusy(true);
@@ -84,9 +87,10 @@ function Invite() {
         <p className="break-all rounded-2xl bg-sunk p-3 text-sm">{link}</p>
         <Muted className="text-xs">Single use. Expires in {days === 1 ? "24 hours" : "7 days"}.</Muted>
         <div className="flex gap-2">
-          {typeof navigator !== "undefined" && "share" in navigator && <Pill onClick={() => navigator.share({ title: "Be my PeriPal", url: link }).catch(() => {})}>Share</Pill>}
+          <Pill onClick={() => setSharing({ title: `Your invite for ${name}`, text: `Be my PeriPal on Pause in Play? It's a private way to check in with each other.`, url: link })}>Share</Pill>
           <Pill variant="ghost" onClick={() => { navigator.clipboard.writeText(link); toast("Link copied"); }}>Copy</Pill>
         </div>
+        <ShareSheet open={!!sharing} payload={sharing} pals={false} onClose={() => setSharing(null)} />
       </Card>
     );
 

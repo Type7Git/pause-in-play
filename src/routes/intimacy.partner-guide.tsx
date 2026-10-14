@@ -1,5 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { toast } from "sonner";
+import { useState } from "react";
+import { ShareSheet } from "@/components/mm/ShareSheet";
+import { shareOrigin, type SharePayload } from "@/lib/share";
 import { PartnerGuide } from "@/components/mm/PartnerGuide";
 import { Pill, ScreenTitle } from "@/components/mm/ui";
 
@@ -9,11 +11,8 @@ export const Route = createFileRoute("/intimacy/partner-guide")({
 });
 
 function Partner() {
-  const share = async () => {
-    const url = `${window.location.origin}/partners`;
-    if (navigator.share) { await navigator.share({ title: "A guide for partners", url }).catch(() => {}); return; }
-    try { await navigator.clipboard.writeText(url); toast("Link copied. It contains none of your information."); } catch { toast(url); }
-  };
+  const [sharing, setSharing] = useState<SharePayload | null>(null);
+  const share = () => setSharing({ title: "A guide for partners", text: "I thought you might find this useful. It's a short guide on perimenopause and how to help.", url: `${shareOrigin()}/partners` });
   return (
     <>
       <ScreenTitle eyebrow="For your partner" title="What's going on, and how to help." sub="A short guide you can share. It contains none of your information." />
@@ -22,6 +21,7 @@ function Partner() {
         <Pill onClick={share}>Share this guide</Pill>
         <Link to="/intimacy/library" className="press inline-flex min-h-11 items-center rounded-full border-[1.5px] border-line bg-card px-5 font-bold text-plum">Intimacy library</Link>
       </div>
+      <ShareSheet open={!!sharing} payload={sharing} pals={false} onClose={() => setSharing(null)} />
     </>
   );
 }

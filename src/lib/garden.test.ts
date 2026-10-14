@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { MIN_GARDENS, badgeShareLine, standingLine, thirstLevel, topPercent, weedsFor } from "./garden";
+import { CAN_TIP, MIN_GARDENS, badgeShareLine, nearestPlant, nearestWeed, plantSpots, spoutTip, standingLine, thirstLevel, topPercent, weedsFor } from "./garden";
 
 const day = 864e5;
 
@@ -52,5 +52,24 @@ describe("standing wording", () => {
     const s = { gardens: MIN_GARDENS * 4, top: null, badgeShare: { a: 25, b: 0 } };
     expect(badgeShareLine(s, "a")).toBe("25% of Pause in Play gardens have this badge.");
     expect(badgeShareLine(s, "b")).toMatch(/rare/);
+  });
+});
+
+describe("garden tools", () => {
+  it("finds the plant under the spout, only when close", () => {
+    const tip = spoutTip(CAN_TIP);
+    expect(tip.x).toBeGreaterThan(15);
+    expect(tip.y).toBeGreaterThan(10); // pouring downwards
+    expect(nearestPlant(120, 85)?.slot).toBe(1);
+    expect(nearestPlant(60, 61, 10)).toBeNull(); // no back row yet
+    expect(nearestPlant(120, 61, 10)?.slot).toBe(7); // back row has come up
+  });
+  it("grows a back row past 70 petals", () => {
+    expect(plantSpots(60).some((p) => p.slot >= 7)).toBe(false);
+    expect(plantSpots(200).filter((p) => p.slot >= 7 && p.stage === 3).length).toBeGreaterThan(5);
+  });
+  it("finds the nearest weed in reach", () => {
+    expect(nearestWeed([61, 187], 66)).toBe(61);
+    expect(nearestWeed([61, 187], 120)).toBeNull();
   });
 });

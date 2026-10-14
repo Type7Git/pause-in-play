@@ -13,9 +13,14 @@ export const Route = createFileRoute("/api/public/hooks/send-nudges")({
           .eq("name", "push")
           .maybeSingle();
         if (!data || data.token !== token) return new Response("Unauthorized", { status: 401 });
-        const { deliverDueNudges } = await import("@/lib/push.server");
+        const { deliverDueNudges, deliverLittleNotes } = await import("@/lib/push.server");
         const result = await deliverDueNudges(supabaseAdmin);
-        return Response.json(result);
+        // Little notes ride the same job; a problem there never blocks Side Quest nudges.
+        const notes = await deliverLittleNotes(supabaseAdmin, new URL(request.url).origin).catch((e: unknown) => {
+          console.error("little notes", e);
+          return { notes: 0 };
+        });
+        return Response.json({ ...result, ...notes });
       },
     },
   },

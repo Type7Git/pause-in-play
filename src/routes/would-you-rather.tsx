@@ -5,6 +5,9 @@ import { BackButton } from "@/components/mm/BackButton";
 import { Card, Chip, Muted, Pill, ScreenTitle } from "@/components/mm/ui";
 import { supabase } from "@/integrations/supabase/client";
 import { useRewards } from "@/lib/rewards";
+import { ShareSheet } from "@/components/mm/ShareSheet";
+import { renderCard, svgImage } from "@/lib/share-cards";
+import { shareOrigin, type SharePayload } from "@/lib/share";
 import { WYR_TOPICS, pickRound, scoreRound } from "@/lib/wyr";
 
 export const Route = createFileRoute("/would-you-rather")({
@@ -29,29 +32,16 @@ function Portrait({ c, className = "" }: { c: Char; className?: string }) {
   return <span aria-hidden="true" className={`block [&_svg]:size-full ${className}`} dangerouslySetInnerHTML={{ __html: c.portrait_svg }} />;
 }
 
-async function shareImage(c: Char) {
-  const css = getComputedStyle(document.documentElement);
-  const svg = c.portrait_svg.replace(/var\((--[\w-]+)\)/g, (_, v: string) => css.getPropertyValue(v).trim() || "#EADFF1").replace("<svg ", '<svg xmlns="http://www.w3.org/2000/svg" ');
-  const img = new Image();
-  img.src = URL.createObjectURL(new Blob([svg], { type: "image/svg+xml" }));
-  await img.decode();
-  const cv = document.createElement("canvas"); cv.width = cv.height = 1080;
-  const x = cv.getContext("2d")!;
-  x.fillStyle = "#FAF7FB"; x.fillRect(0, 0, 1080, 1080);
-  x.fillStyle = "#5B3A6B"; x.textAlign = "center";
-  x.font = "bold 44px sans-serif"; x.fillText("Today, I'd rather be…", 540, 130);
-  x.drawImage(img, 290, 180, 500, 500);
-  x.font = "bold 76px sans-serif"; x.fillText(c.name, 540, 790);
-  x.fillStyle = "#6E6479"; x.font = "36px sans-serif"; x.fillText("Would you rather? · Pause in Play", 540, 1000);
-  const blob = await new Promise<Blob | null>((r) => cv.toBlob(r, "image/png"));
-  if (!blob) return;
-  const file = new File([blob], "my-pause-in-play-result.png", { type: "image/png" });
-  const text = `Today, I'd rather be ${c.name}. ${c.result_text}`;
-  if (navigator.canShare?.({ files: [file] })) { await navigator.share({ files: [file], text }).catch(() => {}); return; }
-  const a = document.createElement("a"); a.href = URL.createObjectURL(blob); a.download = file.name; a.click();
+/** Share card: the character portrait on a Pause in Play card. */
+async function resultImage(c: Char) {
+  const holder = document.createElement("div");
+  holder.innerHTML = c.portrait_svg;
+  const svg = holder.querySelector("svg");
+  return renderCard({ eyebrow: "Today, I'd rather be…", title: c.name, body: c.result_text, art: svg ? await svgImage(svg) : null, artShape: "medal", tint: "#F6DEDA" });
 }
 
 function Wyr() {
+  const [sharing, setSharing] = useState<SharePayload | null>(null);
   const { earn, user } = useRewards();
   const qc = useQueryClient();
   const { data } = useQuery({
@@ -152,7 +142,14 @@ function Wyr() {
           {char(result.runnerUp) && <Muted>With a dash of {char(result.runnerUp)!.name.replace(/^The /, "")}</Muted>}
           <div className="flex flex-wrap justify-center gap-2">
             <Pill onClick={() => newRound()}>Play again</Pill>
-            <Pill variant="ghost" onClick={() => void shareImage(win)}>Share my result</Pill>
+            <Pill variant="ghost" onClick={() => setSharing({
+              title: "My Would you rather? result",
+              text: `Today, I'd rather be ${win.name}. Who would you rather be?`,
+              palText: `Today, I'd rather be ${win.name} 😄 Have a go at Would you rather? in Pause in Play.`,
+              fileName: "my-pause-in-play-result.png",
+              url: `${shareOrigin()}/would-you-rather`,
+              image: () => resultImage(win),
+            })}>Share my result</Pill>
           </div>
         </Card>
       ) : q ? (
@@ -199,6 +196,7 @@ function Wyr() {
           })}
         </ul>
       </Card>
+      <ShareSheet open={!!sharing} payload={sharing} onClose={() => setSharing(null)} />
     </>
   );
 }

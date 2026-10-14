@@ -1,10 +1,10 @@
-import { useEffect, useRef, useState, type ReactNode } from "react";
+import { useEffect, useRef, useState, type KeyboardEvent, type PointerEvent, type ReactNode } from "react";
 import { Cloud, CloudLightning, CloudRain, Droplets, Flower2, Shovel, Sparkles, Sun, Wind, X } from "lucide-react";
 import { useRewards } from "@/lib/rewards";
 import { plantStages } from "@/lib/levels";
-import { backStages, thirstLevel, today, weedsFor } from "@/lib/garden";
+import { BASE, CAN_TIP, backStages, nearestPlant, nearestWeed, plantSpots, spoutTip, thirstLevel, today, weedsFor } from "@/lib/garden";
 import { SPOTS, SUN_MESSAGES, WATER_MESSAGES, WEATHER, WEED_MESSAGES, flowerInfo, type FlowerKey, type WeatherKey } from "@/content/garden";
-import { GardenScene, type Pick } from "./Garden";
+import { GardenScene, type GardenTool, type Pick } from "./Garden";
 import { FlowerPicker, FlowerPreview } from "./FlowerPicker";
 import { prefersReducedMotion } from "./ui";
 
@@ -55,7 +55,12 @@ export function GardenPlay() {
   const [hint, setHint] = useState(false);
   const [picker, setPicker] = useState(false);
   const [now, setNow] = useState<number | null>(null);
-  const thirst = now === null ? 0 : thirstLevel(lastCareAt, now);
+  const [tool, setTool] = useState<GardenTool | null>(null);
+  const [watered, setWatered] = useState<number[]>([]);
+  const savedWater = useRef(false);
+  const drag = useRef<{ id: number; sx: number; sy: number; dx: number; dy: number; moved: boolean } | null>(null);
+  // Thirst is read once on arrival, then each plant perks up as it's watered.
+  const [thirst, setThirst] = useState(0);
   const later = (fn: () => void, ms: number) => { timers.current.push(setTimeout(fn, ms)); };
   useEffect(() => () => timers.current.forEach(clearTimeout), []);
 
@@ -93,6 +98,7 @@ export function GardenPlay() {
     started.current = true;
     const t = Date.now();
     setNow(t);
+    setThirst(thirstLevel(lastCareAt, t));
     const d = today();
     let pulled: number[] = [];
     try { pulled = JSON.parse(store.get(`pip:weeds:${d}`) ?? "[]") as number[]; } catch { pulled = []; }
@@ -115,12 +121,92 @@ export function GardenPlay() {
   // Keep "seen" current while she earns petals on this screen.
   useEffect(() => { if (started.current) store.set("pip:garden-seen", String(petals)); }, [petals]);
 
-  const doWater = () => {
-    water();
-    setNow(Date.now());
+  /* ---------- hands-on tools: pick up, move, tap to use ---------- */
+  const svgPoint = (cx: number, cy: number) => {
+    const svg = wrap.current?.querySelector("svg");
+    const m = svg?.getScreenCTM();
+    if (!svg || !m) return null;
+    const p = new DOMPoint(cx, cy).matrixTransform(m.inverse());
+    return { x: p.x, y: p.y };
+  };
+  const clampTool = (t: GardenTool): GardenTool => ({ ...t, x: Math.min(Math.max(t.x, 14), 326), y: Math.min(Math.max(t.y, 18), 152) });
+  const pickUp = (kind: GardenTool["kind"]) => {
+    if (tool?.kind === kind) { setTool(null); return; }
+    setTool({ kind, x: 170, y: 46, tipping: false, dragging: false });
+    show(kind === "can" ? "Watering can" : "Trowel",
+      kind === "can" ? "Drag the can over a flower, or tap the flower, then tap the can to pour." : "Drag the trowel onto a weed, or tap the weed, then tap the trowel to dig it out.",
+      null, kind === "can" ? WATER : SAGE);
+  };
+  const moveToolTo = (x: number, top: number) => {
+    if (!tool) return;
+    if (tool.kind === "can") {
+      const tip = spoutTip(CAN_TIP);
+      setTool(clampTool({ ...tool, x: x - tip.x, y: top - 14 - tip.y, dragging: false }));
+    } else setTool(clampTool({ ...tool, x, y: BASE - 20, dragging: false }));
+  };
+  const waterPlant = (slot: number) => {
+    const first = !savedWater.current;
+    if (first) { savedWater.current = true; water(); setNow(Date.now()); }
+    const wasThirsty = thirst > 0 && !watered.includes(slot);
+    setWatered((w) => (w.includes(slot) ? w : [...w, slot]));
     if (!prefersReducedMotion()) setWatering(Date.now());
-    show("Watered", next("water", WATER_MESSAGES), null, WATER);
-    later(() => popPlant(-1), 1500);
+    popPlant(slot);
+    const el = spot(`plant-${slot}`);
+    burst(el, WATER);
+    const all = plantSpots(petals).every((p) => p.slot === slot || watered.includes(p.slot));
+    show(wasThirsty ? "Perked right up" : "Watered", all && thirst ? "Every plant has had a drink. Now one for you?" : next("water", WATER_MESSAGES), el, WATER);
+  };
+  const applyTool = () => {
+    if (!tool || tool.tipping) return;
+    setTool({ ...tool, tipping: true });
+    if (tool.kind === "can") {
+      const target = nearestPlant(petals, tool.x + spoutTip(CAN_TIP).x, 24);
+      later(() => {
+        setTool((t) => (t ? { ...t, tipping: false } : t));
+        if (target) waterPlant(target.slot);
+        else show("Just the soil", "Move the spout over a flower and try again.", spot("tool"), WATER);
+      }, 1000);
+    } else {
+      const target = nearestWeed(weeds, tool.x, 18);
+      later(() => {
+        setTool((t) => (t ? { ...t, tipping: false } : t));
+        if (target !== null) pullWeed(target);
+        else show(weeds.length ? "No weed here" : "All clear", weeds.length ? "Move the trowel onto a weed and dig again." : "Nothing to pull today. New weeds pop up tomorrow, because life.", spot("tool"), SAGE);
+      }, 550);
+    }
+  };
+  const toolProps = {
+    "aria-label": tool?.kind === "can" ? "Watering can. Drag it over a flower and tap to pour. Arrow keys move it." : "Trowel. Drag it onto a weed and tap to dig. Arrow keys move it.",
+    onPointerDown: (e: PointerEvent<SVGGElement>) => {
+      if (!tool) return;
+      const p = svgPoint(e.clientX, e.clientY);
+      if (!p) return;
+      e.currentTarget.setPointerCapture(e.pointerId);
+      drag.current = { id: e.pointerId, sx: e.clientX, sy: e.clientY, dx: tool.x - p.x, dy: tool.y - p.y, moved: false };
+    },
+    onPointerMove: (e: PointerEvent<SVGGElement>) => {
+      const d = drag.current;
+      if (!d || d.id !== e.pointerId) return;
+      if (!d.moved && Math.hypot(e.clientX - d.sx, e.clientY - d.sy) < 6) return;
+      d.moved = true;
+      const p = svgPoint(e.clientX, e.clientY);
+      if (p) setTool((t) => (t ? clampTool({ ...t, x: p.x + d.dx, y: p.y + d.dy, dragging: true }) : t));
+    },
+    onPointerUp: (e: PointerEvent<SVGGElement>) => {
+      const d = drag.current;
+      drag.current = null;
+      if (!d || d.id !== e.pointerId) return;
+      if (d.moved) setTool((t) => (t ? { ...t, dragging: false } : t));
+      else applyTool();
+    },
+    onPointerCancel: () => { drag.current = null; setTool((t) => (t ? { ...t, dragging: false } : t)); },
+    onKeyDown: (e: KeyboardEvent<SVGGElement>) => {
+      const step: Record<string, [number, number]> = { ArrowLeft: [-12, 0], ArrowRight: [12, 0], ArrowUp: [0, -12], ArrowDown: [0, 12] };
+      const s = step[e.key];
+      if (s) { e.preventDefault(); setTool((t) => (t ? clampTool({ ...t, x: t.x + s[0], y: t.y + s[1] }) : t)); }
+      else if (e.key === "Enter" || e.key === " ") { e.preventDefault(); applyTool(); }
+      else if (e.key === "Escape") setTool(null);
+    },
   };
   const doSun = () => {
     setSunBurst(Date.now());
@@ -153,6 +239,19 @@ export function GardenPlay() {
 
   const onPick = (p: Pick, el: Element) => {
     markTapped();
+    // Holding a tool: tapping a plant or weed moves the tool there, ready to use.
+    if (tool && (p.kind === "flower" || p.kind === "bud" || p.kind === "sprout") && p.slot !== undefined) {
+      const spotP = plantSpots(petals).find((s) => s.slot === p.slot);
+      if (spotP) { moveToolTo(spotP.x, spotP.top); return; }
+    }
+    if (tool && p.kind === "weed" && p.weed !== undefined) {
+      if (tool.kind === "trowel") { moveToolTo(p.weed, BASE); return; }
+    }
+    if (!tool && p.kind === "weed" && p.weed !== undefined) {
+      setTool(clampTool({ kind: "trowel", x: p.weed, y: BASE - 20, tipping: false, dragging: false }));
+      show("Grab the trowel", "It's right there on the weed. Tap the trowel to dig it out.", null, SAGE);
+      return;
+    }
     const f = p.flower ? flowerInfo(p.flower) : null;
     switch (p.kind) {
       case "flower":
@@ -177,7 +276,7 @@ export function GardenPlay() {
       case "butterfly": show(SPOTS.butterfly.title, SPOTS.butterfly.message, el, "var(--mm-plum-2)"); burst(el, "var(--mm-plum-2)"); break;
       case "bee": show(SPOTS.bee.title, SPOTS.bee.message, el, GOLD); break;
       case "cloud": show(SPOTS.cloud.title, SPOTS.cloud.message, el, "#8b8597"); break;
-      case "weed": pullWeed(p.weed); break;
+      case "weed": if (tool) show("Wrong tool", "Swap to the trowel for weeds.", el, SAGE); break;
     }
   };
 
@@ -206,7 +305,7 @@ export function GardenPlay() {
         </p>
       )}
       <div ref={wrap} className="relative" onKeyDown={(e) => e.key === "Escape" && setBubble(null)}>
-        <GardenScene petals={petals} flowers={flowers} weather={weather} thirst={thirst} weeds={weeds} pulling={pulling} watering={watering} sunBurst={sunBurst} grown={grown} pop={pop} hint={hint} onPick={onPick} />
+        <GardenScene petals={petals} flowers={flowers} weather={weather} thirst={thirst} weeds={weeds} pulling={pulling} watering={watering} sunBurst={sunBurst} grown={grown} pop={pop} hint={hint && !tool} onPick={onPick} watered={watered} tool={tool} toolProps={toolProps} />
         {bubble && !bubble.strip && (
           <div
             key={bubble.key}
@@ -243,9 +342,9 @@ export function GardenPlay() {
       )}
 
       <div className="grid grid-cols-3 gap-2 px-[18px] pt-3">
-        <ToolButton onClick={doWater} label="Water" icon={<Droplets className="size-6" style={{ color: WATER }} aria-hidden="true" />} note={thirst ? "Thirsty" : undefined} />
+        <ToolButton onClick={() => pickUp("can")} pressed={tool?.kind === "can"} label={tool?.kind === "can" ? "Put it down" : "Water"} icon={<Droplets className="size-6" style={{ color: WATER }} aria-hidden="true" />} note={thirst && plantSpots(petals).some((p) => !watered.includes(p.slot)) ? "Thirsty" : undefined} />
         <ToolButton onClick={doSun} label="Sunshine" icon={<Sun className="size-6 text-gold" aria-hidden="true" />} />
-        <ToolButton onClick={() => pullWeed()} label={weeds.length ? `Weeds · ${weeds.length}` : "No weeds"} icon={<Shovel className="size-6 text-sage" aria-hidden="true" />} />
+        <ToolButton onClick={() => pickUp("trowel")} pressed={tool?.kind === "trowel"} label={tool?.kind === "trowel" ? "Put it down" : weeds.length ? `Weeds · ${weeds.length}` : "No weeds"} icon={<Shovel className="size-6 text-sage" aria-hidden="true" />} />
       </div>
 
       <div className="flex flex-col gap-2 px-[18px] pt-5">
@@ -287,9 +386,9 @@ export function GardenPlay() {
   );
 }
 
-function ToolButton({ onClick, label, icon, note }: { onClick: () => void; label: string; icon: ReactNode; note?: string | undefined }) {
+function ToolButton({ onClick, label, icon, note, pressed }: { onClick: () => void; label: string; icon: ReactNode; note?: string | undefined; pressed?: boolean }) {
   return (
-    <button type="button" onClick={onClick} className="press relative flex min-h-[72px] flex-col items-center justify-center gap-1 rounded-2xl border border-line bg-card text-sm font-bold text-ink shadow-soft">
+    <button type="button" onClick={onClick} aria-pressed={pressed} className={`press relative flex min-h-[72px] flex-col items-center justify-center gap-1 rounded-2xl border text-sm font-bold text-ink shadow-soft ${pressed ? "border-plum bg-plum-soft" : "border-line bg-card"}`}>
       {icon}
       {label}
       {note && <span className="absolute -top-2 right-1.5 rounded-full bg-gold px-2 py-0.5 text-[11px] text-[#271f31]">{note}</span>}

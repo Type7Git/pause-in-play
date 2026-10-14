@@ -4,6 +4,7 @@ import { LockKeyhole } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { Card, Chip, Muted, Pill } from "./ui";
 import type { LearnItem } from "./AdminSections";
+import { ShareArticle } from "./ShareArticle";
 
 export function PublishedLearn() {
   const q = useQuery({
@@ -40,6 +41,7 @@ function Item({ item, open, onToggle }: { item: LearnItem; open: boolean; onTogg
         <>
           {item.kind === "video" && item.video_url && <a href={item.video_url} target="_blank" rel="noreferrer" className="font-bold text-plum underline">Watch the video</a>}
           {item.body && <p className="whitespace-pre-line">{item.body}</p>}
+          {item.id && <ShareArticle id={item.id} title={item.title} />}
           {item.kind === "quiz" && (qq ? (
             <>
               <Muted>Question {n + 1} of {item.quiz.length}</Muted>

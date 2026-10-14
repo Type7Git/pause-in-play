@@ -4,6 +4,42 @@ import { plantStages } from "./levels";
 /** Back row: once the front row is in full bloom (70 petals) a second row keeps coming up, finishing around 200. */
 export const backStages = (petals: number) => plantStages(Math.max(0, petals - 70) / 2);
 
+/** Garden layout in picture units (340 x 190). Front row first, then the back row (slots 7-13). */
+export const BASE = 168;
+export const BACK_BASE = 150;
+export const SLOTS: [number, number][] = [[40, 56], [82, 76], [124, 50], [166, 86], [208, 62], [250, 80], [292, 54]];
+export const BACK: [number, number][] = [[61, 44], [229, 50], [145, 40], [313, 46], [103, 52], [187, 46], [20, 42]];
+
+/** Spout tip of the watering can, relative to where it's held, at a given tilt (degrees). */
+export function spoutTip(deg: number) {
+  const r = (deg * Math.PI) / 180;
+  return { x: 24 * Math.cos(r) + 14 * Math.sin(r), y: 24 * Math.sin(r) - 14 * Math.cos(r) };
+}
+export const CAN_REST = 38;
+export const CAN_TIP = 72;
+
+/** Every plant that has come up, with where its head is. */
+export function plantSpots(petals: number) {
+  const front = plantStages(petals);
+  const back = backStages(petals);
+  const out: { slot: number; x: number; top: number; stage: number }[] = [];
+  SLOTS.forEach(([x, h], i) => { const st = front[i] ?? 0; if (st) out.push({ slot: i, x, stage: st, top: BASE - (st === 1 ? h * 0.4 : st === 2 ? h * 0.8 : h) }); });
+  BACK.forEach(([x, h], j) => { const st = back[j] ?? 0; if (st) out.push({ slot: j + 7, x, stage: st, top: BACK_BASE - (st === 1 ? h * 0.4 : st === 2 ? h * 0.8 : h) }); });
+  return out;
+}
+
+/** The plant nearest a point along the ground, if it's close enough to reach. */
+export function nearestPlant(petals: number, x: number, reach = 22) {
+  let best: ReturnType<typeof plantSpots>[number] | null = null;
+  for (const p of plantSpots(petals)) if (Math.abs(p.x - x) <= reach && (!best || Math.abs(p.x - x) < Math.abs(best.x - x))) best = p;
+  return best;
+}
+export function nearestWeed(weeds: number[], x: number, reach = 18) {
+  let best: number | null = null;
+  for (const w of weeds) if (Math.abs(w - x) <= reach && (best === null || Math.abs(w - x) < Math.abs(best - x))) best = w;
+  return best;
+}
+
 export const MIN_GARDENS = 25;
 const BUCKETS = [1, 2, 5, 10, 15, 20, 25, 30, 40, 50];
 

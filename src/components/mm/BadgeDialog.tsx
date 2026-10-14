@@ -1,10 +1,13 @@
-import { useEffect, useRef } from "react";
-import { Users } from "lucide-react";
+import { useEffect, useRef, useState } from "react";
+import { Share2, Users } from "lucide-react";
 import type { Badge } from "@/lib/rewards";
 import { BADGE_COPY } from "@/content/garden";
 import { badgeShareLine, standingLine, type Standing } from "@/lib/garden";
 import { BadgeGlyphShape } from "./icons";
 import { prefersReducedMotion } from "./ui";
+import { ShareSheet } from "./ShareSheet";
+import { renderCard, svgImage } from "@/lib/share-cards";
+import type { SharePayload } from "@/lib/share";
 
 export function BadgeMedal({ badge, className = "size-[52px]" }: { badge: Badge; className?: string }) {
   return (
@@ -54,7 +57,19 @@ export function BadgeDialog({ badge, standing, onClose }: { badge: Badge | null;
     if (!badge && d.open) d.close();
   }, [badge]);
   const copy = badge ? BADGE_COPY[badge.key] : undefined;
-  const share = badge ? badgeShareLine(standing, badge.key) : null;
+  const [sharing, setSharing] = useState<SharePayload | null>(null);
+  const share = () => {
+    if (!badge) return;
+    const el = medal.current?.querySelector<SVGSVGElement>(".badge-pop svg");
+    setSharing({
+      title: `${badge.name} badge`,
+      text: `I just earned the "${badge.name}" badge in Pause in Play. ${copy?.cheer ?? ""}`.trim(),
+      palText: `🏅 I just earned "${badge.name}" in Pause in Play! ${copy?.cheer ?? ""}`.trim(),
+      fileName: `${badge.key}-badge.png`,
+      image: async () => renderCard({ eyebrow: "Badge earned", title: badge.name, body: copy?.cheer, art: el ? await svgImage(el) : null, artShape: "medal", tint: "#FBEFD9" }),
+    });
+  };
+  const rarity = badge ? badgeShareLine(standing, badge.key) : null;
   const line = standingLine(standing);
 
   return (
@@ -95,17 +110,25 @@ export function BadgeDialog({ badge, standing, onClose }: { badge: Badge | null;
               )}
             </div>
           )}
-          {(share || line) && (
+          {(rarity || line) && (
             <div className="flex w-full items-start gap-2.5 border-t border-line pt-3 text-left text-[13px] leading-snug text-muted-foreground">
               <Users className="mt-0.5 size-4 shrink-0 text-plum" aria-hidden="true" />
-              <p>{share}{share && line ? " " : ""}{line}</p>
+              <p>{rarity}{rarity && line ? " " : ""}{line}</p>
             </div>
           )}
-          <button type="button" onClick={onClose} autoFocus className="press min-h-11 w-full rounded-full bg-plum px-5 text-sm font-bold text-shell">
-            Back to my garden
-          </button>
+          <div className="flex w-full gap-2">
+            {badge.earned && (
+              <button type="button" onClick={share} className="press flex min-h-11 flex-1 items-center justify-center gap-2 rounded-full border-[1.5px] border-line bg-card px-4 text-sm font-bold text-plum">
+                <Share2 className="size-4" aria-hidden="true" />Share
+              </button>
+            )}
+            <button type="button" onClick={onClose} autoFocus className="press min-h-11 flex-[2] rounded-full bg-plum px-5 text-sm font-bold text-shell">
+              Back to my garden
+            </button>
+          </div>
         </div>
       )}
+      <ShareSheet open={!!sharing} payload={sharing} onClose={() => setSharing(null)} />
     </dialog>
   );
 }

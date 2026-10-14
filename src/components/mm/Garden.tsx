@@ -1,17 +1,12 @@
-import type { KeyboardEvent, MouseEvent, ReactNode } from "react";
+import type { KeyboardEvent, MouseEvent, ReactNode, SVGProps } from "react";
 import { plantStages } from "@/lib/levels";
-import { backStages } from "@/lib/garden";
+import { BACK, BACK_BASE, BASE, CAN_REST, CAN_TIP, SLOTS, backStages, spoutTip } from "@/lib/garden";
 import { DEFAULT_FLOWERS, flowerInfo, type FlowerKey, type WeatherKey } from "@/content/garden";
 
 /** The garden picture. Pure drawing: interaction (bubbles, tools) lives in GardenPlay. */
 
 const W = 340;
 const H = 190;
-const BASE = 168;
-const SLOTS: [number, number][] = [[40, 56], [82, 76], [124, 50], [166, 86], [208, 62], [250, 80], [292, 54]];
-/** Back row: once the front row is in full bloom (70 petals) a second row keeps coming up, finishing around 200. */
-const BACK: [number, number][] = [[61, 44], [229, 50], [145, 40], [313, 46], [103, 52], [187, 46], [20, 42]];
-const BACK_BASE = 150;
 
 export type PickKind = "flower" | "sprout" | "bud" | "seed" | "sun" | "soil" | "butterfly" | "bee" | "cloud" | "weed";
 export type Pick = { kind: PickKind; slot?: number; flower?: FlowerKey; weed?: number };
@@ -110,7 +105,7 @@ function Plant({ x, h, stage, k, i, thirst, grow, pop, hint, onPick, base: BASE 
     <g className="garden-sway" style={{ ...origin, animationDelay: `${-i * 0.7}s` }}>
       <g className={grow ? "garden-grow" : pop ? "garden-pop" : ""} style={{ ...origin, animationDelay: grow ? `${0.3 + i * 0.18}s` : undefined }}>
         <g transform={`rotate(${droop} ${x} ${BASE})`} opacity={thirst === 2 ? 0.78 : thirst === 1 ? 0.9 : 1}>
-          <Spot label={label} pick={pick} onPick={onPick}>
+          <Spot label={label} pick={pick} onPick={onPick} spot={`plant-${i}`}>
             <rect x={x - 15} y={top - 16} width="30" height={BASE - top + 16} fill="transparent" />
             <path d={`M${x} ${BASE} C ${x - 3} ${BASE - ph * 0.4}, ${x + 3} ${BASE - ph * 0.7}, ${x} ${top}`} stroke="var(--mm-sage)" strokeWidth="2.6" fill="none" strokeLinecap="round" />
             <path d={`M${x} ${BASE - ph * 0.35} q11 -9 17 -3 q-8 9 -17 3z`} fill="var(--mm-sage)" />
@@ -150,9 +145,60 @@ export type SceneProps = {
   pop?: number | null;
   hint?: boolean;
   onPick?: OnPick;
+  /** Plants watered this visit stand back up straight away. */
+  watered?: number[];
+  tool?: GardenTool | null;
+  toolProps?: SVGProps<SVGGElement>;
 };
 
-export function GardenScene({ petals, flowers = DEFAULT_FLOWERS, weather = "sunny", thirst = 0, weeds = [], pulling = null, watering = 0, sunBurst = 0, grown = [], pop = null, hint = false, onPick }: SceneProps) {
+export type GardenTool = { kind: "can" | "trowel"; x: number; y: number; tipping: boolean; dragging: boolean };
+
+
+function ToolView({ t, props }: { t: GardenTool; props?: SVGProps<SVGGElement> | undefined }) {
+  const can = t.kind === "can";
+  const tilt = can ? (t.tipping ? CAN_TIP : CAN_REST) : t.tipping ? -40 : -12;
+  const tip = spoutTip(CAN_TIP);
+  return (
+    <g
+      {...props}
+      data-spot="tool"
+      role="button"
+      tabIndex={0}
+      className="mm-hot"
+      style={{ transform: `translate(${t.x}px, ${t.y}px)`, transition: t.dragging ? "none" : "transform .45s cubic-bezier(.2,.8,.3,1.1)", touchAction: "none", cursor: t.dragging ? "grabbing" : "grab" }}
+    >
+      <circle r="26" fill="transparent" />
+      <circle r="22" fill="var(--mm-card)" opacity={t.dragging ? 0.35 : 0.18} />
+      <g style={{ transform: `rotate(${tilt}deg)`, transition: "transform .35s ease-in-out" }}>
+        {can ? (
+          <>
+            <path d="M-14 -11 q-11 1 -11 10 q0 9 11 9" stroke="#5f8fbf" strokeWidth="3" fill="none" strokeLinecap="round" />
+            <path d="M8 -4 L22 -12 L24.5 -9 L10 2z" fill="#6f9cc8" />
+            <ellipse cx="24" cy="-11.5" rx="2.6" ry="4.2" fill="#5f8fbf" transform="rotate(-30 24 -11.5)" />
+            <path d="M-15 -12 h24 v19 q0 5 -5 5 h-14 q-5 0 -5 -5z" fill="#7aa8d4" />
+            <path d="M-15 -12 h24 v4 h-24z" fill="#5f8fbf" />
+            <path d="M-11 -6 v12" stroke="#fff" strokeWidth="2" opacity=".35" strokeLinecap="round" />
+          </>
+        ) : (
+          <>
+            <rect x="-2.6" y="-26" width="5.2" height="15" rx="2.6" fill="#a8744a" />
+            <rect x="-1.2" y="-12" width="2.4" height="6" fill="#8a8f98" />
+            <path d="M-7 -6 h14 q0 14 -7 20 q-7 -6 -7 -20z" fill="#b7bcc6" />
+            <path d="M-4 -4 q1 9 4 13" stroke="#fff" strokeWidth="1.2" opacity=".5" fill="none" />
+          </>
+        )}
+      </g>
+      {can && t.tipping && [0, 1, 2, 3, 4, 5].map((j) => (
+        <circle key={j} cx={tip.x + (j % 3) - 1} cy={tip.y} r="1.7" fill="#5f8fbf" className="garden-pour" style={{ animationDelay: `${j * 0.1}s` }} />
+      ))}
+      {!can && t.tipping && [0, 1, 2, 3].map((j) => (
+        <circle key={j} cx={(j - 1.5) * 4} cy="14" r="1.8" fill="#8a6446" className="garden-dirt" style={{ animationDelay: `${j * 0.06}s` }} />
+      ))}
+    </g>
+  );
+}
+
+export function GardenScene({ petals, flowers = DEFAULT_FLOWERS, weather = "sunny", thirst = 0, weeds = [], pulling = null, watering = 0, sunBurst = 0, grown = [], pop = null, hint = false, onPick, watered = [], tool = null, toolProps }: SceneProps) {
   const stages = plantStages(petals);
   const back = backStages(petals);
   const blooms = [...stages, ...back].filter((s) => s >= 3).length;
@@ -195,7 +241,7 @@ export function GardenScene({ petals, flowers = DEFAULT_FLOWERS, weather = "sunn
       {BACK.map(([x, h], j) => {
         const st = back[j] ?? 0;
         const k = flowers[(j + 3) % flowers.length] ?? "rose";
-        return st > 0 ? <Plant key={`b${j}-${k}`} x={x} h={h} stage={st} k={k} i={j + 7} thirst={thirst} grow={grown.includes(j + 7)} pop={pop === j + 7 || pop === -1} hint={false} onPick={onPick} base={BACK_BASE} scale={0.8} /> : null;
+        return st > 0 ? <Plant key={`b${j}-${k}`} x={x} h={h} stage={st} k={k} i={j + 7} thirst={watered.includes(j + 7) ? 0 : thirst} grow={grown.includes(j + 7)} pop={pop === j + 7 || pop === -1} hint={false} onPick={onPick} base={BACK_BASE} scale={0.8} /> : null;
       })}
 
       <Spot label="The soil" pick={{ kind: "soil" }} onPick={onPick} spot="soil">
@@ -208,7 +254,7 @@ export function GardenScene({ petals, flowers = DEFAULT_FLOWERS, weather = "sunn
         const st = stages[i] ?? 0;
         const k = flowers[i % flowers.length] ?? "rose";
         return st > 0 ? (
-          <Plant key={`${i}-${k}`} x={x} h={h} stage={st} k={k} i={i} thirst={thirst} grow={grown.includes(i)} pop={pop === i || pop === -1} hint={hint && i === firstBloom} onPick={onPick} />
+          <Plant key={`${i}-${k}`} x={x} h={h} stage={st} k={k} i={i} thirst={watered.includes(i) ? 0 : thirst} grow={grown.includes(i)} pop={pop === i || pop === -1} hint={hint && i === firstBloom} onPick={onPick} />
         ) : (
           <Spot key={i} label="A seed, waiting" pick={{ kind: "seed", slot: i }} onPick={onPick}>
             <ellipse cx={x} cy={BASE + 1} rx="8" ry="3" fill="var(--mm-hill-2)" />
@@ -259,16 +305,7 @@ export function GardenScene({ petals, flowers = DEFAULT_FLOWERS, weather = "sunn
         <path key={i} d={`M0 ${y} q30 -6 60 0 t60 0`} stroke="#fff" strokeWidth="1.6" fill="none" opacity=".7" strokeLinecap="round" className="garden-gust" style={{ animationDelay: `${-i * 1.1}s` }} />
       ))}
 
-      {watering > 0 && (
-        <g key={watering} className="garden-can">
-          <g transform="translate(0 52)">
-            <path d="M-14 -10 h20 v16 q0 4 -4 4 h-12 q-4 0 -4 -4z" fill="#7aa0c4" />
-            <path d="M6 -6 l16 -8 l2 3 l-15 9z" fill="#7aa0c4" />
-            <path d="M-14 -6 q-8 0 -8 7 q0 6 8 6" stroke="#7aa0c4" strokeWidth="2.4" fill="none" />
-            {[0, 1, 2, 3, 4].map((j) => <circle key={j} cx={22 + (j % 2) * 3} cy={-8} r="1.6" fill="#7d9ec8" className="garden-drip" style={{ animationDelay: `${j * 0.12}s` }} />)}
-          </g>
-        </g>
-      )}
+      {tool && <ToolView t={tool} props={toolProps} />}
     </svg>
   );
 }

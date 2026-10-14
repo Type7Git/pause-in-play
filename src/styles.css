@@ -245,3 +245,11 @@
 }
 @keyframes garden-strip { 0% { opacity: 0; transform: translateY(-6px) scale(.98); } 100% { opacity: 1; transform: none; } }
 .garden-strip { animation: garden-strip 300ms cubic-bezier(.2,.8,.3,1.2) both; }
+@keyframes garden-pour { from { transform: translate(0, 0); opacity: 1; } to { transform: translate(3px, 70px); opacity: 0; } }
+.garden-pour { animation: garden-pour .55s ease-in infinite; }
+@keyframes garden-dirt { 0% { transform: translate(0, 0); opacity: 1; } 100% { transform: translate(var(--dx, 6px), -14px); opacity: 0; } }
+.garden-dirt { animation: garden-dirt .5s ease-out infinite; }
+.garden-dirt:nth-child(odd) { --dx: -7px; }
+@keyframes tab-pop { from { opacity: 0; transform: translateY(6px) scale(.94); } to { opacity: 1; transform: none; } }
+.tab-pop { animation: tab-pop 220ms cubic-bezier(.2,.8,.3,1.2) both; }
+.mm-hot:focus:not(:focus-visible) { outline: none; }

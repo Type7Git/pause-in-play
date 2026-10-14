@@ -1,5 +1,7 @@
-import { Link, useLocation } from "@tanstack/react-router";
-import type { ReactNode } from "react";
+import { Link, useLocation, useRouter } from "@tanstack/react-router";
+import { useEffect, type ReactNode } from "react";
+import { onNative } from "@/lib/native";
+import { topUpPhoneNotes } from "@/lib/notes-device";
 import { Settings } from "lucide-react";
 import { getLevel } from "@/lib/levels";
 import { useRewards } from "@/lib/rewards";
@@ -32,10 +34,24 @@ function Meter() {
   );
 }
 
+/** In the phone app: tapping a notification opens the right screen, and Little notes stay topped up. */
+function useAppNotifications() {
+  const router = useRouter();
+  useEffect(() => {
+    void topUpPhoneNotes();
+    const l = onNative("LocalNotifications", "localNotificationActionPerformed", (data) => {
+      const path = (data as { notification?: { extra?: { path?: unknown } } })?.notification?.extra?.path;
+      if (typeof path === "string" && path.startsWith("/")) router.history.push(path);
+    });
+    return () => { void l?.remove(); };
+  }, [router]);
+}
+
 export function AppShell({ children }: { children: ReactNode }) {
   const path = useLocation({ select: (l) => l.pathname });
   const quiet = path === "/wind-down";
   usePelvicReminders();
+  useAppNotifications();
   if (path.startsWith("/admin")) {
     return (
       <div className="min-h-screen bg-shell px-6 py-8">

@@ -2,13 +2,16 @@ import { createFileRoute } from "@tanstack/react-router";
 import { BackButton } from "@/components/mm/BackButton";
 import { useEffect, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
-import { Users } from "lucide-react";
+import { Share2, Users } from "lucide-react";
 import { GardenPlay } from "@/components/mm/GardenPlay";
 import { BadgeDialog, BadgeMedal } from "@/components/mm/BadgeDialog";
 import { getLevel } from "@/lib/levels";
 import { useRewards, type Badge } from "@/lib/rewards";
 import { gardenStanding } from "@/lib/garden.functions";
 import { standingLine } from "@/lib/garden";
+import { ShareSheet } from "@/components/mm/ShareSheet";
+import { renderCard, svgImage } from "@/lib/share-cards";
+import { shareOrigin, type SharePayload } from "@/lib/share";
 
 const SEEN = "pip:badges-seen";
 
@@ -30,6 +33,19 @@ function GardenPage() {
   const { ready, petals, badges } = useRewards();
   const L = getLevel(petals);
   const [open, setOpen] = useState<Badge | null>(null);
+  const [sharing, setSharing] = useState<SharePayload | null>(null);
+  const shareGarden = () => setSharing({
+    title: "My garden",
+    text: `My Pause in Play garden is at ${L.name}. Every petal is a small act of looking after myself.`,
+    palText: `🌸 My garden just reached ${L.name} in Pause in Play.`,
+    url: shareOrigin(),
+    fileName: "my-garden.png",
+    image: async () => {
+      const el = document.querySelector<SVGSVGElement>('section[aria-label="Your garden"] svg');
+      const art = el ? await svgImage(el, [".garden-flutter", ".garden-buzz", ".garden-drift", ".garden-drift-fast", ".garden-flash", ".garden-rain", ".garden-gust", ".garden-soak", ".garden-pour", ".garden-dirt", ".mm-ring", '[data-spot="tool"]']) : null;
+      return renderCard({ eyebrow: "My garden", title: L.name, body: `${petals} petals, each one a small act of looking after myself.`, art, artShape: "wide", tint: "#E6F1E9" });
+    },
+  });
   const [seen, setSeen] = useState<string[] | null>(null);
   useEffect(() => {
     try { setSeen(JSON.parse(localStorage.getItem(SEEN) ?? "[]") as string[]); } catch { setSeen([]); }
@@ -68,6 +84,9 @@ function GardenPage() {
           <div className="h-2.5 overflow-hidden rounded-full bg-sunk" role="progressbar" aria-label={L.next ? `Progress to ${L.next.name}` : "Top level reached"} aria-valuemin={0} aria-valuemax={100} aria-valuenow={Math.round(L.pct * 100)}>
             <i className="petal-bar block h-full rounded-full transition-[width] duration-500" style={{ width: `${Math.round(L.pct * 100)}%` }} />
           </div>
+          <button type="button" onClick={shareGarden} className="press mt-1.5 flex min-h-11 items-center justify-center gap-2 self-start rounded-full border-[1.5px] border-line bg-card px-4 text-sm font-bold text-plum">
+            <Share2 className="size-4" aria-hidden="true" />Share my garden
+          </button>
         </div>
       </section>
       <section className="mm-card flex flex-col gap-3 p-[18px]">
@@ -103,6 +122,7 @@ function GardenPage() {
         </section>
       )}
       <BadgeDialog badge={open} standing={standing.data} onClose={() => setOpen(null)} />
+      <ShareSheet open={!!sharing} payload={sharing} onClose={() => setSharing(null)} />
     </>
   );
 }

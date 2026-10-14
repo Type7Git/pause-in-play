@@ -22,6 +22,7 @@ import { Route as LearnRouteImport } from './routes/learn'
 import { Route as LittleWinRouteImport } from './routes/little-win'
 import { Route as MedicinesRouteImport } from './routes/medicines'
 import { Route as MoodRouteImport } from './routes/mood'
+import { Route as NotesRouteImport } from './routes/notes'
 import { Route as PanelRouteImport } from './routes/panel'
 import { Route as PartnersRouteImport } from './routes/partners'
 import { Route as PelvicRouteImport } from './routes/pelvic'
@@ -48,6 +49,7 @@ import { Route as PalCodeRouteImport } from './routes/pal.$code'
 import { Route as PalsIndexRouteImport } from './routes/pals.index'
 import { Route as PalsIdRouteImport } from './routes/pals.$id'
 import { Route as PalsInviteRouteImport } from './routes/pals.invite'
+import { Route as ReadIdRouteImport } from './routes/read.$id'
 import { Route as ApiPublicHooksSendNudgesRouteImport } from './routes/api/public/hooks/send-nudges'
 
 const IndexRoute = IndexRouteImport.update({
@@ -113,6 +115,11 @@ const MedicinesRoute = MedicinesRouteImport.update({
 const MoodRoute = MoodRouteImport.update({
   id: '/mood',
   path: '/mood',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const NotesRoute = NotesRouteImport.update({
+  id: '/notes',
+  path: '/notes',
   getParentRoute: () => rootRouteImport,
 } as any)
 const PanelRoute = PanelRouteImport.update({
@@ -245,6 +252,11 @@ const PalsInviteRoute = PalsInviteRouteImport.update({
   path: '/pals/invite',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ReadIdRoute = ReadIdRouteImport.update({
+  id: '/read/$id',
+  path: '/read/$id',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ApiPublicHooksSendNudgesRoute =
   ApiPublicHooksSendNudgesRouteImport.update({
     id: '/api/public/hooks/send-nudges',
@@ -266,6 +278,7 @@ export interface FileRoutesByFullPath {
   '/little-win': typeof LittleWinRoute
   '/medicines': typeof MedicinesRoute
   '/mood': typeof MoodRoute
+  '/notes': typeof NotesRoute
   '/panel': typeof PanelRoute
   '/partners': typeof PartnersRoute
   '/pelvic': typeof PelvicRoute
@@ -289,6 +302,7 @@ export interface FileRoutesByFullPath {
   '/pal/$code': typeof PalCodeRoute
   '/pals/$id': typeof PalsIdRoute
   '/pals/invite': typeof PalsInviteRoute
+  '/read/$id': typeof ReadIdRoute
   '/intimacy/': typeof IntimacyIndexRoute
   '/move/': typeof MoveIndexRoute
   '/pals/': typeof PalsIndexRoute
@@ -307,6 +321,7 @@ export interface FileRoutesByTo {
   '/little-win': typeof LittleWinRoute
   '/medicines': typeof MedicinesRoute
   '/mood': typeof MoodRoute
+  '/notes': typeof NotesRoute
   '/panel': typeof PanelRoute
   '/partners': typeof PartnersRoute
   '/pelvic': typeof PelvicRoute
@@ -330,6 +345,7 @@ export interface FileRoutesByTo {
   '/pal/$code': typeof PalCodeRoute
   '/pals/$id': typeof PalsIdRoute
   '/pals/invite': typeof PalsInviteRoute
+  '/read/$id': typeof ReadIdRoute
   '/intimacy': typeof IntimacyIndexRoute
   '/move': typeof MoveIndexRoute
   '/pals': typeof PalsIndexRoute
@@ -350,6 +366,7 @@ export interface FileRoutesById {
   '/little-win': typeof LittleWinRoute
   '/medicines': typeof MedicinesRoute
   '/mood': typeof MoodRoute
+  '/notes': typeof NotesRoute
   '/panel': typeof PanelRoute
   '/partners': typeof PartnersRoute
   '/pelvic': typeof PelvicRoute
@@ -373,6 +390,7 @@ export interface FileRoutesById {
   '/pal/$code': typeof PalCodeRoute
   '/pals/$id': typeof PalsIdRoute
   '/pals/invite': typeof PalsInviteRoute
+  '/read/$id': typeof ReadIdRoute
   '/intimacy/': typeof IntimacyIndexRoute
   '/move/': typeof MoveIndexRoute
   '/pals/': typeof PalsIndexRoute
@@ -394,6 +412,7 @@ export interface FileRouteTypes {
     | '/little-win'
     | '/medicines'
     | '/mood'
+    | '/notes'
     | '/panel'
     | '/partners'
     | '/pelvic'
@@ -417,6 +436,7 @@ export interface FileRouteTypes {
     | '/pal/$code'
     | '/pals/$id'
     | '/pals/invite'
+    | '/read/$id'
     | '/intimacy/'
     | '/move/'
     | '/pals/'
@@ -435,6 +455,7 @@ export interface FileRouteTypes {
     | '/little-win'
     | '/medicines'
     | '/mood'
+    | '/notes'
     | '/panel'
     | '/partners'
     | '/pelvic'
@@ -458,6 +479,7 @@ export interface FileRouteTypes {
     | '/pal/$code'
     | '/pals/$id'
     | '/pals/invite'
+    | '/read/$id'
     | '/intimacy'
     | '/move'
     | '/pals'
@@ -477,6 +499,7 @@ export interface FileRouteTypes {
     | '/little-win'
     | '/medicines'
     | '/mood'
+    | '/notes'
     | '/panel'
     | '/partners'
     | '/pelvic'
@@ -500,6 +523,7 @@ export interface FileRouteTypes {
     | '/pal/$code'
     | '/pals/$id'
     | '/pals/invite'
+    | '/read/$id'
     | '/intimacy/'
     | '/move/'
     | '/pals/'
@@ -520,6 +544,7 @@ export interface RootRouteChildren {
   LittleWinRoute: typeof LittleWinRoute
   MedicinesRoute: typeof MedicinesRoute
   MoodRoute: typeof MoodRoute
+  NotesRoute: typeof NotesRoute
   PanelRoute: typeof PanelRoute
   PartnersRoute: typeof PartnersRoute
   PelvicRoute: typeof PelvicRoute
@@ -538,6 +563,7 @@ export interface RootRouteChildren {
   PalCodeRoute: typeof PalCodeRoute
   PalsIdRoute: typeof PalsIdRoute
   PalsInviteRoute: typeof PalsInviteRoute
+  ReadIdRoute: typeof ReadIdRoute
   MoveIndexRoute: typeof MoveIndexRoute
   PalsIndexRoute: typeof PalsIndexRoute
   ApiPublicHooksSendNudgesRoute: typeof ApiPublicHooksSendNudgesRoute
@@ -634,6 +660,13 @@ declare module '@tanstack/react-router' {
       path: '/mood'
       fullPath: '/mood'
       preLoaderRoute: typeof MoodRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/notes': {
+      id: '/notes'
+      path: '/notes'
+      fullPath: '/notes'
+      preLoaderRoute: typeof NotesRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/panel': {
@@ -818,6 +851,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PalsInviteRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/read/$id': {
+      id: '/read/$id'
+      path: '/read/$id'
+      fullPath: '/read/$id'
+      preLoaderRoute: typeof ReadIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/api/public/hooks/send-nudges': {
       id: '/api/public/hooks/send-nudges'
       path: '/api/public/hooks/send-nudges'
@@ -864,6 +904,7 @@ const rootRouteChildren: RootRouteChildren = {
   LittleWinRoute: LittleWinRoute,
   MedicinesRoute: MedicinesRoute,
   MoodRoute: MoodRoute,
+  NotesRoute: NotesRoute,
   PanelRoute: PanelRoute,
   PartnersRoute: PartnersRoute,
   PelvicRoute: PelvicRoute,
@@ -882,6 +923,7 @@ const rootRouteChildren: RootRouteChildren = {
   PalCodeRoute: PalCodeRoute,
   PalsIdRoute: PalsIdRoute,
   PalsInviteRoute: PalsInviteRoute,
+  ReadIdRoute: ReadIdRoute,
   MoveIndexRoute: MoveIndexRoute,
   PalsIndexRoute: PalsIndexRoute,
   ApiPublicHooksSendNudgesRoute: ApiPublicHooksSendNudgesRoute,

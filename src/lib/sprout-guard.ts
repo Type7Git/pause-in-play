@@ -4,7 +4,8 @@ export const TOOLS = {
   "side-quest": "Side Quest Saver",
   remember: "the VIT Department",
   tabs: "37 tabs open",
-  "wind-down": "Help me wind down",
+  "wind-down": "Relax and Restore",
+  notes: "Little notes",
   "little-win": "Give me a little win",
   laugh: "I need a laugh",
   erin: "Our clinical panel",
@@ -34,7 +35,7 @@ export const TOOLS = {
 export type ToolKey = keyof typeof TOOLS;
 /** Where each linked tool opens. Section links open home with that section selected. */
 export const TOOL_ROUTES: Record<ToolKey, { to: string; section?: string }> = {
-  "side-quest": { to: "/side-quest" }, remember: { to: "/remember" }, tabs: { to: "/tabs" }, "wind-down": { to: "/wind-down" },
+  "side-quest": { to: "/side-quest" }, remember: { to: "/remember" }, tabs: { to: "/tabs" }, "wind-down": { to: "/wind-down" }, notes: { to: "/notes" },
   "little-win": { to: "/little-win" }, laugh: { to: "/laugh" }, erin: { to: "/panel" }, panel: { to: "/panel" },
   medicines: { to: "/medicines" }, mood: { to: "/mood" }, learn: { to: "/learn" }, cycle: { to: "/cycle" }, settings: { to: "/settings" },
   sprout: { to: "/sprout" }, "tell-sprout": { to: "/tell-sprout" }, home: { to: "/" }, favourites: { to: "/", section: "favourites" },

@@ -14,8 +14,9 @@ export const ACTIVITIES: Record<ActivityKey, Activity> = {
   quest: { key: "quest", title: "What was I doing?", desc: "Save my place and the next step", to: "/side-quest", icon: "quest", blob: "bg-gold-soft" },
   vit: { key: "vit", title: "Help me remember", desc: "The Very Important Thing Department", to: "/remember", icon: "vit", blob: "bg-rose-soft" },
   voice: { key: "voice", title: "Tell Sprout", desc: "Say it out loud, Sprout files it", to: "/tell-sprout", icon: "voice", blob: "bg-sage-soft" },
-  tabs: { key: "tabs", title: "My brain has 37 tabs open", desc: "A one-minute pause, then one thing", to: "/tabs", icon: "tabs", blob: "bg-plum-soft" },
-  wind: { key: "wind", title: "Help me wind down", desc: "Quiet, no scores", to: "/wind-down", icon: "wind", blob: "bg-plum-soft" },
+  tabs: { key: "tabs", title: "My brain has 37 tabs open", desc: "Get it out of your head, then pick one", to: "/tabs", icon: "tabs", blob: "bg-plum-soft" },
+  wind: { key: "wind", title: "Relax and Restore", desc: "Guided relaxations and rest poses", to: "/wind-down", icon: "wind", blob: "bg-plum-soft" },
+  notes: { key: "notes", title: "Little notes", desc: "Kind words that turn up when you need them", to: "/notes", icon: "notes", blob: "bg-rose-soft" },
   colour: { key: "colour", title: "Colour me calm", desc: "Colour in. No going over the lines", to: "/colour", icon: "colour", blob: "bg-gold-soft" },
   wyr: { key: "wyr", title: "Would you rather?", desc: "Swipe to find out who you'd rather be", to: "/would-you-rather", icon: "wyr", blob: "bg-rose-soft" },
   win: { key: "win", title: "Give me a little win", desc: "A short, untimed puzzle", to: "/little-win", icon: "win", blob: "bg-sage-soft" },
@@ -52,7 +53,7 @@ export type Section = {
 export const SECTIONS: Section[] = [
   { key: "favourites", name: "Favourites", blurb: "Your go-to tools, all in one place.", icon: "heart", blob: "bg-rose-soft", activities: [] },
   { key: "fog", name: "Brain fog helpers", blurb: "For the 'why did I walk in here?' moments.", icon: "brain", blob: "bg-gold-soft", activities: ["quest", "vit", "voice"] },
-  { key: "calm", name: "Calming moments", blurb: "Settle your body. Quiet your mind.", icon: "calm", blob: "bg-plum-soft", activities: ["tabs", "wind", "colour"] },
+  { key: "calm", name: "Some me time", blurb: "Settle your body. Quiet your mind.", icon: "calm", blob: "bg-plum-soft", activities: ["tabs", "wind", "notes", "colour"] },
   { key: "play", name: "Playful challenges", blurb: "Small wins and a good laugh.", icon: "play", blob: "bg-sage-soft", activities: ["wyr", "colour", "win", "laugh"] },
   { key: "body", name: "Resilient body", blurb: "Move and nourish, when you feel you can.", icon: "body", blob: "bg-sage-soft", activities: ["move", "pelvic", "food", "bodylearn"] },
   {
