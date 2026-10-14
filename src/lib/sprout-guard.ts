@@ -35,7 +35,7 @@ export const TOOL_ROUTES: Record<ToolKey, { to: string; section?: string }> = {
   "little-win": { to: "/little-win" }, laugh: { to: "/laugh" }, erin: { to: "/panel" }, panel: { to: "/panel" },
   medicines: { to: "/medicines" }, mood: { to: "/mood" }, learn: { to: "/learn" }, cycle: { to: "/cycle" }, settings: { to: "/settings" },
   sprout: { to: "/sprout" }, "tell-sprout": { to: "/tell-sprout" }, home: { to: "/" }, favourites: { to: "/", section: "favourites" },
-  colour: { to: "/colour" }, "would-you-rather": { to: "/would-you-rather" }, peripals: { to: "/pals" }, intimacy: { to: "/", section: "intimacy" },
+  colour: { to: "/colour" }, "would-you-rather": { to: "/would-you-rather" }, peripals: { to: "/pals" }, intimacy: { to: "/", section: "love" },
   reflect: { to: "/intimacy/check-in" }, "talk-cards": { to: "/intimacy/cards" }, "say-it-kindly": { to: "/intimacy/say-it-kindly" },
   "partner-guide": { to: "/intimacy/partner-guide" }, "intimacy-library": { to: "/intimacy/library" },
 };
