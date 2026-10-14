@@ -1,0 +1,2 @@
+ALTER TABLE public.movement_sessions ADD COLUMN review_area text NOT NULL DEFAULT 'exercise' CHECK (review_area IN ('exercise','nutrition')), ADD COLUMN approved_by uuid, ADD COLUMN approved_at timestamptz, ADD COLUMN updated_at timestamptz NOT NULL DEFAULT now();
+ALTER TABLE public.food_tips ADD COLUMN review_area text NOT NULL DEFAULT 'nutrition' CHECK (review_area IN ('exercise','nutrition')), ADD COLUMN approved_by uuid, ADD COLUMN approved_at timestamptz, ADD COLUMN updated_at timestamptz NOT NULL DEFAULT now();
