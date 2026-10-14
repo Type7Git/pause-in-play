@@ -16,7 +16,7 @@ export const ACTIVITIES: Record<ActivityKey, Activity> = {
   voice: { key: "voice", title: "Tell Sprout", desc: "Say it out loud, Sprout files it", to: "/tell-sprout", icon: "voice", blob: "bg-sage-soft" },
   tabs: { key: "tabs", title: "My brain has 37 tabs open", desc: "A one-minute pause, then one thing", to: "/tabs", icon: "tabs", blob: "bg-plum-soft" },
   wind: { key: "wind", title: "Help me wind down", desc: "Quiet, no scores", to: "/wind-down", icon: "wind", blob: "bg-plum-soft" },
-  colour: { key: "colour", title: "Calm colouring", desc: "Colour slowly, nothing to finish", icon: "colour", blob: "bg-gold-soft" },
+  colour: { key: "colour", title: "Colour me calm", desc: "Colour in. No going over the lines", to: "/colour", icon: "colour", blob: "bg-gold-soft" },
   wyr: { key: "wyr", title: "Would you rather", desc: "Quick, silly choices", icon: "wyr", blob: "bg-rose-soft" },
   win: { key: "win", title: "Give me a little win", desc: "A short, untimed puzzle", to: "/little-win", icon: "win", blob: "bg-sage-soft" },
   laugh: { key: "laugh", title: "I need a laugh", desc: "An everyday scene to sort out", to: "/laugh", icon: "laugh", blob: "bg-gold-soft" },
