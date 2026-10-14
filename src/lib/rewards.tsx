@@ -5,7 +5,7 @@ import { SaveGardenDialog } from "@/components/mm/SaveGardenDialog";
 import { supabase } from "@/integrations/supabase/client";
 import { sendDueReminders } from "@/lib/push.functions";
 
-export type BadgeGlyph = "leaf" | "flag" | "tab" | "star" | "glasses" | "key";
+export type BadgeGlyph = "leaf" | "flag" | "tab" | "star" | "glasses" | "key" | "palette" | "crown" | "heart";
 export type Badge = { key: string; name: string; earned: boolean; glyph: BadgeGlyph };
 export type Quest = { id: string; doing: string; next: string; remindAt: string | null };
 export type VitItem = { id: string; thing: string; location: string; example?: boolean };
@@ -17,6 +17,9 @@ export const BADGES: Omit<Badge, "earned">[] = [
   { key: "small_victories", name: "Small victories", glyph: "star" },
   { key: "glasses_detective", name: "Glasses detective", glyph: "glasses" },
   { key: "vit_head", name: "VIT Department head", glyph: "key" },
+  { key: "calm_colourist", name: "Calm colourist", glyph: "palette" },
+  { key: "decisive_queen", name: "Decisive queen", glyph: "crown" },
+  { key: "peripal", name: "PeriPal", glyph: "heart" },
 ];
 const keyFor = (name: string) => BADGES.find((b) => b.name === name)?.key;
 
@@ -29,8 +32,9 @@ const SEED_VIT: VitItem[] = [
 /* ---------- signed-out storage (this device only) ---------- */
 const LOCAL = "midlife-mind:local-v2";
 const PROMPTED = "midlife-mind:save-prompted";
-type Local = { petals: number; badges: string[]; quests: Quest[]; vit: VitItem[]; dirty: boolean };
-const freshLocal = (): Local => ({ petals: 18, badges: ["first_seedling"], quests: [], vit: SEED_VIT, dirty: false });
+export const DEFAULT_FAVOURITES = ["quest", "tabs", "colour"];
+type Local = { petals: number; badges: string[]; quests: Quest[]; vit: VitItem[]; favourites: string[]; dirty: boolean };
+const freshLocal = (): Local => ({ petals: 18, badges: ["first_seedling"], quests: [], vit: SEED_VIT, favourites: DEFAULT_FAVOURITES, dirty: false });
 function readLocal(): Local {
   try {
     const raw = localStorage.getItem(LOCAL);
@@ -43,11 +47,12 @@ const uid = () => (crypto.randomUUID ? crypto.randomUUID() : String(Date.now() +
 
 /* ---------- account storage ---------- */
 async function loadRemote() {
-  const [p, b, q, v] = await Promise.all([
+  const [p, b, q, v, f] = await Promise.all([
     supabase.from("petal_events").select("amount"),
     supabase.from("badges_earned").select("badge_key"),
     supabase.from("side_quests").select("id, doing, next_step, remind_at").is("done_at", null).order("created_at", { ascending: false }),
     supabase.from("vit_items").select("id, thing, location").order("created_at", { ascending: false }),
+    supabase.from("user_favourites").select("activity_key").order("position"),
   ]);
   return {
     hasEvents: (p.data?.length ?? 0) > 0,
@@ -55,6 +60,7 @@ async function loadRemote() {
     badges: (b.data ?? []).map((r) => r.badge_key),
     quests: (q.data ?? []).map((r) => ({ id: r.id, doing: r.doing, next: r.next_step ?? "", remindAt: r.remind_at })),
     vit: (v.data ?? []).map((r) => ({ id: r.id, thing: r.thing, location: r.location })),
+    favourites: (f.data ?? []).map((r) => r.activity_key),
   };
 }
 
@@ -67,6 +73,8 @@ async function migrateLocal(userId: string, local: Local) {
     await supabase.from("side_quests").insert(local.quests.map((q) => ({ user_id: userId, doing: q.doing, next_step: q.next || null, remind_at: q.remindAt })));
   const realVit = local.vit.filter((v) => !v.example);
   if (realVit.length) await supabase.from("vit_items").insert(realVit.map((v) => ({ user_id: userId, thing: v.thing, location: v.location })));
+  if (local.favourites.length)
+    await supabase.from("user_favourites").upsert(local.favourites.map((k, i) => ({ user_id: userId, activity_key: k, position: i })), { onConflict: "user_id,activity_key", ignoreDuplicates: true });
   localStorage.removeItem(LOCAL);
 }
 
@@ -82,6 +90,8 @@ type Ctx = {
   completeQuest: (id: string) => void;
   addVit: (thing: string, location: string) => number;
   removeVit: (id: string) => void;
+  favourites: string[];
+  toggleFavourite: (key: string, title: string) => void;
   openSave: () => void;
 };
 // Keep one context instance across hot reloads so provider and consumers always match.
@@ -95,7 +105,10 @@ export function RewardsProvider({ children }: { children: ReactNode }) {
   const [earned, setEarned] = useState<string[]>(["first_seedling"]);
   const [quests, setQuests] = useState<Quest[]>([]);
   const [vit, setVit] = useState<VitItem[]>(SEED_VIT);
-  const [toast, setToast] = useState<{ id: number; msg: string } | null>(null);
+  const [favourites, setFavourites] = useState<string[]>(DEFAULT_FAVOURITES);
+  const favRef = useRef<string[]>(DEFAULT_FAVOURITES);
+  useEffect(() => { favRef.current = favourites; }, [favourites]);
+  const [toast, setToast] = useState<{ id: number; msg: string; heart?: boolean } | null>(null);
   const [saveOpen, setSaveOpen] = useState(false);
   const timer = useRef<ReturnType<typeof setTimeout>>(undefined);
   const userRef = useRef<User | null>(null);
@@ -105,7 +118,7 @@ export function RewardsProvider({ children }: { children: ReactNode }) {
 
   const applyLocal = () => {
     const l = readLocal();
-    setPetals(l.petals); setEarned(l.badges); setQuests(l.quests); setVit(l.vit);
+    setPetals(l.petals); setEarned(l.badges); setQuests(l.quests); setVit(l.vit); setFavourites(l.favourites);
   };
 
   const hydrate = useCallback(async (u: User | null) => {
@@ -124,9 +137,10 @@ export function RewardsProvider({ children }: { children: ReactNode }) {
       } else if (!r.hasEvents) {
         // Brand-new account on a fresh device: plant the first seedling.
         await supabase.from("badges_earned").upsert({ user_id: u.id, badge_key: "first_seedling" }, { onConflict: "user_id,badge_key", ignoreDuplicates: true });
+        await supabase.from("user_favourites").upsert(DEFAULT_FAVOURITES.map((k, i) => ({ user_id: u.id, activity_key: k, position: i })), { onConflict: "user_id,activity_key", ignoreDuplicates: true });
         r = await loadRemote();
       }
-      setPetals(r.petals); setEarned(r.badges); setQuests(r.quests); setVit(r.vit);
+      setPetals(r.petals); setEarned(r.badges); setQuests(r.quests); setVit(r.vit); setFavourites(r.favourites);
       // Deliver any due Side Quest nudges to this user's devices.
       void sendDueReminders().catch(() => {});
     } catch (e) {
@@ -211,10 +225,25 @@ export function RewardsProvider({ children }: { children: ReactNode }) {
     else local((l) => ({ ...l, vit: l.vit.filter((x) => x.id !== id) }));
   };
 
+  const toggleFavourite: Ctx["toggleFavourite"] = (key, title) => {
+    const u = userRef.current;
+    const on = favRef.current.includes(key);
+    const next = on ? favRef.current.filter((k) => k !== key) : [...favRef.current, key];
+    favRef.current = next;
+    setFavourites(next);
+    if (u) {
+      if (on) void supabase.from("user_favourites").delete().eq("user_id", u.id).eq("activity_key", key);
+      else void supabase.from("user_favourites").insert({ user_id: u.id, activity_key: key, position: next.length - 1 });
+    } else local((l) => ({ ...l, favourites: next }));
+    setToast({ id: Date.now(), msg: on ? "Removed from Favourites" : `${title} added to Favourites`, heart: true });
+    clearTimeout(timer.current);
+    timer.current = setTimeout(() => setToast(null), 2500);
+  };
+
   const badges = BADGES.map((b) => ({ ...b, earned: earned.includes(b.key) }));
 
   return (
-    <RewardsContext.Provider value={{ ready, user, petals, badges, quests, vit, earn, addQuest, completeQuest, addVit, removeVit, openSave: () => setSaveOpen(true) }}>
+    <RewardsContext.Provider value={{ ready, user, petals, badges, quests, vit, earn, addQuest, completeQuest, addVit, removeVit, favourites, toggleFavourite, openSave: () => setSaveOpen(true) }}>
       {children}
       <SaveGardenDialog open={saveOpen} onOpenChange={setSaveOpen} />
       {toast && (
@@ -223,7 +252,7 @@ export function RewardsProvider({ children }: { children: ReactNode }) {
           role="status"
           className="animate-rise fixed bottom-7 left-1/2 z-[9] flex max-w-[calc(100%-32px)] -translate-x-1/2 items-center gap-2.5 rounded-2xl bg-ink py-2.5 pl-3 pr-4 text-sm font-bold text-shell shadow-lift"
         >
-          <PetalIcon className="size-[22px] flex-none" />
+          {toast.heart ? <span aria-hidden="true" className="text-rose">♥</span> : <PetalIcon className="size-[22px] flex-none" />}
           <span>{toast.msg}</span>
         </div>
       )}
