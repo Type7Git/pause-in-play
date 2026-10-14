@@ -4,7 +4,7 @@ import { BackButton } from "@/components/mm/BackButton";
 import { WhyThisHelps } from "@/components/mm/Panel";
 import { ChoiceGlyph } from "@/components/mm/icons";
 import { Card, Muted, Pill, ScreenTitle, prefersReducedMotion } from "@/components/mm/ui";
-import { whyThisHelps } from "@/content/erin";
+import { whyThisHelps } from "@/content/panel";
 import { useRewards } from "@/lib/rewards";
 
 export const Route = createFileRoute("/tabs")({
