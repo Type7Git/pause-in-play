@@ -13,6 +13,7 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as AdminRouteImport } from './routes/admin'
 import { Route as CycleRouteImport } from './routes/cycle'
 import { Route as ErinRouteImport } from './routes/erin'
+import { Route as GardenRouteImport } from './routes/garden'
 import { Route as LaughRouteImport } from './routes/laugh'
 import { Route as LearnRouteImport } from './routes/learn'
 import { Route as LittleWinRouteImport } from './routes/little-win'
@@ -47,6 +48,11 @@ const CycleRoute = CycleRouteImport.update({
 const ErinRoute = ErinRouteImport.update({
   id: '/erin',
   path: '/erin',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const GardenRoute = GardenRouteImport.update({
+  id: '/garden',
+  path: '/garden',
   getParentRoute: () => rootRouteImport,
 } as any)
 const LaughRoute = LaughRouteImport.update({
@@ -131,6 +137,7 @@ export interface FileRoutesByFullPath {
   '/admin': typeof AdminRoute
   '/cycle': typeof CycleRoute
   '/erin': typeof ErinRoute
+  '/garden': typeof GardenRoute
   '/laugh': typeof LaughRoute
   '/learn': typeof LearnRoute
   '/little-win': typeof LittleWinRoute
@@ -152,6 +159,7 @@ export interface FileRoutesByTo {
   '/admin': typeof AdminRoute
   '/cycle': typeof CycleRoute
   '/erin': typeof ErinRoute
+  '/garden': typeof GardenRoute
   '/laugh': typeof LaughRoute
   '/learn': typeof LearnRoute
   '/little-win': typeof LittleWinRoute
@@ -174,6 +182,7 @@ export interface FileRoutesById {
   '/admin': typeof AdminRoute
   '/cycle': typeof CycleRoute
   '/erin': typeof ErinRoute
+  '/garden': typeof GardenRoute
   '/laugh': typeof LaughRoute
   '/learn': typeof LearnRoute
   '/little-win': typeof LittleWinRoute
@@ -197,6 +206,7 @@ export interface FileRouteTypes {
     | '/admin'
     | '/cycle'
     | '/erin'
+    | '/garden'
     | '/laugh'
     | '/learn'
     | '/little-win'
@@ -218,6 +228,7 @@ export interface FileRouteTypes {
     | '/admin'
     | '/cycle'
     | '/erin'
+    | '/garden'
     | '/laugh'
     | '/learn'
     | '/little-win'
@@ -239,6 +250,7 @@ export interface FileRouteTypes {
     | '/admin'
     | '/cycle'
     | '/erin'
+    | '/garden'
     | '/laugh'
     | '/learn'
     | '/little-win'
@@ -261,6 +273,7 @@ export interface RootRouteChildren {
   AdminRoute: typeof AdminRoute
   CycleRoute: typeof CycleRoute
   ErinRoute: typeof ErinRoute
+  GardenRoute: typeof GardenRoute
   LaughRoute: typeof LaughRoute
   LearnRoute: typeof LearnRoute
   LittleWinRoute: typeof LittleWinRoute
@@ -306,6 +319,13 @@ declare module '@tanstack/react-router' {
       path: '/erin'
       fullPath: '/erin'
       preLoaderRoute: typeof ErinRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/garden': {
+      id: '/garden'
+      path: '/garden'
+      fullPath: '/garden'
+      preLoaderRoute: typeof GardenRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/laugh': {
@@ -421,6 +441,7 @@ const rootRouteChildren: RootRouteChildren = {
   AdminRoute: AdminRoute,
   CycleRoute: CycleRoute,
   ErinRoute: ErinRoute,
+  GardenRoute: GardenRoute,
   LaughRoute: LaughRoute,
   LearnRoute: LearnRoute,
   LittleWinRoute: LittleWinRoute,
