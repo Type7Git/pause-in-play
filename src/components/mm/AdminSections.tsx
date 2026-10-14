@@ -39,7 +39,7 @@ export function LearnAdmin({ userId }: { userId: string }) {
             {(items.data ?? []).map((i) => (
               <tr key={i.id} onClick={() => setEditing(i)} className="cursor-pointer border-t border-line hover:bg-sunk">
                 <td className="px-4 py-2.5 text-muted-foreground">{KIND[i.kind]}</td>
-                <td className="px-4 py-2.5 font-bold">{i.title}</td>
+                <td className="px-4 py-2.5 font-bold">{i.title}{i.section === "intimacy" && <span className="ml-2 rounded-full bg-rose-soft px-2 py-0.5 text-xs font-normal">Intimacy</span>}</td>
                 <td className="px-4 py-2.5">{i.tier === "plus" ? "Plus" : "Free"}</td>
                 <td className="px-4 py-2.5"><span className={`rounded-full px-2.5 py-0.5 text-xs font-bold ${i.status === "approved" ? "bg-sage-soft text-sage" : "bg-gold-soft text-ink"}`}>{i.status === "approved" ? "Approved" : "Draft"}</span></td>
               </tr>
