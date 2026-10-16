@@ -9,6 +9,8 @@ export const getRouter = () => {
     routeTree,
     context: { queryClient },
     scrollRestoration: true,
+    // Every Season scrolls inside its phone frame, so new pages start that panel at the top too.
+    scrollToTopSelectors: [".es .stage"],
     defaultPreloadStaleTime: 0,
   });
 
