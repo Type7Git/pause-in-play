@@ -1,4 +1,4 @@
-/** Flowella tailoring: plain rules then ranking, so every card can say why it's there. */
+/** Luma tailoring: plain rules then ranking, so every card can say why it's there. */
 import { CHECK_INFO, CONDS, CONTRA, LEARN, LIBRARY, PERIODS, SPACES, STAGES, TOPICS, CHILDREN, labelOf, type CheckId, type Item, type Profile, type SpaceId } from "./content";
 
 export const YEAR_NOW = new Date().getFullYear();

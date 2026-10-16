@@ -15,13 +15,13 @@ import { Route as ColourRouteImport } from './routes/colour'
 import { Route as CycleRouteImport } from './routes/cycle'
 import { Route as ErinRouteImport } from './routes/erin'
 import { Route as EverySeasonRouteImport } from './routes/every-season'
-import { Route as FlowellaRouteImport } from './routes/flowella'
 import { Route as FoodRouteImport } from './routes/food'
 import { Route as GardenRouteImport } from './routes/garden'
 import { Route as IntimacyRouteImport } from './routes/intimacy'
 import { Route as LaughRouteImport } from './routes/laugh'
 import { Route as LearnRouteImport } from './routes/learn'
 import { Route as LittleWinRouteImport } from './routes/little-win'
+import { Route as LumaRouteImport } from './routes/luma'
 import { Route as MedicinesRouteImport } from './routes/medicines'
 import { Route as MoodRouteImport } from './routes/mood'
 import { Route as NotesRouteImport } from './routes/notes'
@@ -40,14 +40,14 @@ import { Route as WindDownRouteImport } from './routes/wind-down'
 import { Route as WouldYouRatherRouteImport } from './routes/would-you-rather'
 import { Route as BodyWhyRouteImport } from './routes/body.why'
 import { Route as EverySeasonSplatRouteImport } from './routes/every-season.$'
-import { Route as FlowellaIndexRouteImport } from './routes/flowella.index'
-import { Route as FlowellaHomeRouteImport } from './routes/flowella.home'
 import { Route as IntimacyIndexRouteImport } from './routes/intimacy.index'
 import { Route as IntimacyCardsRouteImport } from './routes/intimacy.cards'
 import { Route as IntimacyCheckInRouteImport } from './routes/intimacy.check-in'
 import { Route as IntimacyLibraryRouteImport } from './routes/intimacy.library'
 import { Route as IntimacyPartnerGuideRouteImport } from './routes/intimacy.partner-guide'
 import { Route as IntimacySayItKindlyRouteImport } from './routes/intimacy.say-it-kindly'
+import { Route as LumaIndexRouteImport } from './routes/luma.index'
+import { Route as LumaHomeRouteImport } from './routes/luma.home'
 import { Route as MoveIndexRouteImport } from './routes/move.index'
 import { Route as MoveKeyRouteImport } from './routes/move.$key'
 import { Route as PalCodeRouteImport } from './routes/pal.$code'
@@ -55,9 +55,9 @@ import { Route as PalsIndexRouteImport } from './routes/pals.index'
 import { Route as PalsIdRouteImport } from './routes/pals.$id'
 import { Route as PalsInviteRouteImport } from './routes/pals.invite'
 import { Route as ReadIdRouteImport } from './routes/read.$id'
-import { Route as FlowellaCheckIdRouteImport } from './routes/flowella.check.$id'
-import { Route as FlowellaItemIdRouteImport } from './routes/flowella.item.$id'
-import { Route as FlowellaSpaceIdRouteImport } from './routes/flowella.space.$id'
+import { Route as LumaCheckIdRouteImport } from './routes/luma.check.$id'
+import { Route as LumaItemIdRouteImport } from './routes/luma.item.$id'
+import { Route as LumaSpaceIdRouteImport } from './routes/luma.space.$id'
 import { Route as ApiPublicHooksSendNudgesRouteImport } from './routes/api/public/hooks/send-nudges'
 
 const IndexRoute = IndexRouteImport.update({
@@ -90,11 +90,6 @@ const EverySeasonRoute = EverySeasonRouteImport.update({
   path: '/every-season',
   getParentRoute: () => rootRouteImport,
 } as any)
-const FlowellaRoute = FlowellaRouteImport.update({
-  id: '/flowella',
-  path: '/flowella',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const FoodRoute = FoodRouteImport.update({
   id: '/food',
   path: '/food',
@@ -123,6 +118,11 @@ const LearnRoute = LearnRouteImport.update({
 const LittleWinRoute = LittleWinRouteImport.update({
   id: '/little-win',
   path: '/little-win',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LumaRoute = LumaRouteImport.update({
+  id: '/luma',
+  path: '/luma',
   getParentRoute: () => rootRouteImport,
 } as any)
 const MedicinesRoute = MedicinesRouteImport.update({
@@ -215,16 +215,6 @@ const EverySeasonSplatRoute = EverySeasonSplatRouteImport.update({
   path: '/$',
   getParentRoute: () => EverySeasonRoute,
 } as any)
-const FlowellaIndexRoute = FlowellaIndexRouteImport.update({
-  id: '/',
-  path: '/',
-  getParentRoute: () => FlowellaRoute,
-} as any)
-const FlowellaHomeRoute = FlowellaHomeRouteImport.update({
-  id: '/home',
-  path: '/home',
-  getParentRoute: () => FlowellaRoute,
-} as any)
 const IntimacyIndexRoute = IntimacyIndexRouteImport.update({
   id: '/',
   path: '/',
@@ -254,6 +244,16 @@ const IntimacySayItKindlyRoute = IntimacySayItKindlyRouteImport.update({
   id: '/say-it-kindly',
   path: '/say-it-kindly',
   getParentRoute: () => IntimacyRoute,
+} as any)
+const LumaIndexRoute = LumaIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => LumaRoute,
+} as any)
+const LumaHomeRoute = LumaHomeRouteImport.update({
+  id: '/home',
+  path: '/home',
+  getParentRoute: () => LumaRoute,
 } as any)
 const MoveIndexRoute = MoveIndexRouteImport.update({
   id: '/move/',
@@ -290,20 +290,20 @@ const ReadIdRoute = ReadIdRouteImport.update({
   path: '/read/$id',
   getParentRoute: () => rootRouteImport,
 } as any)
-const FlowellaCheckIdRoute = FlowellaCheckIdRouteImport.update({
+const LumaCheckIdRoute = LumaCheckIdRouteImport.update({
   id: '/check/$id',
   path: '/check/$id',
-  getParentRoute: () => FlowellaRoute,
+  getParentRoute: () => LumaRoute,
 } as any)
-const FlowellaItemIdRoute = FlowellaItemIdRouteImport.update({
+const LumaItemIdRoute = LumaItemIdRouteImport.update({
   id: '/item/$id',
   path: '/item/$id',
-  getParentRoute: () => FlowellaRoute,
+  getParentRoute: () => LumaRoute,
 } as any)
-const FlowellaSpaceIdRoute = FlowellaSpaceIdRouteImport.update({
+const LumaSpaceIdRoute = LumaSpaceIdRouteImport.update({
   id: '/space/$id',
   path: '/space/$id',
-  getParentRoute: () => FlowellaRoute,
+  getParentRoute: () => LumaRoute,
 } as any)
 const ApiPublicHooksSendNudgesRoute =
   ApiPublicHooksSendNudgesRouteImport.update({
@@ -319,13 +319,13 @@ export interface FileRoutesByFullPath {
   '/cycle': typeof CycleRoute
   '/erin': typeof ErinRoute
   '/every-season': typeof EverySeasonRouteWithChildren
-  '/flowella': typeof FlowellaRouteWithChildren
   '/food': typeof FoodRoute
   '/garden': typeof GardenRoute
   '/intimacy': typeof IntimacyRouteWithChildren
   '/laugh': typeof LaughRoute
   '/learn': typeof LearnRoute
   '/little-win': typeof LittleWinRoute
+  '/luma': typeof LumaRouteWithChildren
   '/medicines': typeof MedicinesRoute
   '/mood': typeof MoodRoute
   '/notes': typeof NotesRoute
@@ -344,24 +344,24 @@ export interface FileRoutesByFullPath {
   '/would-you-rather': typeof WouldYouRatherRoute
   '/body/why': typeof BodyWhyRoute
   '/every-season/$': typeof EverySeasonSplatRoute
-  '/flowella/home': typeof FlowellaHomeRoute
   '/intimacy/cards': typeof IntimacyCardsRoute
   '/intimacy/check-in': typeof IntimacyCheckInRoute
   '/intimacy/library': typeof IntimacyLibraryRoute
   '/intimacy/partner-guide': typeof IntimacyPartnerGuideRoute
   '/intimacy/say-it-kindly': typeof IntimacySayItKindlyRoute
+  '/luma/home': typeof LumaHomeRoute
   '/move/$key': typeof MoveKeyRoute
   '/pal/$code': typeof PalCodeRoute
   '/pals/$id': typeof PalsIdRoute
   '/pals/invite': typeof PalsInviteRoute
   '/read/$id': typeof ReadIdRoute
-  '/flowella/': typeof FlowellaIndexRoute
   '/intimacy/': typeof IntimacyIndexRoute
+  '/luma/': typeof LumaIndexRoute
   '/move/': typeof MoveIndexRoute
   '/pals/': typeof PalsIndexRoute
-  '/flowella/check/$id': typeof FlowellaCheckIdRoute
-  '/flowella/item/$id': typeof FlowellaItemIdRoute
-  '/flowella/space/$id': typeof FlowellaSpaceIdRoute
+  '/luma/check/$id': typeof LumaCheckIdRoute
+  '/luma/item/$id': typeof LumaItemIdRoute
+  '/luma/space/$id': typeof LumaSpaceIdRoute
   '/api/public/hooks/send-nudges': typeof ApiPublicHooksSendNudgesRoute
 }
 export interface FileRoutesByTo {
@@ -394,24 +394,24 @@ export interface FileRoutesByTo {
   '/would-you-rather': typeof WouldYouRatherRoute
   '/body/why': typeof BodyWhyRoute
   '/every-season/$': typeof EverySeasonSplatRoute
-  '/flowella/home': typeof FlowellaHomeRoute
   '/intimacy/cards': typeof IntimacyCardsRoute
   '/intimacy/check-in': typeof IntimacyCheckInRoute
   '/intimacy/library': typeof IntimacyLibraryRoute
   '/intimacy/partner-guide': typeof IntimacyPartnerGuideRoute
   '/intimacy/say-it-kindly': typeof IntimacySayItKindlyRoute
+  '/luma/home': typeof LumaHomeRoute
   '/move/$key': typeof MoveKeyRoute
   '/pal/$code': typeof PalCodeRoute
   '/pals/$id': typeof PalsIdRoute
   '/pals/invite': typeof PalsInviteRoute
   '/read/$id': typeof ReadIdRoute
-  '/flowella': typeof FlowellaIndexRoute
   '/intimacy': typeof IntimacyIndexRoute
+  '/luma': typeof LumaIndexRoute
   '/move': typeof MoveIndexRoute
   '/pals': typeof PalsIndexRoute
-  '/flowella/check/$id': typeof FlowellaCheckIdRoute
-  '/flowella/item/$id': typeof FlowellaItemIdRoute
-  '/flowella/space/$id': typeof FlowellaSpaceIdRoute
+  '/luma/check/$id': typeof LumaCheckIdRoute
+  '/luma/item/$id': typeof LumaItemIdRoute
+  '/luma/space/$id': typeof LumaSpaceIdRoute
   '/api/public/hooks/send-nudges': typeof ApiPublicHooksSendNudgesRoute
 }
 export interface FileRoutesById {
@@ -422,13 +422,13 @@ export interface FileRoutesById {
   '/cycle': typeof CycleRoute
   '/erin': typeof ErinRoute
   '/every-season': typeof EverySeasonRouteWithChildren
-  '/flowella': typeof FlowellaRouteWithChildren
   '/food': typeof FoodRoute
   '/garden': typeof GardenRoute
   '/intimacy': typeof IntimacyRouteWithChildren
   '/laugh': typeof LaughRoute
   '/learn': typeof LearnRoute
   '/little-win': typeof LittleWinRoute
+  '/luma': typeof LumaRouteWithChildren
   '/medicines': typeof MedicinesRoute
   '/mood': typeof MoodRoute
   '/notes': typeof NotesRoute
@@ -447,24 +447,24 @@ export interface FileRoutesById {
   '/would-you-rather': typeof WouldYouRatherRoute
   '/body/why': typeof BodyWhyRoute
   '/every-season/$': typeof EverySeasonSplatRoute
-  '/flowella/home': typeof FlowellaHomeRoute
   '/intimacy/cards': typeof IntimacyCardsRoute
   '/intimacy/check-in': typeof IntimacyCheckInRoute
   '/intimacy/library': typeof IntimacyLibraryRoute
   '/intimacy/partner-guide': typeof IntimacyPartnerGuideRoute
   '/intimacy/say-it-kindly': typeof IntimacySayItKindlyRoute
+  '/luma/home': typeof LumaHomeRoute
   '/move/$key': typeof MoveKeyRoute
   '/pal/$code': typeof PalCodeRoute
   '/pals/$id': typeof PalsIdRoute
   '/pals/invite': typeof PalsInviteRoute
   '/read/$id': typeof ReadIdRoute
-  '/flowella/': typeof FlowellaIndexRoute
   '/intimacy/': typeof IntimacyIndexRoute
+  '/luma/': typeof LumaIndexRoute
   '/move/': typeof MoveIndexRoute
   '/pals/': typeof PalsIndexRoute
-  '/flowella/check/$id': typeof FlowellaCheckIdRoute
-  '/flowella/item/$id': typeof FlowellaItemIdRoute
-  '/flowella/space/$id': typeof FlowellaSpaceIdRoute
+  '/luma/check/$id': typeof LumaCheckIdRoute
+  '/luma/item/$id': typeof LumaItemIdRoute
+  '/luma/space/$id': typeof LumaSpaceIdRoute
   '/api/public/hooks/send-nudges': typeof ApiPublicHooksSendNudgesRoute
 }
 export interface FileRouteTypes {
@@ -476,13 +476,13 @@ export interface FileRouteTypes {
     | '/cycle'
     | '/erin'
     | '/every-season'
-    | '/flowella'
     | '/food'
     | '/garden'
     | '/intimacy'
     | '/laugh'
     | '/learn'
     | '/little-win'
+    | '/luma'
     | '/medicines'
     | '/mood'
     | '/notes'
@@ -501,24 +501,24 @@ export interface FileRouteTypes {
     | '/would-you-rather'
     | '/body/why'
     | '/every-season/$'
-    | '/flowella/home'
     | '/intimacy/cards'
     | '/intimacy/check-in'
     | '/intimacy/library'
     | '/intimacy/partner-guide'
     | '/intimacy/say-it-kindly'
+    | '/luma/home'
     | '/move/$key'
     | '/pal/$code'
     | '/pals/$id'
     | '/pals/invite'
     | '/read/$id'
-    | '/flowella/'
     | '/intimacy/'
+    | '/luma/'
     | '/move/'
     | '/pals/'
-    | '/flowella/check/$id'
-    | '/flowella/item/$id'
-    | '/flowella/space/$id'
+    | '/luma/check/$id'
+    | '/luma/item/$id'
+    | '/luma/space/$id'
     | '/api/public/hooks/send-nudges'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -551,24 +551,24 @@ export interface FileRouteTypes {
     | '/would-you-rather'
     | '/body/why'
     | '/every-season/$'
-    | '/flowella/home'
     | '/intimacy/cards'
     | '/intimacy/check-in'
     | '/intimacy/library'
     | '/intimacy/partner-guide'
     | '/intimacy/say-it-kindly'
+    | '/luma/home'
     | '/move/$key'
     | '/pal/$code'
     | '/pals/$id'
     | '/pals/invite'
     | '/read/$id'
-    | '/flowella'
     | '/intimacy'
+    | '/luma'
     | '/move'
     | '/pals'
-    | '/flowella/check/$id'
-    | '/flowella/item/$id'
-    | '/flowella/space/$id'
+    | '/luma/check/$id'
+    | '/luma/item/$id'
+    | '/luma/space/$id'
     | '/api/public/hooks/send-nudges'
   id:
     | '__root__'
@@ -578,13 +578,13 @@ export interface FileRouteTypes {
     | '/cycle'
     | '/erin'
     | '/every-season'
-    | '/flowella'
     | '/food'
     | '/garden'
     | '/intimacy'
     | '/laugh'
     | '/learn'
     | '/little-win'
+    | '/luma'
     | '/medicines'
     | '/mood'
     | '/notes'
@@ -603,24 +603,24 @@ export interface FileRouteTypes {
     | '/would-you-rather'
     | '/body/why'
     | '/every-season/$'
-    | '/flowella/home'
     | '/intimacy/cards'
     | '/intimacy/check-in'
     | '/intimacy/library'
     | '/intimacy/partner-guide'
     | '/intimacy/say-it-kindly'
+    | '/luma/home'
     | '/move/$key'
     | '/pal/$code'
     | '/pals/$id'
     | '/pals/invite'
     | '/read/$id'
-    | '/flowella/'
     | '/intimacy/'
+    | '/luma/'
     | '/move/'
     | '/pals/'
-    | '/flowella/check/$id'
-    | '/flowella/item/$id'
-    | '/flowella/space/$id'
+    | '/luma/check/$id'
+    | '/luma/item/$id'
+    | '/luma/space/$id'
     | '/api/public/hooks/send-nudges'
   fileRoutesById: FileRoutesById
 }
@@ -631,13 +631,13 @@ export interface RootRouteChildren {
   CycleRoute: typeof CycleRoute
   ErinRoute: typeof ErinRoute
   EverySeasonRoute: typeof EverySeasonRouteWithChildren
-  FlowellaRoute: typeof FlowellaRouteWithChildren
   FoodRoute: typeof FoodRoute
   GardenRoute: typeof GardenRoute
   IntimacyRoute: typeof IntimacyRouteWithChildren
   LaughRoute: typeof LaughRoute
   LearnRoute: typeof LearnRoute
   LittleWinRoute: typeof LittleWinRoute
+  LumaRoute: typeof LumaRouteWithChildren
   MedicinesRoute: typeof MedicinesRoute
   MoodRoute: typeof MoodRoute
   NotesRoute: typeof NotesRoute
@@ -709,13 +709,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof EverySeasonRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/flowella': {
-      id: '/flowella'
-      path: '/flowella'
-      fullPath: '/flowella'
-      preLoaderRoute: typeof FlowellaRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/food': {
       id: '/food'
       path: '/food'
@@ -756,6 +749,13 @@ declare module '@tanstack/react-router' {
       path: '/little-win'
       fullPath: '/little-win'
       preLoaderRoute: typeof LittleWinRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/luma': {
+      id: '/luma'
+      path: '/luma'
+      fullPath: '/luma'
+      preLoaderRoute: typeof LumaRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/medicines': {
@@ -884,20 +884,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof EverySeasonSplatRouteImport
       parentRoute: typeof EverySeasonRoute
     }
-    '/flowella/': {
-      id: '/flowella/'
-      path: '/'
-      fullPath: '/flowella/'
-      preLoaderRoute: typeof FlowellaIndexRouteImport
-      parentRoute: typeof FlowellaRoute
-    }
-    '/flowella/home': {
-      id: '/flowella/home'
-      path: '/home'
-      fullPath: '/flowella/home'
-      preLoaderRoute: typeof FlowellaHomeRouteImport
-      parentRoute: typeof FlowellaRoute
-    }
     '/intimacy/': {
       id: '/intimacy/'
       path: '/'
@@ -939,6 +925,20 @@ declare module '@tanstack/react-router' {
       fullPath: '/intimacy/say-it-kindly'
       preLoaderRoute: typeof IntimacySayItKindlyRouteImport
       parentRoute: typeof IntimacyRoute
+    }
+    '/luma/': {
+      id: '/luma/'
+      path: '/'
+      fullPath: '/luma/'
+      preLoaderRoute: typeof LumaIndexRouteImport
+      parentRoute: typeof LumaRoute
+    }
+    '/luma/home': {
+      id: '/luma/home'
+      path: '/home'
+      fullPath: '/luma/home'
+      preLoaderRoute: typeof LumaHomeRouteImport
+      parentRoute: typeof LumaRoute
     }
     '/move/': {
       id: '/move/'
@@ -989,26 +989,26 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ReadIdRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/flowella/check/$id': {
-      id: '/flowella/check/$id'
+    '/luma/check/$id': {
+      id: '/luma/check/$id'
       path: '/check/$id'
-      fullPath: '/flowella/check/$id'
-      preLoaderRoute: typeof FlowellaCheckIdRouteImport
-      parentRoute: typeof FlowellaRoute
+      fullPath: '/luma/check/$id'
+      preLoaderRoute: typeof LumaCheckIdRouteImport
+      parentRoute: typeof LumaRoute
     }
-    '/flowella/item/$id': {
-      id: '/flowella/item/$id'
+    '/luma/item/$id': {
+      id: '/luma/item/$id'
       path: '/item/$id'
-      fullPath: '/flowella/item/$id'
-      preLoaderRoute: typeof FlowellaItemIdRouteImport
-      parentRoute: typeof FlowellaRoute
+      fullPath: '/luma/item/$id'
+      preLoaderRoute: typeof LumaItemIdRouteImport
+      parentRoute: typeof LumaRoute
     }
-    '/flowella/space/$id': {
-      id: '/flowella/space/$id'
+    '/luma/space/$id': {
+      id: '/luma/space/$id'
       path: '/space/$id'
-      fullPath: '/flowella/space/$id'
-      preLoaderRoute: typeof FlowellaSpaceIdRouteImport
-      parentRoute: typeof FlowellaRoute
+      fullPath: '/luma/space/$id'
+      preLoaderRoute: typeof LumaSpaceIdRouteImport
+      parentRoute: typeof LumaRoute
     }
     '/api/public/hooks/send-nudges': {
       id: '/api/public/hooks/send-nudges'
@@ -1030,26 +1030,6 @@ const EverySeasonRouteChildren: EverySeasonRouteChildren = {
 
 const EverySeasonRouteWithChildren = EverySeasonRoute._addFileChildren(
   EverySeasonRouteChildren,
-)
-
-interface FlowellaRouteChildren {
-  FlowellaHomeRoute: typeof FlowellaHomeRoute
-  FlowellaIndexRoute: typeof FlowellaIndexRoute
-  FlowellaCheckIdRoute: typeof FlowellaCheckIdRoute
-  FlowellaItemIdRoute: typeof FlowellaItemIdRoute
-  FlowellaSpaceIdRoute: typeof FlowellaSpaceIdRoute
-}
-
-const FlowellaRouteChildren: FlowellaRouteChildren = {
-  FlowellaHomeRoute: FlowellaHomeRoute,
-  FlowellaIndexRoute: FlowellaIndexRoute,
-  FlowellaCheckIdRoute: FlowellaCheckIdRoute,
-  FlowellaItemIdRoute: FlowellaItemIdRoute,
-  FlowellaSpaceIdRoute: FlowellaSpaceIdRoute,
-}
-
-const FlowellaRouteWithChildren = FlowellaRoute._addFileChildren(
-  FlowellaRouteChildren,
 )
 
 interface IntimacyRouteChildren {
@@ -1074,6 +1054,24 @@ const IntimacyRouteWithChildren = IntimacyRoute._addFileChildren(
   IntimacyRouteChildren,
 )
 
+interface LumaRouteChildren {
+  LumaHomeRoute: typeof LumaHomeRoute
+  LumaIndexRoute: typeof LumaIndexRoute
+  LumaCheckIdRoute: typeof LumaCheckIdRoute
+  LumaItemIdRoute: typeof LumaItemIdRoute
+  LumaSpaceIdRoute: typeof LumaSpaceIdRoute
+}
+
+const LumaRouteChildren: LumaRouteChildren = {
+  LumaHomeRoute: LumaHomeRoute,
+  LumaIndexRoute: LumaIndexRoute,
+  LumaCheckIdRoute: LumaCheckIdRoute,
+  LumaItemIdRoute: LumaItemIdRoute,
+  LumaSpaceIdRoute: LumaSpaceIdRoute,
+}
+
+const LumaRouteWithChildren = LumaRoute._addFileChildren(LumaRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AdminRoute: AdminRoute,
@@ -1081,13 +1079,13 @@ const rootRouteChildren: RootRouteChildren = {
   CycleRoute: CycleRoute,
   ErinRoute: ErinRoute,
   EverySeasonRoute: EverySeasonRouteWithChildren,
-  FlowellaRoute: FlowellaRouteWithChildren,
   FoodRoute: FoodRoute,
   GardenRoute: GardenRoute,
   IntimacyRoute: IntimacyRouteWithChildren,
   LaughRoute: LaughRoute,
   LearnRoute: LearnRoute,
   LittleWinRoute: LittleWinRoute,
+  LumaRoute: LumaRouteWithChildren,
   MedicinesRoute: MedicinesRoute,
   MoodRoute: MoodRoute,
   NotesRoute: NotesRoute,

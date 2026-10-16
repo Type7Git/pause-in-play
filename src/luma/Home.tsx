@@ -1,4 +1,4 @@
-/** The Flowella home: calm and visual. Headers and pictures here; detail is one tap deeper. */
+/** The Luma home: calm and visual. Headers and pictures here; detail is one tap deeper. */
 import { Link } from "@tanstack/react-router";
 import { useEffect, useRef, useState } from "react";
 import { CheckIcon, Chevron, Flower, ItemArt, SpaceArt } from "./art";
@@ -29,7 +29,7 @@ export function Home() {
   return (
     <>
       <header className="hhead">
-        <div style={{ minWidth: 0 }}><small className="brand"><Flower size={18} still /><b>Flowella</b><span aria-hidden="true">·</span>{today}</small><h1 tabIndex={-1}>{greeting()}{profile.name ? `, ${profile.name}` : ""}</h1></div>
+        <div style={{ minWidth: 0 }}><small className="brand"><Flower size={18} still /><b>Luma</b><span aria-hidden="true">·</span>{today}</small><h1 tabIndex={-1}>{greeting()}{profile.name ? `, ${profile.name}` : ""}</h1></div>
         <Meter />
       </header>
       <main className="stage" key="home">
@@ -41,7 +41,7 @@ export function Home() {
             </div>
           ) : null}
           {pl.lowMood ? (
-            <Link to="/flowella/item/$id" params={{ id: "one-minute-pause" }} className="gentle" style={{ animationDelay: ".04s" }}>
+            <Link to="/luma/item/$id" params={{ id: "one-minute-pause" }} className="gentle" style={{ animationDelay: ".04s" }}>
               <span className="orbmini" aria-hidden="true" />
               <span><b>Go gently today.</b><span>A one-minute pause is ready when you are. Need someone now? Lifeline, 13 11 14.</span></span>
             </Link>
@@ -50,7 +50,7 @@ export function Home() {
           {first ? (
             <section style={{ animationDelay: ".06s" }} aria-labelledby="es-focus">
               <div className="sec-h"><h2 id="es-focus">Your focus</h2></div>
-              <Link to="/flowella/space/$id" params={{ id: first.id }} className={`hero tint-${SPACES[first.id].tint}`}>
+              <Link to="/luma/space/$id" params={{ id: first.id }} className={`hero tint-${SPACES[first.id].tint}`}>
                 <span className="num" aria-hidden="true">1</span>
                 <span className="art-box"><SpaceArt id={first.id} /></span>
                 <span className="cap">
@@ -60,7 +60,7 @@ export function Home() {
               </Link>
               <div className={`duo ${companions.length === 1 ? "one" : ""}`}>
                 {companions.map((id, i) => (
-                  <Link key={id} to="/flowella/space/$id" params={{ id }} className={`tint-${HUBS[id].tint}`}>
+                  <Link key={id} to="/luma/space/$id" params={{ id }} className={`tint-${HUBS[id].tint}`}>
                     {i < rest.length ? <span className="num" aria-hidden="true">{i + 2}</span> : null}
                     <span className="art-box"><SpaceArt id={id} /></span>
                     <h3>{HUBS[id].name}</h3>
@@ -75,7 +75,7 @@ export function Home() {
               <div className="sec-h"><h2 id="es-checks">Your checks</h2><span>Tap for details</span></div>
               <div className="chks">
                 {pl.checks.map((c) => (
-                  <Link key={c.id} to="/flowella/check/$id" params={{ id: c.id }} className={`chk tone-${c.tone}`} aria-label={`${c.name}: ${TONE_WORD[c.tone]}. Open details.`}>
+                  <Link key={c.id} to="/luma/check/$id" params={{ id: c.id }} className={`chk tone-${c.tone}`} aria-label={`${c.name}: ${TONE_WORD[c.tone]}. Open details.`}>
                     <span className="ring"><CheckIcon id={c.id} /><span className="dot" /></span>
                     <b>{SHORT_CHECK[c.id]}</b>
                     <small>{TONE_WORD[c.tone]}</small>
@@ -94,7 +94,7 @@ export function Home() {
             <div className="sec-h"><h2 id="es-explore">Explore everything</h2><span>Always one tap away</span></div>
             <div className="tiles">
               {HUB_IDS.map((id) => (
-                <Link key={id} to="/flowella/space/$id" params={{ id }} className={`tile tint-${tintOf(id)} ${pl.spaces.some((s) => s.id === id) ? "on" : ""}`}>
+                <Link key={id} to="/luma/space/$id" params={{ id }} className={`tile tint-${tintOf(id)} ${pl.spaces.some((s) => s.id === id) ? "on" : ""}`}>
                   <span className="art-box"><SpaceArt id={id} /></span>
                   {HUBS[id].short}
                 </Link>
@@ -103,8 +103,8 @@ export function Home() {
           </section>
 
           <section className="foot" style={{ animationDelay: ".3s" }}>
-            <Link to="/flowella" search={{ mode: "changed" }} className="soft-btn" onClick={() => es.snapshot()}>Something's changed?</Link>
-            <p>Concept demo with sample content. Flowella shares information, never a diagnosis. Your answers stay on this device.</p>
+            <Link to="/luma" search={{ mode: "changed" }} className="soft-btn" onClick={() => es.snapshot()}>Something's changed?</Link>
+            <p>Concept demo with sample content. Luma shares information, never a diagnosis. Your answers stay on this device.</p>
           </section>
         </div>
       </main>
@@ -128,7 +128,7 @@ function ForYou({ picks }: { picks: Pick[] }) {
       <div className="sec-h"><h2 id="es-today">For you today</h2><span>Swipe</span></div>
       <div className="rail" ref={rail}>
         {picks.map((it) => (
-          <Link key={it.id} to="/flowella/item/$id" params={{ id: it.id }} className={`pick tint-${tintOf(it.space)}`}>
+          <Link key={it.id} to="/luma/item/$id" params={{ id: it.id }} className={`pick tint-${tintOf(it.space)}`}>
             <span className="art-box"><ItemArt item={it} /></span>
             <span className="tx">
               <span className="meta">{FORMAT_LABEL[it.format]} · {it.mins} min</span>

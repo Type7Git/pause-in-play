@@ -36,7 +36,7 @@ export function NearYou({ profile, topic }: { profile: Profile; topic: Topic }) 
     <div className="near">
       <h2><PinIcon />Near you</h2>
       <p>Add your postcode to see clinics and services close to home.</p>
-      <Link to="/flowella" search={{ mode: "changed" }} className="soft-btn" style={{ alignSelf: "flex-start" }}>Add my postcode</Link>
+      <Link to="/luma" search={{ mode: "changed" }} className="soft-btn" style={{ alignSelf: "flex-start" }}>Add my postcode</Link>
     </div>
   );
   return (

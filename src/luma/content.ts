@@ -1,5 +1,5 @@
 /**
- * Flowella (concept demo): questions, spaces, sample library, checks and example people.
+ * Luma (concept demo): questions, spaces, sample library, checks and example people.
  * All copy here is sample content for demonstration. Final content is written and reviewed by clinicians.
  */
 export type Opt = { id: string; label: string };

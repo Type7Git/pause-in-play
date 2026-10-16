@@ -32,7 +32,7 @@ export function SpacePage({ id }: { id: HubId }) {
               <div className="sec-h"><h2>Start here</h2><span>Picked for you</span></div>
               <div className="list">
                 {items.map((it) => (
-                  <Link key={it.id} to="/flowella/item/$id" params={{ id: it.id }} className="row">
+                  <Link key={it.id} to="/luma/item/$id" params={{ id: it.id }} className="row">
                     <span className="art-box"><ItemArt item={it} /></span>
                     <span className="tx"><span className="meta">{FORMAT_LABEL[it.format]} · {it.mins} min</span><b>{it.title}</b></span>
                   </Link>

@@ -1,5 +1,5 @@
 import { createFileRoute, redirect } from "@tanstack/react-router";
 
 export const Route = createFileRoute("/every-season/$")({
-  beforeLoad: () => { throw redirect({ to: "/flowella", replace: true }); },
+  beforeLoad: () => { throw redirect({ to: "/luma", replace: true }); },
 });

@@ -1,9 +1,9 @@
 import { createFileRoute, notFound } from "@tanstack/react-router";
-import type { CheckId } from "@/flowella/content";
-import { CheckPage } from "@/flowella/Detail";
+import type { CheckId } from "@/luma/content";
+import { CheckPage } from "@/luma/Detail";
 
 const IDS: CheckId[] = ["cervical", "breast", "bones"];
-export const Route = createFileRoute("/flowella/check/$id")({
+export const Route = createFileRoute("/luma/check/$id")({
   beforeLoad: ({ params }) => { if (!IDS.includes(params.id as CheckId)) throw notFound(); },
   component: CheckRoute,
 });

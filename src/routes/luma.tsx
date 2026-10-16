@@ -1,17 +1,17 @@
 import { createFileRoute, Outlet } from "@tanstack/react-router";
-import esCss from "@/flowella/es.css?url";
-import { FLOWER_ICON, Flower } from "@/flowella/art";
-import { PersonaButtons } from "@/flowella/ui";
+import esCss from "@/luma/es.css?url";
+import { FLOWER_ICON, Flower } from "@/luma/art";
+import { PersonaButtons } from "@/luma/ui";
 
-export const Route = createFileRoute("/flowella")({
+export const Route = createFileRoute("/luma")({
   head: () => ({
     meta: [
-      { title: "Flowella · Find your rhythm. Flourish your way." },
+      { title: "Luma · Find your rhythm. Flourish your way." },
       { name: "description", content: "Personalised women's health through every stage of life. Concept demo." },
-      { name: "apple-mobile-web-app-title", content: "Flowella" },
+      { name: "apple-mobile-web-app-title", content: "Luma" },
       { name: "robots", content: "noindex" },
       { name: "theme-color", content: "#fbf1f3" },
-      { property: "og:title", content: "Flowella · Find your rhythm. Flourish your way." },
+      { property: "og:title", content: "Luma · Find your rhythm. Flourish your way." },
       { property: "og:description", content: "Personalised women's health through every stage of life." },
     ],
     links: [
@@ -29,7 +29,7 @@ function EverySeasonLayout() {
     <div className="es">
       <div className="page">
         <section className="aside" aria-label="About this demo">
-          <span className="brand"><Flower size={44} /><b>Flowella</b></span>
+          <span className="brand"><Flower size={44} /><b>Luma</b></span>
           <span className="kicker">Concept demo</span>
           <h2>Find your rhythm. Flourish your way.</h2>
           <p>Personalised women's health through every stage of life. Tap through the welcome as a new user. About three minutes of questions, then the app builds a home around her answers.</p>

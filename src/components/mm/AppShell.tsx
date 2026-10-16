@@ -52,8 +52,8 @@ export function AppShell({ children }: { children: ReactNode }) {
   const quiet = path === "/wind-down";
   usePelvicReminders();
   useAppNotifications();
-  // Flowella is a separate concept demo with its own look, so it skips the Pause in Play frame.
-  if (path.startsWith("/flowella") || path.startsWith("/every-season")) return <>{children}</>;
+  // Luma is a separate concept demo with its own look, so it skips the Pause in Play frame.
+  if (path.startsWith("/luma") || path.startsWith("/every-season")) return <>{children}</>;
   if (path.startsWith("/admin")) {
     return (
       <div className="min-h-screen bg-shell px-6 py-8">

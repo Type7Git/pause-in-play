@@ -9,7 +9,7 @@ export const getRouter = () => {
     routeTree,
     context: { queryClient },
     scrollRestoration: true,
-    // Flowella scrolls inside its phone frame, so new pages start that panel at the top too.
+    // Luma scrolls inside its phone frame, so new pages start that panel at the top too.
     scrollToTopSelectors: [".es .stage"],
     defaultPreloadStaleTime: 0,
   });

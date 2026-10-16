@@ -1,4 +1,4 @@
-/** Flowella illustrations. Soft, slow, decorative (aria-hidden): the words carry the meaning. */
+/** Luma illustrations. Soft, slow, decorative (aria-hidden): the words carry the meaning. */
 import { useEffect, useId, useRef, type CSSProperties } from "react";
 import { CONDS, CONTRA, STAGE_SHORT, TOPICS, TOPIC_SHORT, labelOf, type CheckId, type HubId, type Item, type Profile } from "./content";
 import type { Tone } from "./engine";
@@ -27,7 +27,7 @@ export const PhoneIcon = () => (
 );
 
 /* ---------- brand mark and welcome ---------- */
-/** The Flowella flower: swirling petals for flow, an open ring for rhythm. Blooms open, then turns slowly. */
+/** The Luma flower: swirling petals for flow, an open ring for rhythm. Blooms open, then turns slowly. */
 const PETAL = "M60 60 C 40 56, 30 36, 42 20 C 52 8, 72 10, 74 26 C 76 42, 70 54, 60 60 Z";
 const INNER = "M60 60 C 52 54, 48 42, 54 35 C 59 30, 67 32, 67 40 C 67 49, 64 55, 60 60 Z";
 export function Flower({ size = 96, still = false, className = "" }: { size?: number; still?: boolean; className?: string }) {

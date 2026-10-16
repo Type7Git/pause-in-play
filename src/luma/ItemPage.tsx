@@ -36,7 +36,7 @@ export function ItemPage({ item }: { item: Item }) {
 
   return (
     <>
-      <TopBar title={`${title} · ${spaceName(item)}`} back={item.space === "checks" ? "/flowella/home" : `/flowella/space/${item.space}`} />
+      <TopBar title={`${title} · ${spaceName(item)}`} back={item.space === "checks" ? "/luma/home" : `/luma/space/${item.space}`} />
       <main className="stage" ref={stage} key={`item-${item.id}`}>
         <div className={`detail tint-${tintOf(item)}`} key={item.id}>
           {item.format === "read" && !item.tool ? <div className="readbar" aria-hidden="true"><i style={{ width: `${read}%` }} /></div> : null}
@@ -66,7 +66,7 @@ export function ItemPage({ item }: { item: Item }) {
           {next ? (
             <section style={{ animationDelay: ".22s" }}>
               <div className="sec-h"><h2>Up next for you</h2></div>
-              <Link to="/flowella/item/$id" params={{ id: next.id }} className={`row tint-${tintOf(next)}`}>
+              <Link to="/luma/item/$id" params={{ id: next.id }} className={`row tint-${tintOf(next)}`}>
                 <span className="art-box"><ItemArt item={next} /></span>
                 <span className="tx"><span className="meta">{FORMAT_LABEL[next.format]} · {next.mins} min</span><b>{next.title}</b></span>
               </Link>
