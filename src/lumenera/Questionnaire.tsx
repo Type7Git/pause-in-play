@@ -1,4 +1,4 @@
-/** The Flowella welcome: one question per screen, each with a small live illustration. */
+/** The Lumenera welcome: one question per screen, each with a small live illustration. */
 import { useNavigate } from "@tanstack/react-router";
 import { useEffect, useRef, useState, type ReactNode } from "react";
 import { Bubbles, CheckCards, Chevron, Cluster, Constellation, Cycle, Face, Family, Info, Learn, Lock, LockIcon, Flower, Pin, Ring, Shield, Slots, Tick } from "./art";
@@ -79,7 +79,7 @@ export function Questionnaire({ mode }: { mode: "changed" | "build" | undefined 
     if (prev === undefined) return;
     setHistory(h);
     setReturnTo(null);
-    if (prev === -1) { void navigate({ to: "/flowella/home" }); return; }
+    if (prev === -1) { void navigate({ to: "/home" }); return; }
     go(prev, -1);
   };
   const set = (p: Partial<Profile>) => { setStill(true); es.patch(p); };
@@ -92,7 +92,7 @@ export function Questionnaire({ mode }: { mode: "changed" | "build" | undefined 
     const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     const t = reduced ? 150 : 650;
     const timers = [1, 2, 3].map((n) => window.setTimeout(() => setBuilt(n), t * n));
-    timers.push(window.setTimeout(() => { es.finish(); void navigate({ to: "/flowella/home", replace: true }); }, t * 4 + (reduced ? 0 : 400)));
+    timers.push(window.setTimeout(() => { es.finish(); void navigate({ to: "/home", replace: true }); }, t * 4 + (reduced ? 0 : 400)));
     return () => timers.forEach(clearTimeout);
   }, [s.kind, navigate]);
 
@@ -107,7 +107,7 @@ export function Questionnaire({ mode }: { mode: "changed" | "build" | undefined 
     case "welcome":
       body = (
         <>
-          <div className="art welcome-art"><Bubbles /><div className="logo"><Flower size={124} /><span className="name">Flowella</span><span className="line">Find your rhythm. Flourish your way.</span><span className="tag">Personalised women's health through every stage of life.</span></div></div>
+          <div className="art welcome-art"><Bubbles /><div className="logo"><Flower size={124} /><span className="name">Lumenera</span><span className="line">Find your rhythm. Flourish your way.</span><span className="tag">Personalised women's health through every stage of life.</span></div></div>
           <div className="qhead"><h1 tabIndex={-1}>Let's make this yours.</h1><p className="why" style={{ fontSize: 15 }}>A few questions, about 3 minutes. Your answers shape what you see, and you can change them any time.</p></div>
           <p className="why"><LockIcon /><span>Private by default. Stored in Australia, never sold.</span></p>
         </>
@@ -171,7 +171,7 @@ export function Questionnaire({ mode }: { mode: "changed" | "build" | undefined 
             {s.list!.map((o, i) => <OptBtn key={o.id} o={o} i={i} on={isOn(o.id)} onClick={() => toggle(o.id)} suffix={s.ordered && isOn(o.id) ? <span className="num">#{arr.indexOf(o.id) + 1}</span> : undefined} />)}
           </div>
           {s.ordered ? <p className="why" style={{ marginTop: -6 }}><span>{arr.length}/3 chosen. Tap again to remove.</span></p> : null}
-          {s.id === "support" && arr.includes("alone") ? <div className="note"><b>You don't have to do this alone.</b>PeriPals lets you invite one trusted person to share the load, at your pace.</div> : null}
+          {s.id === "support" && arr.includes("alone") ? <div className="note"><b>You don't have to do this alone.</b>My people lets you invite one trusted person to share the load, at your pace.</div> : null}
           {s.id === "identity" && ["ab", "ts", "both"].includes(String(v)) ? <div className="note"><b>Thank you for telling us.</b>We'll show health checks you can have earlier, and services run by and for Aboriginal and Torres Strait Islander women.</div> : null}
         </>
       );

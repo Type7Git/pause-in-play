@@ -11,10 +11,10 @@ import { useRewards } from "@/lib/rewards";
 export const Route = createFileRoute("/read/$id")({
   head: () => ({
     meta: [
-      { title: "Shared with you · Pause in Play" },
-      { name: "description", content: "Someone shared an article from Pause in Play with you." },
-      { property: "og:title", content: "Shared with you · Pause in Play" },
-      { property: "og:description", content: "A clinically reviewed read from Pause in Play." },
+      { title: "Shared with you · Lumenera" },
+      { name: "description", content: "Someone shared an article from Lumenera with you." },
+      { property: "og:title", content: "Shared with you · Lumenera" },
+      { property: "og:description", content: "A clinically reviewed read from Lumenera." },
       { property: "og:type", content: "article" },
       { name: "robots", content: "noindex" },
     ],
@@ -34,7 +34,7 @@ function Read() {
   });
   if (q.isLoading || !ready) return <Muted>Opening…</Muted>;
   const a = q.data;
-  if (!a) return <Card><h3>This article isn't available any more</h3><Muted>It may have been updated or moved.</Muted><Link to="/" className="font-bold text-plum underline">Go to Pause in Play</Link></Card>;
+  if (!a) return <Card><h3>This article isn't available any more</h3><Muted>It may have been updated or moved.</Muted><Link to="/" className="font-bold text-plum underline">Go to Lumenera</Link></Card>;
   const more = MORE[(a.section ?? "general") as keyof typeof MORE] ?? MORE.general;
   const teaser = a.summary || `${(a.body ?? "").slice(0, 180).trim()}…`;
   return (
@@ -63,7 +63,7 @@ function Read() {
           <Card>
             <p className="text-sm">{teaser}</p>
             <div className="rounded-2xl bg-plum-soft p-3.5 text-sm">
-              <b className="font-display text-base">Read the rest in Pause in Play</b>
+              <b className="font-display text-base">Read the rest in Lumenera</b>
               <p className="mt-0.5 text-muted-foreground">It's free. A small, kind companion for perimenopause, with tools, games and clinically reviewed reads.</p>
             </div>
           </Card>

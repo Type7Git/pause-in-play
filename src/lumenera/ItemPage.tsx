@@ -36,7 +36,7 @@ export function ItemPage({ item }: { item: Item }) {
 
   return (
     <>
-      <TopBar title={`${title} · ${spaceName(item)}`} back={item.space === "checks" ? "/flowella/home" : `/flowella/space/${item.space}`} />
+      <TopBar title={`${title} · ${spaceName(item)}`} back={item.space === "checks" ? "/home" : `/space/${item.space}`} />
       <main className="stage" ref={stage} key={`item-${item.id}`}>
         <div className={`detail tint-${tintOf(item)}`} key={item.id}>
           {item.format === "read" && !item.tool ? <div className="readbar" aria-hidden="true"><i style={{ width: `${read}%` }} /></div> : null}
@@ -66,7 +66,7 @@ export function ItemPage({ item }: { item: Item }) {
           {next ? (
             <section style={{ animationDelay: ".22s" }}>
               <div className="sec-h"><h2>Up next for you</h2></div>
-              <Link to="/flowella/item/$id" params={{ id: next.id }} className={`row tint-${tintOf(next)}`}>
+              <Link to="/item/$id" params={{ id: next.id }} className={`row tint-${tintOf(next)}`}>
                 <span className="art-box"><ItemArt item={next} /></span>
                 <span className="tx"><span className="meta">{FORMAT_LABEL[next.format]} · {next.mins} min</span><b>{next.title}</b></span>
               </Link>
@@ -163,7 +163,7 @@ function Breathe() {
   return (
     <div className="tool">
       <h2>{on ? `${left} seconds` : left === 0 ? "That's your minute. Well done." : "One minute, just breathing"}</h2>
-      <div className="orb-wrap"><div className={`orb ${on ? phase : ""}`} /><span className="say" aria-live="polite">{on ? (phase === "in" ? "Breathe in" : "And out") : ""}</span></div>
+      <div className="orb-wrap"><div className={`lx-orb ${on ? phase : ""}`} /><span className="say" aria-live="polite">{on ? (phase === "in" ? "Breathe in" : "And out") : ""}</span></div>
       <p>In for 4, out for 6. Let your shoulders drop.</p>
       <button type="button" className="primary" onClick={() => { if (!on) setLeft(60); setOn((o) => !o); }}>{on ? "Stop" : left === 0 ? "Again" : "Start"}</button>
     </div>
@@ -191,7 +191,7 @@ function Weeks() {
   const size = 30 + ((w - 4) / 36) * 100;
   return (
     <div className="tool">
-      <div className="grow">
+      <div className="lx-grow">
         <div className="seed-box"><div className="seed" style={{ width: size, height: size }} /></div>
         <b>Week {w}</b>
         <label className="sr" htmlFor="es-week">Week of pregnancy</label>
@@ -251,7 +251,7 @@ function Move() {
       <div className="energy">{(["low", "some", "plenty"] as const).map((e) => <button key={e} type="button" className="opt" style={{ animation: "none" }} aria-pressed={energy === e} onClick={() => { setEnergy(e); setPick(SESSIONS.find((x) => x.energy === e)!.id); setStep(-1); }}>{e === "low" ? "Low" : e === "some" ? "Some" : "Plenty"}</button>)}</div>
       <div className="sessions">{SESSIONS.map((x) => <button key={x.id} type="button" className={`sess ${x.energy !== energy ? "dim" : ""}`} aria-pressed={pick === x.id} onClick={() => { setPick(x.id); setStep(-1); }}><span className="tx"><b>{x.name}</b><span>10 minutes · {x.moves.slice(0, 3).join(", ")}</span></span></button>)}</div>
       {running ? (
-        <div className="grow" aria-live="polite"><div className="seed-box" style={{ height: 110 }}><div className="seed a-breathe" style={{ width: 70, height: 70 }} /></div><b style={{ fontSize: 22 }}>{s.moves[step]}</b><p>Move {step + 1} of {s.moves.length}. Demo pace, a few seconds each.</p></div>
+        <div className="lx-grow" aria-live="polite"><div className="seed-box" style={{ height: 110 }}><div className="seed a-breathe" style={{ width: 70, height: 70 }} /></div><b style={{ fontSize: 22 }}>{s.moves[step]}</b><p>Move {step + 1} of {s.moves.length}. Demo pace, a few seconds each.</p></div>
       ) : step >= s.moves.length ? <p aria-live="polite"><b>Done. That counts.</b> Every bit of movement adds up.</p> : null}
       <button type="button" className="primary" onClick={() => setStep(running ? -1 : 0)}>{running ? "Stop" : `Start ${s.name.toLowerCase()}`}</button>
     </div>

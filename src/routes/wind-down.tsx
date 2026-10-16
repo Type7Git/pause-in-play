@@ -7,9 +7,9 @@ import { MoveStrip } from "@/components/mm/MoveFigure";
 export const Route = createFileRoute("/wind-down")({
   head: () => ({
     meta: [
-      { title: "Relax and Restore · Pause in Play" },
+      { title: "Relax and Restore · Lumenera" },
       { name: "description", content: "Guided relaxations and gentle rest poses. Nothing to win here. Just rest." },
-      { property: "og:title", content: "Relax and Restore · Pause in Play" },
+      { property: "og:title", content: "Relax and Restore · Lumenera" },
       { property: "og:description", content: "Nothing to win here. Just rest." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },

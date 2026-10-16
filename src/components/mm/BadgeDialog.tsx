@@ -63,8 +63,8 @@ export function BadgeDialog({ badge, standing, onClose }: { badge: Badge | null;
     const el = medal.current?.querySelector<SVGSVGElement>(".badge-pop svg");
     setSharing({
       title: `${badge.name} badge`,
-      text: `I just earned the "${badge.name}" badge in Pause in Play. ${copy?.cheer ?? ""}`.trim(),
-      palText: `🏅 I just earned "${badge.name}" in Pause in Play! ${copy?.cheer ?? ""}`.trim(),
+      text: `I just earned the "${badge.name}" badge in Lumenera. ${copy?.cheer ?? ""}`.trim(),
+      palText: `🏅 I just earned "${badge.name}" in Lumenera! ${copy?.cheer ?? ""}`.trim(),
       fileName: `${badge.key}-badge.png`,
       image: async () => renderCard({ eyebrow: "Badge earned", title: badge.name, body: copy?.cheer, art: el ? await svgImage(el) : null, artShape: "medal", tint: "#FBEFD9" }),
     });

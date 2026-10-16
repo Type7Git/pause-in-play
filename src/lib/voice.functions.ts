@@ -11,7 +11,7 @@ export const fileVoiceNote = createServerFn({ method: "POST" })
       return await fileNote(data.text);
     } catch (e) {
       console.error("voice-file", e);
-      return { type: "error", text: "Sprout had a little wobble. Please try again." };
+      return { type: "error", text: "Enera had a little wobble. Please try again." };
     }
   });
 
@@ -27,6 +27,6 @@ export const transcribeVoice = createServerFn({ method: "POST" })
       return { text };
     } catch (e) {
       console.error("transcribe", e);
-      return { error: "Sprout couldn't hear that clearly. Try again, or type it." };
+      return { error: "Enera couldn't hear that clearly. Try again, or type it." };
     }
   });

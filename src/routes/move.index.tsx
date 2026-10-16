@@ -15,7 +15,7 @@ export const sessionsQuery = {
 };
 
 export const Route = createFileRoute("/move/")({
-  head: () => ({ meta: [{ title: "Move today · Pause in Play" }, { name: "description", content: "Short stretch, yoga, Pilates, strength and walking sessions. Move when you feel you can." }, { property: "og:title", content: "Move today · Pause in Play" }, { property: "og:description", content: "Gentle movement sessions for perimenopause. No streaks, no pressure." }, { property: "og:type", content: "website" }, { name: "twitter:card", content: "summary" }] }),
+  head: () => ({ meta: [{ title: "Move today · Lumenera" }, { name: "description", content: "Short stretch, yoga, Pilates, strength and walking sessions. Move when you feel you can." }, { property: "og:title", content: "Move today · Lumenera" }, { property: "og:description", content: "Gentle movement sessions for perimenopause. No streaks, no pressure." }, { property: "og:type", content: "website" }, { name: "twitter:card", content: "summary" }] }),
   component: MoveToday,
 });
 

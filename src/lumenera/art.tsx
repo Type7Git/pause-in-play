@@ -1,4 +1,4 @@
-/** Flowella illustrations. Soft, slow, decorative (aria-hidden): the words carry the meaning. */
+/** Lumenera illustrations. Soft, slow, decorative (aria-hidden): the words carry the meaning. */
 import { useEffect, useId, useRef, type CSSProperties } from "react";
 import { CONDS, CONTRA, STAGE_SHORT, TOPICS, TOPIC_SHORT, labelOf, type CheckId, type HubId, type Item, type Profile } from "./content";
 import type { Tone } from "./engine";
@@ -27,7 +27,7 @@ export const PhoneIcon = () => (
 );
 
 /* ---------- brand mark and welcome ---------- */
-/** The Flowella flower: swirling petals for flow, an open ring for rhythm. Blooms open, then turns slowly. */
+/** The Lumenera flower: swirling petals for flow, an open ring for rhythm. Blooms open, then turns slowly. */
 const PETAL = "M60 60 C 40 56, 30 36, 42 20 C 52 8, 72 10, 74 26 C 76 42, 70 54, 60 60 Z";
 const INNER = "M60 60 C 52 54, 48 42, 54 35 C 59 30, 67 32, 67 40 C 67 49, 64 55, 60 60 Z";
 export function Flower({ size = 96, still = false, className = "" }: { size?: number; still?: boolean; className?: string }) {
@@ -311,6 +311,31 @@ export function SpaceArt({ id }: { id: HubId }) {
             {[0, 72, 144, 216, 288].map((r) => <ellipse key={r} cx="0" cy="-9" rx="6" ry="10" fill="var(--rose)" opacity=".7" transform={`rotate(${r})`} />)}
             <circle r="5" fill="var(--soon-ring)" />
           </g>
+        </svg>
+      );
+    case "body":
+      return (
+        <svg {...box}>{defs}{motes}
+          <path d="M20 168 Q90 140 160 160 T300 150" fill="none" stroke="var(--surface)" strokeWidth="10" strokeLinecap="round" opacity=".8" />
+          <g className="a-bob">
+            <circle cx="160" cy="58" r="16" fill={grad} />
+            <path className="a-line" d="M160 76 C 158 100 156 116 160 136" stroke="var(--rose)" strokeWidth="7" strokeLinecap="round" fill="none" />
+            <path d="M160 92 C 136 82 118 66 108 48" stroke="var(--lilac)" strokeWidth="6" strokeLinecap="round" fill="none" />
+            <path d="M160 92 C 184 82 202 66 212 48" stroke="var(--lilac)" strokeWidth="6" strokeLinecap="round" fill="none" />
+            <path d="M160 136 C 146 150 136 160 124 166 M160 136 C 174 150 184 160 196 166" stroke="var(--rose)" strokeWidth="6" strokeLinecap="round" fill="none" />
+          </g>
+          <circle className="a-breathe" cx="160" cy="100" r="74" fill="none" stroke="var(--surface)" strokeWidth="2" strokeDasharray="3 9" />
+        </svg>
+      );
+    case "meds":
+      return (
+        <svg {...box}>{defs}{motes}
+          <rect x="96" y="40" width="128" height="122" rx="20" fill="var(--surface)" opacity=".8" />
+          <line x1="96" y1="100" x2="224" y2="100" stroke="var(--line)" strokeWidth="3" />
+          <g className="a-bob"><g transform="rotate(-24 136 76)"><rect x="116" y="66" width="44" height="20" rx="10" fill="var(--rose)" /><rect x="138" y="66" width="22" height="20" rx="10" fill="var(--lilac)" /><rect x="138" y="66" width="10" height="20" fill="var(--lilac)" /></g></g>
+          <g className="a-bob2"><circle cx="190" cy="76" r="12" fill={grad} /><circle cx="186" cy="72" r="4" fill="#fff" opacity=".6" /></g>
+          <g className="a-bob"><rect x="118" y="116" width="26" height="32" rx="7" fill="var(--lilac)" opacity=".8" /><rect x="114" y="110" width="34" height="9" rx="4" fill="var(--rose)" /></g>
+          <g className="a-beat"><circle cx="190" cy="132" r="15" fill="var(--ok-ring)" /><path d="M183 132l5 5 9-10" stroke="#fff" strokeWidth="3" fill="none" strokeLinecap="round" strokeLinejoin="round" /></g>
         </svg>
       );
     case "mind":

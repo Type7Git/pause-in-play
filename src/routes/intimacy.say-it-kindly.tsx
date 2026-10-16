@@ -5,7 +5,7 @@ import { Card, Chip, Pill, ScreenTitle } from "@/components/mm/ui";
 import { KINDLY_PARTS } from "@/content/intimacy";
 
 export const Route = createFileRoute("/intimacy/say-it-kindly")({
-  head: () => ({ meta: [{ title: "Say it kindly · Pause in Play" }, { name: "description", content: "Build gentle words for a tricky conversation with your partner." }, { property: "og:title", content: "Say it kindly · Pause in Play" }, { property: "og:description", content: "Gentle words for a tricky conversation." }, { property: "og:type", content: "website" }, { name: "twitter:card", content: "summary" }, { name: "robots", content: "noindex" }] }),
+  head: () => ({ meta: [{ title: "Say it kindly · Lumenera" }, { name: "description", content: "Build gentle words for a tricky conversation with your partner." }, { property: "og:title", content: "Say it kindly · Lumenera" }, { property: "og:description", content: "Gentle words for a tricky conversation." }, { property: "og:type", content: "website" }, { name: "twitter:card", content: "summary" }, { name: "robots", content: "noindex" }] }),
   component: Kindly,
 });
 
@@ -36,7 +36,7 @@ function Kindly() {
       </label>
       <div className="flex flex-wrap gap-2">
         <Pill onClick={copy}>Copy</Pill>
-        <Link to="/pals" className="press inline-flex min-h-11 items-center rounded-full border-[1.5px] border-line bg-card px-5 font-bold text-plum">Send to a PeriPal</Link>
+        <Link to="/pals" className="press inline-flex min-h-11 items-center rounded-full border-[1.5px] border-line bg-card px-5 font-bold text-plum">Send to someone in My people</Link>
       </div>
     </>
   );

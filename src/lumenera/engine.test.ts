@@ -4,7 +4,7 @@ import { checksFor, personal, placeOf, plan } from "./engine";
 
 const Y = new Date().getFullYear();
 
-describe("Flowella tailoring", () => {
+describe("Lumenera tailoring", () => {
   it("builds different homes for different lives", () => {
     expect(plan(PERSONAS["maddie"]!.profile).spaces.map((s) => s.id)).toEqual(["periods", "contra"]);
     expect(plan(PERSONAS["sam"]!.profile).spaces[0]!.id).toBe("fertility");

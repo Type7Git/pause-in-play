@@ -7,7 +7,7 @@ import { dayKey, repPhases, useBody } from "@/lib/body";
 import { useRewards } from "@/lib/rewards";
 
 export const Route = createFileRoute("/pelvic")({
-  head: () => ({ meta: [{ title: "Pelvic floor trainer · Pause in Play" }, { name: "description", content: "A paced pelvic floor trainer with holds, quick squeezes and discreet reminders." }, { property: "og:title", content: "Pelvic floor trainer · Pause in Play" }, { property: "og:description", content: "Squeeze, lift and let go, at your own pace." }, { property: "og:type", content: "website" }, { name: "twitter:card", content: "summary" }] }),
+  head: () => ({ meta: [{ title: "Pelvic floor trainer · Lumenera" }, { name: "description", content: "A paced pelvic floor trainer with holds, quick squeezes and discreet reminders." }, { property: "og:title", content: "Pelvic floor trainer · Lumenera" }, { property: "og:description", content: "Squeeze, lift and let go, at your own pace." }, { property: "og:type", content: "website" }, { name: "twitter:card", content: "summary" }] }),
   component: Pelvic,
 });
 

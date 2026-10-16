@@ -13,11 +13,13 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as AdminRouteImport } from './routes/admin'
 import { Route as ColourRouteImport } from './routes/colour'
 import { Route as CycleRouteImport } from './routes/cycle'
+import { Route as EneraRouteImport } from './routes/enera'
 import { Route as ErinRouteImport } from './routes/erin'
 import { Route as EverySeasonRouteImport } from './routes/every-season'
 import { Route as FlowellaRouteImport } from './routes/flowella'
 import { Route as FoodRouteImport } from './routes/food'
 import { Route as GardenRouteImport } from './routes/garden'
+import { Route as HomeRouteImport } from './routes/home'
 import { Route as IntimacyRouteImport } from './routes/intimacy'
 import { Route as LaughRouteImport } from './routes/laugh'
 import { Route as LearnRouteImport } from './routes/learn'
@@ -35,19 +37,21 @@ import { Route as SideQuestRouteImport } from './routes/side-quest'
 import { Route as SproutRouteImport } from './routes/sprout'
 import { Route as TabsRouteImport } from './routes/tabs'
 import { Route as TeamPreviewRouteImport } from './routes/team-preview'
+import { Route as TellEneraRouteImport } from './routes/tell-enera'
 import { Route as TellSproutRouteImport } from './routes/tell-sprout'
 import { Route as WindDownRouteImport } from './routes/wind-down'
 import { Route as WouldYouRatherRouteImport } from './routes/would-you-rather'
 import { Route as BodyWhyRouteImport } from './routes/body.why'
+import { Route as CheckIdRouteImport } from './routes/check.$id'
 import { Route as EverySeasonSplatRouteImport } from './routes/every-season.$'
-import { Route as FlowellaIndexRouteImport } from './routes/flowella.index'
-import { Route as FlowellaHomeRouteImport } from './routes/flowella.home'
+import { Route as FlowellaSplatRouteImport } from './routes/flowella.$'
 import { Route as IntimacyIndexRouteImport } from './routes/intimacy.index'
 import { Route as IntimacyCardsRouteImport } from './routes/intimacy.cards'
 import { Route as IntimacyCheckInRouteImport } from './routes/intimacy.check-in'
 import { Route as IntimacyLibraryRouteImport } from './routes/intimacy.library'
 import { Route as IntimacyPartnerGuideRouteImport } from './routes/intimacy.partner-guide'
 import { Route as IntimacySayItKindlyRouteImport } from './routes/intimacy.say-it-kindly'
+import { Route as ItemIdRouteImport } from './routes/item.$id'
 import { Route as MoveIndexRouteImport } from './routes/move.index'
 import { Route as MoveKeyRouteImport } from './routes/move.$key'
 import { Route as PalCodeRouteImport } from './routes/pal.$code'
@@ -55,9 +59,7 @@ import { Route as PalsIndexRouteImport } from './routes/pals.index'
 import { Route as PalsIdRouteImport } from './routes/pals.$id'
 import { Route as PalsInviteRouteImport } from './routes/pals.invite'
 import { Route as ReadIdRouteImport } from './routes/read.$id'
-import { Route as FlowellaCheckIdRouteImport } from './routes/flowella.check.$id'
-import { Route as FlowellaItemIdRouteImport } from './routes/flowella.item.$id'
-import { Route as FlowellaSpaceIdRouteImport } from './routes/flowella.space.$id'
+import { Route as SpaceIdRouteImport } from './routes/space.$id'
 import { Route as ApiPublicHooksSendNudgesRouteImport } from './routes/api/public/hooks/send-nudges'
 
 const IndexRoute = IndexRouteImport.update({
@@ -78,6 +80,11 @@ const ColourRoute = ColourRouteImport.update({
 const CycleRoute = CycleRouteImport.update({
   id: '/cycle',
   path: '/cycle',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const EneraRoute = EneraRouteImport.update({
+  id: '/enera',
+  path: '/enera',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ErinRoute = ErinRouteImport.update({
@@ -103,6 +110,11 @@ const FoodRoute = FoodRouteImport.update({
 const GardenRoute = GardenRouteImport.update({
   id: '/garden',
   path: '/garden',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const HomeRoute = HomeRouteImport.update({
+  id: '/home',
+  path: '/home',
   getParentRoute: () => rootRouteImport,
 } as any)
 const IntimacyRoute = IntimacyRouteImport.update({
@@ -190,6 +202,11 @@ const TeamPreviewRoute = TeamPreviewRouteImport.update({
   path: '/team-preview',
   getParentRoute: () => rootRouteImport,
 } as any)
+const TellEneraRoute = TellEneraRouteImport.update({
+  id: '/tell-enera',
+  path: '/tell-enera',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const TellSproutRoute = TellSproutRouteImport.update({
   id: '/tell-sprout',
   path: '/tell-sprout',
@@ -210,19 +227,19 @@ const BodyWhyRoute = BodyWhyRouteImport.update({
   path: '/body/why',
   getParentRoute: () => rootRouteImport,
 } as any)
+const CheckIdRoute = CheckIdRouteImport.update({
+  id: '/check/$id',
+  path: '/check/$id',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const EverySeasonSplatRoute = EverySeasonSplatRouteImport.update({
   id: '/$',
   path: '/$',
   getParentRoute: () => EverySeasonRoute,
 } as any)
-const FlowellaIndexRoute = FlowellaIndexRouteImport.update({
-  id: '/',
-  path: '/',
-  getParentRoute: () => FlowellaRoute,
-} as any)
-const FlowellaHomeRoute = FlowellaHomeRouteImport.update({
-  id: '/home',
-  path: '/home',
+const FlowellaSplatRoute = FlowellaSplatRouteImport.update({
+  id: '/$',
+  path: '/$',
   getParentRoute: () => FlowellaRoute,
 } as any)
 const IntimacyIndexRoute = IntimacyIndexRouteImport.update({
@@ -254,6 +271,11 @@ const IntimacySayItKindlyRoute = IntimacySayItKindlyRouteImport.update({
   id: '/say-it-kindly',
   path: '/say-it-kindly',
   getParentRoute: () => IntimacyRoute,
+} as any)
+const ItemIdRoute = ItemIdRouteImport.update({
+  id: '/item/$id',
+  path: '/item/$id',
+  getParentRoute: () => rootRouteImport,
 } as any)
 const MoveIndexRoute = MoveIndexRouteImport.update({
   id: '/move/',
@@ -290,20 +312,10 @@ const ReadIdRoute = ReadIdRouteImport.update({
   path: '/read/$id',
   getParentRoute: () => rootRouteImport,
 } as any)
-const FlowellaCheckIdRoute = FlowellaCheckIdRouteImport.update({
-  id: '/check/$id',
-  path: '/check/$id',
-  getParentRoute: () => FlowellaRoute,
-} as any)
-const FlowellaItemIdRoute = FlowellaItemIdRouteImport.update({
-  id: '/item/$id',
-  path: '/item/$id',
-  getParentRoute: () => FlowellaRoute,
-} as any)
-const FlowellaSpaceIdRoute = FlowellaSpaceIdRouteImport.update({
+const SpaceIdRoute = SpaceIdRouteImport.update({
   id: '/space/$id',
   path: '/space/$id',
-  getParentRoute: () => FlowellaRoute,
+  getParentRoute: () => rootRouteImport,
 } as any)
 const ApiPublicHooksSendNudgesRoute =
   ApiPublicHooksSendNudgesRouteImport.update({
@@ -317,11 +329,13 @@ export interface FileRoutesByFullPath {
   '/admin': typeof AdminRoute
   '/colour': typeof ColourRoute
   '/cycle': typeof CycleRoute
+  '/enera': typeof EneraRoute
   '/erin': typeof ErinRoute
   '/every-season': typeof EverySeasonRouteWithChildren
   '/flowella': typeof FlowellaRouteWithChildren
   '/food': typeof FoodRoute
   '/garden': typeof GardenRoute
+  '/home': typeof HomeRoute
   '/intimacy': typeof IntimacyRouteWithChildren
   '/laugh': typeof LaughRoute
   '/learn': typeof LearnRoute
@@ -339,29 +353,29 @@ export interface FileRoutesByFullPath {
   '/sprout': typeof SproutRoute
   '/tabs': typeof TabsRoute
   '/team-preview': typeof TeamPreviewRoute
+  '/tell-enera': typeof TellEneraRoute
   '/tell-sprout': typeof TellSproutRoute
   '/wind-down': typeof WindDownRoute
   '/would-you-rather': typeof WouldYouRatherRoute
   '/body/why': typeof BodyWhyRoute
+  '/check/$id': typeof CheckIdRoute
   '/every-season/$': typeof EverySeasonSplatRoute
-  '/flowella/home': typeof FlowellaHomeRoute
+  '/flowella/$': typeof FlowellaSplatRoute
   '/intimacy/cards': typeof IntimacyCardsRoute
   '/intimacy/check-in': typeof IntimacyCheckInRoute
   '/intimacy/library': typeof IntimacyLibraryRoute
   '/intimacy/partner-guide': typeof IntimacyPartnerGuideRoute
   '/intimacy/say-it-kindly': typeof IntimacySayItKindlyRoute
+  '/item/$id': typeof ItemIdRoute
   '/move/$key': typeof MoveKeyRoute
   '/pal/$code': typeof PalCodeRoute
   '/pals/$id': typeof PalsIdRoute
   '/pals/invite': typeof PalsInviteRoute
   '/read/$id': typeof ReadIdRoute
-  '/flowella/': typeof FlowellaIndexRoute
+  '/space/$id': typeof SpaceIdRoute
   '/intimacy/': typeof IntimacyIndexRoute
   '/move/': typeof MoveIndexRoute
   '/pals/': typeof PalsIndexRoute
-  '/flowella/check/$id': typeof FlowellaCheckIdRoute
-  '/flowella/item/$id': typeof FlowellaItemIdRoute
-  '/flowella/space/$id': typeof FlowellaSpaceIdRoute
   '/api/public/hooks/send-nudges': typeof ApiPublicHooksSendNudgesRoute
 }
 export interface FileRoutesByTo {
@@ -369,10 +383,13 @@ export interface FileRoutesByTo {
   '/admin': typeof AdminRoute
   '/colour': typeof ColourRoute
   '/cycle': typeof CycleRoute
+  '/enera': typeof EneraRoute
   '/erin': typeof ErinRoute
   '/every-season': typeof EverySeasonRouteWithChildren
+  '/flowella': typeof FlowellaRouteWithChildren
   '/food': typeof FoodRoute
   '/garden': typeof GardenRoute
+  '/home': typeof HomeRoute
   '/laugh': typeof LaughRoute
   '/learn': typeof LearnRoute
   '/little-win': typeof LittleWinRoute
@@ -389,29 +406,29 @@ export interface FileRoutesByTo {
   '/sprout': typeof SproutRoute
   '/tabs': typeof TabsRoute
   '/team-preview': typeof TeamPreviewRoute
+  '/tell-enera': typeof TellEneraRoute
   '/tell-sprout': typeof TellSproutRoute
   '/wind-down': typeof WindDownRoute
   '/would-you-rather': typeof WouldYouRatherRoute
   '/body/why': typeof BodyWhyRoute
+  '/check/$id': typeof CheckIdRoute
   '/every-season/$': typeof EverySeasonSplatRoute
-  '/flowella/home': typeof FlowellaHomeRoute
+  '/flowella/$': typeof FlowellaSplatRoute
   '/intimacy/cards': typeof IntimacyCardsRoute
   '/intimacy/check-in': typeof IntimacyCheckInRoute
   '/intimacy/library': typeof IntimacyLibraryRoute
   '/intimacy/partner-guide': typeof IntimacyPartnerGuideRoute
   '/intimacy/say-it-kindly': typeof IntimacySayItKindlyRoute
+  '/item/$id': typeof ItemIdRoute
   '/move/$key': typeof MoveKeyRoute
   '/pal/$code': typeof PalCodeRoute
   '/pals/$id': typeof PalsIdRoute
   '/pals/invite': typeof PalsInviteRoute
   '/read/$id': typeof ReadIdRoute
-  '/flowella': typeof FlowellaIndexRoute
+  '/space/$id': typeof SpaceIdRoute
   '/intimacy': typeof IntimacyIndexRoute
   '/move': typeof MoveIndexRoute
   '/pals': typeof PalsIndexRoute
-  '/flowella/check/$id': typeof FlowellaCheckIdRoute
-  '/flowella/item/$id': typeof FlowellaItemIdRoute
-  '/flowella/space/$id': typeof FlowellaSpaceIdRoute
   '/api/public/hooks/send-nudges': typeof ApiPublicHooksSendNudgesRoute
 }
 export interface FileRoutesById {
@@ -420,11 +437,13 @@ export interface FileRoutesById {
   '/admin': typeof AdminRoute
   '/colour': typeof ColourRoute
   '/cycle': typeof CycleRoute
+  '/enera': typeof EneraRoute
   '/erin': typeof ErinRoute
   '/every-season': typeof EverySeasonRouteWithChildren
   '/flowella': typeof FlowellaRouteWithChildren
   '/food': typeof FoodRoute
   '/garden': typeof GardenRoute
+  '/home': typeof HomeRoute
   '/intimacy': typeof IntimacyRouteWithChildren
   '/laugh': typeof LaughRoute
   '/learn': typeof LearnRoute
@@ -442,29 +461,29 @@ export interface FileRoutesById {
   '/sprout': typeof SproutRoute
   '/tabs': typeof TabsRoute
   '/team-preview': typeof TeamPreviewRoute
+  '/tell-enera': typeof TellEneraRoute
   '/tell-sprout': typeof TellSproutRoute
   '/wind-down': typeof WindDownRoute
   '/would-you-rather': typeof WouldYouRatherRoute
   '/body/why': typeof BodyWhyRoute
+  '/check/$id': typeof CheckIdRoute
   '/every-season/$': typeof EverySeasonSplatRoute
-  '/flowella/home': typeof FlowellaHomeRoute
+  '/flowella/$': typeof FlowellaSplatRoute
   '/intimacy/cards': typeof IntimacyCardsRoute
   '/intimacy/check-in': typeof IntimacyCheckInRoute
   '/intimacy/library': typeof IntimacyLibraryRoute
   '/intimacy/partner-guide': typeof IntimacyPartnerGuideRoute
   '/intimacy/say-it-kindly': typeof IntimacySayItKindlyRoute
+  '/item/$id': typeof ItemIdRoute
   '/move/$key': typeof MoveKeyRoute
   '/pal/$code': typeof PalCodeRoute
   '/pals/$id': typeof PalsIdRoute
   '/pals/invite': typeof PalsInviteRoute
   '/read/$id': typeof ReadIdRoute
-  '/flowella/': typeof FlowellaIndexRoute
+  '/space/$id': typeof SpaceIdRoute
   '/intimacy/': typeof IntimacyIndexRoute
   '/move/': typeof MoveIndexRoute
   '/pals/': typeof PalsIndexRoute
-  '/flowella/check/$id': typeof FlowellaCheckIdRoute
-  '/flowella/item/$id': typeof FlowellaItemIdRoute
-  '/flowella/space/$id': typeof FlowellaSpaceIdRoute
   '/api/public/hooks/send-nudges': typeof ApiPublicHooksSendNudgesRoute
 }
 export interface FileRouteTypes {
@@ -474,11 +493,13 @@ export interface FileRouteTypes {
     | '/admin'
     | '/colour'
     | '/cycle'
+    | '/enera'
     | '/erin'
     | '/every-season'
     | '/flowella'
     | '/food'
     | '/garden'
+    | '/home'
     | '/intimacy'
     | '/laugh'
     | '/learn'
@@ -496,29 +517,29 @@ export interface FileRouteTypes {
     | '/sprout'
     | '/tabs'
     | '/team-preview'
+    | '/tell-enera'
     | '/tell-sprout'
     | '/wind-down'
     | '/would-you-rather'
     | '/body/why'
+    | '/check/$id'
     | '/every-season/$'
-    | '/flowella/home'
+    | '/flowella/$'
     | '/intimacy/cards'
     | '/intimacy/check-in'
     | '/intimacy/library'
     | '/intimacy/partner-guide'
     | '/intimacy/say-it-kindly'
+    | '/item/$id'
     | '/move/$key'
     | '/pal/$code'
     | '/pals/$id'
     | '/pals/invite'
     | '/read/$id'
-    | '/flowella/'
+    | '/space/$id'
     | '/intimacy/'
     | '/move/'
     | '/pals/'
-    | '/flowella/check/$id'
-    | '/flowella/item/$id'
-    | '/flowella/space/$id'
     | '/api/public/hooks/send-nudges'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -526,10 +547,13 @@ export interface FileRouteTypes {
     | '/admin'
     | '/colour'
     | '/cycle'
+    | '/enera'
     | '/erin'
     | '/every-season'
+    | '/flowella'
     | '/food'
     | '/garden'
+    | '/home'
     | '/laugh'
     | '/learn'
     | '/little-win'
@@ -546,29 +570,29 @@ export interface FileRouteTypes {
     | '/sprout'
     | '/tabs'
     | '/team-preview'
+    | '/tell-enera'
     | '/tell-sprout'
     | '/wind-down'
     | '/would-you-rather'
     | '/body/why'
+    | '/check/$id'
     | '/every-season/$'
-    | '/flowella/home'
+    | '/flowella/$'
     | '/intimacy/cards'
     | '/intimacy/check-in'
     | '/intimacy/library'
     | '/intimacy/partner-guide'
     | '/intimacy/say-it-kindly'
+    | '/item/$id'
     | '/move/$key'
     | '/pal/$code'
     | '/pals/$id'
     | '/pals/invite'
     | '/read/$id'
-    | '/flowella'
+    | '/space/$id'
     | '/intimacy'
     | '/move'
     | '/pals'
-    | '/flowella/check/$id'
-    | '/flowella/item/$id'
-    | '/flowella/space/$id'
     | '/api/public/hooks/send-nudges'
   id:
     | '__root__'
@@ -576,11 +600,13 @@ export interface FileRouteTypes {
     | '/admin'
     | '/colour'
     | '/cycle'
+    | '/enera'
     | '/erin'
     | '/every-season'
     | '/flowella'
     | '/food'
     | '/garden'
+    | '/home'
     | '/intimacy'
     | '/laugh'
     | '/learn'
@@ -598,29 +624,29 @@ export interface FileRouteTypes {
     | '/sprout'
     | '/tabs'
     | '/team-preview'
+    | '/tell-enera'
     | '/tell-sprout'
     | '/wind-down'
     | '/would-you-rather'
     | '/body/why'
+    | '/check/$id'
     | '/every-season/$'
-    | '/flowella/home'
+    | '/flowella/$'
     | '/intimacy/cards'
     | '/intimacy/check-in'
     | '/intimacy/library'
     | '/intimacy/partner-guide'
     | '/intimacy/say-it-kindly'
+    | '/item/$id'
     | '/move/$key'
     | '/pal/$code'
     | '/pals/$id'
     | '/pals/invite'
     | '/read/$id'
-    | '/flowella/'
+    | '/space/$id'
     | '/intimacy/'
     | '/move/'
     | '/pals/'
-    | '/flowella/check/$id'
-    | '/flowella/item/$id'
-    | '/flowella/space/$id'
     | '/api/public/hooks/send-nudges'
   fileRoutesById: FileRoutesById
 }
@@ -629,11 +655,13 @@ export interface RootRouteChildren {
   AdminRoute: typeof AdminRoute
   ColourRoute: typeof ColourRoute
   CycleRoute: typeof CycleRoute
+  EneraRoute: typeof EneraRoute
   ErinRoute: typeof ErinRoute
   EverySeasonRoute: typeof EverySeasonRouteWithChildren
   FlowellaRoute: typeof FlowellaRouteWithChildren
   FoodRoute: typeof FoodRoute
   GardenRoute: typeof GardenRoute
+  HomeRoute: typeof HomeRoute
   IntimacyRoute: typeof IntimacyRouteWithChildren
   LaughRoute: typeof LaughRoute
   LearnRoute: typeof LearnRoute
@@ -651,15 +679,19 @@ export interface RootRouteChildren {
   SproutRoute: typeof SproutRoute
   TabsRoute: typeof TabsRoute
   TeamPreviewRoute: typeof TeamPreviewRoute
+  TellEneraRoute: typeof TellEneraRoute
   TellSproutRoute: typeof TellSproutRoute
   WindDownRoute: typeof WindDownRoute
   WouldYouRatherRoute: typeof WouldYouRatherRoute
   BodyWhyRoute: typeof BodyWhyRoute
+  CheckIdRoute: typeof CheckIdRoute
+  ItemIdRoute: typeof ItemIdRoute
   MoveKeyRoute: typeof MoveKeyRoute
   PalCodeRoute: typeof PalCodeRoute
   PalsIdRoute: typeof PalsIdRoute
   PalsInviteRoute: typeof PalsInviteRoute
   ReadIdRoute: typeof ReadIdRoute
+  SpaceIdRoute: typeof SpaceIdRoute
   MoveIndexRoute: typeof MoveIndexRoute
   PalsIndexRoute: typeof PalsIndexRoute
   ApiPublicHooksSendNudgesRoute: typeof ApiPublicHooksSendNudgesRoute
@@ -695,6 +727,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof CycleRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/enera': {
+      id: '/enera'
+      path: '/enera'
+      fullPath: '/enera'
+      preLoaderRoute: typeof EneraRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/erin': {
       id: '/erin'
       path: '/erin'
@@ -728,6 +767,13 @@ declare module '@tanstack/react-router' {
       path: '/garden'
       fullPath: '/garden'
       preLoaderRoute: typeof GardenRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/home': {
+      id: '/home'
+      path: '/home'
+      fullPath: '/home'
+      preLoaderRoute: typeof HomeRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/intimacy': {
@@ -849,6 +895,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof TeamPreviewRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/tell-enera': {
+      id: '/tell-enera'
+      path: '/tell-enera'
+      fullPath: '/tell-enera'
+      preLoaderRoute: typeof TellEneraRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/tell-sprout': {
       id: '/tell-sprout'
       path: '/tell-sprout'
@@ -877,6 +930,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof BodyWhyRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/check/$id': {
+      id: '/check/$id'
+      path: '/check/$id'
+      fullPath: '/check/$id'
+      preLoaderRoute: typeof CheckIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/every-season/$': {
       id: '/every-season/$'
       path: '/$'
@@ -884,18 +944,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof EverySeasonSplatRouteImport
       parentRoute: typeof EverySeasonRoute
     }
-    '/flowella/': {
-      id: '/flowella/'
-      path: '/'
-      fullPath: '/flowella/'
-      preLoaderRoute: typeof FlowellaIndexRouteImport
-      parentRoute: typeof FlowellaRoute
-    }
-    '/flowella/home': {
-      id: '/flowella/home'
-      path: '/home'
-      fullPath: '/flowella/home'
-      preLoaderRoute: typeof FlowellaHomeRouteImport
+    '/flowella/$': {
+      id: '/flowella/$'
+      path: '/$'
+      fullPath: '/flowella/$'
+      preLoaderRoute: typeof FlowellaSplatRouteImport
       parentRoute: typeof FlowellaRoute
     }
     '/intimacy/': {
@@ -939,6 +992,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/intimacy/say-it-kindly'
       preLoaderRoute: typeof IntimacySayItKindlyRouteImport
       parentRoute: typeof IntimacyRoute
+    }
+    '/item/$id': {
+      id: '/item/$id'
+      path: '/item/$id'
+      fullPath: '/item/$id'
+      preLoaderRoute: typeof ItemIdRouteImport
+      parentRoute: typeof rootRouteImport
     }
     '/move/': {
       id: '/move/'
@@ -989,26 +1049,12 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ReadIdRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/flowella/check/$id': {
-      id: '/flowella/check/$id'
-      path: '/check/$id'
-      fullPath: '/flowella/check/$id'
-      preLoaderRoute: typeof FlowellaCheckIdRouteImport
-      parentRoute: typeof FlowellaRoute
-    }
-    '/flowella/item/$id': {
-      id: '/flowella/item/$id'
-      path: '/item/$id'
-      fullPath: '/flowella/item/$id'
-      preLoaderRoute: typeof FlowellaItemIdRouteImport
-      parentRoute: typeof FlowellaRoute
-    }
-    '/flowella/space/$id': {
-      id: '/flowella/space/$id'
+    '/space/$id': {
+      id: '/space/$id'
       path: '/space/$id'
-      fullPath: '/flowella/space/$id'
-      preLoaderRoute: typeof FlowellaSpaceIdRouteImport
-      parentRoute: typeof FlowellaRoute
+      fullPath: '/space/$id'
+      preLoaderRoute: typeof SpaceIdRouteImport
+      parentRoute: typeof rootRouteImport
     }
     '/api/public/hooks/send-nudges': {
       id: '/api/public/hooks/send-nudges'
@@ -1033,19 +1079,11 @@ const EverySeasonRouteWithChildren = EverySeasonRoute._addFileChildren(
 )
 
 interface FlowellaRouteChildren {
-  FlowellaHomeRoute: typeof FlowellaHomeRoute
-  FlowellaIndexRoute: typeof FlowellaIndexRoute
-  FlowellaCheckIdRoute: typeof FlowellaCheckIdRoute
-  FlowellaItemIdRoute: typeof FlowellaItemIdRoute
-  FlowellaSpaceIdRoute: typeof FlowellaSpaceIdRoute
+  FlowellaSplatRoute: typeof FlowellaSplatRoute
 }
 
 const FlowellaRouteChildren: FlowellaRouteChildren = {
-  FlowellaHomeRoute: FlowellaHomeRoute,
-  FlowellaIndexRoute: FlowellaIndexRoute,
-  FlowellaCheckIdRoute: FlowellaCheckIdRoute,
-  FlowellaItemIdRoute: FlowellaItemIdRoute,
-  FlowellaSpaceIdRoute: FlowellaSpaceIdRoute,
+  FlowellaSplatRoute: FlowellaSplatRoute,
 }
 
 const FlowellaRouteWithChildren = FlowellaRoute._addFileChildren(
@@ -1079,11 +1117,13 @@ const rootRouteChildren: RootRouteChildren = {
   AdminRoute: AdminRoute,
   ColourRoute: ColourRoute,
   CycleRoute: CycleRoute,
+  EneraRoute: EneraRoute,
   ErinRoute: ErinRoute,
   EverySeasonRoute: EverySeasonRouteWithChildren,
   FlowellaRoute: FlowellaRouteWithChildren,
   FoodRoute: FoodRoute,
   GardenRoute: GardenRoute,
+  HomeRoute: HomeRoute,
   IntimacyRoute: IntimacyRouteWithChildren,
   LaughRoute: LaughRoute,
   LearnRoute: LearnRoute,
@@ -1101,15 +1141,19 @@ const rootRouteChildren: RootRouteChildren = {
   SproutRoute: SproutRoute,
   TabsRoute: TabsRoute,
   TeamPreviewRoute: TeamPreviewRoute,
+  TellEneraRoute: TellEneraRoute,
   TellSproutRoute: TellSproutRoute,
   WindDownRoute: WindDownRoute,
   WouldYouRatherRoute: WouldYouRatherRoute,
   BodyWhyRoute: BodyWhyRoute,
+  CheckIdRoute: CheckIdRoute,
+  ItemIdRoute: ItemIdRoute,
   MoveKeyRoute: MoveKeyRoute,
   PalCodeRoute: PalCodeRoute,
   PalsIdRoute: PalsIdRoute,
   PalsInviteRoute: PalsInviteRoute,
   ReadIdRoute: ReadIdRoute,
+  SpaceIdRoute: SpaceIdRoute,
   MoveIndexRoute: MoveIndexRoute,
   PalsIndexRoute: PalsIndexRoute,
   ApiPublicHooksSendNudgesRoute: ApiPublicHooksSendNudgesRoute,

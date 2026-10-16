@@ -21,7 +21,7 @@ export const BADGES: Omit<Badge, "earned">[] = [
   { key: "calm_colourist", name: "Calm colourist", glyph: "palette" },
   { key: "decisive_queen", name: "Decisive queen", glyph: "crown" },
   { key: "moving_gently", name: "Moving gently", glyph: "leaf" },
-  { key: "peripal", name: "PeriPal", glyph: "heart" },
+  { key: "peripal", name: "Support circle", glyph: "heart" },
 ];
 const keyFor = (name: string) => BADGES.find((b) => b.name === name)?.key;
 

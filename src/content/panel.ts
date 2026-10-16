@@ -20,7 +20,7 @@ export const panel: PanelMember[] = [
 export const principles = [
   "Every tool and article is reviewed by a registered health professional before it goes live.",
   "Education and skills only. No diagnosis, no symptom scores, no medical advice.",
-  "Sprout answers only from the reviewed library, and points you to your GP for anything medical.",
+  "Enera answers only from the reviewed library, and points you to your GP for anything medical.",
   "Private by default. You choose what's saved and what's shared.",
 ] as const;
 

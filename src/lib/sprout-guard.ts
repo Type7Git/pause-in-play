@@ -1,4 +1,4 @@
-/** Pure, browser-safe Sprout rules: safety screening, privacy scrubbing and tool names. */
+/** Pure, browser-safe Enera rules (Enera was called Enera; code names keep "sprout"): safety screening, privacy scrubbing and tool names. */
 
 export const TOOLS = {
   "side-quest": "Side Quest Saver",
@@ -15,14 +15,14 @@ export const TOOLS = {
   learn: "Learn",
   cycle: "Cycle Tracker",
   settings: "Settings",
-  sprout: "Ask Sprout",
-  "tell-sprout": "Tell Sprout",
+  sprout: "Ask Enera",
+  "tell-sprout": "Tell Enera",
   home: "Home",
   favourites: "Favourites",
   colour: "Colour me calm",
   "would-you-rather": "Would you rather?",
-  peripals: "PeriPals",
-  intimacy: "Intimacy & relationships",
+  peripals: "My people",
+  intimacy: "Sexual health and relationships",
   reflect: "What's changed for me",
   "talk-cards": "Conversation cards",
   "say-it-kindly": "Say it kindly",
@@ -38,8 +38,8 @@ export const TOOL_ROUTES: Record<ToolKey, { to: string; section?: string }> = {
   "side-quest": { to: "/side-quest" }, remember: { to: "/remember" }, tabs: { to: "/tabs" }, "wind-down": { to: "/wind-down" }, notes: { to: "/notes" },
   "little-win": { to: "/little-win" }, laugh: { to: "/laugh" }, erin: { to: "/panel" }, panel: { to: "/panel" },
   medicines: { to: "/medicines" }, mood: { to: "/mood" }, learn: { to: "/learn" }, cycle: { to: "/cycle" }, settings: { to: "/settings" },
-  sprout: { to: "/sprout" }, "tell-sprout": { to: "/tell-sprout" }, home: { to: "/" }, favourites: { to: "/", section: "favourites" },
-  colour: { to: "/colour" }, "would-you-rather": { to: "/would-you-rather" }, peripals: { to: "/pals" }, intimacy: { to: "/", section: "love" },
+  sprout: { to: "/enera" }, "tell-sprout": { to: "/tell-enera" }, home: { to: "/home" }, favourites: { to: "/home" },
+  colour: { to: "/colour" }, "would-you-rather": { to: "/would-you-rather" }, peripals: { to: "/pals" }, intimacy: { to: "/space/contra" },
   reflect: { to: "/intimacy/check-in" }, "talk-cards": { to: "/intimacy/cards" }, "say-it-kindly": { to: "/intimacy/say-it-kindly" },
   "partner-guide": { to: "/intimacy/partner-guide" }, "intimacy-library": { to: "/intimacy/library" },
   move: { to: "/move" }, pelvic: { to: "/pelvic" }, food: { to: "/food" },
@@ -55,7 +55,7 @@ export const CLINICAL_REPLY =
   "That's an important question, and it needs someone who knows your health. I can't advise on medication, hormones, tests or symptoms. Your GP is the best place to start, and they can refer you on if needed.";
 
 export const NO_MATCH_REPLY =
-  "I don't have anything on that in the Pause in Play library yet. I've noted the question (anonymously) so the clinical team can consider adding it. In the meantime, swipe through the sections on the home screen to find a tool that fits.";
+  "I don't have anything on that in the Lumenera library yet. I've noted the question (anonymously) so the clinical team can consider adding it. In the meantime, the spaces on your home screen are full of tools that might fit.";
 
 export const RATE_LIMIT_REPLY =
   "I need a little rest. You've sent lots of messages this hour, so let's pick this up a bit later. The tools on the home screen are always there.";

@@ -50,7 +50,7 @@ describe("standing wording", () => {
   });
   it("describes badge rarity", () => {
     const s = { gardens: MIN_GARDENS * 4, top: null, badgeShare: { a: 25, b: 0 } };
-    expect(badgeShareLine(s, "a")).toBe("25% of Pause in Play gardens have this badge.");
+    expect(badgeShareLine(s, "a")).toBe("25% of Lumenera gardens have this badge.");
     expect(badgeShareLine(s, "b")).toMatch(/rare/);
   });
 });

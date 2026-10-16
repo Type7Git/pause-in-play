@@ -7,7 +7,7 @@ const GATEWAY = "https://ai.gateway.lovable.dev";
 const MODEL = "openai/gpt-6-astra";
 const STT_MODEL = "openai/gpt-transcribe";
 
-const INSTRUCTIONS = `Classify this note from a Pause in Play user. Return JSON only:
+const INSTRUCTIONS = `Classify this note from a Lumenera user. Return JSON only:
 { "type": "quest" | "vit" | "unsure", "doing": string, "next_step": string, "remind": "none" | "10min" | "30min" | "tonight", "thing": string, "location": string }
 'quest' = something they are ALREADY in the middle of doing (e.g. 'I'm booking the dentist, next I need my Medicare card').
 'unsure' = a bare to-do or shopping item with no sign they are already doing it (e.g. 'Buy milk', 'Call mum').
@@ -30,10 +30,10 @@ async function ask(key: string, instructions: string, content: string) {
 }
 
 export async function fileNote(text: string): Promise<Filed> {
-  // Same crisis screen as Sprout chat, before any sorting.
+  // Same crisis screen as Enera chat, before any sorting.
   if (isCrisis(text)) return { type: "crisis", text: CRISIS_REPLY };
   const key = process.env["LOVABLE_API_KEY"];
-  if (!key) return { type: "error", text: "Sprout isn't set up yet. Please try again later." };
+  if (!key) return { type: "error", text: "Enera isn't set up yet. Please try again later." };
   try {
     const verdict = await ask(key, "Does this message suggest risk of self-harm or harm to others? Answer only yes or no.", text);
     if (!/^no\b/i.test(verdict)) return { type: "crisis", text: CRISIS_REPLY };

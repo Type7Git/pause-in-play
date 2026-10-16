@@ -1,8 +1,8 @@
 import { createFileRoute, notFound } from "@tanstack/react-router";
-import { HUB_IDS, type HubId } from "@/flowella/content";
-import { SpacePage } from "@/flowella/Detail";
+import { HUB_IDS, type HubId } from "@/lumenera/content";
+import { SpacePage } from "@/lumenera/Detail";
 
-export const Route = createFileRoute("/flowella/space/$id")({
+export const Route = createFileRoute("/space/$id")({
   beforeLoad: ({ params }) => { if (!HUB_IDS.includes(params.id as HubId)) throw notFound(); },
   component: SpaceRoute,
 });

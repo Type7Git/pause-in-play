@@ -11,6 +11,8 @@ import {
 import { useEffect, type ReactNode } from "react";
 
 import appCss from "../styles.css?url";
+import esCss from "@/lumenera/es.css?url";
+import { FLOWER_ICON } from "@/lumenera/art";
 import { reportLovableError } from "../lib/lovable-error-reporting";
 import { RewardsProvider } from "@/lib/rewards";
 import { AppShell } from "@/components/mm/AppShell";
@@ -19,7 +21,7 @@ import { registerOfflineWorker } from "@/lib/pwa";
 
 function NotFoundComponent() {
   return (
-    <div className="flex min-h-dvh items-center justify-center bg-background px-4">
+    <div className="flex min-h-[60vh] items-center justify-center px-4">
       <div className="flex max-w-sm flex-col items-center gap-3 text-center">
         <p className="eyebrow">Page not found</p>
         <h1>This page has wandered off.</h1>
@@ -38,7 +40,7 @@ function ErrorComponent({ error, reset }: ErrorComponentProps) {
   }, [error]);
 
   return (
-    <div className="flex min-h-dvh items-center justify-center bg-background px-4">
+    <div className="flex min-h-[60vh] items-center justify-center px-4">
       <div role="alert" className="flex max-w-sm flex-col items-center gap-3 text-center">
         <p className="eyebrow">A little hiccup</p>
         <h1>This page didn't load.</h1>
@@ -61,15 +63,15 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
   head: () => ({
     meta: [
       { charSet: "utf-8" },
-      { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { name: "theme-color", content: "#5B3A6B" },
+      { name: "viewport", content: "width=device-width, initial-scale=1, viewport-fit=cover" },
+      { name: "theme-color", content: "#fbf1f3" },
       { name: "apple-mobile-web-app-capable", content: "yes" },
-      { name: "apple-mobile-web-app-title", content: "Pause in Play" },
+      { name: "apple-mobile-web-app-title", content: "Lumenera" },
       { name: "apple-mobile-web-app-status-bar-style", content: "default" },
-      { title: "Pause in Play" },
-      { name: "description", content: "A warm, playful self-care companion for women in perimenopause." },
-      { property: "og:title", content: "Pause in Play" },
-      { property: "og:description", content: "A warm, playful self-care companion for women in perimenopause." },
+      { title: "Lumenera · Find your rhythm. Flourish your way." },
+      { name: "description", content: "Personalised women's health through every stage of life." },
+      { property: "og:title", content: "Lumenera" },
+      { property: "og:description", content: "Find your rhythm. Flourish your way. Personalised women's health through every stage of life." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
     ],
@@ -78,10 +80,12 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
       {
         rel: "stylesheet",
-        href: "https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Atkinson+Hyperlegible:wght@400;700&display=swap",
+        href: "https://fonts.googleapis.com/css2?family=Young+Serif&family=Figtree:wght@400;500;600;700&display=swap",
       },
       { rel: "stylesheet", href: appCss },
-      { rel: "icon", href: "/favicon.ico", type: "image/x-icon" },
+      { rel: "stylesheet", href: esCss },
+      { rel: "icon", href: FLOWER_ICON, type: "image/svg+xml" },
+      { rel: "icon", href: "/favicon.ico", type: "image/x-icon", sizes: "any" },
       { rel: "manifest", href: "/manifest.webmanifest" },
       { rel: "apple-touch-icon", href: "/apple-touch-icon.png" },
     ],

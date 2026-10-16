@@ -1,4 +1,4 @@
-/** Home section wheel content. Add a section or activity here — no component changes needed. */
+/** Every tool in Lumenera. Lumenera's spaces pick from these in src/lumenera/tools.ts. */
 export type ActivityKey = string;
 export type Activity = {
   key: ActivityKey;
@@ -13,7 +13,7 @@ export type Activity = {
 export const ACTIVITIES: Record<ActivityKey, Activity> = {
   quest: { key: "quest", title: "What was I doing?", desc: "Save my place and the next step", to: "/side-quest", icon: "quest", blob: "bg-gold-soft" },
   vit: { key: "vit", title: "Help me remember", desc: "The Very Important Thing Department", to: "/remember", icon: "vit", blob: "bg-rose-soft" },
-  voice: { key: "voice", title: "Tell Sprout", desc: "Say it out loud, Sprout files it", to: "/tell-sprout", icon: "voice", blob: "bg-sage-soft" },
+  voice: { key: "voice", title: "Tell Enera", desc: "Say it out loud, Enera files it", to: "/tell-enera", icon: "voice", blob: "bg-sage-soft" },
   tabs: { key: "tabs", title: "My brain has 37 tabs open", desc: "Get it out of your head, then pick one", to: "/tabs", icon: "tabs", blob: "bg-plum-soft" },
   wind: { key: "wind", title: "Relax and Restore", desc: "Guided relaxations and rest poses", to: "/wind-down", icon: "wind", blob: "bg-plum-soft" },
   notes: { key: "notes", title: "Little notes", desc: "Kind words that turn up when you need them", to: "/notes", icon: "notes", blob: "bg-rose-soft" },
@@ -21,13 +21,13 @@ export const ACTIVITIES: Record<ActivityKey, Activity> = {
   wyr: { key: "wyr", title: "Would you rather?", desc: "Swipe to find out who you'd rather be", to: "/would-you-rather", icon: "wyr", blob: "bg-rose-soft" },
   win: { key: "win", title: "Give me a little win", desc: "A short, untimed puzzle", to: "/little-win", icon: "win", blob: "bg-sage-soft" },
   laugh: { key: "laugh", title: "I need a laugh", desc: "An everyday scene to sort out", to: "/laugh", icon: "laugh", blob: "bg-gold-soft" },
-  reflect: { key: "reflect", to: "/intimacy/check-in", title: "What's changed for me", desc: "A private check-in", icon: "reflect", blob: "bg-rose-soft" },
+  reflect: { key: "reflect", to: "/intimacy/check-in", title: "What's changed for me", desc: "A private intimacy check-in", icon: "reflect", blob: "bg-rose-soft" },
   talk: { key: "talk", to: "/intimacy/cards", title: "Conversation cards", desc: "Questions to ask each other", icon: "talk", blob: "bg-plum-soft" },
   kindly: { key: "kindly", to: "/intimacy/say-it-kindly", title: "Say it kindly", desc: "Words for tricky conversations", icon: "kindly", blob: "bg-sage-soft" },
   partner: { key: "partner", to: "/intimacy/partner-guide", title: "For your partner", desc: "Something to share with them", icon: "partner", blob: "bg-gold-soft" },
   ilearn: { key: "ilearn", to: "/intimacy/library", title: "Intimacy library", desc: "Clinically reviewed reading", icon: "ilearn", blob: "bg-plum-soft" },
-  pals: { key: "pals", to: "/pals", title: "My PeriPals", desc: "Check in with your people", icon: "pals", blob: "bg-rose-soft" },
-  invite: { key: "invite", to: "/pals/invite", title: "Invite a PeriPal", desc: "Bring a friend along", icon: "invite", blob: "bg-sage-soft" },
+  pals: { key: "pals", to: "/pals", title: "My people", desc: "Check in with the people in your corner", icon: "pals", blob: "bg-rose-soft" },
+  invite: { key: "invite", to: "/pals/invite", title: "Invite someone", desc: "Bring someone you trust along", icon: "invite", blob: "bg-sage-soft" },
   mood: { key: "mood", title: "Mood Mapper", desc: "Two taps to log how you feel", to: "/mood", icon: "mood", blob: "bg-rose-soft" },
   meds: { key: "meds", title: "Medicine Cabinet", desc: "Your reminders, your way", to: "/medicines", icon: "medicines", blob: "bg-plum-soft" },
   cycle: { key: "cycle", title: "Cycle Tracker", desc: "Periods, spotting and symptoms", to: "/cycle", icon: "cycle", blob: "bg-rose-soft" },
@@ -59,8 +59,8 @@ export const SECTIONS: Section[] = [
   {
     key: "love", name: "Intimacy & relationships", blurb: "Private, practical and kind.", icon: "love", blob: "bg-rose-soft",
     activities: ["reflect", "talk", "kindly", "partner", "ilearn"],
-    lockLine: "Private by default. Never shared with PeriPals, and you can hide this section behind Face ID in Settings.",
+    lockLine: "Private by default. Never shared with your people, and you can hide this section behind Face ID in Settings.",
   },
-  { key: "pals", name: "PeriPals", blurb: "Support that goes both ways.", icon: "pals", blob: "bg-gold-soft", activities: ["pals", "invite"], palsStrip: true },
+  { key: "pals", name: "My people", blurb: "Support that goes both ways.", icon: "pals", blob: "bg-gold-soft", activities: ["pals", "invite"], palsStrip: true },
   { key: "track", name: "Track & support", blurb: "Record, remind, reflect.", icon: "track", blob: "bg-sage-soft", activities: ["mood", "meds", "cycle", "learn"] },
 ];

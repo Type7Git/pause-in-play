@@ -13,9 +13,9 @@ import type { SharePayload } from "@/lib/share";
 export const Route = createFileRoute("/colour")({
   head: () => ({
     meta: [
-      { title: "Colour me calm · Pause in Play" },
+      { title: "Colour me calm · Lumenera" },
       { name: "description", content: "Colour in. No going over the lines. A slow, untimed colouring game." },
-      { property: "og:title", content: "Colour me calm · Pause in Play" },
+      { property: "og:title", content: "Colour me calm · Lumenera" },
       { property: "og:description", content: "Colour in. No going over the lines." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
@@ -238,8 +238,8 @@ function Colour() {
               const src = view.current?.toDataURL("image/png");
               setSharing({
                 title: `My ${scene.name} colouring`,
-                text: "I coloured this in Pause in Play. Ten calm minutes, no going over the lines.",
-                palText: `🎨 I coloured "${scene.name}" in Pause in Play.`,
+                text: "I coloured this in Lumenera. Ten calm minutes, no going over the lines.",
+                palText: `🎨 I coloured "${scene.name}" in Lumenera.`,
                 fileName: `${scene.key}-colouring.png`,
                 image: async () => {
                   if (!src) return null;

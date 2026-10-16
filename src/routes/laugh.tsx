@@ -9,9 +9,9 @@ import { useRewards } from "@/lib/rewards";
 export const Route = createFileRoute("/laugh")({
   head: () => ({
     meta: [
-      { title: "I need a laugh · Pause in Play" },
+      { title: "I need a laugh · Lumenera" },
       { name: "description", content: "She's looked everywhere. Can you find her glasses? Plus the great handbag audit." },
-      { property: "og:title", content: "I need a laugh · Pause in Play" },
+      { property: "og:title", content: "I need a laugh · Lumenera" },
       { property: "og:description", content: "She's looked everywhere. Can you find her glasses?" },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
@@ -114,7 +114,7 @@ function Laugh() {
             <circle cx="235" cy="90" r="1.6" fill="var(--mm-ink)" />
             <circle cx="247" cy="90" r="1.6" fill="var(--mm-ink)" />
             <path d="M236 98q5 3 10 0" fill="none" stroke="var(--mm-ink)" strokeWidth="1.6" strokeLinecap="round" />
-            <text x="262" y="74" fontSize="16" fontWeight="700" fill="var(--mm-plum-2)" fontFamily="Bricolage Grotesque, system-ui">?</text>
+            <text x="262" y="74" fontSize="16" fontWeight="700" fill="var(--mm-plum-2)" fontFamily="Young Serif, Georgia, serif">?</text>
           </g>
           <Hot spot="head" label="Look on top of her head" onLook={look}>
             <rect x="222" y="58" width="38" height="20" fill="transparent" />

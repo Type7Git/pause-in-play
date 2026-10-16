@@ -48,7 +48,7 @@ export function LibraryUpload() {
     const { error } = await supabase.from("library_entries").insert(rows.map((r) => ({ ...r, status: "draft", updated_at: now })));
     setBusy(false);
     if (error) { toast.error("The import didn't save. Nothing was added, so please try again."); return; }
-    toast.success(`${rows.length} entries added as drafts. Approve each one before Sprout uses it.`);
+    toast.success(`${rows.length} entries added as drafts. Approve each one before Enera uses it.`);
     setRows(null);
     await qc.invalidateQueries({ queryKey: ["admin-library"] });
   }
@@ -57,7 +57,7 @@ export function LibraryUpload() {
     const XLSX = await import("xlsx");
     const ws = XLSX.utils.aoa_to_sheet([HEADERS, ["Sleep & rest", "Waking at 3am", "A short, warm answer of 60–120 words…", "sleep, 3am, waking", "wind-down"]]);
     const wb = XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(wb, ws, "Sprout library");
+    XLSX.utils.book_append_sheet(wb, ws, "Enera library");
     XLSX.writeFile(wb, "sprout-library-template.xlsx");
   }
 

@@ -22,7 +22,7 @@ export function NoteCard({ note, className = "" }: { note: Note; className?: str
       <svg viewBox="0 0 100 100" aria-hidden="true" className="absolute -bottom-6 -left-6 size-28 rotate-180"><Art kind={s.art} colour={s.accent} /></svg>
       <figcaption className="relative text-xs font-bold uppercase tracking-[0.12em]" style={{ color: s.accent }}>{kind}</figcaption>
       <blockquote className="relative my-auto font-display text-[clamp(22px,6.4vw,28px)] font-bold leading-[1.22] tracking-[-0.01em]">{note.text}</blockquote>
-      <p className="relative text-sm font-extrabold" style={{ color: s.accent }}>Pause in Play</p>
+      <p className="relative text-sm font-extrabold" style={{ color: s.accent }}>Lumenera</p>
     </figure>
   );
 }

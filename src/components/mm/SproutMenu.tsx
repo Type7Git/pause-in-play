@@ -6,17 +6,17 @@ import { Sprout } from "./Sprout";
 import { SproutMic } from "./icons";
 
 const OPTIONS = [
-  { to: "/sprout", title: "Ask Sprout", desc: "Questions answered from our reviewed library", icon: <MessageCircleHeart className="size-6 text-plum" aria-hidden="true" />, tint: "bg-plum-soft" },
-  { to: "/tell-sprout", title: "File it", desc: "Say it out loud and Sprout puts it in the right place", icon: <SproutMic className="size-6 text-sage" />, tint: "bg-sage-soft" },
+  { to: "/enera", title: "Ask Enera", desc: "Questions answered from our reviewed library", icon: <MessageCircleHeart className="size-6 text-plum" aria-hidden="true" />, tint: "bg-plum-soft" },
+  { to: "/tell-enera", title: "File it", desc: "Say it out loud and Enera puts it in the right place", icon: <SproutMic className="size-6 text-sage" />, tint: "bg-sage-soft" },
 ] as const;
 
-/** Sprout lives top right. One tap opens two choices: ask a question, or file something by voice. */
+/** Enera lives top right. One tap opens two choices: ask a question, or file something by voice. */
 export function SproutMenu() {
   const [open, setOpen] = useState(false);
   return (
     <Popover open={open} onOpenChange={setOpen}>
       <PopoverTrigger
-        aria-label="Sprout: ask a question or file something"
+        aria-label="Enera: ask a question or file something"
         className="press relative -my-1 grid size-11 shrink-0 min-[400px]:size-[50px] place-items-center rounded-full bg-sage-soft shadow-soft data-[state=open]:ring-2 data-[state=open]:ring-sage"
       >
         <Sprout size={40} mood={open ? "wave" : "happy"} className="-mb-1 max-[399px]:h-[38px] max-[399px]:w-[34px]" />

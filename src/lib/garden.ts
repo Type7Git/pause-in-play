@@ -79,9 +79,9 @@ export function standingLine(s: Standing | null | undefined): string | null {
   if (!s || s.gardens < 1) return null;
   if (s.gardens < MIN_GARDENS)
     return s.gardens <= 1
-      ? "Yours is one of the very first gardens in Pause in Play. Thank you for being here early."
-      : `Yours is one of the first ${s.gardens} gardens growing in Pause in Play. Thank you for being here early.`;
-  if (s.top !== null) return `Your garden is in the top ${s.top}% of Pause in Play gardens. Keep up the lovely work.`;
+      ? "Yours is one of the very first gardens in Lumenera. Thank you for being here early."
+      : `Yours is one of the first ${s.gardens} gardens growing in Lumenera. Thank you for being here early.`;
+  if (s.top !== null) return `Your garden is in the top ${s.top}% of Lumenera gardens. Keep up the lovely work.`;
   return `You're growing alongside ${(s.gardens - 1).toLocaleString("en-AU")} other gardens. Every petal counts, at your own pace.`;
 }
 
@@ -90,5 +90,5 @@ export function badgeShareLine(s: Standing | null | undefined, key: string): str
   const n = s.badgeShare[key] ?? 0;
   const pct = (n / s.gardens) * 100;
   if (pct < 1) return "Fewer than 1 in 100 gardens have this badge so far. That's a rare one.";
-  return `${Math.round(pct)}% of Pause in Play gardens have this badge.`;
+  return `${Math.round(pct)}% of Lumenera gardens have this badge.`;
 }

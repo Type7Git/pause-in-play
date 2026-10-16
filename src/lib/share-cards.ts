@@ -9,12 +9,12 @@ const LIGHT_VARS: Record<string, string> = {
   "--mm-sky": "#f6eef8", "--mm-hill": "#cfe3d4", "--mm-hill-2": "#b9d6c1",
 };
 
-const display = () => '"Bricolage Grotesque", "Avenir Next", system-ui, sans-serif';
-const body = () => '"Atkinson Hyperlegible", "Segoe UI", system-ui, sans-serif';
+const display = () => '"Young Serif", Georgia, serif';
+const body = () => '"Figtree", "Segoe UI", system-ui, sans-serif';
 /** Canvas won't fetch a font weight the page hasn't used yet, so ask for them up front. */
 async function loadFonts() {
   try {
-    await Promise.all(['800 72px "Bricolage Grotesque"', '700 60px "Bricolage Grotesque"', '400 42px "Atkinson Hyperlegible"', '700 34px "Atkinson Hyperlegible"'].map((f) => document.fonts.load(f)));
+    await Promise.all(['400 72px "Young Serif"', '400 60px "Young Serif"', '400 42px "Figtree"', '700 34px "Figtree"'].map((f) => document.fonts.load(f)));
   } catch { /* fall back to system fonts */ }
 }
 
@@ -121,7 +121,7 @@ export async function renderCard(spec: CardSpec): Promise<Blob | null> {
   }
   // footer
   x.fillStyle = C.plum; x.font = `800 44px ${display()}`;
-  x.fillText("Pause in Play", W / 2, H - pad - 90);
+  x.fillText("Lumenera", W / 2, H - pad - 90);
   x.fillStyle = C.muted; x.font = `400 30px ${body()}`;
   x.fillText(shareOrigin().replace(/^https?:\/\//, ""), W / 2, H - pad - 44);
   return new Promise((r) => cv.toBlob(r, "image/png"));

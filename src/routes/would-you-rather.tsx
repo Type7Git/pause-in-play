@@ -13,9 +13,9 @@ import { WYR_TOPICS, pickRound, scoreRound } from "@/lib/wyr";
 export const Route = createFileRoute("/would-you-rather")({
   head: () => ({
     meta: [
-      { title: "Would you rather? · Pause in Play" },
+      { title: "Would you rather? · Lumenera" },
       { name: "description", content: "Swipe to find out who you'd rather be. Ten quick choices, no wrong answers." },
-      { property: "og:title", content: "Would you rather? · Pause in Play" },
+      { property: "og:title", content: "Would you rather? · Lumenera" },
       { property: "og:description", content: "Swipe to find out who you'd rather be." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
@@ -32,7 +32,7 @@ function Portrait({ c, className = "" }: { c: Char; className?: string }) {
   return <span aria-hidden="true" className={`block [&_svg]:size-full ${className}`} dangerouslySetInnerHTML={{ __html: c.portrait_svg }} />;
 }
 
-/** Share card: the character portrait on a Pause in Play card. */
+/** Share card: the character portrait on a Lumenera card. */
 async function resultImage(c: Char) {
   const holder = document.createElement("div");
   holder.innerHTML = c.portrait_svg;
@@ -145,7 +145,7 @@ function Wyr() {
             <Pill variant="ghost" onClick={() => setSharing({
               title: "My Would you rather? result",
               text: `Today, I'd rather be ${win.name}. Who would you rather be?`,
-              palText: `Today, I'd rather be ${win.name} 😄 Have a go at Would you rather? in Pause in Play.`,
+              palText: `Today, I'd rather be ${win.name} 😄 Have a go at Would you rather? in Lumenera.`,
               fileName: "my-pause-in-play-result.png",
               url: `${shareOrigin()}/would-you-rather`,
               image: () => resultImage(win),

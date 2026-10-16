@@ -1,7 +1,7 @@
 import { describe, expect, it } from "vitest";
 import { sanitiseFiled } from "./voice-file";
 
-describe("Tell Sprout sorting", () => {
+describe("Tell Enera sorting", () => {
   it("keeps a quest with doing, next step and 10-minute nudge", () => {
     expect(sanitiseFiled({ type: "quest", doing: "emptying the dishwasher", next_step: "", remind: "10min" }))
       .toMatchObject({ type: "quest", doing: "Emptying the dishwasher", remind: "10min" });

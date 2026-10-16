@@ -14,7 +14,7 @@ import { ChevronDown, ArrowLeft } from "lucide-react";
 
 type Msg = { role: "user" | "assistant"; text: string; reply?: SproutReply };
 
-const OPENING = "Hi, I'm Sprout. I might be able to help with questions about the program, share some information from our clinical advisory team, or at least point you in the right direction. What's on your mind?";
+const OPENING = "Hi, I'm Enera. I might be able to help with questions about the program, share some information from our clinical advisory team, or at least point you in the right direction. What's on your mind?";
 const QUICK = ["I can't sleep", "My brain feels so overwhelmed", "Tell me about the program"];
 
 /** Chat panel. Conversation lives only in memory and is cleared when the screen closes. */
@@ -51,7 +51,7 @@ export function SproutChat({ compact = false }: { compact?: boolean }) {
       const reply = await ask({ data: { message, history } });
       setMsgs((m) => [...m, { role: "assistant", text: reply.text, reply }]);
     } catch {
-      setMsgs((m) => [...m, { role: "assistant", text: "Sprout had a little wobble. Please try again in a moment.", reply: { kind: "error", text: "" } }]);
+      setMsgs((m) => [...m, { role: "assistant", text: "Enera had a little wobble. Please try again in a moment.", reply: { kind: "error", text: "" } }]);
     } finally {
       setBusy(false);
       inputRef.current?.focus();
@@ -65,15 +65,15 @@ export function SproutChat({ compact = false }: { compact?: boolean }) {
         <p className="min-w-0 rounded-[20px] rounded-bl-md border border-line bg-card px-4 py-3 text-[15px] leading-relaxed shadow-soft">{OPENING}</p>
       </div>
       <form onSubmit={(e) => { e.preventDefault(); send(text); }} className="flex items-end gap-2 rounded-[22px] border border-line bg-card p-2 shadow-soft">
-        <Link to="/tell-sprout" aria-label="Tell Sprout by voice" className="press grid size-11 shrink-0 place-items-center rounded-full bg-sage-soft text-sage">
+        <Link to="/tell-enera" aria-label="Tell Enera by voice" className="press grid size-11 shrink-0 place-items-center rounded-full bg-sage-soft text-sage">
           <SproutMic className="size-5" />
         </Link>
-        <label htmlFor="sprout-input" className="sr-only">Ask Sprout something</label>
+        <label htmlFor="sprout-input" className="sr-only">Ask Enera something</label>
         <textarea
           id="sprout-input" ref={inputRef} rows={2} maxLength={600} value={text}
           onChange={(e) => setText(e.target.value)}
           onKeyDown={(e) => { if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); send(text); } }}
-          placeholder="Ask Sprout something…"
+          placeholder="Ask Enera something…"
           className="max-h-32 min-h-11 min-w-0 flex-1 resize-none rounded-[14px] bg-transparent px-2 py-2 text-[15px] outline-none"
         />
         <Pill type="submit" disabled={busy || !text.trim()} aria-label="Send" className="size-11 shrink-0 p-0">
@@ -91,7 +91,7 @@ export function SproutChat({ compact = false }: { compact?: boolean }) {
               {m.reply?.kind === "answer" && m.reply.entry && (
                 <>
                   <span className="flex items-center gap-2 border-t border-line pt-2 text-xs text-muted-foreground">
-                    <PanelBadge size={22} className="shrink-0" />From the Pause in Play library: {m.reply.entry.title} · clinically reviewed
+                    <PanelBadge size={22} className="shrink-0" />From the Lumenera library: {m.reply.entry.title} · clinically reviewed
                   </span>
                   {m.reply.entry.linked_tool && (
                     <Link to={TOOL_ROUTES[m.reply.entry.linked_tool].to as "/"} onClick={() => { const tool = m.reply?.entry?.linked_tool; const s = tool ? TOOL_ROUTES[tool].section : undefined; if (s) localStorage.setItem(HOME_SECTION_KEY, s); }} className="press inline-flex min-h-11 items-center self-start rounded-full bg-sage px-4 py-2 text-sm font-bold text-shell">
@@ -107,7 +107,7 @@ export function SproutChat({ compact = false }: { compact?: boolean }) {
           </div>
         ))}
         {busy && (
-          <div className="flex items-end gap-2" aria-label="Sprout is typing">
+          <div className="flex items-end gap-2" aria-label="Enera is typing">
             <Sprout size={30} mood="thinking" />
             <div className="flex gap-1.5 rounded-[20px] rounded-bl-md border border-line bg-card px-4 py-3.5 shadow-soft">
               {[0, 1, 2].map((d) => <span key={d} className="sprout-dot size-2 rounded-full bg-plum-2" style={{ animationDelay: `${d * 0.15}s` }} />)}
@@ -120,7 +120,7 @@ export function SproutChat({ compact = false }: { compact?: boolean }) {
       <div className="divide-y divide-line border-y border-line">
         <details className="group" onToggle={(e) => { if (!e.currentTarget.open) setCat(null); }}>
           <summary className="flex min-h-12 cursor-pointer list-none items-center justify-between gap-3 py-3 text-sm font-bold text-plum [&::-webkit-details-marker]:hidden">
-            Browse the Pause in Play library
+            Browse the Lumenera library
             <ChevronDown className="size-4 shrink-0 transition-transform group-open:rotate-180" aria-hidden="true" />
           </summary>
           {cat && <Pill variant="ghost" size="sm" onClick={() => setCat(null)} className="mb-2 max-w-full justify-start whitespace-normal text-left"><ArrowLeft className="size-4 shrink-0" />All topics · {cat}</Pill>}

@@ -1,9 +1,11 @@
 /** Space and check pages: the depth behind the calm home. */
 import { Link } from "@tanstack/react-router";
 import { CalendarArt, ItemArt, SpaceArt, Tick, ToneGlyph } from "./art";
-import { CHECK_INFO, FORMAT_LABEL, HUBS, SCREEN_BANDS, type CheckId, type HubId } from "./content";
+import { CHECK_INFO, FORMAT_LABEL, HUBS, SCREEN_BANDS, type CheckId, type HubId, type Item } from "./content";
 import { ageOf, checksFor, plan, rank, type Check } from "./engine";
+import { ActivityIcon } from "@/components/mm/ActivityIcon";
 import { NearYou } from "./places";
+import { toolsFor } from "./tools";
 import { es, useEs } from "./store";
 import { NeedsProfile, TopBar } from "./ui";
 
@@ -14,7 +16,8 @@ export function SpacePage({ id }: { id: HubId }) {
   if (!done) return <><TopBar title={hub.short} /><main className="stage"><NeedsProfile /></main></>;
   const pl = plan(profile);
   const mine = pl.spaces.find((s) => s.id === id);
-  const items = rank(profile, pl.spaces.map((s) => s.id), pl.mindFirst, pl.lowMood, id).slice(0, 5);
+  const items = id === "body" || id === "meds" ? [] : rank(profile, pl.spaces.map((s) => s.id), pl.mindFirst, pl.lowMood, id as Item["space"]).slice(0, 5);
+  const tools = toolsFor(id);
   return (
     <>
       <TopBar title={hub.short} />
@@ -27,12 +30,27 @@ export function SpacePage({ id }: { id: HubId }) {
             <p>{hub.blurb}</p>
             <div className="chips">{mine?.why ? <span className="chip">Because {mine.why}</span> : <span className="chip plain">Exploring</span>}</div>
           </div>
+          {tools.length ? (
+            <section style={{ animationDelay: ".08s" }} aria-labelledby="es-tools">
+              <div className="sec-h"><h2 id="es-tools">Your tools</h2><span>Tap to open</span></div>
+              <div className={`tools ${tools.length === 1 ? "one" : ""}`}>
+                {tools.map((t, i) => (
+                  <Link key={t.key} to={t.to!} className="tool-tile" style={{ animationDelay: `${0.1 + i * 0.04}s` }}>
+                    <span className="ico"><ActivityIcon icon={t.icon} className="size-6" /></span>
+                    <b>{t.title}</b>
+                    <span>{t.desc}</span>
+                  </Link>
+                ))}
+              </div>
+              {id === "contra" ? <p className="why" style={{ fontSize: 12.5, marginTop: 10 }}>Private by default. Nothing here is shared with your people, and you can lock this space with Face ID or your fingerprint in Settings.</p> : null}
+            </section>
+          ) : null}
           {items.length ? (
-            <section style={{ animationDelay: ".1s" }}>
+            <section style={{ animationDelay: ".12s" }}>
               <div className="sec-h"><h2>Start here</h2><span>Picked for you</span></div>
               <div className="list">
                 {items.map((it) => (
-                  <Link key={it.id} to="/flowella/item/$id" params={{ id: it.id }} className="row">
+                  <Link key={it.id} to="/item/$id" params={{ id: it.id }} className="row">
                     <span className="art-box"><ItemArt item={it} /></span>
                     <span className="tx"><span className="meta">{FORMAT_LABEL[it.format]} · {it.mins} min</span><b>{it.title}</b></span>
                   </Link>

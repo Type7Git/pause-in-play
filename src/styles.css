@@ -5,8 +5,8 @@
 @custom-variant dark (&:is(.dark *));
 
 @theme inline {
-  --font-display: "Bricolage Grotesque", "Avenir Next", system-ui, sans-serif;
-  --font-body: "Atkinson Hyperlegible", "Segoe UI", system-ui, sans-serif;
+  --font-display: "Young Serif", Georgia, "Times New Roman", serif;
+  --font-body: "Figtree", "Segoe UI", system-ui, -apple-system, sans-serif;
   --radius-card: 22px;
   --radius-tile: 20px;
   --radius-input: 14px;
@@ -57,28 +57,29 @@
 }
 
 :root {
-  --mm-bg: #ece6f0; --mm-shell: #faf7fb; --mm-card: #ffffff; --mm-sunk: #f4eff6;
-  --mm-ink: #271f31; --mm-muted: #625870; /* deepened from #6e6479 for AA */
-  --mm-plum: #5b3a6b; --mm-plum-2: #6f4d80; /* deepened from #7d5a8e for AA */ --mm-plum-soft: #eadff1;
-  --mm-sage: #3f6a4c; --mm-sage-soft: #dcebe0; /* deepened from #4f7e60 for AA */
-  --mm-gold: #d48a22; --mm-gold-soft: #fae8cb;
-  --mm-rose: #a8483f; --mm-rose-soft: #f6deda; /* deepened from #c0584e for AA */ --mm-line: #e5ddea;
-  --mm-sky: #f6eef8; --mm-hill: #cfe3d4; --mm-hill-2: #b9d6c1;
-  --mm-shadow: 0 1px 2px rgba(60, 30, 80, 0.06), 0 6px 18px rgba(60, 30, 80, 0.07);
-  --mm-shadow-lift: 0 2px 4px rgba(60, 30, 80, 0.08), 0 14px 30px rgba(60, 30, 80, 0.12);
+  /* Lumenera palette: blush field, rose accent, occasional lilac, steel-grey ink. */
+  --mm-bg: #fbf1f3; --mm-shell: #fffafb; --mm-card: #ffffff; --mm-sunk: #fbeff3;
+  --mm-ink: #313d48; --mm-muted: #5d6a76;
+  --mm-plum: #a8486b; --mm-plum-2: #6f5aa6; --mm-plum-soft: #f6e4ec;
+  --mm-sage: #2f7357; --mm-sage-soft: #dcefe5;
+  --mm-gold: #c27a1e; --mm-gold-soft: #fde9d2;
+  --mm-rose: #b23f5a; --mm-rose-soft: #f8dbe4; --mm-line: #eedae2;
+  --mm-sky: #fbeff3; --mm-hill: #dcefe5; --mm-hill-2: #c5e3d3;
+  --mm-shadow: 0 1px 2px rgba(80, 40, 60, 0.05), 0 6px 18px rgba(120, 60, 90, 0.08);
+  --mm-shadow-lift: 0 2px 4px rgba(80, 40, 60, 0.07), 0 14px 30px rgba(120, 60, 90, 0.13);
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --mm-bg: #141019; --mm-shell: #1d1724; --mm-card: #272030; --mm-sunk: #221b2a;
-    --mm-ink: #f2edf6; --mm-muted: #b4a9c0;
-    --mm-plum: #cfaee0; --mm-plum-2: #b48cc9; --mm-plum-soft: #3a2d47;
-    --mm-sage: #93c4a2; --mm-sage-soft: #22352a;
-    --mm-gold: #f2b45b; --mm-gold-soft: #3d2f1e;
-    --mm-rose: #ec9188; --mm-rose-soft: #43272a; --mm-line: #382f43;
-    --mm-sky: #231c2c; --mm-hill: #22392b; --mm-hill-2: #2b4635;
-    --mm-shadow: 0 1px 2px rgba(0, 0, 0, 0.3), 0 6px 18px rgba(0, 0, 0, 0.25);
-    --mm-shadow-lift: 0 2px 4px rgba(0, 0, 0, 0.35), 0 14px 30px rgba(0, 0, 0, 0.35);
+    --mm-bg: #1b181e; --mm-shell: #241f27; --mm-card: #2d2630; --mm-sunk: #2a222d;
+    --mm-ink: #e8ecf0; --mm-muted: #b6bec7;
+    --mm-plum: #f2a9c0; --mm-plum-2: #cbbcf0; --mm-plum-soft: #4a2a38;
+    --mm-sage: #8fd1b0; --mm-sage-soft: #1f3a2e;
+    --mm-gold: #f2b45b; --mm-gold-soft: #3f2c1a;
+    --mm-rose: #f4a3a0; --mm-rose-soft: #45232a; --mm-line: #3d3341;
+    --mm-sky: #2a1f2a; --mm-hill: #1f3a2e; --mm-hill-2: #284a3a;
+    --mm-shadow: 0 1px 2px rgba(0, 0, 0, 0.35), 0 6px 18px rgba(0, 0, 0, 0.3);
+    --mm-shadow-lift: 0 2px 4px rgba(0, 0, 0, 0.4), 0 14px 30px rgba(0, 0, 0, 0.4);
     color-scheme: dark;
   }
 }
@@ -92,9 +93,11 @@
     font-size: 16px;
     line-height: 1.5;
   }
-  h1, h2, h3 { font-family: var(--font-display); text-wrap: balance; }
-  h1 { font-size: 28px; font-weight: 700; line-height: 1.12; letter-spacing: -0.02em; }
-  h3 { font-size: 17px; font-weight: 700; letter-spacing: -0.005em; }
+  /* Young Serif has one weight; never fake a bold. */
+  html { font-synthesis-weight: none; }
+  h1, h2, h3 { font-family: var(--font-display); font-weight: 400; text-wrap: balance; }
+  h1 { font-size: 28px; line-height: 1.14; letter-spacing: -0.005em; }
+  h3 { font-size: 17px; letter-spacing: 0; }
   :focus-visible { outline: 3px solid var(--mm-gold); outline-offset: 2px; }
 }
 

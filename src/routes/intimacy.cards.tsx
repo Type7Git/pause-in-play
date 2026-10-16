@@ -4,7 +4,7 @@ import { Chip, Muted, Pill, ScreenTitle } from "@/components/mm/ui";
 import { CONVERSATION_DECKS } from "@/content/intimacy";
 
 export const Route = createFileRoute("/intimacy/cards")({
-  head: () => ({ meta: [{ title: "Conversation cards · Pause in Play" }, { name: "description", content: "Gentle questions for couples: connection, touch, desire, practical and play." }, { property: "og:title", content: "Conversation cards · Pause in Play" }, { property: "og:description", content: "Gentle questions for couples." }, { property: "og:type", content: "website" }, { name: "twitter:card", content: "summary" }, { name: "robots", content: "noindex" }] }),
+  head: () => ({ meta: [{ title: "Conversation cards · Lumenera" }, { name: "description", content: "Gentle questions for couples: connection, touch, desire, practical and play." }, { property: "og:title", content: "Conversation cards · Lumenera" }, { property: "og:description", content: "Gentle questions for couples." }, { property: "og:type", content: "website" }, { name: "twitter:card", content: "summary" }, { name: "robots", content: "noindex" }] }),
   component: Cards,
 });
 

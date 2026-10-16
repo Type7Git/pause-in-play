@@ -1,4 +1,4 @@
-/** Shared, browser-safe shapes for "Tell Sprout" voice filing. */
+/** Shared, browser-safe shapes for "Tell Enera" voice filing. */
 export type Remind = "none" | "10min" | "30min" | "tonight";
 export type Filed =
   | { type: "quest" | "vit" | "unsure"; doing: string; next_step: string; remind: Remind; thing: string; location: string }

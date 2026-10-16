@@ -9,10 +9,10 @@ import { company, disclosure, panel, principles } from "@/content/panel";
 export const Route = createFileRoute("/panel")({
   head: () => ({
     meta: [
-      { title: "Our clinical advisory panel · Pause in Play" },
-      { name: "description", content: "Every tool and article in Pause in Play is reviewed by registered health professionals." },
-      { property: "og:title", content: "Our clinical advisory panel · Pause in Play" },
-      { property: "og:description", content: "Who reviews Pause in Play, and who's behind it." },
+      { title: "Our clinical advisory panel · Lumenera" },
+      { name: "description", content: "Every tool and article in Lumenera is reviewed by registered health professionals." },
+      { property: "og:title", content: "Our clinical advisory panel · Lumenera" },
+      { property: "og:description", content: "Who reviews Lumenera, and who's behind it." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
     ],
@@ -59,15 +59,15 @@ function PanelPage() {
       </Card>
 
       <Card className="bg-gold-soft">
-        <h3>The Pause in Play program</h3>
+        <h3>The Lumenera program</h3>
         <Muted>Live group sessions led by qualified facilitators, with guest sessions from health professionals.</Muted>
         <Pill onClick={() => toast("Thanks! We'll let you know when the program opens.")}>Join the waitlist</Pill>
       </Card>
 
       <Card>
-        <h3>Who's behind Pause in Play</h3>
+        <h3>Who's behind Lumenera</h3>
         <Muted>
-          Pause in Play is owned and operated by <Fill text={company.name} />, founded by <Fill text={company.founder} />. Panel members are independent advisers paid a fee to review content. They don't own the business or run it day to day. <Fill text={disclosure} />
+          Lumenera is owned and operated by <Fill text={company.name} />, founded by <Fill text={company.founder} />. Panel members are independent advisers paid a fee to review content. They don't own the business or run it day to day. <Fill text={disclosure} />
         </Muted>
       </Card>
 

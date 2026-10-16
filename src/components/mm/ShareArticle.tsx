@@ -12,7 +12,7 @@ export function ShareArticle({ id, title }: { id: string; title: string }) {
         type="button"
         onClick={() => setSharing({
           title: `Share "${title}"`,
-          text: `I found this helpful: "${title}". It's in Pause in Play (free account needed to read it).`,
+          text: `I found this helpful: "${title}". It's in Lumenera (free account needed to read it).`,
           palText: `I found this helpful and thought of you: "${title}"`,
           url: `${shareOrigin()}/read/${id}`,
         })}

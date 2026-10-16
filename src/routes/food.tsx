@@ -9,7 +9,7 @@ import { dayKey, useBody } from "@/lib/body";
 import { useRewards } from "@/lib/rewards";
 
 export const Route = createFileRoute("/food")({
-  head: () => ({ meta: [{ title: "Food for this stage · Pause in Play" }, { name: "description", content: "Add in, never cut out. Simple food ideas for bones, muscle, sleep, mood and more." }, { property: "og:title", content: "Food for this stage · Pause in Play" }, { property: "og:description", content: "Add in, never cut out." }, { property: "og:type", content: "website" }, { name: "twitter:card", content: "summary" }] }),
+  head: () => ({ meta: [{ title: "Food for this stage · Lumenera" }, { name: "description", content: "Add in, never cut out. Simple food ideas for bones, muscle, sleep, mood and more." }, { property: "og:title", content: "Food for this stage · Lumenera" }, { property: "og:description", content: "Add in, never cut out." }, { property: "og:type", content: "website" }, { name: "twitter:card", content: "summary" }] }),
   component: Food,
 });
 

@@ -11,7 +11,7 @@ import { useRewards } from "@/lib/rewards";
 import { SafetyCard } from "@/components/mm/MoveSafety";
 
 export const Route = createFileRoute("/move/$key")({
-  head: () => ({ meta: [{ title: "Movement session · Pause in Play" }, { name: "description", content: "A short guided movement session with easier versions for every move." }, { property: "og:title", content: "Movement session · Pause in Play" }, { property: "og:description", content: "Short guided movement, at your pace." }, { property: "og:type", content: "website" }, { name: "twitter:card", content: "summary" }] }),
+  head: () => ({ meta: [{ title: "Movement session · Lumenera" }, { name: "description", content: "A short guided movement session with easier versions for every move." }, { property: "og:title", content: "Movement session · Lumenera" }, { property: "og:description", content: "Short guided movement, at your pace." }, { property: "og:type", content: "website" }, { name: "twitter:card", content: "summary" }] }),
   component: SessionScreen,
 });
 

@@ -12,9 +12,9 @@ import { addTab, closeTab, emptyBasket, readTabs, removeTab, restoreAll, restore
 export const Route = createFileRoute("/tabs")({
   head: () => ({
     meta: [
-      { title: "37 tabs open · Pause in Play" },
+      { title: "37 tabs open · Lumenera" },
       { name: "description", content: "A one-minute breathing pause, then put what is on your mind into tabs and close them until only one next action remains." },
-      { property: "og:title", content: "37 tabs open · Pause in Play" },
+      { property: "og:title", content: "37 tabs open · Lumenera" },
       { property: "og:description", content: "Let's close a few. You only need one." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },

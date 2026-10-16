@@ -8,7 +8,7 @@ const input = z.object({
   history: z.array(z.object({ role: z.enum(["user", "assistant"]), text: z.string().max(2000) })).max(8).default([]),
 });
 
-/** Public: anyone can chat with Sprout. Nothing is stored except anonymised unanswered questions. */
+/** Public: anyone can chat with Enera. Nothing is stored except anonymised unanswered questions. */
 export const askSprout = createServerFn({ method: "POST" })
   .inputValidator((d) => input.parse(d))
   .handler(async ({ data }): Promise<SproutReply> => {
@@ -21,6 +21,6 @@ export const askSprout = createServerFn({ method: "POST" })
       return await handleSprout(data.message, data.history.slice(-4), bucket);
     } catch (e) {
       console.error("sprout", e);
-      return { kind: "error", text: "Sprout had a little wobble. Please try again in a moment." };
+      return { kind: "error", text: "Enera had a little wobble. Please try again in a moment." };
     }
   });

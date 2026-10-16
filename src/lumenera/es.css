@@ -1,4 +1,4 @@
-/* Flowella (concept demo). Everything is scoped to .es so it never touches Pause in Play. */
+/* Lumenera (concept demo). Everything is scoped to .es. */
 .es {
   --field-1: #fbf1f3; --field-2: #f3dbe4;
   --surface: #fffafb; --surface-2: #fbeff3; --line: #eedae2;
@@ -36,11 +36,15 @@
     color-scheme: dark;
   }
 }
-.es *, .es *::before, .es *::after { box-sizing: border-box; }
-.es button, .es input { font: inherit; color: inherit; }
-.es a { color: inherit; text-decoration: none; }
-.es :focus-visible { outline: 3px solid var(--lilac); outline-offset: 2px; border-radius: 10px; }
-.es h1, .es h2, .es h3 { color: var(--ink); }
+/* Element defaults sit in the base layer so the tools' own utility classes always win. */
+@layer base {
+  .es *, .es *::before, .es *::after { box-sizing: border-box; }
+  .es button, .es input { font: inherit; color: inherit; }
+  .es a { color: inherit; text-decoration: none; }
+  .es :focus-visible { outline: 3px solid var(--lilac); outline-offset: 2px; border-radius: 10px; }
+  .es h1, .es h2, .es h3 { color: var(--ink); }
+  .es h1 { font-family: var(--display); font-weight: 400; font-size: 27px; line-height: 1.16; margin: 0; letter-spacing: -.005em; text-wrap: balance; outline: none; }
+}
 
 /* ---------- page + device ---------- */
 .es .page { min-height: 100dvh; display: flex; gap: 40px; align-items: center; justify-content: center; padding-block: 24px; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
@@ -82,7 +86,6 @@
 .es .art.lilac { background: linear-gradient(150deg, var(--surface-2), var(--lilac-soft)); }
 .es .qhead { display: flex; flex-direction: column; gap: 6px; }
 .es .eyebrow { font-size: 12px; letter-spacing: .14em; text-transform: uppercase; font-weight: 700; color: var(--rose-ink); }
-.es h1 { font-family: var(--display); font-weight: 400; font-size: 27px; line-height: 1.16; margin: 0; letter-spacing: -.005em; text-wrap: balance; outline: none; }
 .es .why { display: flex; gap: 8px; align-items: flex-start; font-size: 14px; color: var(--ink-2); margin: 0; }
 .es .why svg { flex: none; margin-top: 3px; }
 .es .opts { display: flex; flex-wrap: wrap; gap: 8px; }
@@ -127,7 +130,7 @@
 .es .logo .name { font-family: var(--display); font-size: 36px; line-height: 1; margin-top: 2px; letter-spacing: -.01em; }
 .es .logo .line { font-family: var(--display); font-size: 16px; color: var(--rose-ink); }
 .es .logo .tag { font-size: 12.5px; color: var(--ink-2); max-width: 240px; text-wrap: balance; }
-/* Flowella flower */
+/* Lumenera flower */
 .es .flower .petal { transform-box: view-box; transform-origin: 60px 60px; animation: es-bloom 1.1s cubic-bezier(.3, 1.35, .5, 1) both; }
 .es .flower .spin { transform-box: view-box; transform-origin: 60px 60px; animation: es-spin 90s linear infinite; }
 .es .flower .ribbon { stroke-dasharray: 260; stroke-dashoffset: 260; animation: es-draw 1.8s .2s ease forwards; }
@@ -403,19 +406,19 @@
 .es .audio .scrub i { display: block; height: 100%; width: 0; background: linear-gradient(90deg, var(--rose), var(--lilac)); }
 .es .audio .times { width: 100%; display: flex; justify-content: space-between; font-size: 12.5px; color: var(--ink-2); font-variant-numeric: tabular-nums; }
 .es .orb-wrap { position: relative; width: 210px; height: 210px; display: grid; place-items: center; }
-.es .orb { width: 120px; height: 120px; border-radius: 50%; background: radial-gradient(circle at 35% 30%, rgba(255, 255, 255, .75), transparent 42%), linear-gradient(150deg, var(--rose), var(--lilac)); box-shadow: 0 0 0 16px var(--rose-glow), 0 0 60px var(--rose-glow); transform: scale(.75); transition: transform 4s ease-in-out; }
-.es .orb.in { transform: scale(1.35); transition-duration: 4s; }
-.es .orb.out { transform: scale(.75); transition-duration: 6s; }
+.es .lx-orb { width: 120px; height: 120px; border-radius: 50%; background: radial-gradient(circle at 35% 30%, rgba(255, 255, 255, .75), transparent 42%), linear-gradient(150deg, var(--rose), var(--lilac)); box-shadow: 0 0 0 16px var(--rose-glow), 0 0 60px var(--rose-glow); transform: scale(.75); transition: transform 4s ease-in-out; }
+.es .lx-orb.in { transform: scale(1.35); transition-duration: 4s; }
+.es .lx-orb.out { transform: scale(.75); transition-duration: 6s; }
 .es .orb-wrap .say { position: absolute; font-family: var(--display); font-size: 20px; color: var(--ink); pointer-events: none; }
 @keyframes es-breath-orb { 0%, 100% { transform: scale(.85); } 40% { transform: scale(1.1); } }
 .es .cyc-days { display: grid; grid-template-columns: repeat(7, 1fr); gap: 6px; width: 100%; max-width: 320px; }
 .es .cyc-days button { aspect-ratio: 1; border-radius: 50%; border: 1.5px solid var(--line); background: var(--surface); font-size: 12px; font-weight: 700; cursor: pointer; color: var(--ink-2); transition: background .2s, transform .2s, border-color .2s; padding: 0; }
 .es .cyc-days button[aria-pressed="true"] { background: var(--rose); border-color: var(--rose); color: #fff; transform: scale(1.06); }
 .es .cyc-days button.today { box-shadow: 0 0 0 3px var(--lilac-soft), 0 0 0 4.5px var(--lilac); }
-.es .grow { width: 100%; display: flex; flex-direction: column; gap: 12px; align-items: center; }
-.es .grow .seed { border-radius: 50%; background: radial-gradient(circle at 35% 30%, rgba(255, 255, 255, .7), transparent 42%), linear-gradient(150deg, var(--rose-soft), var(--rose)); transition: width .4s cubic-bezier(.3, 1.4, .5, 1), height .4s cubic-bezier(.3, 1.4, .5, 1); box-shadow: 0 0 0 10px var(--rose-glow); }
-.es .grow .seed-box { height: 150px; display: grid; place-items: center; }
-.es .grow b { font-family: var(--display); font-weight: 400; font-size: 30px; }
+.es .lx-grow { width: 100%; display: flex; flex-direction: column; gap: 12px; align-items: center; }
+.es .lx-grow .seed { border-radius: 50%; background: radial-gradient(circle at 35% 30%, rgba(255, 255, 255, .7), transparent 42%), linear-gradient(150deg, var(--rose-soft), var(--rose)); transition: width .4s cubic-bezier(.3, 1.4, .5, 1), height .4s cubic-bezier(.3, 1.4, .5, 1); box-shadow: 0 0 0 10px var(--rose-glow); }
+.es .lx-grow .seed-box { height: 150px; display: grid; place-items: center; }
+.es .lx-grow b { font-family: var(--display); font-weight: 400; font-size: 30px; }
 .es .squeeze { position: relative; width: 170px; height: 170px; border-radius: 50%; border: 0; background: none; cursor: pointer; touch-action: none; -webkit-user-select: none; user-select: none; }
 .es .squeeze svg { position: absolute; inset: 0; transform: rotate(-90deg); }
 .es .squeeze .core { position: absolute; inset: 22px; border-radius: 50%; display: grid; place-items: center; background: var(--surface); box-shadow: var(--shadow-sm); font-weight: 700; color: var(--ink); transition: transform .3s; padding: 10px; font-size: 14px; line-height: 1.25; }
@@ -470,3 +473,46 @@
   .es *, .es *::before, .es *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
   .es .a-line, .es .flower .ribbon { animation: none !important; stroke-dashoffset: 0; }
 }
+
+/* Tool tiles inside each space */
+.es .tools { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.es .tools.one { grid-template-columns: 1fr; }
+.es .tool-tile { display: flex; flex-direction: column; gap: 6px; padding: 14px; border-radius: 20px; background: var(--surface); border: 1.5px solid var(--line); min-width: 0; transition: transform .2s, box-shadow .2s; animation: es-opt-in .45s cubic-bezier(.2, .8, .2, 1) both; }
+.es .tool-tile:active { transform: scale(.97); }
+.es .tool-tile:hover { box-shadow: var(--shadow-sm); }
+.es .tool-tile .ico { width: 44px; height: 44px; border-radius: 14px; display: grid; place-items: center; background: linear-gradient(150deg, var(--surface-2), var(--tint-soft, var(--rose-soft))); }
+.es .tool-tile b { font-size: 14.5px; line-height: 1.25; }
+.es .tool-tile > span:last-child { font-size: 12.5px; color: var(--ink-2); line-height: 1.35; }
+
+/* Home: Ask Enera, everyday tools, favourites, garden */
+.es .ask { display: flex; align-items: center; gap: 12px; padding: 10px 14px 10px 10px; border-radius: 999px; background: var(--surface); border: 1.5px solid var(--line); box-shadow: var(--shadow-sm); color: var(--ink-2); transition: transform .2s; }
+.es .ask:active { transform: scale(.98); }
+.es .ask > span { flex: 1; min-width: 0; display: flex; flex-direction: column; line-height: 1.25; }
+.es .ask b { color: var(--ink); font-size: 15px; }
+.es .ask > span > span { font-size: 12.5px; }
+.es .trio { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+.es .trio a { display: flex; flex-direction: column; border-radius: 20px; overflow: hidden; background: linear-gradient(155deg, var(--surface-2), var(--tint-soft)); box-shadow: var(--shadow-sm); min-width: 0; transition: transform .2s; }
+.es .trio a:active { transform: scale(.97); }
+.es .trio .art-box { height: 78px; display: block; }
+.es .trio h3 { font-family: var(--display); font-weight: 400; font-size: 14px; line-height: 1.2; margin: 0; padding: 4px 10px 12px; text-wrap: balance; }
+.es .favs { display: flex; gap: 8px; overflow-x: auto; margin: 12px -18px 0; padding: 2px 18px 4px; scrollbar-width: none; }
+.es .favs::-webkit-scrollbar { display: none; }
+.es .fav { flex: none; display: inline-flex; align-items: center; gap: 8px; min-height: 40px; padding: 6px 14px 6px 10px; border-radius: 999px; background: var(--surface-2); font-size: 13.5px; font-weight: 600; }
+.es .garden-card { display: block; border-radius: 24px; overflow: hidden; background: var(--surface); border: 1.5px solid var(--line); transition: transform .2s; }
+.es .garden-card:active { transform: scale(.98); }
+.es .garden-card .scene { display: flex; align-items: flex-end; height: 120px; overflow: hidden; }
+.es .garden-card .scene > * { width: 100%; }
+.es .garden-card .tx { display: flex; flex-direction: column; gap: 8px; padding: 12px 16px 14px; }
+.es .garden-card .row1 { display: flex; justify-content: space-between; align-items: baseline; gap: 8px; }
+.es .garden-card .row1 b { font-family: var(--display); font-weight: 400; font-size: 18px; }
+.es .garden-card .row1 span { font-size: 12.5px; color: var(--ink-2); }
+.es .garden-card .bar { max-width: none; height: 8px; }
+.es .garden-card .sub2 { font-size: 12.5px; color: var(--ink-2); }
+.es .panel-link { display: flex; align-items: center; gap: 10px; width: 100%; padding: 10px 14px; border-radius: 18px; background: var(--surface-2); font-size: 13.5px; text-align: left; }
+.es .panel-link span { flex: 1; min-width: 0; }
+
+/* Tool pages inside the frame */
+.es .device.quiet { --surface: #1a1625; --surface-2: #241e31; --line: #3c3349; --ink: #d3cbdf; --ink-2: #8f85a1; background: #1a1625; transition: background .6s; }
+.es .device .mm-page { animation: mm-page-in 260ms cubic-bezier(.2,.7,.2,1) both; }
+.es .enera-think .flower .spin { animation: es-spin 6s linear infinite; transform-box: view-box; transform-origin: 60px 60px; }
+.es .enera-think .flower.still .spin { animation: es-spin 6s linear infinite; }

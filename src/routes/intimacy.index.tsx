@@ -2,7 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { ScreenTitle } from "@/components/mm/ui";
 
 export const Route = createFileRoute("/intimacy/")({
-  head: () => ({ meta: [{ title: "Intimacy & relationships · Pause in Play" }, { name: "description", content: "Private, practical and kind." }, { property: "og:title", content: "Intimacy & relationships · Pause in Play" }, { property: "og:description", content: "Private, practical and kind." }, { property: "og:type", content: "website" }, { name: "twitter:card", content: "summary" }, { name: "robots", content: "noindex" }] }),
+  head: () => ({ meta: [{ title: "Intimacy & relationships · Lumenera" }, { name: "description", content: "Private, practical and kind." }, { property: "og:title", content: "Intimacy & relationships · Lumenera" }, { property: "og:description", content: "Private, practical and kind." }, { property: "og:type", content: "website" }, { name: "twitter:card", content: "summary" }, { name: "robots", content: "noindex" }] }),
   component: () => (
     <>
       <ScreenTitle eyebrow="Intimacy & relationships" title="Private, practical and kind." />

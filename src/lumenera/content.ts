@@ -1,5 +1,5 @@
 /**
- * Flowella (concept demo): questions, spaces, sample library, checks and example people.
+ * Lumenera (concept demo): questions, spaces, sample library, checks and example people.
  * All copy here is sample content for demonstration. Final content is written and reviewed by clinicians.
  */
 export type Opt = { id: string; label: string };
@@ -31,16 +31,19 @@ export type SpaceId = "periods" | "contra" | "fertility" | "baby" | "meno";
 export type Space = { id: SpaceId; name: string; short: string; tint: "rose" | "lilac"; by?: string; blurb: string; seeSomeone: string[] };
 export const SPACES: Record<SpaceId, Space> = {
   periods: { id: "periods", name: "Periods and cycles", short: "Periods", tint: "rose", blurb: "Understand your cycle, and get real help when periods get in the way of life.", seeSomeone: ["Periods so heavy you change protection every hour or two", "Pain that stops you doing everyday things", "Bleeding between periods or after sex"] },
-  contra: { id: "contra", name: "Contraception and sexual health", short: "Sexual health", tint: "lilac", blurb: "Clear, judgement-free information so you can choose what suits you.", seeSomeone: ["New pain, sores or unusual discharge", "You think your contraception may have failed", "Sex has become painful"] },
+  contra: { id: "contra", name: "Sexual health and relationships", short: "Relationships", tint: "lilac", blurb: "Contraception, sexual health and intimacy: clear, private and judgement-free.", seeSomeone: ["New pain, sores or unusual discharge", "You think your contraception may have failed", "Sex has become painful"] },
   fertility: { id: "fertility", name: "Fertility and pregnancy", short: "Fertility", tint: "rose", blurb: "From thinking about it, to trying, to growing a little person.", seeSomeone: ["Trying for 12 months (6 if you're over 35)", "Bleeding or strong pain in pregnancy", "Your baby's movements change or slow down"] },
   baby: { id: "baby", name: "After baby", short: "After baby", tint: "lilac", blurb: "Your recovery, your baby, and how you're really going.", seeSomeone: ["Heavy bleeding, fever or a painful wound", "Low mood or worry that won't lift", "Your baby is unusually drowsy or won't feed"] },
   meno: { id: "meno", name: "Perimenopause and menopause", short: "Menopause", tint: "rose", by: "Powered by Pause in Play", blurb: "Brain fog, sleep, mood and body changes, with tools that actually help.", seeSomeone: ["Any bleeding after menopause", "Symptoms getting in the way of work or sleep", "You'd like to talk about treatment options"] },
 };
 export const SPACE_IDS = Object.keys(SPACES) as SpaceId[];
 /** Hubs are everything you can explore: the five life-stage spaces plus Mind, which runs through every stage. */
-export type HubId = SpaceId | "mind";
-export const MIND: Omit<Space, "id"> & { id: "mind" } = { id: "mind", name: "Mood and mind", short: "Mind", tint: "lilac", blurb: "How you're really going, with small things that help on hard days.", seeSomeone: ["Low mood or worry most days for two weeks or more", "Sleep, eating or work are falling apart", "You're having thoughts of harming yourself: call Lifeline on 13 11 14 or 000"] };
-export const HUBS: Record<HubId, Omit<Space, "id"> & { id: HubId }> = { ...SPACES, mind: MIND };
+export type HubId = SpaceId | "mind" | "body" | "meds";
+type Hub = Omit<Space, "id"> & { id: HubId; to?: string };
+export const MIND: Hub = { id: "mind", name: "Mood and mind", short: "Mind", tint: "lilac", blurb: "How you're really going, with tools, games and small things that help on hard days.", seeSomeone: ["Low mood or worry most days for two weeks or more", "Sleep, eating or work are falling apart", "You're having thoughts of harming yourself: call Lifeline on 13 11 14 or 000"] };
+export const BODY: Hub = { id: "body", name: "Resilient body", short: "Body", tint: "rose", blurb: "Move and nourish, when you feel you can. Short sessions, pelvic floor and food that adds in, never cuts out.", seeSomeone: ["Pain that doesn't settle with rest", "Leaking, heaviness or pelvic pain", "You'd like a plan from a physio or dietitian"] };
+export const MEDS: Hub = { id: "meds", name: "Medicine cabinet", short: "Medicines", tint: "lilac", to: "/medicines", blurb: "Your medicines and supplements, on your schedule, with discreet reminders.", seeSomeone: ["Side effects that worry you", "You're unsure how a new medicine fits with others", "Your pharmacist can review everything you take"] };
+export const HUBS: Record<HubId, Hub> = { ...SPACES, mind: MIND, body: BODY, meds: MEDS };
 export const HUB_IDS = Object.keys(HUBS) as HubId[];
 
 export type Format = "read" | "watch" | "listen" | "do";

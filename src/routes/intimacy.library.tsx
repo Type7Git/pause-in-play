@@ -5,7 +5,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { ShareArticle } from "@/components/mm/ShareArticle";
 
 export const Route = createFileRoute("/intimacy/library")({
-  head: () => ({ meta: [{ title: "Intimacy library · Pause in Play" }, { name: "description", content: "Clinically reviewed articles on desire, comfort and connection at midlife." }, { property: "og:title", content: "Intimacy library · Pause in Play" }, { property: "og:description", content: "Clinically reviewed reading on desire, comfort and connection." }, { property: "og:type", content: "website" }, { name: "twitter:card", content: "summary" }, { name: "robots", content: "noindex" }] }),
+  head: () => ({ meta: [{ title: "Intimacy library · Lumenera" }, { name: "description", content: "Clinically reviewed articles on desire, comfort and connection at midlife." }, { property: "og:title", content: "Intimacy library · Lumenera" }, { property: "og:description", content: "Clinically reviewed reading on desire, comfort and connection." }, { property: "og:type", content: "website" }, { name: "twitter:card", content: "summary" }, { name: "robots", content: "noindex" }] }),
   component: Library,
 });
 

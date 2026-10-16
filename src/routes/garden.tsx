@@ -18,9 +18,9 @@ const SEEN = "pip:badges-seen";
 export const Route = createFileRoute("/garden")({
   head: () => ({
     meta: [
-      { title: "Your garden and badges · Pause in Play" },
+      { title: "Your garden and badges · Lumenera" },
       { name: "description", content: "See your garden grow, your level and every badge you've earned. No streaks, no penalties." },
-      { property: "og:title", content: "Your garden and badges · Pause in Play" },
+      { property: "og:title", content: "Your garden and badges · Lumenera" },
       { property: "og:description", content: "Petals come from using the tools. No streaks, no penalties for missed days." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
@@ -36,8 +36,8 @@ function GardenPage() {
   const [sharing, setSharing] = useState<SharePayload | null>(null);
   const shareGarden = () => setSharing({
     title: "My garden",
-    text: `My Pause in Play garden is at ${L.name}. Every petal is a small act of looking after myself.`,
-    palText: `🌸 My garden just reached ${L.name} in Pause in Play.`,
+    text: `My Lumenera garden is at ${L.name}. Every petal is a small act of looking after myself.`,
+    palText: `🌸 My garden just reached ${L.name} in Lumenera.`,
     url: shareOrigin(),
     fileName: "my-garden.png",
     image: async () => {
@@ -72,7 +72,7 @@ function GardenPage() {
       <div>
         <p className="eyebrow">Your garden</p>
         <h1>Your garden and badges</h1>
-        <p className="mt-1.5 text-sm text-muted-foreground">Petals come from using the tools, logging, playing and checking in with your PeriPals. No streaks, no penalties for missed days.</p>
+        <p className="mt-1.5 text-sm text-muted-foreground">Petals come from using the tools, logging, playing and checking in with your people. No streaks, no penalties for missed days.</p>
       </div>
       <section className="mm-card overflow-hidden pb-[18px]" aria-label="Your garden">
         <GardenPlay />

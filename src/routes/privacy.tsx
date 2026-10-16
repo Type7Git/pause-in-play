@@ -5,9 +5,9 @@ import { Card, Muted, ScreenTitle } from "@/components/mm/ui";
 export const Route = createFileRoute("/privacy")({
   head: () => ({
     meta: [
-      { title: "Privacy · Pause in Play" },
-      { name: "description", content: "What Pause in Play stores, why, and how to delete it. We never store moods, symptoms or health information." },
-      { property: "og:title", content: "Privacy · Pause in Play" },
+      { title: "Privacy · Lumenera" },
+      { name: "description", content: "What Lumenera stores, why, and how to delete it. We never store moods, symptoms or health information." },
+      { property: "og:title", content: "Privacy · Lumenera" },
       { property: "og:description", content: "What we store, why, and how to delete it." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
@@ -33,7 +33,7 @@ function Privacy() {
       <ScreenTitle eyebrow="Privacy" title="What we store, and why." sub="Short version: only what your garden needs." />
       <Card><h3>Support & tracking examples</h3><Muted>Mood Mapper, Medicine Cabinet and Cycle Tracker currently show labelled example data only, for signed-in and signed-out users alike. Personal health saving is disabled. Example selections are temporary; nothing is sent or stored.</Muted><Muted>Before personal tracking becomes available, Australian hosting must be verified and you must give explicit consent. You will be able to download and delete your records. Health records will never be sold, used for advertising or shown to the team.</Muted></Card>
       <Card>
-        <h3>Tell Sprout (voice)</h3>
+        <h3>Tell Enera (voice)</h3>
         <Muted>Your voice is turned into text and never stored. The recording is thrown away straight after. Only the text you check and save is kept.</Muted>
       </Card>
       <Card>

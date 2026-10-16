@@ -12,9 +12,9 @@ import { useRewards } from "@/lib/rewards";
 export const Route = createFileRoute("/pals/")({
   head: () => ({
     meta: [
-      { title: "My PeriPals · Pause in Play" },
+      { title: "My people · Lumenera" },
       { name: "description", content: "Support that goes both ways. Share only what you choose with the people you trust." },
-      { property: "og:title", content: "My PeriPals · Pause in Play" },
+      { property: "og:title", content: "My people · Lumenera" },
       { property: "og:description", content: "Share only what you choose with the people you trust." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
@@ -24,8 +24,8 @@ export const Route = createFileRoute("/pals/")({
     <>
       <BackButton />
       <div>
-        <p className="eyebrow">PeriPals</p>
-        <h1>My PeriPals</h1>
+        <p className="eyebrow">My people</p>
+        <h1>My people</h1>
         <p className="mt-1.5 text-sm text-muted-foreground">Support that goes both ways.</p>
       </div>
       <PalsGate><Pals /></PalsGate>
@@ -44,7 +44,7 @@ function Pals() {
     const { error } = await supabase.from("pal_status").upsert({ user_id: user!.id, status: k, updated_at: new Date().toISOString() });
     if (error) { toast("Couldn't post that. Please try again."); return; }
     qc.invalidateQueries({ queryKey: ["pal_status_mine"] });
-    toast(`Posted '${statusLabel(k)!.label}' to your PeriPals`);
+    toast(`Posted '${statusLabel(k)!.label}' to your people`);
   };
   const pauseAll = async (on: boolean) => {
     await supabase.from("pal_settings").upsert({ user_id: user!.id, paused_all: on });
@@ -59,12 +59,12 @@ function Pals() {
         <div className="flex flex-wrap gap-2" role="group" aria-label="Your status">
           {STATUSES.map((s) => <Chip key={s.key} pressed={mine.data === s.key} onClick={() => post(s.key)}>{s.emoji} {s.label}</Chip>)}
         </div>
-        <Muted className="text-xs">Only PeriPals you've allowed to see your status will see this.</Muted>
+        <Muted className="text-xs">Only people you've allowed to see your status will see this.</Muted>
       </Card>
 
-      <section className="flex flex-col gap-2.5" aria-label="Your PeriPals">
+      <section className="flex flex-col gap-2.5" aria-label="Your people">
         {pals.isLoading && <Muted>Loading…</Muted>}
-        {pals.data?.length === 0 && <p className="mm-card p-[18px] text-sm text-muted-foreground">No PeriPals yet. Invite someone you trust; you choose exactly what they see.</p>}
+        {pals.data?.length === 0 && <p className="mm-card p-[18px] text-sm text-muted-foreground">No one here yet. Invite someone you trust; you choose exactly what they see.</p>}
         {pals.data?.map((p) => {
           const st = statusLabel(p.their_status);
           const pending = p.i_share_status === "pending";
@@ -81,7 +81,7 @@ function Pals() {
             </Link>
           );
         })}
-        <Link to="/pals/invite" className="press inline-flex min-h-11 items-center justify-center rounded-full bg-plum px-5 py-3 font-bold text-shell shadow-soft">+ Invite a PeriPal</Link>
+        <Link to="/pals/invite" className="press inline-flex min-h-11 items-center justify-center rounded-full bg-plum px-5 py-3 font-bold text-shell shadow-soft">+ Invite someone</Link>
       </section>
 
       <Card>

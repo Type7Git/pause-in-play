@@ -15,9 +15,9 @@ import type { SharePayload } from "@/lib/share";
 export const Route = createFileRoute("/pals/invite")({
   head: () => ({
     meta: [
-      { title: "Invite a PeriPal · Pause in Play" },
+      { title: "Invite someone · Lumenera" },
       { name: "description", content: "Invite someone you trust and choose exactly what they can see." },
-      { property: "og:title", content: "Invite a PeriPal · Pause in Play" },
+      { property: "og:title", content: "Invite someone · Lumenera" },
       { property: "og:description", content: "Choose exactly what a trusted person can see." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
@@ -26,7 +26,7 @@ export const Route = createFileRoute("/pals/invite")({
   component: () => (
     <>
       <BackButton />
-      <div><p className="eyebrow">PeriPals</p><h1>Invite a PeriPal</h1></div>
+      <div><p className="eyebrow">My people</p><h1>Invite someone</h1></div>
       <PalsGate><Invite /></PalsGate>
     </>
   ),
@@ -75,7 +75,7 @@ function Invite() {
     setBusy(false);
     if (error) { toast(friendlyError(error)); return; }
     setLink(`${window.location.origin}/pal/${data.code}`);
-    earn(3, "Reaching out counts", "PeriPal");
+    earn(3, "Reaching out counts", "Support circle");
   };
 
   const sees = PERMS.filter((p) => !("soon" in p) && perms[p.key]).map((p) => p.label);
@@ -87,7 +87,7 @@ function Invite() {
         <p className="break-all rounded-2xl bg-sunk p-3 text-sm">{link}</p>
         <Muted className="text-xs">Single use. Expires in {days === 1 ? "24 hours" : "7 days"}.</Muted>
         <div className="flex gap-2">
-          <Pill onClick={() => setSharing({ title: `Your invite for ${name}`, text: `Be my PeriPal on Pause in Play? It's a private way to check in with each other.`, url: link })}>Share</Pill>
+          <Pill onClick={() => setSharing({ title: `Your invite for ${name}`, text: `Will you be one of my people on Lumenera? It's a private way to check in with each other.`, url: link })}>Share</Pill>
           <Pill variant="ghost" onClick={() => { navigator.clipboard.writeText(link); toast("Link copied"); }}>Copy</Pill>
         </div>
         <ShareSheet open={!!sharing} payload={sharing} pals={false} onClose={() => setSharing(null)} />

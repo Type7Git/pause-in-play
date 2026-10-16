@@ -20,9 +20,9 @@ export const Route = createFileRoute("/notes")({
   validateSearch: (s: Record<string, unknown>): { card?: string } => (typeof s["card"] === "string" ? { card: s["card"] } : {}),
   head: () => ({
     meta: [
-      { title: "Little notes · Pause in Play" },
+      { title: "Little notes · Lumenera" },
       { name: "description", content: "Kind, real words of encouragement, understanding and support, sent now and then." },
-      { property: "og:title", content: "Little notes · Pause in Play" },
+      { property: "og:title", content: "Little notes · Lumenera" },
       { property: "og:description", content: "Kind words that turn up when you need them." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
@@ -56,7 +56,7 @@ function Notes() {
     const s = styleFor(note);
     setSharing({
       title: "A little note",
-      text: `"${note.text}" A little note from Pause in Play.`,
+      text: `"${note.text}" A little note from Lumenera.`,
       palText: `Thought you might need this today: "${note.text}"`,
       url: `${shareOrigin()}/notes?card=${note.id}`,
       fileName: "a-little-note.png",
@@ -114,13 +114,13 @@ function NoteSettings({ signedIn }: { signedIn: boolean }) {
         const r = await scheduleOnPhone(next, true);
         setStatus(r === "scheduled" ? `All set. Notes will pop up on this phone, ${FREQ_LABEL[next.freq].toLowerCase()}, between ${hour(next.from)} and ${hour(next.to)}.`
           : r === "off" ? "Notes are off. You can still read them here any time."
-          : r === "denied" ? "Your phone has notifications turned off for Pause in Play. Turn them on in your phone's settings, then try again."
+          : r === "denied" ? "Your phone has notifications turned off for Lumenera. Turn them on in your phone's settings, then try again."
           : "Something went wrong setting up notes on this phone.");
       } else if (signedIn) {
         if (next.on) {
           const p = await enablePush();
           if (p.status === "registered") await savePushToken({ data: { token: p.token } });
-          else { setStatus(p.status === "denied" ? "Notifications are blocked in this browser. Allow them for this site, or use the Pause in Play app." : "This browser can't show notifications. The Pause in Play app can."); }
+          else { setStatus(p.status === "denied" ? "Notifications are blocked in this browser. Allow them for this site, or use the Lumenera app." : "This browser can't show notifications. The Lumenera app can."); }
           await saveLittleNotes({ data: { ...next, tz: localTz() } });
           if (p.status === "registered") setStatus(`All set. Notes will arrive in this browser, ${FREQ_LABEL[next.freq].toLowerCase()}, between ${hour(next.from)} and ${hour(next.to)}.`);
         } else {
@@ -128,7 +128,7 @@ function NoteSettings({ signedIn }: { signedIn: boolean }) {
           setStatus("Notes are off. You can still read them here any time.");
         }
       } else {
-        setStatus(next.on ? "To send notes to you, use the Pause in Play app, or sign in so we can send them to this browser." : "");
+        setStatus(next.on ? "To send notes to you, use the Lumenera app, or sign in so we can send them to this browser." : "");
       }
     } catch {
       setStatus("That didn't save. Please try again.");

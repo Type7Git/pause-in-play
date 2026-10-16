@@ -23,7 +23,7 @@ export const PERMS = [
 ] as const;
 export type PermKey = (typeof PERMS)[number]["key"];
 
-export const NEVER_SHARED = ["Mood logs and notes", "Sprout chats and Tell Sprout", "Intimacy & relationships", "Medicine names and doses", "Your Side Quests and VIT items"];
+export const NEVER_SHARED = ["Mood logs and notes", "Enera chats and Tell Enera", "Intimacy & relationships", "Medicine names and doses", "Your Side Quests and VIT items"];
 
 export const initials = (name: string) => name.split(/\s+/).filter(Boolean).slice(0, 2).map((w) => w[0]!.toUpperCase()).join("") || "P";
 

@@ -152,7 +152,7 @@ export function BadgeGlyphShape({ glyph }: { glyph: BadgeGlyph }) {
   }
 }
 
-/** Mic with Sprout's leaf sprig on top and his gold pot as the base — every mic reads as Sprout. */
+/** Mic with Enera's leaf sprig on top and his gold pot as the base — every mic reads as Enera. */
 export function SproutMic({ className = "" }: { className?: string }) {
   return (
     <svg viewBox="0 0 24 24" className={className} aria-hidden="true" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">

@@ -1,7 +1,7 @@
 import { describe, expect, it } from "vitest";
 import { isClinical, isCrisis, scrubPII, toTsQuery } from "./sprout-guard";
 
-describe("Sprout safety rules", () => {
+describe("Enera safety rules", () => {
   it.each(["I don't want to be here anymore", "everyone would be better off without me", "I want to hurt myself", "I feel suicidal", "I can't go on"])(
     "treats %s as crisis", (m) => expect(isCrisis(m)).toBe(true));
   it("does not flag ordinary messages as crisis", () => expect(isCrisis("I can't sleep")).toBe(false));

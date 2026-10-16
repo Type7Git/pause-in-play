@@ -6,7 +6,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { ShareArticle } from "@/components/mm/ShareArticle";
 
 export const Route = createFileRoute("/body/why")({
-  head: () => ({ meta: [{ title: "Why it helps · Pause in Play" }, { name: "description", content: "Clinically reviewed reading on movement, bones, pelvic floor and food at midlife." }, { property: "og:title", content: "Why it helps · Pause in Play" }, { property: "og:description", content: "The why behind movement and food in perimenopause." }, { property: "og:type", content: "website" }, { name: "twitter:card", content: "summary" }] }),
+  head: () => ({ meta: [{ title: "Why it helps · Lumenera" }, { name: "description", content: "Clinically reviewed reading on movement, bones, pelvic floor and food at midlife." }, { property: "og:title", content: "Why it helps · Lumenera" }, { property: "og:description", content: "The why behind movement and food in perimenopause." }, { property: "og:type", content: "website" }, { name: "twitter:card", content: "summary" }] }),
   component: Why,
 });
 

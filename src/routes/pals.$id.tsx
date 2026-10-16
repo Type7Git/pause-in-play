@@ -16,9 +16,9 @@ import { NeverShared, PermSwitches } from "./pals.invite";
 export const Route = createFileRoute("/pals/$id")({
   head: () => ({
     meta: [
-      { title: "PeriPal · Pause in Play" },
-      { name: "description", content: "Messages, nudges and what you share with this PeriPal." },
-      { property: "og:title", content: "PeriPal · Pause in Play" },
+      { title: "My people · Lumenera" },
+      { name: "description", content: "Messages, nudges and what you share with this person." },
+      { property: "og:title", content: "My people · Lumenera" },
       { property: "og:description", content: "Messages, nudges and sharing choices." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
@@ -42,7 +42,7 @@ function Pal() {
   const [tab, setTab] = useState<"messages" | "sees">("messages");
   const p = pals.data?.find((x) => x.other_id === id);
   if (pals.isLoading) return <Muted>Loading…</Muted>;
-  if (!p) return <Card><h3>You're no longer connected</h3><Muted>This PeriPal connection has ended.</Muted></Card>;
+  if (!p) return <Card><h3>You're no longer connected</h3><Muted>This connection has ended.</Muted></Card>;
   const st = statusLabel(p.their_status);
   return (
     <>
@@ -68,7 +68,7 @@ function Confirm({ linkId, name }: { linkId: string; name: string }) {
   const set = async (status: "active" | "removed") => {
     await supabase.from("pal_links").update({ status }).eq("id", linkId);
     qc.invalidateQueries({ queryKey: ["pals"] });
-    toast(status === "active" ? `${name} is now your PeriPal` : "Invite declined");
+    toast(status === "active" ? `${name} is now one of your people` : "Invite declined");
   };
   return (
     <Card className="bg-gold-soft">

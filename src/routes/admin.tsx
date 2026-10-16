@@ -17,10 +17,10 @@ import { LibraryUpload } from "@/components/mm/LibraryUpload";
 export const Route = createFileRoute("/admin")({
   head: () => ({
     meta: [
-      { title: "Sprout library admin · Pause in Play" },
-      { name: "description", content: "The team's workspace for writing, approving and testing Sprout's library." },
-      { property: "og:title", content: "Sprout library admin · Pause in Play" },
-      { property: "og:description", content: "Write, approve and test Sprout's answers." },
+      { title: "Enera library admin · Lumenera" },
+      { name: "description", content: "The team's workspace for writing, approving and testing Enera's library." },
+      { property: "og:title", content: "Enera library admin · Lumenera" },
+      { property: "og:description", content: "Write, approve and test Enera's answers." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
       { name: "robots", content: "noindex" },
@@ -44,13 +44,13 @@ function Admin() {
   const [editing, setEditing] = useState<Entry | null>(null);
 
   if (!ready || (user && isAdmin.isLoading)) return <p role="status" className="p-10 text-muted-foreground">Opening the library…</p>;
-  if (!user) return <div className="mx-auto flex max-w-md flex-col gap-4 p-10"><h1 className="font-display text-2xl font-extrabold">Sign in to the Sprout library</h1><SignInForm /></div>;
+  if (!user) return <div className="mx-auto flex max-w-md flex-col gap-4 p-10"><h1 className="font-display text-2xl font-extrabold">Sign in to the Enera library</h1><SignInForm /></div>;
   if (!isAdmin.data) return (
     <div className="mx-auto flex max-w-md flex-col items-center gap-3 p-10 text-center">
       <Sprout size={64} mood="thinking" />
-      <h1 className="font-display text-2xl font-extrabold">This area is just for the Pause in Play team</h1>
+      <h1 className="font-display text-2xl font-extrabold">This area is just for the Lumenera team</h1>
       <p className="text-muted-foreground">Your account doesn't have library access.</p>
-      <Link to="/" className="font-bold text-plum underline">Back to Pause in Play</Link>
+      <Link to="/" className="font-bold text-plum underline">Back to Lumenera</Link>
     </div>
   );
 
@@ -66,9 +66,9 @@ function Admin() {
         </div>
         <Link to="/" className="text-sm font-bold text-plum underline">← Back to the app</Link>
       </header>
-      <p className="rounded-[14px] border border-gold bg-gold-soft px-4 py-2.5 text-sm">Sprout only uses <b>Approved</b> entries. Drafts are never shown to users.</p>
+      <p className="rounded-[14px] border border-gold bg-gold-soft px-4 py-2.5 text-sm">Enera only uses <b>Approved</b> entries. Drafts are never shown to users.</p>
       <nav className="flex flex-wrap gap-1 rounded-[22px] border border-line bg-card p-1 self-start" role="tablist">
-        {([["library", "Sprout library"], ["questions", "Unanswered"], ["test", "Test Sprout"], ["learn", "Learn content"], ["body", "Resilient body"], ["wyr", "Would you rather"], ["users", "Users"], ["payments", "Payments"], ["reports", "PeriPal reports"]] as const).map(([k, l]) => (
+        {([["library", "Enera library"], ["questions", "Unanswered"], ["test", "Test Enera"], ["learn", "Learn content"], ["body", "Resilient body"], ["wyr", "Would you rather"], ["users", "Users"], ["payments", "Payments"], ["reports", "My people reports"]] as const).map(([k, l]) => (
           <button key={k} role="tab" aria-selected={tab === k} onClick={() => setTab(k)} className={`press rounded-full px-4 py-2 text-sm font-bold ${tab === k ? "bg-plum text-shell" : "text-plum"}`}>{l}</button>
         ))}
       </nav>
@@ -117,7 +117,7 @@ function Library({ userId, onEdit }: { userId: string; onEdit: (e: Entry) => voi
     }).eq("id", e.id);
     setToggling(null);
     if (error) { toast.error("Couldn't update that entry. Try again."); return; }
-    toast.success(approved ? "Approved. Sprout can use it now." : "Back to draft. Sprout won't use it.");
+    toast.success(approved ? "Approved. Enera can use it now." : "Back to draft. Enera won't use it.");
     qc.invalidateQueries({ queryKey: ["admin-library"] });
   }
   return (
@@ -186,7 +186,7 @@ function Editor({ entry, userId, onClose }: { entry: Entry; userId: string; onCl
     const { error } = e.id ? await supabase.from("library_entries").update(row).eq("id", e.id) : await supabase.from("library_entries").insert(row);
     setBusy(false);
     if (error) { toast.error("That didn't save. Your changes are still here, so check your connection and try again."); return; }
-    toast.success(approve ? "Approved. Sprout can use it now." : "Saved as a draft. Sprout won't use it yet.");
+    toast.success(approve ? "Approved. Enera can use it now." : "Saved as a draft. Enera won't use it yet.");
     await qc.invalidateQueries({ queryKey: ["admin-library"] });
     await qc.invalidateQueries({ queryKey: ["sprout-topics"] });
     onClose();
@@ -278,7 +278,7 @@ function Questions({ onWrite }: { onWrite: (q: string) => void }) {
           <button onClick={() => handled(g.ids)} className="press rounded-full border border-line px-3.5 py-1.5 text-sm font-bold text-plum">Mark handled</button>
         </div>
       ))}
-      {!groups.length && <p className="rounded-[16px] border border-line bg-card px-4 py-6 text-center text-muted-foreground">{qs.isLoading ? "Checking for new questions…" : "Nothing waiting. Sprout's doing well."}</p>}
+      {!groups.length && <p className="rounded-[16px] border border-line bg-card px-4 py-6 text-center text-muted-foreground">{qs.isLoading ? "Checking for new questions…" : "Nothing waiting. Enera's doing well."}</p>}
     </section>
   );
 }
