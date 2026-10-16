@@ -8,14 +8,15 @@ import { PanelBadge } from "@/components/mm/Panel";
 import { getLevel } from "@/lib/levels";
 import { useRewards } from "@/lib/rewards";
 import { CheckIcon, Chevron, Flower, ItemArt, SpaceArt } from "./art";
-import { TOOL } from "./tools";
+import { CATEGORIES, readRecent, type CategoryId } from "./tools";
+import { CategoryArt, MenuButton, ToolRows, toolsInCategory } from "./Menu";
 import { FORMAT_LABEL, HUBS, HUB_IDS, SPACES, type HubId } from "./content";
-import { plan, type Check, type Pick } from "./engine";
+import { checksRow, plan, type Check, type Pick } from "./engine";
 import { es, useEs } from "./store";
-import { Meter, NeedsProfile, greeting } from "./ui";
+import { NeedsProfile, greeting } from "./ui";
 
 const TONE_WORD: Record<Check["tone"], string> = { ok: "Up to date", soon: "Due soon", overdue: "Overdue", info: "Good to know" };
-const SHORT_CHECK: Record<Check["id"], string> = { cervical: "Cervical", breast: "Breast", bones: "Bones" };
+const SHORT_CHECK: Record<Check["id"], string> = { cervical: "Cervical", breast: "Breast", bones: "Bones", skin: "Skin", mind: "Mind", life: "By life stage" };
 const tintOf = (id: HubId | "checks") => (id === "checks" ? "rose" : HUBS[id].tint);
 
 export function Home() {
@@ -24,6 +25,7 @@ export function Home() {
   if (!ready) return <main className="stage" key="home" />;
   if (!done) return <main className="stage" key="home"><NeedsProfile /></main>;
   const pl = plan(profile);
+  const checks = checksRow(profile);
   const st = profile.stages ?? [];
   const lost = !!prevStages?.includes("pregnant") && !st.includes("pregnant") && !st.includes("baby") && profile.children !== "u1";
   // After a pregnancy ends, fertility stays available but never leads the home.
@@ -38,7 +40,7 @@ export function Home() {
     <>
       <header className="hhead">
         <div style={{ minWidth: 0 }}><small className="brand"><Flower size={18} still /><b>Lumenera</b><span aria-hidden="true">·</span>{today}</small><h1 tabIndex={-1}>{greeting()}{profile.name ? `, ${profile.name}` : ""}</h1></div>
-        <Meter />
+        <MenuButton />
       </header>
       <main className="stage" key="home">
         <div className="home">
@@ -84,42 +86,25 @@ export function Home() {
             </section>
           ) : null}
 
-          {pl.checks.length ? (
+          {checks.length ? (
             <section style={{ animationDelay: ".12s" }} aria-labelledby="es-checks">
               <div className="sec-h"><h2 id="es-checks">Your checks</h2><span>Tap for details</span></div>
               <div className="chks">
-                {pl.checks.map((c) => (
-                  <Link key={c.id} to="/check/$id" params={{ id: c.id }} className={`chk tone-${c.tone}`} aria-label={`${c.name}: ${TONE_WORD[c.tone]}. Open details.`}>
+                {checks.map((c) => (
+                  <Link key={c.id} to="/check/$id" params={{ id: c.id }} className={`chk tone-${c.tone}`} aria-label={`${c.name}: ${c.tone === "info" ? c.status : TONE_WORD[c.tone]}. Open details.`}>
                     <span className="ring"><CheckIcon id={c.id} /><span className="dot" /></span>
                     <b>{SHORT_CHECK[c.id]}</b>
-                    <small>{TONE_WORD[c.tone]}</small>
+                    <small>{c.tone === "info" ? c.status : TONE_WORD[c.tone]}</small>
                   </Link>
                 ))}
               </div>
               <div className="legend" aria-hidden="true">
-                <span className="tone-ok"><i />Up to date</span><span className="tone-soon"><i />Due soon</span><span className="tone-overdue"><i />Overdue</span>
+                <span className="tone-ok"><i />Up to date</span><span className="tone-soon"><i />Due soon</span><span className="tone-overdue"><i />Overdue</span><span className="tone-info"><i />Reminder</span>
               </div>
             </section>
           ) : null}
 
-          <section style={{ animationDelay: ".15s" }} aria-labelledby="es-every">
-            <div className="sec-h"><h2 id="es-every">Everyday tools</h2><span>For any stage</span></div>
-            <div className="trio">
-              {(["meds", "body", "mind"] as const).map((id) => (
-                <HubLink key={id} id={id} className={`tint-${HUBS[id].tint}`}>
-                  <span className="art-box"><SpaceArt id={id} /></span>
-                  <h3>{HUBS[id].name}</h3>
-                </HubLink>
-              ))}
-            </div>
-            {rewards.favourites.length ? (
-              <div className="favs" aria-label="Your favourite tools">
-                {rewards.favourites.map((k) => TOOL[k]).filter((t) => !!t?.to).map((t) => (
-                  <Link key={t!.key} to={t!.to!} className="fav"><ActivityIcon icon={t!.icon} className="size-5" />{t!.title}</Link>
-                ))}
-              </div>
-            ) : null}
-          </section>
+          <EverydayTools favourites={rewards.favourites} />
 
           <ForYou picks={pl.picks} />
 
@@ -143,7 +128,7 @@ export function Home() {
 
           <section className="foot" style={{ animationDelay: ".3s" }}>
             <Link to="/" search={{ mode: "changed" }} className="soft-btn" onClick={() => es.snapshot()}>Something's changed?</Link>
-            <p>Concept demo with sample content. Lumenera shares information, never a diagnosis. Your answers stay on this device.</p>
+            <p>Lumenera shares information, never a diagnosis. Your answers stay on this device.</p>
             <Link to="/panel" className="panel-link"><PanelBadge size={28} /><span>Developed with our clinical advisory panel</span><Chevron /></Link>
           </section>
           <div style={{ animationDelay: ".34s" }}><AddToHomeCard /></div>
@@ -180,6 +165,33 @@ function ForYou({ picks }: { picks: Pick[] }) {
         ))}
       </div>
       <div className="dots" aria-hidden="true">{picks.map((p, i) => <i key={p.id} className={i === on ? "on" : ""} />)}</div>
+    </section>
+  );
+}
+
+/** Everyday tools: a slider of categories, with the chosen one's tools listed below. Recently used leads. */
+function EverydayTools({ favourites }: { favourites: string[] }) {
+  const [recent, setRecent] = useState<string[]>([]);
+  const [sel, setSel] = useState<CategoryId | null>(null);
+  useEffect(() => { setRecent(readRecent()); }, []);
+  const cats = CATEGORIES.filter((c) => c.id !== "recent" || recent.length);
+  const current = cats.find((c) => c.id === (sel ?? (recent.length ? "recent" : "practical"))) ?? cats[0]!;
+  const keys = toolsInCategory(current, favourites, recent).slice(0, 5);
+  return (
+    <section style={{ animationDelay: ".15s" }} aria-labelledby="es-every">
+      <div className="sec-h"><h2 id="es-every">Everyday tools</h2><Link to="/tools" className="see-all">See all</Link></div>
+      <div className="cat-rail" role="tablist" aria-label="Tool categories">
+        {cats.map((c) => (
+          <button key={c.id} type="button" role="tab" aria-selected={c.id === current.id} className={`cat ${c.art.hub ? `tint-${HUBS[c.art.hub].tint}` : "tint-rose"}`} onClick={() => setSel(c.id)}>
+            <span className="art-box"><CategoryArt c={c} /></span>
+            <b>{c.name}</b>
+          </button>
+        ))}
+      </div>
+      <div className="cat-list" role="tabpanel" aria-label={current.name} key={current.id}>
+        <p className="why">{current.blurb}</p>
+        {keys.length ? <ToolRows keys={keys} /> : <p className="empty-note">{current.id === "fav" ? "Tap the heart on any tool and it will live here, ready when you need it." : "Nothing here yet."}</p>}
+      </div>
     </section>
   );
 }

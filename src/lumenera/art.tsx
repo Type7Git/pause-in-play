@@ -214,6 +214,9 @@ export function CheckIcon({ id, size = 26 }: { id: CheckId; size?: number }) {
   const p = { width: size, height: size, viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: 2, strokeLinecap: "round" as const, strokeLinejoin: "round" as const, "aria-hidden": true };
   if (id === "cervical") return <svg {...p}><path d="M12 3c-3 4-5 7-5 10a5 5 0 0 0 10 0c0-3-2-6-5-10z" /><path d="M10 14a2 2 0 0 0 2 2" /></svg>;
   if (id === "breast") return <svg {...p}><path d="M12 20.5s-7.5-4.4-7.5-10A4.3 4.3 0 0 1 12 7.6a4.3 4.3 0 0 1 7.5 2.9c0 5.6-7.5 10-7.5 10z" /></svg>;
+  if (id === "skin") return <svg {...p}><circle cx="12" cy="12" r="4" /><path d="M12 2.5v2M12 19.5v2M4.6 4.6l1.4 1.4M18 18l1.4 1.4M2.5 12h2M19.5 12h2M4.6 19.4L6 18M18 6l1.4-1.4" /></svg>;
+  if (id === "mind") return <svg {...p}><circle cx="12" cy="12" r="9" /><path d="M8.5 14.5c1 1.2 2.2 1.8 3.5 1.8s2.5-.6 3.5-1.8" /><path d="M9 9.5h.01M15 9.5h.01" strokeWidth="2.6" /></svg>;
+  if (id === "life") return <svg {...p}><path d="M4 18h4v-4h4v-4h4V6h4" /><circle cx="4" cy="18" r="1.4" fill="currentColor" /><circle cx="20" cy="6" r="1.4" fill="currentColor" /></svg>;
   return <svg {...p}><path d="M7.5 7.5l9 9" strokeWidth="3.4" /><g fill="currentColor" stroke="none"><circle cx="5.6" cy="7.8" r="2.4" /><circle cx="7.8" cy="5.6" r="2.4" /><circle cx="16.2" cy="18.4" r="2.4" /><circle cx="18.4" cy="16.2" r="2.4" /></g></svg>;
 }
 export const ToneGlyph = ({ tone }: { tone: Tone }) => (

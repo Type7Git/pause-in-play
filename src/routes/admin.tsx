@@ -13,6 +13,7 @@ import { LearnAdmin, PaymentsAdmin, UsersAdmin } from "@/components/mm/AdminSect
 import { BodyAdmin } from "@/components/mm/BodyAdmin";
 import { WyrAdmin } from "@/components/mm/WyrAdmin";
 import { LibraryUpload } from "@/components/mm/LibraryUpload";
+import { MedicinesAdmin } from "@/components/mm/MedicinesAdmin";
 
 export const Route = createFileRoute("/admin")({
   head: () => ({
@@ -40,7 +41,7 @@ function Admin() {
     enabled: !!user,
     queryFn: async () => (await supabase.rpc("has_role", { _user_id: user!.id, _role: "admin" })).data === true,
   });
-  const [tab, setTab] = useState<"library" | "questions" | "test" | "learn" | "body" | "wyr" | "users" | "payments" | "reports">("library");
+  const [tab, setTab] = useState<"library" | "questions" | "test" | "learn" | "body" | "wyr" | "medicines" | "users" | "payments" | "reports">("library");
   const [editing, setEditing] = useState<Entry | null>(null);
 
   if (!ready || (user && isAdmin.isLoading)) return <p role="status" className="p-10 text-muted-foreground">Opening the library…</p>;
@@ -68,7 +69,7 @@ function Admin() {
       </header>
       <p className="rounded-[14px] border border-gold bg-gold-soft px-4 py-2.5 text-sm">Enera only uses <b>Approved</b> entries. Drafts are never shown to users.</p>
       <nav className="flex flex-wrap gap-1 rounded-[22px] border border-line bg-card p-1 self-start" role="tablist">
-        {([["library", "Enera library"], ["questions", "Unanswered"], ["test", "Test Enera"], ["learn", "Learn content"], ["body", "Resilient body"], ["wyr", "Would you rather"], ["users", "Users"], ["payments", "Payments"], ["reports", "My people reports"]] as const).map(([k, l]) => (
+        {([["library", "Enera library"], ["questions", "Unanswered"], ["test", "Test Enera"], ["learn", "Learn content"], ["body", "Resilient body"], ["wyr", "Would you rather"], ["medicines", "Medicines"], ["users", "Users"], ["payments", "Payments"], ["reports", "Lume Lounge reports"]] as const).map(([k, l]) => (
           <button key={k} role="tab" aria-selected={tab === k} onClick={() => setTab(k)} className={`press rounded-full px-4 py-2 text-sm font-bold ${tab === k ? "bg-plum text-shell" : "text-plum"}`}>{l}</button>
         ))}
       </nav>
@@ -78,6 +79,7 @@ function Admin() {
       {tab === "learn" && <LearnAdmin userId={user.id} />}
       {tab === "body" && <BodyAdmin userId={user.id} />}
       {tab === "wyr" && <WyrAdmin />}
+      {tab === "medicines" && <MedicinesAdmin userId={user.id} />}
       {tab === "users" && <UsersAdmin />}
       {tab === "payments" && <PaymentsAdmin />}
       {tab === "reports" && <PalReportsAdmin />}

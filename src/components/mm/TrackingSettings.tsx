@@ -1,27 +1,32 @@
 import { useState } from "react";
-import { CalendarDays, Download, ShieldCheck } from "lucide-react";
-import { Card, Chip, Muted, Pill } from "./ui";
-import { ExampleLabel } from "./TrackingShared";
-import { downloadExample } from "@/lib/tracking-examples";
+import { Download, ShieldCheck, Trash2 } from "lucide-react";
+import { Card, Muted, Pill } from "./ui";
+import { clearDeviceRecords, deviceRecords } from "@/lib/tracking";
 
-const categories = [
-  ["Medicine reminders", "At the times you choose"], ["Side quest nudges", "When your parked mission is due"],
-  ["Mood check-in", "A gentle prompt at your chosen time"], ["Cycle reminders", "Optional prompts to log"],
-  ["Daily motivation", "A small, kind thought"], ["New articles and videos", "New releases in Learn"],
-  ["Clinical insights from Erin", "Reviewed ideas from Erin"], ["Program news", "Dates and program updates"],
-];
-function Toggle({ label, detail, on, change }: { label: string; detail: string; on: boolean; change: () => void }) {
-  return <div className="flex items-center gap-3 border-b border-line py-2.5"><div className="min-w-0 flex-1"><b className="text-sm">{label}</b><p className="text-xs text-muted-foreground">{detail}</p></div><Pill variant="ghost" className={`h-11 min-w-11 shrink-0 px-2 ${on ? "border-sage bg-sage-soft text-sage" : ""}`} role="switch" aria-label={`Example ${label}`} aria-checked={on} onClick={change}><span className={`relative block h-5 w-8 rounded-full ${on ? "bg-sage" : "bg-line"}`}><i className={`absolute top-0.5 size-4 rounded-full bg-card transition-transform ${on ? "left-0.5 translate-x-3" : "left-0.5"}`} /></span></Pill></div>;
-}
+/** Your health records on this phone: Mood Mapper, Cycle Tracker and Medicine cabinet. Download or delete them. */
 export function TrackingSettings() {
-  const [on, setOn] = useState(["Medicine reminders","Side quest nudges","Quiet hours","Discreet mode"]);
-  const [note, setNote] = useState("");
-  const toggle = (label: string) => setOn(l => l.includes(label) ? l.filter(v => v !== label) : [...l,label]);
-  return <><section className="border-t border-line pt-5"><p className="eyebrow">Support & tracking preview</p><p className="mt-2 text-sm text-muted-foreground">The choices below are examples only. They do not change your existing Side Quest notifications, connect calendars, or save preferences.</p></section>
-    <Card><div className="flex justify-between"><h3>Notifications</h3><ExampleLabel /></div>{categories.map(([label,detail]) => label && detail ? <Toggle key={label} label={label} detail={detail} on={on.includes(label)} change={() => toggle(label)} /> : null)}{on.includes("Mood check-in") && <label className="text-sm">Example check-in time<input type="time" defaultValue="18:00" className="mt-1 block min-h-11 w-full rounded-input border border-line bg-sunk px-3" /></label>}</Card>
-    <Card><h3>How and when</h3>{[["Quiet hours","Non-urgent nudges rest overnight"],["Let medicine reminders through","Optional exception to quiet hours"],["Morning digest","Bundle non-urgent items at 8am"],["Discreet mode","Hide medicine names on lock screens and calendars"]].map(([label,detail]) => label && detail ? <Toggle key={label} label={label} detail={detail} on={on.includes(label)} change={() => toggle(label)} /> : null)}<div className="grid grid-cols-2 gap-3"><label className="text-sm">Quiet from<input type="time" defaultValue="21:00" className="mt-1 min-h-11 w-full rounded-input border border-line bg-sunk px-2" /></label><label className="text-sm">Until<input type="time" defaultValue="07:00" className="mt-1 min-h-11 w-full rounded-input border border-line bg-sunk px-2" /></label></div><label className="text-sm">Maximum non-urgent nudges per day<input type="number" min="0" max="20" defaultValue="3" className="mt-1 min-h-11 w-full rounded-input border border-line bg-sunk px-3" /></label></Card>
-    <Card><h3>Calendars</h3><ExampleLabel /><div className="flex items-center gap-3"><CalendarDays className="size-6 text-plum" /><div className="flex-1"><b className="text-sm">Google Calendar</b><p className="text-xs text-muted-foreground">Not connected</p></div><Pill size="sm" variant="ghost" onClick={() => setNote("Calendar connections are not available in this example. Google approval is required before public release.")}>Connect</Pill></div><Muted>Read-only events in Today and reminders in a separate Lumenera calendar will be separate choices.</Muted><div className="flex flex-wrap items-center justify-between gap-2"><b className="text-sm">Apple Calendar or Outlook</b><Pill size="sm" variant="ghost" onClick={() => setNote("Private subscription links are not available yet. No link has been created.")}>Get link</Pill></div>{note && <p role="status" className="text-sm text-muted-foreground">{note}</p>}</Card>
-    <Card><ShieldCheck className="size-6 text-sage" /><h3>Privacy and your data</h3><Muted>Personal health saving is disabled until Australian hosting is verified. An account and explicit consent will be required. Health information will never be sold or used for advertising.</Muted><Muted>These downloads contain labelled sample records only, not your account data.</Muted><div className="flex flex-wrap gap-2"><Pill variant="ghost" size="sm" onClick={() => downloadExample("json")}><Download className="size-4" />Example JSON</Pill><Pill variant="ghost" size="sm" onClick={() => downloadExample("csv")}><Download className="size-4" />Example CSV</Pill></div></Card>
-    <Card><h3>Your plan</h3><Muted>Free, Plus and Program access will be managed by the team. No paid membership is active in this preview.</Muted><div className="flex gap-2">{["Free","Plus","Program"].map(p => <Chip key={p} pressed={p === "Free"} disabled>{p}</Chip>)}</div></Card>
-  </>;
+  const [status, setStatus] = useState("");
+  const download = () => {
+    const url = URL.createObjectURL(new Blob([JSON.stringify(deviceRecords(), null, 2)], { type: "application/json" }));
+    const a = document.createElement("a"); a.href = url; a.download = `lumenera-my-records-${new Date().toISOString().slice(0, 10)}.json`; a.click();
+    setTimeout(() => URL.revokeObjectURL(url), 1000);
+    setStatus("Downloaded.");
+  };
+  const remove = () => {
+    if (!confirm("Delete your moods, cycle log and medicine cabinet from this phone? This can't be undone.")) return;
+    clearDeviceRecords();
+    setStatus("Deleted from this phone.");
+  };
+  return (
+    <Card>
+      <ShieldCheck className="size-6 text-sage" aria-hidden="true" />
+      <h3>Your health records</h3>
+      <Muted>Your moods, cycle log and medicine cabinet are kept on this phone only. They aren't part of your account and aren't sent to Lumenera, so they won't move to a new phone. Health information will never be sold or used for advertising.</Muted>
+      <div className="flex flex-wrap gap-2">
+        <Pill variant="ghost" size="sm" onClick={download}><Download className="size-4" />Download my records</Pill>
+        <Pill variant="ghost" size="sm" className="text-rose" onClick={remove}><Trash2 className="size-4" />Delete from this phone</Pill>
+      </div>
+      {status && <p role="status" className="text-sm text-muted-foreground">{status}</p>}
+    </Card>
+  );
 }

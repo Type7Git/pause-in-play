@@ -12,9 +12,9 @@ import { useRewards } from "@/lib/rewards";
 export const Route = createFileRoute("/pals/")({
   head: () => ({
     meta: [
-      { title: "My people · Lumenera" },
+      { title: "Lume Lounge · Lumenera" },
       { name: "description", content: "Support that goes both ways. Share only what you choose with the people you trust." },
-      { property: "og:title", content: "My people · Lumenera" },
+      { property: "og:title", content: "Lume Lounge · Lumenera" },
       { property: "og:description", content: "Share only what you choose with the people you trust." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
@@ -24,8 +24,8 @@ export const Route = createFileRoute("/pals/")({
     <>
       <BackButton />
       <div>
-        <p className="eyebrow">My people</p>
-        <h1>My people</h1>
+        <p className="eyebrow">Lume Lounge</p>
+        <h1>Your Lume Lounge</h1>
         <p className="mt-1.5 text-sm text-muted-foreground">Support that goes both ways.</p>
       </div>
       <PalsGate><Pals /></PalsGate>
@@ -44,7 +44,7 @@ function Pals() {
     const { error } = await supabase.from("pal_status").upsert({ user_id: user!.id, status: k, updated_at: new Date().toISOString() });
     if (error) { toast("Couldn't post that. Please try again."); return; }
     qc.invalidateQueries({ queryKey: ["pal_status_mine"] });
-    toast(`Posted '${statusLabel(k)!.label}' to your people`);
+    toast(`Posted '${statusLabel(k)!.label}' to your Lume Lounge`);
   };
   const pauseAll = async (on: boolean) => {
     await supabase.from("pal_settings").upsert({ user_id: user!.id, paused_all: on });

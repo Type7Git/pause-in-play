@@ -16,9 +16,9 @@ import { NeverShared, PermSwitches } from "./pals.invite";
 export const Route = createFileRoute("/pals/$id")({
   head: () => ({
     meta: [
-      { title: "My people · Lumenera" },
+      { title: "Lume Lounge · Lumenera" },
       { name: "description", content: "Messages, nudges and what you share with this person." },
-      { property: "og:title", content: "My people · Lumenera" },
+      { property: "og:title", content: "Lume Lounge · Lumenera" },
       { property: "og:description", content: "Messages, nudges and sharing choices." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
@@ -68,7 +68,7 @@ function Confirm({ linkId, name }: { linkId: string; name: string }) {
   const set = async (status: "active" | "removed") => {
     await supabase.from("pal_links").update({ status }).eq("id", linkId);
     qc.invalidateQueries({ queryKey: ["pals"] });
-    toast(status === "active" ? `${name} is now one of your people` : "Invite declined");
+    toast(status === "active" ? `${name} is now in your Lume Lounge` : "Invite declined");
   };
   return (
     <Card className="bg-gold-soft">

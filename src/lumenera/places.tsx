@@ -5,7 +5,7 @@ import { PhoneIcon, PinIcon } from "./art";
 import type { Profile } from "./content";
 import { placeOf } from "./engine";
 
-export type Topic = "periods" | "contra" | "fertility" | "baby" | "meno" | "mind" | "body" | "meds" | "cervical" | "breast" | "bones";
+export type Topic = "periods" | "contra" | "fertility" | "baby" | "meno" | "mind" | "body" | "meds" | "skin" | "life" | "cervical" | "breast" | "bones";
 type Place = { name: string; sub: string; tel?: string; book?: boolean; href?: string };
 
 export function placesFor(p: Profile, topic: Topic): { heading: string; intro: string; list: Place[] } | null {
@@ -20,7 +20,7 @@ export function placesFor(p: Profile, topic: Topic): { heading: string; intro: s
     list.push({ name: `Women's health clinics in ${where.state}`, sub: "In the full app, local partner clinics appear here", book: true });
   }
   if (topic === "breast") list.unshift({ name: "BreastScreen", sub: "Free mammograms. No referral needed", tel: "13 20 50" });
-  if (topic === "cervical" || topic === "bones") list.push({ name: "Your GP", sub: "Can also check when you were last screened", book: true });
+  if (topic === "cervical" || topic === "bones" || topic === "skin" || topic === "life") list.push({ name: "Your GP", sub: "Can also check when you were last screened", book: true });
   if (topic === "mind") list.push({ name: "Lifeline", sub: "24/7 crisis support", tel: "13 11 14" }, { name: "Beyond Blue", sub: "Talk to a counsellor, 24/7", tel: "1300 22 4636" });
   if (topic === "baby") list.push({ name: "PANDA helpline", sub: "Perinatal anxiety and depression support", tel: "1300 726 306" });
   if (topic === "fertility" || topic === "baby") list.push({ name: "Pregnancy, Birth and Baby", sub: "Talk to a maternal child health nurse", tel: "1800 882 436" });

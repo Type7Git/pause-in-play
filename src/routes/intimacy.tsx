@@ -14,7 +14,7 @@ export function PrivacyBanner() {
   return (
     <p className="flex items-start gap-2.5 rounded-2xl border border-line bg-sunk p-3 text-[13px] leading-snug text-muted-foreground">
       <Lock className="mt-0.5 size-4 shrink-0 text-plum" aria-hidden="true" />
-      Private by default. Nothing here is saved unless you choose, it's never shared with your people, and notifications from this section never show on your lock screen.
+      Private by default. Nothing here is saved unless you choose, it's never shared with your Lume Lounge, and notifications from this section never show on your lock screen.
     </p>
   );
 }

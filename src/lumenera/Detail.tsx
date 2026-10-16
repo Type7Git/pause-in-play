@@ -1,8 +1,8 @@
 /** Space and check pages: the depth behind the calm home. */
 import { Link } from "@tanstack/react-router";
 import { CalendarArt, ItemArt, SpaceArt, Tick, ToneGlyph } from "./art";
-import { CHECK_INFO, FORMAT_LABEL, HUBS, SCREEN_BANDS, type CheckId, type HubId, type Item } from "./content";
-import { ageOf, checksFor, plan, rank, type Check } from "./engine";
+import { CHECK_INFO, FORMAT_LABEL, HUBS, LIFE_STAGE_CHECKS, SCREEN_BANDS, type CheckId, type HubId, type Item } from "./content";
+import { ageOf, checksFor, checksRow, plan, rank, type Check } from "./engine";
 import { ActivityIcon } from "@/components/mm/ActivityIcon";
 import { NearYou } from "./places";
 import { toolsFor } from "./tools";
@@ -42,7 +42,7 @@ export function SpacePage({ id }: { id: HubId }) {
                   </Link>
                 ))}
               </div>
-              {id === "contra" ? <p className="why" style={{ fontSize: 12.5, marginTop: 10 }}>Private by default. Nothing here is shared with your people, and you can lock this space with Face ID or your fingerprint in Settings.</p> : null}
+              {id === "contra" ? <p className="why" style={{ fontSize: 12.5, marginTop: 10 }}>Private by default. Nothing here is shared with your Lume Lounge, and you can lock this space with Face ID or your fingerprint in Settings.</p> : null}
             </section>
           ) : null}
           {items.length ? (
@@ -63,7 +63,7 @@ export function SpacePage({ id }: { id: HubId }) {
             <ul>{hub.seeSomeone.map((t) => <li key={t}>{t}</li>)}</ul>
           </div>
           <div style={{ animationDelay: ".2s" }}><NearYou profile={profile} topic={id} /></div>
-          <p className="why" style={{ fontSize: 12.5 }}>Sample content for the demo. Final content is written and reviewed by clinicians.</p>
+          <p className="why" style={{ fontSize: 12.5 }}>Information, never a diagnosis. Your GP knows your whole story.</p>
         </div>
       </main>
     </>
@@ -77,7 +77,7 @@ export function CheckPage({ id }: { id: CheckId }) {
   const info = CHECK_INFO[id];
   if (!ready) return <><TopBar title="Checks" /><main className="stage" /></>;
   if (!done) return <><TopBar title="Checks" /><main className="stage"><NeedsProfile /></main></>;
-  const c: Check = checksFor(profile).find((x) => x.id === id) ?? { id, name: info.name, tone: "info", status: "Not due for you", detail: "Based on your age, this check isn't part of your routine right now." };
+  const c: Check = checksRow(profile).find((x) => x.id === id) ?? checksFor(profile).find((x) => x.id === id) ?? { id, name: info.name, tone: "info", status: "Not due for you", detail: "Based on your age, this check isn't part of your routine right now." };
   const A = ageOf(profile) ?? 0;
   const field = id === "cervical" && A >= 25 && A <= 74 ? "cervical" : id === "breast" && A >= 40 ? "mammo" : null;
   return (
@@ -107,7 +107,26 @@ export function CheckPage({ id }: { id: CheckId }) {
             </div>
           ) : null}
           <div className="panel" style={{ animationDelay: ".14s" }}><h2>What it is</h2><p>{info.what}</p></div>
-          <div className="panel" style={{ animationDelay: ".18s" }}><h2>How often</h2><p>{info.how}</p></div>
+          {id === "life" ? (
+            <div className="panel" style={{ animationDelay: ".18s" }}>
+              <h2>Through the years</h2>
+              <ol className="timeline">
+                {LIFE_STAGE_CHECKS.map((b, i) => {
+                  const from = Number(b.when.replace(/\D/g, ""));
+                  const next = Number(LIFE_STAGE_CHECKS[i + 1]?.when.replace(/\D/g, "") ?? 200);
+                  const now = A >= from && A < next;
+                  return (
+                    <li key={b.when} className={now ? "now" : ""}>
+                      <b>{b.when}{now ? <span className="chip">You're here</span> : null}</b>
+                      <ul>{b.items.map((t) => <li key={t}>{t}</li>)}</ul>
+                    </li>
+                  );
+                })}
+              </ol>
+            </div>
+          ) : (
+            <div className="panel" style={{ animationDelay: ".18s" }}><h2>How often</h2><p>{info.how}</p></div>
+          )}
           <div className="panel" style={{ animationDelay: ".22s" }}><h2>Why it matters</h2><p>{info.why}</p></div>
           <div className="panel" style={{ animationDelay: ".26s" }}><h2>Where to go</h2><ul>{info.where.map((w) => <li key={w}>{w}</li>)}</ul></div>
           <div style={{ animationDelay: ".3s" }}><NearYou profile={profile} topic={id} /></div>

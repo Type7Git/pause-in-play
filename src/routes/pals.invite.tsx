@@ -26,7 +26,7 @@ export const Route = createFileRoute("/pals/invite")({
   component: () => (
     <>
       <BackButton />
-      <div><p className="eyebrow">My people</p><h1>Invite someone</h1></div>
+      <div><p className="eyebrow">Lume Lounge</p><h1>Invite someone</h1></div>
       <PalsGate><Invite /></PalsGate>
     </>
   ),
@@ -87,7 +87,7 @@ function Invite() {
         <p className="break-all rounded-2xl bg-sunk p-3 text-sm">{link}</p>
         <Muted className="text-xs">Single use. Expires in {days === 1 ? "24 hours" : "7 days"}.</Muted>
         <div className="flex gap-2">
-          <Pill onClick={() => setSharing({ title: `Your invite for ${name}`, text: `Will you be one of my people on Lumenera? It's a private way to check in with each other.`, url: link })}>Share</Pill>
+          <Pill onClick={() => setSharing({ title: `Your invite for ${name}`, text: `Will you join my Lume Lounge on Lumenera? It's a private way to check in with each other.`, url: link })}>Share</Pill>
           <Pill variant="ghost" onClick={() => { navigator.clipboard.writeText(link); toast("Link copied"); }}>Copy</Pill>
         </div>
         <ShareSheet open={!!sharing} payload={sharing} pals={false} onClose={() => setSharing(null)} />

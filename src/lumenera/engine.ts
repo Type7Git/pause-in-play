@@ -50,6 +50,19 @@ export function checksFor(p: Profile): Check[] {
   return out;
 }
 
+/** Gentle prompts that keep the checks row full: skin, mind and checks by life stage. */
+const PROMPTS: Check[] = [
+  { id: "skin", name: "Skin check", tone: "info", status: "Know your skin", detail: "Check your own skin every few months, and see your GP about anything new or changing." },
+  { id: "mind", name: "Mental health check-in", tone: "info", status: "Check in", detail: "How are you really going? Your GP is a good place to start." },
+  { id: "life", name: "Checks by life stage", tone: "info", status: "By age", detail: "The main checks for women, and when each one starts." },
+];
+/** Checks for the home row: what's relevant first, then prompts, to a full row of three (or six). */
+export function checksRow(p: Profile): Check[] {
+  const mine = checksFor(p);
+  const target = Math.max(3, Math.ceil(mine.length / 3) * 3);
+  return [...mine, ...PROMPTS.filter((x) => !mine.some((m) => m.id === x.id))].slice(0, target);
+}
+
 /* ---------- spaces and picks ---------- */
 const topicSpace = (t: string, A: number, kids: string | undefined): SpaceId | null =>
   (({ periods: "periods", contra: "contra", sexual: "contra", fertility: "fertility", pregnancy: "fertility", parenting: "baby", meno: "meno", sleep: A >= 40 ? "meno" : null, pelvic: kids === "u1" ? "baby" : A >= 40 ? "meno" : null, move: A >= 45 ? "meno" : null }) as Record<string, SpaceId | null>)[t] ?? null;

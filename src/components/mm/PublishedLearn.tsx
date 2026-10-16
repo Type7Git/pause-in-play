@@ -24,7 +24,7 @@ export function PublishedLearn() {
   );
 }
 
-function Item({ item, open, onToggle }: { item: LearnItem; open: boolean; onToggle: () => void }) {
+export function Item({ item, open, onToggle }: { item: LearnItem; open: boolean; onToggle: () => void }) {
   const [n, setN] = useState(0);
   const [ans, setAns] = useState<number | null>(null);
   const qq = item.quiz[n];

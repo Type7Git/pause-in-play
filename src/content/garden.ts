@@ -148,7 +148,7 @@ export const BADGE_COPY: Record<string, { why: string; how: string; cheer: strin
   },
   peripal: {
     why: "Connection is protective. Sharing the load with someone you trust makes the hard days lighter.",
-    how: "Invite someone into My people, or accept an invite.",
+    how: "Invite someone into your Lume Lounge, or accept an invite.",
     cheer: "You don't have to do this on your own.",
   },
 };

@@ -25,11 +25,8 @@ export const BADGES: Omit<Badge, "earned">[] = [
 ];
 const keyFor = (name: string) => BADGES.find((b) => b.name === name)?.key;
 
-const SEED_VIT: VitItem[] = [
-  { id: "ex-1", thing: "Passport", location: "Top drawer, under the tea towels", example: true },
-  { id: "ex-2", thing: "Spare house key", location: "Blue mug on the bookshelf", example: true },
-  { id: "ex-3", thing: "Car", location: "Westfield, level 3, near the lifts", example: true },
-];
+// Help me remember starts empty; older builds seeded three example items, which readLocal drops.
+const SEED_VIT: VitItem[] = [];
 
 /* ---------- signed-out storage (this device only) ---------- */
 const LOCAL = "midlife-mind:local-v2";
@@ -51,7 +48,7 @@ const freshLocal = (): Local => ({ petals: 18, badges: ["first_seedling"], quest
 function readLocal(): Local {
   try {
     const raw = localStorage.getItem(LOCAL);
-    if (raw) return { ...freshLocal(), ...JSON.parse(raw) };
+    if (raw) { const l = { ...freshLocal(), ...JSON.parse(raw) } as Local; return { ...l, vit: (l.vit ?? []).filter((v) => !v.example) }; }
   } catch {}
   return freshLocal();
 }

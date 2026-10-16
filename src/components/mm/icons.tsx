@@ -152,16 +152,18 @@ export function BadgeGlyphShape({ glyph }: { glyph: BadgeGlyph }) {
   }
 }
 
-/** Mic with Enera's leaf sprig on top and his gold pot as the base — every mic reads as Enera. */
+/** Enera's mic: a microphone with a small Lumenera flower blooming on top, so every mic reads as Enera. */
 export function SproutMic({ className = "" }: { className?: string }) {
+  const petal = "M12 4.6c-1.3-.5-2-1.6-1.6-2.6.4-.9 1.6-1 2.3-.4.6.6.4 1.9-.7 3Z";
   return (
     <svg viewBox="0 0 24 24" className={className} aria-hidden="true" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-      <rect x="9" y="4" width="6" height="10.5" rx="3" />
-      <path d="M5 11.5a7 7 0 0 0 14 0" />
-      <path d="M12 18.5v1.4" />
-      <path d="M11.7 4.6C9.9 4.5 8.6 3.2 8.3 1.3c2 .2 3.3 1.4 3.4 3.3Z" fill="currentColor" stroke="none" />
-      <path d="M12.3 4.6c1.8-.1 3.1-1.4 3.4-3.3-2 .2-3.3 1.4-3.4 3.3Z" fill="currentColor" stroke="none" />
-      <path d="M9.4 20.6h5.2l-.75 2.6h-3.7z" fill="var(--mm-gold)" stroke="none" />
+      <rect x="9" y="6.4" width="6" height="9.6" rx="3" />
+      <path d="M5.4 12.6a6.6 6.6 0 0 0 13.2 0" />
+      <path d="M12 19.2v2.6M9.2 21.8h5.6" />
+      <g stroke="none">
+        {[0, 72, 144, 216, 288].map((r, i) => <path key={r} d={petal} fill="currentColor" opacity={i % 2 ? 0.6 : 1} transform={`rotate(${r} 12 4.4)`} />)}
+        <circle cx="12" cy="4.4" r="1" fill="#f3c58a" />
+      </g>
     </svg>
   );
 }

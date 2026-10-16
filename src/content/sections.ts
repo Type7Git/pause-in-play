@@ -26,8 +26,8 @@ export const ACTIVITIES: Record<ActivityKey, Activity> = {
   kindly: { key: "kindly", to: "/intimacy/say-it-kindly", title: "Say it kindly", desc: "Words for tricky conversations", icon: "kindly", blob: "bg-sage-soft" },
   partner: { key: "partner", to: "/intimacy/partner-guide", title: "For your partner", desc: "Something to share with them", icon: "partner", blob: "bg-gold-soft" },
   ilearn: { key: "ilearn", to: "/intimacy/library", title: "Intimacy library", desc: "Clinically reviewed reading", icon: "ilearn", blob: "bg-plum-soft" },
-  pals: { key: "pals", to: "/pals", title: "My people", desc: "Check in with the people in your corner", icon: "pals", blob: "bg-rose-soft" },
-  invite: { key: "invite", to: "/pals/invite", title: "Invite someone", desc: "Bring someone you trust along", icon: "invite", blob: "bg-sage-soft" },
+  pals: { key: "pals", to: "/pals", title: "Lume Lounge", desc: "Check in with the people in your corner", icon: "pals", blob: "bg-rose-soft" },
+  invite: { key: "invite", to: "/pals/invite", title: "Invite someone", desc: "Bring someone you trust into your Lume Lounge", icon: "invite", blob: "bg-sage-soft" },
   mood: { key: "mood", title: "Mood Mapper", desc: "Two taps to log how you feel", to: "/mood", icon: "mood", blob: "bg-rose-soft" },
   meds: { key: "meds", title: "Medicine Cabinet", desc: "Your reminders, your way", to: "/medicines", icon: "medicines", blob: "bg-plum-soft" },
   cycle: { key: "cycle", title: "Cycle Tracker", desc: "Periods, spotting and symptoms", to: "/cycle", icon: "cycle", blob: "bg-rose-soft" },
@@ -59,8 +59,8 @@ export const SECTIONS: Section[] = [
   {
     key: "love", name: "Intimacy & relationships", blurb: "Private, practical and kind.", icon: "love", blob: "bg-rose-soft",
     activities: ["reflect", "talk", "kindly", "partner", "ilearn"],
-    lockLine: "Private by default. Never shared with your people, and you can hide this section behind Face ID in Settings.",
+    lockLine: "Private by default. Never shared with your Lume Lounge, and you can hide this section behind Face ID in Settings.",
   },
-  { key: "pals", name: "My people", blurb: "Support that goes both ways.", icon: "pals", blob: "bg-gold-soft", activities: ["pals", "invite"], palsStrip: true },
+  { key: "pals", name: "Lume Lounge", blurb: "Support that goes both ways.", icon: "pals", blob: "bg-gold-soft", activities: ["pals", "invite"], palsStrip: true },
   { key: "track", name: "Track & support", blurb: "Record, remind, reflect.", icon: "track", blob: "bg-sage-soft", activities: ["mood", "meds", "cycle", "learn"] },
 ];

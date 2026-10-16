@@ -17,14 +17,14 @@ type Msg = { role: "user" | "assistant"; text: string; reply?: SproutReply };
 const OPENING = "Hi, I'm Enera. I might be able to help with questions about the program, share some information from our clinical advisory team, or at least point you in the right direction. What's on your mind?";
 const QUICK = ["I can't sleep", "My brain feels so overwhelmed", "Tell me about the program"];
 
-/** Chat panel. Conversation lives only in memory and is cleared when the screen closes. */
+/** Chat panel: welcome, then the conversation, then the question box, so each answer reads top-down. Conversation lives only in memory and is cleared when the screen closes. */
 export function SproutChat({ compact = false }: { compact?: boolean }) {
   const ask = useServerFn(askSprout);
   const [msgs, setMsgs] = useState<Msg[]>([{ role: "assistant", text: OPENING }]);
   const [text, setText] = useState("");
   const [busy, setBusy] = useState(false);
   const [cat, setCat] = useState<string | null>(null);
-  const endRef = useRef<HTMLDivElement>(null);
+  const lastRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLTextAreaElement>(null);
 
   const topics = useQuery({
@@ -37,7 +37,11 @@ export function SproutChat({ compact = false }: { compact?: boolean }) {
     },
   });
 
-  useEffect(() => { if (msgs.length > 1) endRef.current?.scrollIntoView({ behavior: "smooth", block: "nearest" }); }, [msgs, busy]);
+  // Natural conversation: the newest message (your question, then Enera's answer) rises to the top of the screen,
+  // with the question box sitting right below it for the next one.
+  useEffect(() => {
+    if (msgs.length > 1) lastRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+  }, [msgs.length]);
 
   async function send(raw: string) {
     const message = raw.trim();
@@ -54,7 +58,8 @@ export function SproutChat({ compact = false }: { compact?: boolean }) {
       setMsgs((m) => [...m, { role: "assistant", text: "Enera had a little wobble. Please try again in a moment.", reply: { kind: "error", text: "" } }]);
     } finally {
       setBusy(false);
-      inputRef.current?.focus();
+      // On phones, don't pop the keyboard over the answer they're about to read.
+      if (window.matchMedia("(pointer: fine)").matches) inputRef.current?.focus({ preventScroll: true });
     }
   }
 
@@ -64,27 +69,11 @@ export function SproutChat({ compact = false }: { compact?: boolean }) {
         <Sprout size={30} mood="happy" animate={false} />
         <p className="min-w-0 rounded-[20px] rounded-bl-md border border-line bg-card px-4 py-3 text-[15px] leading-relaxed shadow-soft">{OPENING}</p>
       </div>
-      <form onSubmit={(e) => { e.preventDefault(); send(text); }} className="flex items-end gap-2 rounded-[22px] border border-line bg-card p-2 shadow-soft">
-        <Link to="/tell-enera" aria-label="Tell Enera by voice" className="press grid size-11 shrink-0 place-items-center rounded-full bg-sage-soft text-sage">
-          <SproutMic className="size-5" />
-        </Link>
-        <label htmlFor="sprout-input" className="sr-only">Ask Enera something</label>
-        <textarea
-          id="sprout-input" ref={inputRef} rows={2} maxLength={600} value={text}
-          onChange={(e) => setText(e.target.value)}
-          onKeyDown={(e) => { if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); send(text); } }}
-          placeholder="Ask Enera something…"
-          className="max-h-32 min-h-11 min-w-0 flex-1 resize-none rounded-[14px] bg-transparent px-2 py-2 text-[15px] outline-none"
-        />
-        <Pill type="submit" disabled={busy || !text.trim()} aria-label="Send" className="size-11 shrink-0 p-0">
-          <svg viewBox="0 0 24 24" className="size-5" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" /></svg>
-        </Pill>
-      </form>
-      <div className={`flex flex-col gap-3 ${compact ? "max-h-[460px] overflow-y-auto pr-1" : ""}`} aria-live="polite">
-        {msgs.slice(1).map((m, i) => m.role === "user" ? (
-          <div key={i} className="mm-rise ml-auto max-w-[82%] whitespace-pre-line rounded-[20px] rounded-br-md bg-plum px-4 py-2.5 text-[15px] text-shell">{m.text}</div>
+      <div className={`flex flex-col gap-3 empty:hidden ${compact ? "max-h-[460px] overflow-y-auto pr-1" : ""}`} aria-live="polite">
+        {msgs.slice(1).map((m, i, all) => m.role === "user" ? (
+          <div key={i} ref={i === all.length - 1 ? lastRef : undefined} style={{ scrollMarginTop: 12 }} className="mm-rise ml-auto max-w-[82%] whitespace-pre-line rounded-[20px] rounded-br-md bg-plum px-4 py-2.5 text-[15px] text-shell">{m.text}</div>
         ) : (
-          <div key={i} className="mm-rise flex max-w-[92%] items-end gap-2">
+          <div key={i} ref={i === all.length - 1 ? lastRef : undefined} style={{ scrollMarginTop: 12 }} className="mm-rise flex max-w-[92%] items-end gap-2">
             <Sprout size={30} mood={m.reply?.kind === "crisis" || m.reply?.kind === "clinical" ? "caring" : m.reply?.kind === "nomatch" ? "thinking" : "happy"} animate={false} />
             <div className={`flex flex-col gap-2 rounded-[20px] rounded-bl-md border px-4 py-3 text-[15px] shadow-soft ${m.reply?.kind === "crisis" ? "border-rose bg-rose-soft" : "border-line bg-card"}`}>
               <p className="whitespace-pre-line leading-relaxed">{m.text}</p>
@@ -114,8 +103,23 @@ export function SproutChat({ compact = false }: { compact?: boolean }) {
             </div>
           </div>
         )}
-        <div ref={endRef} />
       </div>
+      <form onSubmit={(e) => { e.preventDefault(); send(text); }} className="flex items-end gap-2 rounded-[22px] border border-line bg-card p-2 shadow-soft">
+        <Link to="/tell-enera" aria-label="Tell Enera by voice" className="press grid size-11 shrink-0 place-items-center rounded-full bg-plum-soft text-plum">
+          <SproutMic className="size-5" />
+        </Link>
+        <label htmlFor="sprout-input" className="sr-only">Ask Enera something</label>
+        <textarea
+          id="sprout-input" ref={inputRef} rows={2} maxLength={600} value={text}
+          onChange={(e) => setText(e.target.value)}
+          onKeyDown={(e) => { if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); send(text); } }}
+          placeholder="Ask Enera something…"
+          className="max-h-32 min-h-11 min-w-0 flex-1 resize-none rounded-[14px] bg-transparent px-2 py-2 text-[15px] outline-none"
+        />
+        <Pill type="submit" disabled={busy || !text.trim()} aria-label="Send" className="size-11 shrink-0 p-0">
+          <svg viewBox="0 0 24 24" className="size-5" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" /></svg>
+        </Pill>
+      </form>
 
       <div className="divide-y divide-line border-y border-line">
         <details className="group" onToggle={(e) => { if (!e.currentTarget.open) setCat(null); }}>
@@ -143,6 +147,8 @@ export function SproutChat({ compact = false }: { compact?: boolean }) {
           </div>
         </details>
       </div>
+      {/* Room below, so even a short answer can rise to the top of the screen. */}
+      {msgs.length > 1 ? <div aria-hidden="true" style={{ minHeight: "45vh" }} /> : null}
     </div>
   );
 }

@@ -171,7 +171,7 @@ export function Questionnaire({ mode }: { mode: "changed" | "build" | undefined 
             {s.list!.map((o, i) => <OptBtn key={o.id} o={o} i={i} on={isOn(o.id)} onClick={() => toggle(o.id)} suffix={s.ordered && isOn(o.id) ? <span className="num">#{arr.indexOf(o.id) + 1}</span> : undefined} />)}
           </div>
           {s.ordered ? <p className="why" style={{ marginTop: -6 }}><span>{arr.length}/3 chosen. Tap again to remove.</span></p> : null}
-          {s.id === "support" && arr.includes("alone") ? <div className="note"><b>You don't have to do this alone.</b>My people lets you invite one trusted person to share the load, at your pace.</div> : null}
+          {s.id === "support" && arr.includes("alone") ? <div className="note"><b>You don't have to do this alone.</b>Your Lume Lounge lets you invite trusted people to share the load, at your pace.</div> : null}
           {s.id === "identity" && ["ab", "ts", "both"].includes(String(v)) ? <div className="note"><b>Thank you for telling us.</b>We'll show health checks you can have earlier, and services run by and for Aboriginal and Torres Strait Islander women.</div> : null}
         </>
       );

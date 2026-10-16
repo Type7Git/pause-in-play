@@ -86,7 +86,6 @@ function Settings() {
       <Link to="/privacy" className="inline-flex min-h-11 items-center self-start text-sm font-bold text-plum underline underline-offset-2">What we store and why</Link>
       <IntimacyLockSetting />
       <TrackingSettings />
-      <Link to="/team-preview" className="inline-flex min-h-11 items-center self-start text-sm font-bold text-plum underline underline-offset-2">Team workspace example →</Link>
     </>
   );
 }

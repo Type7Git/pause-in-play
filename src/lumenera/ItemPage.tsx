@@ -45,7 +45,6 @@ export function ItemPage({ item }: { item: Item }) {
             <span className="eyebrow" style={{ color: "var(--tint-ink)" }}>{FORMAT_LABEL[item.format]} · {item.mins} min</span>
             <h1 tabIndex={-1}>{item.title}</h1>
             <p>{item.summary}</p>
-            <span className="sample">Sample content</span>
           </div>
           {item.format === "listen" ? <Audio item={item} /> : null}
           {item.tool ? <Tool item={item} /> : null}

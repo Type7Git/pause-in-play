@@ -10,7 +10,7 @@ const LUCIDE = { colour: Brush, wyr: Scale, reflect: NotebookPen, talk: MessageC
 export function ActivityIcon({ icon, className = "size-7" }: { icon: string; className?: string }) {
   if (CHOICE.has(icon)) return <ChoiceGlyph name={icon as ChoiceIcon} />;
   if (TRACK.has(icon)) return <TrackingGlyph name={icon as "mood"} />;
-  if (icon === "voice") return <SproutMic className={`${className} text-sage`} />;
+  if (icon === "voice") return <SproutMic className={`${className} text-plum`} />;
   const I = LUCIDE[icon as keyof typeof LUCIDE] ?? Sparkle;
   return <I className={`${className} text-plum`} aria-hidden="true" />;
 }

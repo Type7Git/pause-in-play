@@ -516,3 +516,77 @@
 .es .device .mm-page { animation: mm-page-in 260ms cubic-bezier(.2,.7,.2,1) both; }
 .es .enera-think .flower .spin { animation: es-spin 6s linear infinite; transform-box: view-box; transform-origin: 60px 60px; }
 .es .enera-think .flower.still .spin { animation: es-spin 6s linear infinite; }
+
+/* Lumenera menu */
+.es .menu-btn { width: 44px; height: 44px; border-radius: 50%; border: 1.5px solid var(--line); background: var(--surface); color: var(--rose-ink); display: grid; place-items: center; cursor: pointer; flex: none; box-shadow: var(--shadow-sm); transition: transform .15s; }
+.es .menu-btn:active { transform: scale(.94); }
+.es .scrim.dim { background: color-mix(in srgb, var(--ink) 28%, transparent); animation: es-opt-in .2s both; }
+.es .lum-menu { position: absolute; left: 12px; right: 12px; top: max(10px, env(safe-area-inset-top, 0px)); z-index: 20; background: var(--surface); border-radius: 26px; box-shadow: var(--shadow); padding: 10px; display: flex; flex-direction: column; gap: 4px; animation: es-opt-in .25s cubic-bezier(.2, .8, .2, 1) both; }
+.es .lum-menu-head { display: flex; justify-content: space-between; align-items: center; padding: 4px 4px 8px 8px; }
+.es .lum-menu-head .brand b { font-size: 20px; }
+.es .lum-menu-row { display: flex; gap: 12px; align-items: center; padding: 10px; border-radius: 18px; transition: background .2s; animation: es-opt-in .3s cubic-bezier(.2, .8, .2, 1) both; color: var(--ink-2); }
+.es .lum-menu-row:hover, .es .lum-menu-row:focus-visible { background: var(--surface-2); }
+.es .lum-menu-row .ico { width: 44px; height: 44px; border-radius: 14px; display: grid; place-items: center; background: linear-gradient(150deg, var(--rose-soft), var(--lilac-soft)); color: var(--rose-ink); flex: none; }
+.es .lum-menu-row .tx { flex: 1; min-width: 0; display: flex; flex-direction: column; }
+.es .lum-menu-row b { color: var(--ink); font-size: 15.5px; }
+.es .lum-menu-row .tx span { font-size: 13px; }
+
+/* Shared tool rows and category art */
+.es .cat-icon { width: 100%; height: 100%; display: grid; place-items: center; }
+.es .cat-icon > svg { width: 34px; height: 34px; }
+.es .tool-rows { display: flex; flex-direction: column; gap: 8px; }
+.es .tool-row { display: flex; gap: 12px; align-items: center; padding: 10px 12px; border-radius: 18px; background: var(--surface); border: 1.5px solid var(--line); color: var(--ink-2); animation: es-opt-in .35s cubic-bezier(.2, .8, .2, 1) both; transition: transform .15s; }
+.es .tool-row:active { transform: scale(.98); }
+.es .tool-row .ico { width: 40px; height: 40px; border-radius: 12px; display: grid; place-items: center; background: linear-gradient(150deg, var(--surface-2), var(--rose-soft)); flex: none; }
+.es .tool-row .tx { flex: 1; min-width: 0; display: flex; flex-direction: column; line-height: 1.3; }
+.es .tool-row b { color: var(--ink); font-size: 14.5px; }
+.es .tool-row .tx span { font-size: 12.5px; }
+
+/* Menu pages */
+.es .lx-page { display: flex; flex-direction: column; gap: 20px; }
+.es .lx-page > * { animation: es-opt-in .45s cubic-bezier(.2, .8, .2, 1) both; }
+.es .search { display: flex; align-items: center; gap: 10px; min-height: 52px; padding: 0 16px; border-radius: 999px; background: var(--surface); border: 1.5px solid var(--line); color: var(--ink-2); position: sticky; top: 0; z-index: 2; box-shadow: var(--shadow-sm); }
+.es .search:focus-within { border-color: var(--rose); box-shadow: 0 0 0 4px var(--rose-glow); }
+.es .search input { flex: 1; min-width: 0; border: 0; background: none; outline: none; font-size: 16px; color: var(--ink); }
+.es .guide-item { border-radius: 18px; background: var(--surface); border: 1.5px solid var(--line); margin-bottom: 8px; overflow: hidden; }
+.es .guide-item summary { list-style: none; cursor: pointer; display: flex; align-items: center; gap: 10px; min-height: 54px; padding: 10px 14px; }
+.es .guide-item summary::-webkit-details-marker { display: none; }
+.es .guide-item summary .tx { flex: 1; min-width: 0; display: flex; flex-direction: column; }
+.es .guide-item summary b { font-size: 15px; }
+.es .guide-item summary .tx span { font-size: 12px; color: var(--muted); }
+.es .guide-item .chev { color: var(--rose-ink); transition: transform .25s; display: grid; }
+.es .guide-item[open] .chev { transform: rotate(90deg); }
+.es .guide-item[open] { background: linear-gradient(160deg, var(--surface), var(--surface-2)); }
+.es .guide-item p { margin: 0 14px 10px; color: var(--ink-2); font-size: 14.5px; animation: es-opt-in .3s both; }
+.es .guide-item .soft-btn { margin: 0 14px 14px; color: var(--rose-ink); }
+.es .profile-head { display: flex; gap: 14px; align-items: center; }
+.es .profile-head .bigring { width: 104px; height: 104px; flex: none; }
+.es .plan { display: flex; justify-content: space-between; align-items: center; gap: 8px; }
+.es .plan b { font-size: 15px; }
+.es .plan.soon { margin-top: 6px; }
+.es .lib-db > div { border-radius: 20px; }
+.es .lx-page .chips button { cursor: pointer; border: 0; min-height: 36px; }
+
+/* Checks by life stage */
+.es .timeline { list-style: none; margin: 4px 0 0; padding: 0 0 0 18px; display: flex; flex-direction: column; gap: 14px; border-left: 2px solid var(--line); }
+.es .timeline > li { position: relative; display: block; }
+.es .timeline > li::before { content: ""; position: absolute; left: -25px; top: 4px; width: 12px; height: 12px; border-radius: 50%; background: var(--surface); border: 2.5px solid var(--lilac); margin: 0; }
+.es .timeline > li.now::before { background: var(--rose); border-color: var(--rose); box-shadow: 0 0 0 5px var(--rose-glow); }
+.es .timeline > li > b { display: flex; align-items: center; gap: 8px; font-size: 15px; color: var(--ink); margin-bottom: 4px; }
+.es .timeline ul { gap: 4px; }
+.es .timeline ul li { font-size: 14px; }
+.es .tool-row-wrap { position: relative; animation: es-opt-in .35s cubic-bezier(.2, .8, .2, 1) both; }
+.es .tool-row-wrap .tool-row { padding-right: 56px; animation: none; }
+.es .tool-row-wrap .heart { position: absolute; right: 6px; top: 50%; transform: translateY(-50%); width: 44px; height: 44px; border-radius: 50%; border: 0; background: none; color: var(--rose); display: grid; place-items: center; cursor: pointer; }
+
+/* Home: everyday tool categories */
+.es .see-all { font-size: 13px; font-weight: 700; color: var(--rose-ink); }
+.es .cat-rail { display: flex; gap: 10px; overflow-x: auto; scroll-snap-type: x proximity; margin: 0 -18px; padding: 2px 18px 10px; scrollbar-width: none; }
+.es .cat-rail::-webkit-scrollbar { display: none; }
+.es .cat { scroll-snap-align: start; flex: 0 0 104px; display: flex; flex-direction: column; border: 2px solid transparent; border-radius: 20px; overflow: hidden; background: linear-gradient(155deg, var(--surface-2), var(--tint-soft)); box-shadow: var(--shadow-sm); cursor: pointer; text-align: left; padding: 0; transition: transform .15s, border-color .2s; }
+.es .cat:active { transform: scale(.96); }
+.es .cat[aria-selected="true"] { border-color: var(--rose); box-shadow: 0 8px 20px var(--rose-glow); }
+.es .cat .art-box { height: 70px; display: block; }
+.es .cat b { font-family: var(--display); font-weight: 400; font-size: 13.5px; line-height: 1.2; padding: 4px 10px 10px; min-height: 44px; }
+.es .cat-list { display: flex; flex-direction: column; gap: 10px; margin-top: 4px; animation: es-opt-in .3s both; }
+.es .empty-note { margin: 0; padding: 14px 16px; border-radius: 18px; background: var(--surface-2); color: var(--ink-2); font-size: 14px; }

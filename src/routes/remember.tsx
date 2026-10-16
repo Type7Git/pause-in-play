@@ -52,7 +52,6 @@ function Remember() {
             <Row key={x.id}>
               <span className="min-w-0">
                 <b>{x.thing}</b>
-                {x.example && <span className="ml-2 rounded-full bg-plum-soft px-2 py-0.5 text-[11px] font-bold text-plum">Example</span>}
                 <br /><small className="text-[12.5px] text-muted-foreground">{x.location}</small>
               </span>
               <Pill variant="ghost" size="sm" aria-label={`Remove ${x.thing}`} onClick={() => removeVit(x.id)}>Remove</Pill>

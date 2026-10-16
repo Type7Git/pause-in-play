@@ -10,7 +10,7 @@ import { hasPlugin } from "@/lib/native";
 type Pal = { other_id: string; other_name: string; blocked: boolean; i_share_status: string | null; they_share_status: string | null };
 
 /**
- * One share sheet for the whole app: My people, WhatsApp, the phone's own share options,
+ * One share sheet for the whole app: the Lume Lounge, WhatsApp, the phone's own share options,
  * copy link and (in browsers) save the picture. Nothing personal is attached unless the user wrote it.
  */
 export function ShareSheet({ open, onClose, payload, pals = true }: { open: boolean; onClose: () => void; payload: SharePayload | null; pals?: boolean }) {
@@ -91,7 +91,7 @@ export function ShareSheet({ open, onClose, payload, pals = true }: { open: bool
                 </button>
               )}
               <div className="grid grid-cols-3 gap-2">
-                {pals && <button type="button" className={opt} onClick={() => void loadPals()}><Users className="size-6 text-plum" aria-hidden="true" />My people</button>}
+                {pals && <button type="button" className={opt} onClick={() => void loadPals()}><Users className="size-6 text-plum" aria-hidden="true" />Lume Lounge</button>}
                 {!payload.image && <button type="button" className={opt} onClick={() => openOutside(whatsappHref(payload))}><MessageCircle className="size-6 text-[#1f9d55]" aria-hidden="true" />WhatsApp</button>}
                 {!payload.image && <button type="button" className={opt} onClick={() => void more()}><Share2 className="size-6 text-plum" aria-hidden="true" />More options</button>}
                 <button type="button" className={opt} onClick={async () => toast((await copyText(`${payload.text} ${shareUrl(payload)}`)) ? "Copied" : "Couldn't copy on this device")}><Copy className="size-6 text-plum" aria-hidden="true" />{payload.image ? "Copy link" : "Copy"}</button>
@@ -102,9 +102,9 @@ export function ShareSheet({ open, onClose, payload, pals = true }: { open: bool
             <div className="flex flex-col gap-2">
               <button type="button" onClick={() => setShowPals(false)} className="self-start text-sm font-bold text-plum">‹ Other ways to share</button>
               {!user ? (
-                <p className="rounded-2xl bg-sunk p-3 text-sm">My people needs a free account. <Link to="/pals" onClick={onClose} className="font-bold text-plum underline">Set up My people</Link></p>
+                <p className="rounded-2xl bg-sunk p-3 text-sm">The Lume Lounge needs a free account. <Link to="/pals" onClick={onClose} className="font-bold text-plum underline">Set up My people</Link></p>
               ) : palList === null ? (
-                <p className="text-sm text-muted-foreground">Finding your people…</p>
+                <p className="text-sm text-muted-foreground">Opening your Lume Lounge…</p>
               ) : !palList.length ? (
                 <p className="rounded-2xl bg-sunk p-3 text-sm">No one here yet. <Link to="/pals/invite" onClick={onClose} className="font-bold text-plum underline">Invite someone you trust</Link></p>
               ) : (

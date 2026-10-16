@@ -5,7 +5,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { useRewards } from "@/lib/rewards";
 
 /** PeriPals needs an account and an 18+ confirmation before anything is shared. */
-export function PalsGate({ children, why = "My people connects you with people you trust, so it needs an account." }: { children: ReactNode; why?: string }) {
+export function PalsGate({ children, why = "The Lume Lounge connects you with people you trust, so it needs an account." }: { children: ReactNode; why?: string }) {
   const { ready, user, openSave } = useRewards();
   const qc = useQueryClient();
   const settings = useQuery({
@@ -17,7 +17,7 @@ export function PalsGate({ children, why = "My people connects you with people y
   if (!user)
     return (
       <Card>
-        <h3>Sign in to use My people</h3>
+        <h3>Sign in to use the Lume Lounge</h3>
         <Muted>{why}</Muted>
         <Pill onClick={openSave}>Sign in or create an account</Pill>
       </Card>
@@ -25,8 +25,8 @@ export function PalsGate({ children, why = "My people connects you with people y
   if (!settings.data?.adult_confirmed_at)
     return (
       <Card>
-        <h3>My people is for adults</h3>
-        <Muted>My people is only for people aged 18 and over. Please confirm your age to continue.</Muted>
+        <h3>The Lume Lounge is for adults</h3>
+        <Muted>The Lume Lounge is only for people aged 18 and over. Please confirm your age to continue.</Muted>
         <Pill
           onClick={async () => {
             await supabase.from("pal_settings").upsert({ user_id: user.id, adult_confirmed_at: new Date().toISOString() });

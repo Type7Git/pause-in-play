@@ -19,10 +19,12 @@ import { Route as EverySeasonRouteImport } from './routes/every-season'
 import { Route as FlowellaRouteImport } from './routes/flowella'
 import { Route as FoodRouteImport } from './routes/food'
 import { Route as GardenRouteImport } from './routes/garden'
+import { Route as GuideRouteImport } from './routes/guide'
 import { Route as HomeRouteImport } from './routes/home'
 import { Route as IntimacyRouteImport } from './routes/intimacy'
 import { Route as LaughRouteImport } from './routes/laugh'
 import { Route as LearnRouteImport } from './routes/learn'
+import { Route as LibraryRouteImport } from './routes/library'
 import { Route as LittleWinRouteImport } from './routes/little-win'
 import { Route as MedicinesRouteImport } from './routes/medicines'
 import { Route as MoodRouteImport } from './routes/mood'
@@ -31,6 +33,7 @@ import { Route as PanelRouteImport } from './routes/panel'
 import { Route as PartnersRouteImport } from './routes/partners'
 import { Route as PelvicRouteImport } from './routes/pelvic'
 import { Route as PrivacyRouteImport } from './routes/privacy'
+import { Route as ProfileRouteImport } from './routes/profile'
 import { Route as RememberRouteImport } from './routes/remember'
 import { Route as SettingsRouteImport } from './routes/settings'
 import { Route as SideQuestRouteImport } from './routes/side-quest'
@@ -39,6 +42,7 @@ import { Route as TabsRouteImport } from './routes/tabs'
 import { Route as TeamPreviewRouteImport } from './routes/team-preview'
 import { Route as TellEneraRouteImport } from './routes/tell-enera'
 import { Route as TellSproutRouteImport } from './routes/tell-sprout'
+import { Route as ToolsRouteImport } from './routes/tools'
 import { Route as WindDownRouteImport } from './routes/wind-down'
 import { Route as WouldYouRatherRouteImport } from './routes/would-you-rather'
 import { Route as BodyWhyRouteImport } from './routes/body.why'
@@ -112,6 +116,11 @@ const GardenRoute = GardenRouteImport.update({
   path: '/garden',
   getParentRoute: () => rootRouteImport,
 } as any)
+const GuideRoute = GuideRouteImport.update({
+  id: '/guide',
+  path: '/guide',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const HomeRoute = HomeRouteImport.update({
   id: '/home',
   path: '/home',
@@ -130,6 +139,11 @@ const LaughRoute = LaughRouteImport.update({
 const LearnRoute = LearnRouteImport.update({
   id: '/learn',
   path: '/learn',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LibraryRoute = LibraryRouteImport.update({
+  id: '/library',
+  path: '/library',
   getParentRoute: () => rootRouteImport,
 } as any)
 const LittleWinRoute = LittleWinRouteImport.update({
@@ -172,6 +186,11 @@ const PrivacyRoute = PrivacyRouteImport.update({
   path: '/privacy',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ProfileRoute = ProfileRouteImport.update({
+  id: '/profile',
+  path: '/profile',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const RememberRoute = RememberRouteImport.update({
   id: '/remember',
   path: '/remember',
@@ -210,6 +229,11 @@ const TellEneraRoute = TellEneraRouteImport.update({
 const TellSproutRoute = TellSproutRouteImport.update({
   id: '/tell-sprout',
   path: '/tell-sprout',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ToolsRoute = ToolsRouteImport.update({
+  id: '/tools',
+  path: '/tools',
   getParentRoute: () => rootRouteImport,
 } as any)
 const WindDownRoute = WindDownRouteImport.update({
@@ -335,10 +359,12 @@ export interface FileRoutesByFullPath {
   '/flowella': typeof FlowellaRouteWithChildren
   '/food': typeof FoodRoute
   '/garden': typeof GardenRoute
+  '/guide': typeof GuideRoute
   '/home': typeof HomeRoute
   '/intimacy': typeof IntimacyRouteWithChildren
   '/laugh': typeof LaughRoute
   '/learn': typeof LearnRoute
+  '/library': typeof LibraryRoute
   '/little-win': typeof LittleWinRoute
   '/medicines': typeof MedicinesRoute
   '/mood': typeof MoodRoute
@@ -347,6 +373,7 @@ export interface FileRoutesByFullPath {
   '/partners': typeof PartnersRoute
   '/pelvic': typeof PelvicRoute
   '/privacy': typeof PrivacyRoute
+  '/profile': typeof ProfileRoute
   '/remember': typeof RememberRoute
   '/settings': typeof SettingsRoute
   '/side-quest': typeof SideQuestRoute
@@ -355,6 +382,7 @@ export interface FileRoutesByFullPath {
   '/team-preview': typeof TeamPreviewRoute
   '/tell-enera': typeof TellEneraRoute
   '/tell-sprout': typeof TellSproutRoute
+  '/tools': typeof ToolsRoute
   '/wind-down': typeof WindDownRoute
   '/would-you-rather': typeof WouldYouRatherRoute
   '/body/why': typeof BodyWhyRoute
@@ -389,9 +417,11 @@ export interface FileRoutesByTo {
   '/flowella': typeof FlowellaRouteWithChildren
   '/food': typeof FoodRoute
   '/garden': typeof GardenRoute
+  '/guide': typeof GuideRoute
   '/home': typeof HomeRoute
   '/laugh': typeof LaughRoute
   '/learn': typeof LearnRoute
+  '/library': typeof LibraryRoute
   '/little-win': typeof LittleWinRoute
   '/medicines': typeof MedicinesRoute
   '/mood': typeof MoodRoute
@@ -400,6 +430,7 @@ export interface FileRoutesByTo {
   '/partners': typeof PartnersRoute
   '/pelvic': typeof PelvicRoute
   '/privacy': typeof PrivacyRoute
+  '/profile': typeof ProfileRoute
   '/remember': typeof RememberRoute
   '/settings': typeof SettingsRoute
   '/side-quest': typeof SideQuestRoute
@@ -408,6 +439,7 @@ export interface FileRoutesByTo {
   '/team-preview': typeof TeamPreviewRoute
   '/tell-enera': typeof TellEneraRoute
   '/tell-sprout': typeof TellSproutRoute
+  '/tools': typeof ToolsRoute
   '/wind-down': typeof WindDownRoute
   '/would-you-rather': typeof WouldYouRatherRoute
   '/body/why': typeof BodyWhyRoute
@@ -443,10 +475,12 @@ export interface FileRoutesById {
   '/flowella': typeof FlowellaRouteWithChildren
   '/food': typeof FoodRoute
   '/garden': typeof GardenRoute
+  '/guide': typeof GuideRoute
   '/home': typeof HomeRoute
   '/intimacy': typeof IntimacyRouteWithChildren
   '/laugh': typeof LaughRoute
   '/learn': typeof LearnRoute
+  '/library': typeof LibraryRoute
   '/little-win': typeof LittleWinRoute
   '/medicines': typeof MedicinesRoute
   '/mood': typeof MoodRoute
@@ -455,6 +489,7 @@ export interface FileRoutesById {
   '/partners': typeof PartnersRoute
   '/pelvic': typeof PelvicRoute
   '/privacy': typeof PrivacyRoute
+  '/profile': typeof ProfileRoute
   '/remember': typeof RememberRoute
   '/settings': typeof SettingsRoute
   '/side-quest': typeof SideQuestRoute
@@ -463,6 +498,7 @@ export interface FileRoutesById {
   '/team-preview': typeof TeamPreviewRoute
   '/tell-enera': typeof TellEneraRoute
   '/tell-sprout': typeof TellSproutRoute
+  '/tools': typeof ToolsRoute
   '/wind-down': typeof WindDownRoute
   '/would-you-rather': typeof WouldYouRatherRoute
   '/body/why': typeof BodyWhyRoute
@@ -499,10 +535,12 @@ export interface FileRouteTypes {
     | '/flowella'
     | '/food'
     | '/garden'
+    | '/guide'
     | '/home'
     | '/intimacy'
     | '/laugh'
     | '/learn'
+    | '/library'
     | '/little-win'
     | '/medicines'
     | '/mood'
@@ -511,6 +549,7 @@ export interface FileRouteTypes {
     | '/partners'
     | '/pelvic'
     | '/privacy'
+    | '/profile'
     | '/remember'
     | '/settings'
     | '/side-quest'
@@ -519,6 +558,7 @@ export interface FileRouteTypes {
     | '/team-preview'
     | '/tell-enera'
     | '/tell-sprout'
+    | '/tools'
     | '/wind-down'
     | '/would-you-rather'
     | '/body/why'
@@ -553,9 +593,11 @@ export interface FileRouteTypes {
     | '/flowella'
     | '/food'
     | '/garden'
+    | '/guide'
     | '/home'
     | '/laugh'
     | '/learn'
+    | '/library'
     | '/little-win'
     | '/medicines'
     | '/mood'
@@ -564,6 +606,7 @@ export interface FileRouteTypes {
     | '/partners'
     | '/pelvic'
     | '/privacy'
+    | '/profile'
     | '/remember'
     | '/settings'
     | '/side-quest'
@@ -572,6 +615,7 @@ export interface FileRouteTypes {
     | '/team-preview'
     | '/tell-enera'
     | '/tell-sprout'
+    | '/tools'
     | '/wind-down'
     | '/would-you-rather'
     | '/body/why'
@@ -606,10 +650,12 @@ export interface FileRouteTypes {
     | '/flowella'
     | '/food'
     | '/garden'
+    | '/guide'
     | '/home'
     | '/intimacy'
     | '/laugh'
     | '/learn'
+    | '/library'
     | '/little-win'
     | '/medicines'
     | '/mood'
@@ -618,6 +664,7 @@ export interface FileRouteTypes {
     | '/partners'
     | '/pelvic'
     | '/privacy'
+    | '/profile'
     | '/remember'
     | '/settings'
     | '/side-quest'
@@ -626,6 +673,7 @@ export interface FileRouteTypes {
     | '/team-preview'
     | '/tell-enera'
     | '/tell-sprout'
+    | '/tools'
     | '/wind-down'
     | '/would-you-rather'
     | '/body/why'
@@ -661,10 +709,12 @@ export interface RootRouteChildren {
   FlowellaRoute: typeof FlowellaRouteWithChildren
   FoodRoute: typeof FoodRoute
   GardenRoute: typeof GardenRoute
+  GuideRoute: typeof GuideRoute
   HomeRoute: typeof HomeRoute
   IntimacyRoute: typeof IntimacyRouteWithChildren
   LaughRoute: typeof LaughRoute
   LearnRoute: typeof LearnRoute
+  LibraryRoute: typeof LibraryRoute
   LittleWinRoute: typeof LittleWinRoute
   MedicinesRoute: typeof MedicinesRoute
   MoodRoute: typeof MoodRoute
@@ -673,6 +723,7 @@ export interface RootRouteChildren {
   PartnersRoute: typeof PartnersRoute
   PelvicRoute: typeof PelvicRoute
   PrivacyRoute: typeof PrivacyRoute
+  ProfileRoute: typeof ProfileRoute
   RememberRoute: typeof RememberRoute
   SettingsRoute: typeof SettingsRoute
   SideQuestRoute: typeof SideQuestRoute
@@ -681,6 +732,7 @@ export interface RootRouteChildren {
   TeamPreviewRoute: typeof TeamPreviewRoute
   TellEneraRoute: typeof TellEneraRoute
   TellSproutRoute: typeof TellSproutRoute
+  ToolsRoute: typeof ToolsRoute
   WindDownRoute: typeof WindDownRoute
   WouldYouRatherRoute: typeof WouldYouRatherRoute
   BodyWhyRoute: typeof BodyWhyRoute
@@ -769,6 +821,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof GardenRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/guide': {
+      id: '/guide'
+      path: '/guide'
+      fullPath: '/guide'
+      preLoaderRoute: typeof GuideRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/home': {
       id: '/home'
       path: '/home'
@@ -795,6 +854,13 @@ declare module '@tanstack/react-router' {
       path: '/learn'
       fullPath: '/learn'
       preLoaderRoute: typeof LearnRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/library': {
+      id: '/library'
+      path: '/library'
+      fullPath: '/library'
+      preLoaderRoute: typeof LibraryRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/little-win': {
@@ -853,6 +919,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PrivacyRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/profile': {
+      id: '/profile'
+      path: '/profile'
+      fullPath: '/profile'
+      preLoaderRoute: typeof ProfileRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/remember': {
       id: '/remember'
       path: '/remember'
@@ -907,6 +980,13 @@ declare module '@tanstack/react-router' {
       path: '/tell-sprout'
       fullPath: '/tell-sprout'
       preLoaderRoute: typeof TellSproutRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/tools': {
+      id: '/tools'
+      path: '/tools'
+      fullPath: '/tools'
+      preLoaderRoute: typeof ToolsRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/wind-down': {
@@ -1123,10 +1203,12 @@ const rootRouteChildren: RootRouteChildren = {
   FlowellaRoute: FlowellaRouteWithChildren,
   FoodRoute: FoodRoute,
   GardenRoute: GardenRoute,
+  GuideRoute: GuideRoute,
   HomeRoute: HomeRoute,
   IntimacyRoute: IntimacyRouteWithChildren,
   LaughRoute: LaughRoute,
   LearnRoute: LearnRoute,
+  LibraryRoute: LibraryRoute,
   LittleWinRoute: LittleWinRoute,
   MedicinesRoute: MedicinesRoute,
   MoodRoute: MoodRoute,
@@ -1135,6 +1217,7 @@ const rootRouteChildren: RootRouteChildren = {
   PartnersRoute: PartnersRoute,
   PelvicRoute: PelvicRoute,
   PrivacyRoute: PrivacyRoute,
+  ProfileRoute: ProfileRoute,
   RememberRoute: RememberRoute,
   SettingsRoute: SettingsRoute,
   SideQuestRoute: SideQuestRoute,
@@ -1143,6 +1226,7 @@ const rootRouteChildren: RootRouteChildren = {
   TeamPreviewRoute: TeamPreviewRoute,
   TellEneraRoute: TellEneraRoute,
   TellSproutRoute: TellSproutRoute,
+  ToolsRoute: ToolsRoute,
   WindDownRoute: WindDownRoute,
   WouldYouRatherRoute: WouldYouRatherRoute,
   BodyWhyRoute: BodyWhyRoute,

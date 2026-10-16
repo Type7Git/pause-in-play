@@ -1,6 +1,6 @@
 /**
- * Lumenera (concept demo): questions, spaces, sample library, checks and example people.
- * All copy here is sample content for demonstration. Final content is written and reviewed by clinicians.
+ * Lumenera: questions, spaces, library, checks and example people (for the welcome preview).
+ * Copy here needs review by the clinical advisory panel before launch.
  */
 export type Opt = { id: string; label: string };
 const opts = (pairs: [string, string][]): Opt[] => pairs.map(([id, label]) => ({ id, label }));
@@ -81,7 +81,7 @@ export const LIBRARY: Item[] = [
 export const itemById = (id: string) => LIBRARY.find((i) => i.id === id);
 
 /** National screening facts are general Australian program information. */
-export type CheckId = "cervical" | "breast" | "bones";
+export type CheckId = "cervical" | "breast" | "bones" | "skin" | "mind" | "life";
 export const CHECK_INFO: Record<CheckId, { name: string; what: string; how: string; why: string; where: string[]; national: string }> = {
   cervical: {
     name: "Cervical screening",
@@ -98,6 +98,30 @@ export const CHECK_INFO: Record<CheckId, { name: string; what: string; how: stri
     why: "Finding breast cancer early means more treatment options and better outcomes.",
     where: ["BreastScreen: book on 13 20 50 from anywhere in Australia", "No GP referral needed", "Mobile screening vans visit regional towns"],
     national: "BreastScreen Australia",
+  },
+  skin: {
+    name: "Skin check",
+    what: "A head-to-toe look at your skin for new spots, or spots that have changed in size, shape or colour. You can do it yourself, and your GP can do a full check.",
+    how: "Check your own skin every few months. Ask your GP how often you need a professional check, especially with fair skin, lots of moles or a family history of skin cancer.",
+    why: "Australia has some of the highest rates of skin cancer in the world, and most are found early by noticing a change.",
+    where: ["Your GP", "A skin cancer clinic", "Ask someone to check places you can't see, like your back and scalp"],
+    national: "Cancer Council SunSmart",
+  },
+  mind: {
+    name: "Mental health check-in",
+    what: "A conversation with your GP about how you're really going: mood, worry, sleep and stress.",
+    how: "Any time, and especially if things have felt heavy for two weeks or more, after having a baby, or through perimenopause.",
+    why: "Mood can shift with hormones and with life. Getting support early makes a real difference, and your GP can set up a mental health plan for Medicare-rebated sessions.",
+    where: ["Your GP", "Medicare Mental Health (Head to Health): 1800 595 212", "Beyond Blue: 1300 22 4636", "In crisis, call Lifeline on 13 11 14 or 000"],
+    national: "Look after your mind",
+  },
+  life: {
+    name: "Health checks by life stage",
+    what: "The main health checks for women in Australia, and roughly when each one starts.",
+    how: "Use it as a prompt for your next GP visit. Your GP will tailor timing to your health and family history.",
+    why: "Many checks are free and quick, and catching things early gives you more options.",
+    where: ["Your GP can tell you which checks are right for you now"],
+    national: "Your checks over time",
   },
   bones: {
     name: "Bone health",
@@ -123,3 +147,14 @@ export const PERSONAS: Record<string, { label: string; sub: string; tint: "rose"
   sam: { label: "Sam, 38", sub: "Toddler at home, trying for a second", tint: "lilac", profile: { ...blankProfile(), name: "Sam", pronouns: "she/her", year: Y - 38, stages: ["trying", "periods"], focus: ["fertility", "sleep", "pregnancy"], children: "u5", periods: "regular", conds: ["pcos"], mood: 4, cervical: "old", postcode: "7250", learn: ["read", "listen"], deeper: true, sleep: "falling", move: "some", support: ["partner", "friends"], days: ["work", "kids"] } },
   lyn: { label: "Lyn, 62", sub: "Post-menopause, bones and sleep", tint: "rose", profile: { ...blankProfile(), name: "Lyn", pronouns: "she/her", year: Y - 62, stages: ["post"], focus: ["meno", "move", "breast"], children: "adult", conds: ["thyroid"], mood: 3, cervical: "mid", mammo: "old", postcode: "7018", learn: ["read", "do"], deeper: true, family: ["bones"], sleep: "waking", move: "some", support: ["partner", "friends", "gp"], days: ["retired", "parents"], alcohol: "some", smoke: "no" } },
 };
+
+/** The main checks over a woman's life, for the "by life stage" page. General Australian guidance. */
+export const LIFE_STAGE_CHECKS: { when: string; items: string[] }[] = [
+  { when: "From 18", items: ["Blood pressure at least every two years", "Sexual health checks whenever you need them", "Skin checks: know your skin, and see your GP about changes", "Dental check-ups"] },
+  { when: "From 25", items: ["Cervical screening every five years, to 74"] },
+  { when: "From 40", items: ["Free breast screen (mammogram) if you'd like one", "Type 2 diabetes risk check every three years"] },
+  { when: "From 45", items: ["Heart health check with your GP (from 30 for Aboriginal and Torres Strait Islander women)", "Bowel cancer screening every two years, free from 45 on request", "Menopause health assessment with your GP, when it's relevant", "A conversation about bone health"] },
+  { when: "From 50", items: ["Breast screen every two years, to 74", "Bowel screening kit posted every two years, to 74"] },
+  { when: "From 65", items: ["Eyes, hearing and falls prevention", "Bone density, if your GP recommends it"] },
+  { when: "From 75", items: ["A yearly health assessment with your GP"] },
+];

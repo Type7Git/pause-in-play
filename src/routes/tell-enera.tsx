@@ -165,9 +165,9 @@ function TellSprout() {
           <button
             type="button" onClick={() => void listen()} disabled={phase === "thinking"}
             aria-label={listening ? "Stop listening" : "Start speaking to Enera"} aria-pressed={listening}
-            className="press relative grid size-24 place-items-center rounded-full bg-sage text-card shadow-lift disabled:opacity-60"
+            className="press relative grid size-24 place-items-center rounded-full text-white shadow-lift disabled:opacity-60" style={{ background: "linear-gradient(120deg, var(--btn-a), var(--btn-b))" }}
           >
-            {listening && <><span className="mm-ring absolute inset-0 rounded-full border-2 border-sage" /><span className="mm-ring mm-ring-2 absolute inset-0 rounded-full border-2 border-sage" /></>}
+            {listening && <><span className="mm-ring absolute inset-0 rounded-full border-2 border-plum" /><span className="mm-ring mm-ring-2 absolute inset-0 rounded-full border-2 border-plum-2" /></>}
             <SproutMic className="size-10" />
           </button>
           <p role="status" className="font-bold text-muted-foreground">{note || "Tap the mic and just say it."}</p>

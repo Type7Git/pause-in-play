@@ -4,7 +4,7 @@ import { onNative } from "@/lib/native";
 import { topUpPhoneNotes } from "@/lib/notes-device";
 import { usePelvicReminders } from "@/lib/body";
 import { Flower } from "@/lumenera/art";
-import { metaFor } from "@/lumenera/tools";
+import { metaFor, noteVisit } from "@/lumenera/tools";
 import { PersonaButtons, TopBar } from "@/lumenera/ui";
 
 /** In the phone app: tapping a notification opens the right screen, and Little notes stay topped up. */
@@ -61,6 +61,7 @@ export function AppShell({ children }: { children: ReactNode }) {
   const quiet = path === "/wind-down";
   usePelvicReminders();
   useAppNotifications();
+  useEffect(() => { noteVisit(path); }, [path]);
   if (path.startsWith("/admin")) {
     return (
       <div className="es min-h-screen px-6 py-8">
@@ -80,7 +81,7 @@ export function AppShell({ children }: { children: ReactNode }) {
           <p>Personalised women's health through every stage of life. Tap through the welcome as a new user, then explore the tools in every space.</p>
           <p>Short on time? Jump straight to a finished example:</p>
           <div className="people"><PersonaButtons /></div>
-          <p style={{ fontSize: 13 }}>Sample content. Nothing personal leaves this device unless you choose to sign in.</p>
+          <p style={{ fontSize: 13 }}>Lumenera shares information, never a diagnosis. Nothing personal leaves this device unless you choose to sign in.</p>
         </section>
         <div className={`device ${quiet ? "quiet" : ""}`}>
           {isLumeneraScreen(path) ? children : <ToolFrame path={path}>{children}</ToolFrame>}

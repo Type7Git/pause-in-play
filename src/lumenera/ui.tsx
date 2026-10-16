@@ -4,6 +4,7 @@ import { useState, type ReactNode } from "react";
 import { Chevron, MeterRing } from "./art";
 import { PERSONAS } from "./content";
 import { personal } from "./engine";
+import { MenuButton } from "./Menu";
 import { es, useEs } from "./store";
 
 export function usePersona() {
@@ -70,7 +71,7 @@ export function TopBar({ title, back = "/home", children, right }: { title: stri
         <Link to={back} className="iconbtn" aria-label="Back"><Chevron dir="left" /></Link>
       )}
       <div className="where"><small>{title}</small>{children}</div>
-      {right ?? <Meter />}
+      {right ?? <MenuButton />}
     </header>
   );
 }

@@ -10,9 +10,9 @@ import { useRewards } from "@/lib/rewards";
 export const Route = createFileRoute("/pal/$code")({
   head: () => ({
     meta: [
-      { title: "You're invited to be one of their people · Lumenera" },
-      { name: "description", content: "Someone you know has invited you to be one of their people on Lumenera." },
-      { property: "og:title", content: "You're invited to be one of their people" },
+      { title: "You're invited to their Lume Lounge · Lumenera" },
+      { name: "description", content: "Someone you know has invited you to join their Lume Lounge on Lumenera." },
+      { property: "og:title", content: "You're invited to their Lume Lounge" },
       { property: "og:description", content: "Support that goes both ways, on Lumenera." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
@@ -21,7 +21,7 @@ export const Route = createFileRoute("/pal/$code")({
   }),
   component: () => (
     <>
-      <div><p className="eyebrow">My people</p><h1>You're invited</h1></div>
+      <div><p className="eyebrow">Lume Lounge</p><h1>You're invited</h1></div>
       <PalsGate why="Sign in or create a free account to see this invite."><Accept /></PalsGate>
     </>
   ),
@@ -40,7 +40,7 @@ function Accept() {
   const sees = PERMS.filter((x) => p[x.key]).map((x) => x.label);
   return (
     <Card>
-      <h3>{i.owner_name} has invited you to be one of their people.</h3>
+      <h3>{i.owner_name} has invited you to join their Lume Lounge.</h3>
       <Muted>You'll be able to see: {sees.length ? sees.join(", ") : "nothing yet, just that you're connected"}.</Muted>
       <Muted className="text-xs">{i.owner_name} confirms you before anything is shared.</Muted>
       <div className="flex gap-2">

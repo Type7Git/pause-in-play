@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { PERSONAS, blankProfile } from "./content";
-import { checksFor, personal, placeOf, plan } from "./engine";
+import { checksFor, checksRow, personal, placeOf, plan } from "./engine";
 
 const Y = new Date().getFullYear();
 
@@ -33,6 +33,16 @@ describe("checks traffic lights", () => {
   it("breast screen from 50, optional from 40", () => {
     expect(checksFor(p(55, "recent", "old")).find((c) => c.id === "breast")!.tone).toBe("overdue");
     expect(checksFor(p(44, "recent")).find((c) => c.id === "breast")!.tone).toBe("info");
+  });
+});
+
+describe("checks row stays full", () => {
+  it("pads to three with prompts, never repeating a check", () => {
+    const young = checksRow(PERSONAS["maddie"]!.profile);
+    expect(young).toHaveLength(3);
+    expect(young[0]!.id).toBe("cervical");
+    expect(new Set(young.map((c) => c.id)).size).toBe(3);
+    expect(checksRow(PERSONAS["lyn"]!.profile).map((c) => c.id)).toEqual(["cervical", "breast", "bones"]);
   });
 });
 

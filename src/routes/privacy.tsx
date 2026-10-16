@@ -31,7 +31,7 @@ function Privacy() {
     <>
       <BackButton />
       <ScreenTitle eyebrow="Privacy" title="What we store, and why." sub="Short version: only what your garden needs." />
-      <Card><h3>Support & tracking examples</h3><Muted>Mood Mapper, Medicine Cabinet and Cycle Tracker currently show labelled example data only, for signed-in and signed-out users alike. Personal health saving is disabled. Example selections are temporary; nothing is sent or stored.</Muted><Muted>Before personal tracking becomes available, Australian hosting must be verified and you must give explicit consent. You will be able to download and delete your records. Health records will never be sold, used for advertising or shown to the team.</Muted></Card>
+      <Card><h3>Mood Mapper, Cycle Tracker and Medicine cabinet</h3><Muted>What you log in these stays on your phone, whether or not you sign in. It isn't sent to us or saved in your account, and the team can't see it. You can download or delete it any time in Settings.</Muted><Muted>If you add a medicine that isn't in our list, only its name (and what it's for, if you say) is sent so the team can add it for everyone. Nothing that identifies you goes with it. Health records will never be sold or used for advertising.</Muted></Card>
       <Card>
         <h3>Tell Enera (voice)</h3>
         <Muted>Your voice is turned into text and never stored. The recording is thrown away straight after. Only the text you check and save is kept.</Muted>

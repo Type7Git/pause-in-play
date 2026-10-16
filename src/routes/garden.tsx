@@ -72,7 +72,7 @@ function GardenPage() {
       <div>
         <p className="eyebrow">Your garden</p>
         <h1>Your garden and badges</h1>
-        <p className="mt-1.5 text-sm text-muted-foreground">Petals come from using the tools, logging, playing and checking in with your people. No streaks, no penalties for missed days.</p>
+        <p className="mt-1.5 text-sm text-muted-foreground">Petals come from using the tools, logging, playing and checking in with your Lume Lounge. No streaks, no penalties for missed days.</p>
       </div>
       <section className="mm-card overflow-hidden pb-[18px]" aria-label="Your garden">
         <GardenPlay />
