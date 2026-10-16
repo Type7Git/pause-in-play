@@ -1,7 +1,7 @@
-/** The Every Season welcome: one question per screen, each with a small live illustration. */
+/** The Flowella welcome: one question per screen, each with a small live illustration. */
 import { useNavigate } from "@tanstack/react-router";
 import { useEffect, useRef, useState, type ReactNode } from "react";
-import { Bubbles, CheckCards, Chevron, Cluster, Constellation, Cycle, Face, Family, Info, Learn, Lock, LockIcon, Mark, Pin, Ring, Shield, Slots, Tick } from "./art";
+import { Bubbles, CheckCards, Chevron, Cluster, Constellation, Cycle, Face, Family, Info, Learn, Lock, LockIcon, Flower, Pin, Ring, Shield, Slots, Tick } from "./art";
 import { ALCOHOL, CHILDREN, CONDS, CONTRA, DAYS, FAMILY, IDENTITY, LANG, LEARN, MOODS, MOVE, PERIODS, SCREEN_BANDS, SLEEP, SMOKE, STAGES, SUPPORT, TOPICS, labelOf, type Opt, type Profile } from "./content";
 import { YEAR_NOW, ageOf, answered, checksFor, contraRelevant, periodsRelevant, personal, placeOf, plan } from "./engine";
 import { es, useEs } from "./store";
@@ -79,7 +79,7 @@ export function Questionnaire({ mode }: { mode: "changed" | "build" | undefined 
     if (prev === undefined) return;
     setHistory(h);
     setReturnTo(null);
-    if (prev === -1) { void navigate({ to: "/every-season/home" }); return; }
+    if (prev === -1) { void navigate({ to: "/flowella/home" }); return; }
     go(prev, -1);
   };
   const set = (p: Partial<Profile>) => { setStill(true); es.patch(p); };
@@ -92,7 +92,7 @@ export function Questionnaire({ mode }: { mode: "changed" | "build" | undefined 
     const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     const t = reduced ? 150 : 650;
     const timers = [1, 2, 3].map((n) => window.setTimeout(() => setBuilt(n), t * n));
-    timers.push(window.setTimeout(() => { es.finish(); void navigate({ to: "/every-season/home", replace: true }); }, t * 4 + (reduced ? 0 : 400)));
+    timers.push(window.setTimeout(() => { es.finish(); void navigate({ to: "/flowella/home", replace: true }); }, t * 4 + (reduced ? 0 : 400)));
     return () => timers.forEach(clearTimeout);
   }, [s.kind, navigate]);
 
@@ -107,7 +107,7 @@ export function Questionnaire({ mode }: { mode: "changed" | "build" | undefined 
     case "welcome":
       body = (
         <>
-          <div className="art welcome-art"><Bubbles /><div className="logo"><Mark /><span className="name">Every Season</span><span className="tag">Women's health, for every stage of life</span></div></div>
+          <div className="art welcome-art"><Bubbles /><div className="logo"><Flower size={124} /><span className="name">Flowella</span><span className="line">Find your rhythm. Flourish your way.</span><span className="tag">Personalised women's health through every stage of life.</span></div></div>
           <div className="qhead"><h1 tabIndex={-1}>Let's make this yours.</h1><p className="why" style={{ fontSize: 15 }}>A few questions, about 3 minutes. Your answers shape what you see, and you can change them any time.</p></div>
           <p className="why"><LockIcon /><span>Private by default. Stored in Australia, never sold.</span></p>
         </>
@@ -259,7 +259,7 @@ export function Questionnaire({ mode }: { mode: "changed" | "build" | undefined 
       const sats = [...pl.spaces.map((x) => ({ periods: "Periods", contra: "Sexual health", fertility: "Fertility", baby: "After baby", meno: "Menopause" })[x.id]), "Checks", "Mind"].slice(0, 5);
       body = (
         <div className="build">
-          <div className="orbit" aria-hidden="true"><div className="core" />{sats.map((t, i) => <div key={t} className="sat" style={{ ["--a" as string]: `${i * (360 / sats.length)}deg`, animationDelay: `${i * 0.08}s` }}>{t}</div>)}</div>
+          <div className="orbit" aria-hidden="true"><div className="core-flower"><Flower size={116} /></div>{sats.map((t, i) => <div key={t} className="sat" style={{ ["--a" as string]: `${i * (360 / sats.length)}deg`, animationDelay: `${i * 0.08}s` }}>{t}</div>)}</div>
           <h1 tabIndex={-1}>Building your space{a.name ? `, ${a.name}` : ""}</h1>
           <div className="steps">{["Choosing your focus", "Checking what's due", "Picking something for today"].map((t, i) => <div key={t} className={built > i ? "done" : ""}><span className="tick"><Tick /></span>{t}</div>)}</div>
         </div>

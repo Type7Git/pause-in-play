@@ -1,4 +1,4 @@
-/* Every Season (concept demo). Everything is scoped to .es so it never touches Pause in Play. */
+/* Flowella (concept demo). Everything is scoped to .es so it never touches Pause in Play. */
 .es {
   --field-1: #fbf1f3; --field-2: #f3dbe4;
   --surface: #fffafb; --surface-2: #fbeff3; --line: #eedae2;
@@ -122,11 +122,22 @@
 .es .bubbles span { position: absolute; bottom: -60px; border-radius: 50%; background: radial-gradient(circle at 32% 30%, rgba(255, 255, 255, .9), transparent 34%), linear-gradient(150deg, var(--rose-soft), var(--rose)); opacity: .55; animation: es-rise linear infinite; }
 .es .bubbles span.l { background: radial-gradient(circle at 32% 30%, rgba(255, 255, 255, .9), transparent 34%), linear-gradient(150deg, var(--lilac-soft), var(--lilac)); }
 @keyframes es-rise { 0% { transform: translateY(0) translateX(0) scale(.9); opacity: 0; } 12% { opacity: .55; } 50% { transform: translateY(-140px) translateX(10px); } 100% { transform: translateY(-300px) translateX(-6px) scale(1.05); opacity: 0; } }
-.es .welcome-art { height: 300px; }
+.es .welcome-art { height: 320px; }
 .es .logo { position: relative; display: flex; flex-direction: column; align-items: center; gap: 6px; z-index: 1; text-align: center; }
-.es .logo .mark { width: 74px; height: 74px; }
-.es .logo .name { font-family: var(--display); font-size: 30px; }
-.es .logo .tag { font-size: 13px; color: var(--ink-2); }
+.es .logo .name { font-family: var(--display); font-size: 36px; line-height: 1; margin-top: 2px; letter-spacing: -.01em; }
+.es .logo .line { font-family: var(--display); font-size: 16px; color: var(--rose-ink); }
+.es .logo .tag { font-size: 12.5px; color: var(--ink-2); max-width: 240px; text-wrap: balance; }
+/* Flowella flower */
+.es .flower .petal { transform-box: view-box; transform-origin: 60px 60px; animation: es-bloom 1.1s cubic-bezier(.3, 1.35, .5, 1) both; }
+.es .flower .spin { transform-box: view-box; transform-origin: 60px 60px; animation: es-spin 90s linear infinite; }
+.es .flower .ribbon { stroke-dasharray: 260; stroke-dashoffset: 260; animation: es-draw 1.8s .2s ease forwards; }
+.es .flower .ribbon-dot { animation: es-opt-in .5s 1.6s both; }
+.es .flower.still .petal, .es .flower.still .spin, .es .flower.still .ribbon, .es .flower.still .ribbon-dot { animation: none; stroke-dashoffset: 0; }
+@keyframes es-bloom { from { transform: scale(0) rotate(-40deg); opacity: 0; } to { transform: none; opacity: 1; } }
+.es .brand, .es .hhead small.brand { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
+.es .brand b { font-family: var(--display); font-weight: 400; font-size: 15px; letter-spacing: 0; text-transform: none; color: var(--ink); }
+.es .aside .brand b { font-size: 22px; }
+.es .orbit .core-flower { position: absolute; inset: 52px; display: grid; place-items: center; animation: es-breathe 2.4s ease-in-out infinite; }
 .es .greet { width: 82%; background: var(--surface); border-radius: 22px; padding: 20px 22px; box-shadow: var(--shadow); display: flex; flex-direction: column; gap: 6px; animation: es-floaty 5s ease-in-out infinite; }
 .es .greet .hi { font-family: var(--display); font-size: 28px; line-height: 1.1; overflow-wrap: anywhere; }
 .es .greet .caret { display: inline-block; width: 2px; height: .95em; background: var(--rose); margin-left: 3px; vertical-align: -2px; animation: es-blink 1s steps(1) infinite; }
@@ -457,5 +468,5 @@
 
 @media (prefers-reduced-motion: reduce) {
   .es *, .es *::before, .es *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
-  .es .a-line { animation: none !important; stroke-dashoffset: 0; }
+  .es .a-line, .es .flower .ribbon { animation: none !important; stroke-dashoffset: 0; }
 }

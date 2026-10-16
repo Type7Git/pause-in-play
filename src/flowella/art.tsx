@@ -1,4 +1,4 @@
-/** Every Season illustrations. Soft, slow, decorative (aria-hidden): the words carry the meaning. */
+/** Flowella illustrations. Soft, slow, decorative (aria-hidden): the words carry the meaning. */
 import { useEffect, useId, useRef, type CSSProperties } from "react";
 import { CONDS, CONTRA, STAGE_SHORT, TOPICS, TOPIC_SHORT, labelOf, type CheckId, type HubId, type Item, type Profile } from "./content";
 import type { Tone } from "./engine";
@@ -27,17 +27,35 @@ export const PhoneIcon = () => (
 );
 
 /* ---------- brand mark and welcome ---------- */
-export function Mark({ className = "mark" }: { className?: string }) {
-  const id = useSvgId();
+/** The Flowella flower: swirling petals for flow, an open ring for rhythm. Blooms open, then turns slowly. */
+const PETAL = "M60 60 C 40 56, 30 36, 42 20 C 52 8, 72 10, 74 26 C 76 42, 70 54, 60 60 Z";
+const INNER = "M60 60 C 52 54, 48 42, 54 35 C 59 30, 67 32, 67 40 C 67 49, 64 55, 60 60 Z";
+export function Flower({ size = 96, still = false, className = "" }: { size?: number; still?: boolean; className?: string }) {
+  const g = useSvgId();
   return (
-    <svg className={className} viewBox="0 0 74 74" aria-hidden="true">
-      <defs><linearGradient id={id} x1="0" y1="0" x2="1" y2="1"><stop offset="0" stopColor="var(--rose)" /><stop offset="1" stopColor="var(--lilac)" /></linearGradient></defs>
-      <circle cx="37" cy="37" r="34" fill={`url(#${id})`} />
-      <path d="M37 16c-8 9-12 15-12 22a12 12 0 0 0 24 0c0-7-4-13-12-22z" fill="none" stroke="#fff" strokeWidth="3.5" strokeLinejoin="round" />
-      <circle cx="37" cy="40" r="4" fill="#fff" />
+    <svg className={`flower ${still ? "still" : ""} ${className}`} width={size} height={size} viewBox="0 0 120 120" aria-hidden="true">
+      <defs>
+        <linearGradient id={`${g}r`} x1="0" y1="1" x2="0" y2="0"><stop offset="0" stopColor="var(--rose-ink, #a8486b)" /><stop offset="1" stopColor="var(--rose, #cf6f8d)" stopOpacity=".75" /></linearGradient>
+        <linearGradient id={`${g}l`} x1="0" y1="1" x2="0" y2="0"><stop offset="0" stopColor="var(--lilac-ink, #6f5aa6)" /><stop offset="1" stopColor="var(--lilac, #9d89cc)" stopOpacity=".75" /></linearGradient>
+        <linearGradient id={`${g}o`} x1="0" x2="1"><stop offset="0" stopColor="var(--rose, #cf6f8d)" /><stop offset="1" stopColor="var(--lilac, #9d89cc)" /></linearGradient>
+      </defs>
+      <path className="ribbon" d="M17.8 92 A 53 53 0 1 1 102.2 92" fill="none" stroke={`url(#${g}o)`} strokeWidth="2.6" strokeLinecap="round" />
+      <circle className="ribbon-dot" cx="102.2" cy="92" r="3.6" fill="var(--lilac, #9d89cc)" />
+      <g className="spin"><g transform="translate(60 60) scale(.86) translate(-60 -60)">
+        {[0, 1, 2, 3, 4].map((i) => (
+          <g key={i} transform={`rotate(${i * 72} 60 60)`}><path className="petal" d={PETAL} fill={`url(#${g}${i % 2 ? "l" : "r"})`} opacity=".9" style={{ animationDelay: `${0.1 + i * 0.12}s` }} /></g>
+        ))}
+        {[0, 1, 2, 3, 4].map((i) => (
+          <g key={`i${i}`} transform={`rotate(${36 + i * 72} 60 60)`}><path className="petal" d={INNER} fill="#fff" opacity=".55" style={{ animationDelay: `${0.7 + i * 0.08}s` }} /></g>
+        ))}
+        <circle className="petal" cx="60" cy="60" r="7.5" fill="#f3c58a" style={{ animationDelay: "1.1s" }} />
+        <circle cx="57.5" cy="57.5" r="2.4" fill="#fff" opacity=".8" />
+      </g></g>
     </svg>
   );
 }
+/** Static flower for the browser tab icon. */
+export const FLOWER_ICON = `data:image/svg+xml,${encodeURIComponent(`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120"><circle cx="60" cy="60" r="58" fill="#fbf1f3"/>${[0, 1, 2, 3, 4].map((i) => `<path d="${PETAL}" fill="${i % 2 ? "#8a73bf" : "#c25f80"}" opacity=".9" transform="rotate(${i * 72} 60 60)"/>`).join("")}${[0, 1, 2, 3, 4].map((i) => `<path d="${INNER}" fill="#fff" opacity=".5" transform="rotate(${36 + i * 72} 60 60)"/>`).join("")}<circle cx="60" cy="60" r="7.5" fill="#f3c58a"/></svg>`)}`;
 const BUB: [number, number, number, number][] = [[8, 26, 9, 0], [22, 40, 12, 3], [38, 18, 8, 6], [55, 34, 11, 1.5], [70, 22, 10, 4.5], [84, 44, 13, 2], [92, 16, 7, 7], [14, 14, 10, 8.5], [46, 28, 14, 9.5], [64, 50, 12, 5.5]];
 export const Bubbles = () => (
   <div className="bubbles" aria-hidden="true">

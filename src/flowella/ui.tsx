@@ -1,4 +1,4 @@
-/** Shared Every Season chrome: top bar, personal meter, demo menu, example people. */
+/** Shared Flowella chrome: top bar, personal meter, demo menu, example people. */
 import { Link, useNavigate } from "@tanstack/react-router";
 import { useState, type ReactNode } from "react";
 import { Chevron, MeterRing } from "./art";
@@ -8,7 +8,7 @@ import { es, useEs } from "./store";
 
 export function usePersona() {
   const navigate = useNavigate();
-  return (k: string) => { es.persona(k); void navigate({ to: "/every-season", search: { mode: "build" } }); };
+  return (k: string) => { es.persona(k); void navigate({ to: "/flowella", search: { mode: "build" } }); };
 }
 
 export function PersonaButtons({ onPick }: { onPick?: () => void }) {
@@ -48,11 +48,11 @@ function DemoMenu({ p, onClose }: { p: number; onClose: () => void }) {
         <p>Your space is {p}% personal</p>
         <PersonaButtons onPick={onClose} />
         {done ? (
-          <button type="button" className="persona" onClick={() => { onClose(); void navigate({ to: "/every-season", search: { mode: "changed" } }); }}>
+          <button type="button" className="persona" onClick={() => { onClose(); void navigate({ to: "/flowella", search: { mode: "changed" } }); }}>
             <i className="l" /><span>Something's changed<small>Update your answers</small></span>
           </button>
         ) : null}
-        <button type="button" className="persona" onClick={() => { onClose(); es.reset(); void navigate({ to: "/every-season", search: {} }); }}>
+        <button type="button" className="persona" onClick={() => { onClose(); es.reset(); void navigate({ to: "/flowella", search: {} }); }}>
           <i className="l" /><span>Start again<small>Clear answers and begin</small></span>
         </button>
       </div>
@@ -61,7 +61,7 @@ function DemoMenu({ p, onClose }: { p: number; onClose: () => void }) {
 }
 
 /** Top bar for inner pages: back, a quiet title, and the meter. */
-export function TopBar({ title, back = "/every-season/home", children }: { title: string; back?: string | (() => void) | null; children?: ReactNode }) {
+export function TopBar({ title, back = "/flowella/home", children }: { title: string; back?: string | (() => void) | null; children?: ReactNode }) {
   return (
     <header className="top">
       {back === null ? <span className="iconbtn hide" /> : typeof back === "function" ? (
@@ -81,7 +81,7 @@ export function NeedsProfile() {
     <div className="screen" style={{ justifyContent: "center", textAlign: "center", alignItems: "center" }}>
       <h1>Let's make this yours first.</h1>
       <p className="why" style={{ justifyContent: "center" }}>A few questions, or try an example person.</p>
-      <Link to="/every-season" search={{}} className="primary" style={{ width: "100%" }}>Start the welcome</Link>
+      <Link to="/flowella" search={{}} className="primary" style={{ width: "100%" }}>Start the welcome</Link>
       <div className="people" style={{ width: "100%" }}><PersonaButtons /></div>
     </div>
   );

@@ -1,8 +1,8 @@
 import { createFileRoute, notFound } from "@tanstack/react-router";
-import { itemById } from "@/every-season/content";
-import { ItemPage } from "@/every-season/ItemPage";
+import { itemById } from "@/flowella/content";
+import { ItemPage } from "@/flowella/ItemPage";
 
-export const Route = createFileRoute("/every-season/item/$id")({
+export const Route = createFileRoute("/flowella/item/$id")({
   loader: ({ params }) => { const item = itemById(params.id); if (!item) throw notFound(); return item; },
   component: ItemRoute,
 });
