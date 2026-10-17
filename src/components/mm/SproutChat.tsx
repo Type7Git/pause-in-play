@@ -1,11 +1,10 @@
 import { Link } from "@tanstack/react-router";
-import { HOME_SECTION_KEY } from "@/components/SectionWheel";
 import { useServerFn } from "@tanstack/react-start";
 import { useQuery } from "@tanstack/react-query";
 import { useEffect, useRef, useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { askSprout } from "@/lib/sprout.functions";
-import { TOOLS, TOOL_ROUTES, type SproutReply } from "@/lib/sprout-guard";
+import type { SproutReply } from "@/lib/sprout-guard";
 import { PanelBadge } from "./Panel";
 import { SproutMic } from "./icons";
 import { Sprout } from "./Sprout";
@@ -14,8 +13,12 @@ import { ChevronDown, ArrowLeft } from "lucide-react";
 
 type Msg = { role: "user" | "assistant"; text: string; reply?: SproutReply };
 
-const OPENING = "Hi, I'm Enera. I might be able to help with questions about the program, share some information from our clinical advisory team, or at least point you in the right direction. What's on your mind?";
-const QUICK = ["I can't sleep", "My brain feels so overwhelmed", "Tell me about the program"];
+const OPENING = "Hi, I'm Enera. Ask me about your health at any stage of life, or how to get the most out of Lumenera. I'll share what our clinically reviewed library says, point you to the right tool, or help you work out who to talk to. What's on your mind?";
+const QUICK = [
+  "I'm feeling really overwhelmed", "I can't sleep", "My periods are really heavy", "What health checks should I be having?",
+  "How do I add my medicines?", "How do I bring up sex with my partner?", "We're thinking about trying for a baby", "How's my body meant to feel after birth?",
+  "Is this perimenopause?", "What's the Lume Lounge?", "Where do I start?",
+];
 
 /** Chat panel: welcome, then the conversation, then the question box, so each answer reads top-down. Conversation lives only in memory and is cleared when the screen closes. */
 export function SproutChat({ compact = false }: { compact?: boolean }) {
@@ -25,6 +28,7 @@ export function SproutChat({ compact = false }: { compact?: boolean }) {
   const [busy, setBusy] = useState(false);
   const [cat, setCat] = useState<string | null>(null);
   const lastRef = useRef<HTMLDivElement>(null);
+  const last = msgs.length > 1 ? msgs[msgs.length - 1] : undefined;
   const inputRef = useRef<HTMLTextAreaElement>(null);
 
   const topics = useQuery({
@@ -46,7 +50,7 @@ export function SproutChat({ compact = false }: { compact?: boolean }) {
   async function send(raw: string) {
     const message = raw.trim();
     if (!message || busy) return;
-    const history = msgs.slice(1).slice(-4).map(({ role, text }) => ({ role, text }));
+    const history = msgs.slice(1).slice(-6).map(({ role, text }) => ({ role, text }));
     setMsgs((m) => [...m, { role: "user", text: message }]);
     setText("");
     setCat(null);
@@ -74,20 +78,24 @@ export function SproutChat({ compact = false }: { compact?: boolean }) {
           <div key={i} ref={i === all.length - 1 ? lastRef : undefined} style={{ scrollMarginTop: 12 }} className="mm-rise ml-auto max-w-[82%] whitespace-pre-line rounded-[20px] rounded-br-md bg-plum px-4 py-2.5 text-[15px] text-shell">{m.text}</div>
         ) : (
           <div key={i} ref={i === all.length - 1 ? lastRef : undefined} style={{ scrollMarginTop: 12 }} className="mm-rise flex max-w-[92%] items-end gap-2">
-            <Sprout size={30} mood={m.reply?.kind === "crisis" || m.reply?.kind === "clinical" ? "caring" : m.reply?.kind === "nomatch" ? "thinking" : "happy"} animate={false} />
-            <div className={`flex flex-col gap-2 rounded-[20px] rounded-bl-md border px-4 py-3 text-[15px] shadow-soft ${m.reply?.kind === "crisis" ? "border-rose bg-rose-soft" : "border-line bg-card"}`}>
+            <Sprout size={30} mood={m.reply?.kind === "crisis" || m.reply?.kind === "clinical" || m.reply?.kind === "urgent" ? "caring" : m.reply?.kind === "nomatch" ? "thinking" : "happy"} animate={false} />
+            <div className={`flex flex-col gap-2 rounded-[20px] rounded-bl-md border px-4 py-3 text-[15px] shadow-soft ${m.reply?.kind === "crisis" || m.reply?.kind === "urgent" ? "border-rose bg-rose-soft" : "border-line bg-card"}`}>
               <p className="whitespace-pre-line leading-relaxed">{m.text}</p>
-              {m.reply?.kind === "answer" && m.reply.entry && (
-                <>
-                  <span className="flex items-center gap-2 border-t border-line pt-2 text-xs text-muted-foreground">
-                    <PanelBadge size={22} className="shrink-0" />From the Lumenera library: {m.reply.entry.title} · clinically reviewed
-                  </span>
-                  {m.reply.entry.linked_tool && (
-                    <Link to={TOOL_ROUTES[m.reply.entry.linked_tool].to as "/"} onClick={() => { const tool = m.reply?.entry?.linked_tool; const s = tool ? TOOL_ROUTES[tool].section : undefined; if (s) localStorage.setItem(HOME_SECTION_KEY, s); }} className="press inline-flex min-h-11 items-center self-start rounded-full bg-sage px-4 py-2 text-sm font-bold text-shell">
-                      Open {TOOLS[m.reply.entry.linked_tool]} →
-                    </Link>
-                  )}
-                </>
+              {m.reply?.source && (
+                <span className="flex items-center gap-2 border-t border-line pt-2 text-xs text-muted-foreground">
+                  {m.reply.source.reviewed ? <><PanelBadge size={22} className="shrink-0" />From the Lumenera library: {m.reply.source.title} · clinically reviewed</> : <>From the Lumenera guide: {m.reply.source.title}</>}
+                </span>
+              )}
+              {m.reply?.link && (
+                <Link to={m.reply.link.to as "/"} className="press inline-flex min-h-11 items-center self-start rounded-full bg-sage px-4 py-2 text-sm font-bold text-shell">
+                  Open {m.reply.link.label} →
+                </Link>
+              )}
+              {m.reply?.kind === "urgent" && (
+                <span className="flex flex-wrap gap-2">
+                  <a href="tel:000" className="press inline-flex min-h-11 items-center rounded-full bg-rose px-4 py-2 text-sm font-bold text-shell">Call 000</a>
+                  <a href="tel:1800022222" className="press inline-flex min-h-11 items-center rounded-full border border-line bg-card px-4 py-2 text-sm font-bold text-plum">Healthdirect 1800 022 222</a>
+                </span>
               )}
               {m.reply?.kind === "crisis" && (
                 <a href="tel:131114" className="press inline-flex min-h-11 items-center self-start rounded-full bg-rose px-4 py-2 text-sm font-bold text-shell">Call Lifeline 13 11 14</a>
@@ -95,6 +103,11 @@ export function SproutChat({ compact = false }: { compact?: boolean }) {
             </div>
           </div>
         ))}
+        {!busy && last?.role === "assistant" && last.reply?.next?.length ? (
+          <div className="flex flex-wrap gap-1.5 pl-[38px]" aria-label="Things you could say next">
+            {last.reply.next.map((q) => <button key={q} type="button" onClick={() => send(q)} className="press min-h-10 rounded-full border-[1.5px] border-line bg-card px-3.5 py-1.5 text-left text-sm text-plum">{q}</button>)}
+          </div>
+        ) : null}
         {busy && (
           <div className="flex items-end gap-2" aria-label="Enera is typing">
             <Sprout size={30} mood="thinking" />

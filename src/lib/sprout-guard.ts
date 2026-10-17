@@ -1,16 +1,16 @@
-/** Pure, browser-safe Enera rules (Enera was called Enera; code names keep "sprout"): safety screening, privacy scrubbing and tool names. */
+/** Pure, browser-safe Enera rules (Enera was called Sprout; code names keep "sprout"): safety screening, privacy scrubbing and tool names. */
 
 export const TOOLS = {
-  "side-quest": "Side Quest Saver",
-  remember: "the VIT Department",
-  tabs: "37 tabs open",
+  "side-quest": "What was I doing?",
+  remember: "Help me remember",
+  tabs: "37 tabs",
   "wind-down": "Relax and Restore",
   notes: "Little notes",
-  "little-win": "Give me a little win",
+  "little-win": "A little win",
   laugh: "I need a laugh",
   erin: "Our clinical panel",
   panel: "Our clinical panel",
-  medicines: "Medicine Cabinet",
+  medicines: "Medicine cabinet",
   mood: "Mood Mapper",
   learn: "Lume Library",
   cycle: "Cycle Tracker",
@@ -52,10 +52,15 @@ Emergency: 000
 If you can, let someone close to you know how you're feeling, or see your GP soon.`;
 
 export const CLINICAL_REPLY =
-  "That's an important question, and it needs someone who knows your health. I can't advise on medication, hormones, tests or symptoms. Your GP is the best place to start, and they can refer you on if needed.";
+  "That's an important question, and it really needs someone who knows your health. I can't advise on your own medicines, doses, results or symptoms. Your GP is the best place to start (or your pharmacist for anything about medicines), and they can refer you on if needed. Healthdirect is also there any time on 1800 022 222.";
 
+export const URGENT_REPLY = `That sounds like it needs care today, not a chat with me.
+If it's severe or sudden, call 000 or go to your nearest emergency department.
+Otherwise, call your GP today, or Healthdirect on 1800 022 222 (24 hours) for advice on where to go.`;
+
+/** Used only if Enera can't form a reply at all. */
 export const NO_MATCH_REPLY =
-  "I don't have anything on that in the Lumenera library yet. I've noted the question (anonymously) so the clinical team can consider adding it. In the meantime, the spaces on your home screen are full of tools that might fit.";
+  "I'm not sure I've got anything helpful on that just yet, and I'd rather not guess. Could you tell me a little more about what's going on? Or have a look at the Guide in the menu, which explains every space and tool.";
 
 export const RATE_LIMIT_REPLY =
   "I need a little rest. You've sent lots of messages this hour, so let's pick this up a bit later. The tools on the home screen are always there.";
@@ -71,11 +76,24 @@ const CRISIS = [
 ];
 export const isCrisis = (msg: string) => CRISIS.some((r) => r.test(normalise(msg)));
 
+/** Red flags: point to urgent care before anything else. */
+const URGENT = [
+  /\bchest pain\b/, /\b(can'?t|cannot|struggling to|hard to|trouble) breath/, /\bfaint(ed|ing)?\b/, /\bpass(ed|ing) out\b/,
+  /\bsevere (pain|bleeding|headache)\b/, /\bsoak(ing|ed)?\b.*\b(hour|pad|pads)\b/, /\bseizure/, /\boverdos/,
+  /\bbaby\b.*\b(not moving|stopped moving|moving less|isn'?t moving)\b/, /\b(not|stopped|isn'?t) breathing\b/,
+];
+export const isUrgent = (msg: string) => URGENT.some((r) => r.test(normalise(msg)));
+
+/** Personal medical advice never reaches the model: her own medicines, doses, results, diagnoses and worrying symptoms. General health questions do. */
 const CLINICAL = [
-  /\bmedic(ation|ine)s?\b/, /\bmeds\b/, /\bhrt\b/, /\bmht\b/, /\bhormone/, /\boestrogen|\bestrogen|\bprogesterone|\btestosterone/,
-  /\bsupplements?\b/, /\bvitamins?\b/, /\bmagnesium\b/, /\bdos(e|es|age)\b/, /\bhow much .* (should i )?take\b/, /\bpills?\b/,
-  /\bprescri/, /\bantidepress/, /\bblood tests?\b/, /\btests?\b/, /\bdiagnos/, /\bbleed/, /\bperiod (is|has|keeps)\b/,
-  /\bhot flush|\bhot flash|\bnight sweats?\b/, /\blump\b/, /\bpain\b/, /\bpalpitation/,
+  /\bshould i (take|stop|start|use|try|come off|go on|switch|swap|increase|decrease|reduce|double|skip|mix)\b/,
+  /\b(can|could) i (take|stop|come off|go on|switch|swap|increase|decrease|reduce|double|skip|mix)\b/,
+  /\bdos(e|es|age|ing)\b/, /\bhow (much|many) .*\b(take|use)\b/, /\bhow often .*\btake\b/, /\bmissed (a |my )?(pill|dose|injection|tablet)\b/,
+  /\bis it (safe|ok|okay) (to|for me|if i)\b/, /\binteract/, /\bside effects? (of|from) my\b/, /\bwith my (medicine|medication|pill|tablets?|hrt|mht)\b/,
+  /\bdo i have\b/, /\bhave i got\b/, /\bwhat'?s wrong with me\b/, /\bdiagnos(e|is) me\b/, /\bcould (it|this) be\b/,
+  /\bam i (pregnant|in (peri)?menopause|perimenopausal|menopausal|infertile|going through)\b/, /\bis (this|my) .*\bnormal\b/, /\bis it normal (that|for) my\b/,
+  /\bmy ((blood|test|scan|pap|smear|screening|mammogram|ultrasound|biopsy) )*results?\b/, /\blump\b/,
+  /\bbleed(ing)? after (menopause|sex|intercourse)\b/, /\bpost-?menopausal bleed/, /\bpalpitation/,
 ];
 export const isClinical = (msg: string) => CLINICAL.some((r) => r.test(normalise(msg)));
 
@@ -96,7 +114,12 @@ export function toTsQuery(msg: string) {
 }
 
 export type SproutReply = {
-  kind: "answer" | "crisis" | "clinical" | "nomatch" | "limit" | "error";
+  kind: "answer" | "chat" | "crisis" | "clinical" | "urgent" | "nomatch" | "limit" | "error";
   text: string;
-  entry?: { title: string; linked_tool: ToolKey | null };
+  /** Where the answer came from: an approved library entry or article (reviewed), or Lumenera's own guide. */
+  source?: { title: string; reviewed: boolean };
+  /** One place to go next. */
+  link?: { to: string; label: string };
+  /** Up to three short follow-ups she might tap. */
+  next?: string[];
 };
