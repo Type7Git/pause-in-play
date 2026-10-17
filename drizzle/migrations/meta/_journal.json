@@ -120,6 +120,13 @@
       "when": 1792193566609,
       "tag": "0016_medicine_cabinet",
       "breakpoints": true
+    },
+    {
+      "idx": 17,
+      "version": "7",
+      "when": 1792196860265,
+      "tag": "0017_medicine_cabinet_apply",
+      "breakpoints": true
     }
   ]
 }

@@ -259,6 +259,72 @@ export type Database = {
         }
         Relationships: []
       }
+      medicine_suggestions: {
+        Row: {
+          created_at: string
+          for_what: string | null
+          form: string | null
+          id: string
+          name: string
+          status: string
+        }
+        Insert: {
+          created_at?: string
+          for_what?: string | null
+          form?: string | null
+          id?: string
+          name: string
+          status?: string
+        }
+        Update: {
+          created_at?: string
+          for_what?: string | null
+          form?: string | null
+          id?: string
+          name?: string
+          status?: string
+        }
+        Relationships: []
+      }
+      medicines: {
+        Row: {
+          also_called: string[]
+          approved_at: string | null
+          approved_by: string | null
+          default_schedule: Json
+          form: string
+          id: string
+          name: string
+          status: string
+          tags: string[]
+          updated_at: string
+        }
+        Insert: {
+          also_called?: string[]
+          approved_at?: string | null
+          approved_by?: string | null
+          default_schedule?: Json
+          form?: string
+          id: string
+          name: string
+          status?: string
+          tags?: string[]
+          updated_at?: string
+        }
+        Update: {
+          also_called?: string[]
+          approved_at?: string | null
+          approved_by?: string | null
+          default_schedule?: Json
+          form?: string
+          id?: string
+          name?: string
+          status?: string
+          tags?: string[]
+          updated_at?: string
+        }
+        Relationships: []
+      }
       movement_sessions: {
         Row: {
           approved_at: string | null
