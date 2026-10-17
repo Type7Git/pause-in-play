@@ -57,6 +57,7 @@ export function SproutChat({ compact = false }: { compact?: boolean }) {
     setBusy(true);
     try {
       const reply = await ask({ data: { message, history } });
+      if (!reply?.text) throw new Error("empty reply");
       setMsgs((m) => [...m, { role: "assistant", text: reply.text, reply }]);
     } catch {
       setMsgs((m) => [...m, { role: "assistant", text: "Enera had a little wobble. Please try again in a moment.", reply: { kind: "error", text: "" } }]);
