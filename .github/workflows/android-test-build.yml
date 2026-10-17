@@ -1,6 +1,6 @@
 name: Android test build
 
-# Builds an installable test APK of the Pause in Play app shell.
+# Builds an installable test APK of the Lumenera app shell.
 # Runs on every push to the `capacitor` branch that touches mobile/, or manually from the Actions tab.
 on:
   push:
@@ -46,7 +46,7 @@ jobs:
       - name: Upload APK
         uses: actions/upload-artifact@v5
         with:
-          name: pause-in-play-test-apk
+          name: lumenera-test-apk
           path: mobile/android/app/build/outputs/apk/debug/app-debug.apk
           retention-days: 30
 
@@ -54,9 +54,9 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          cp android/app/build/outputs/apk/debug/app-debug.apk pause-in-play-test.apk
+          cp android/app/build/outputs/apk/debug/app-debug.apk lumenera-test.apk
           gh release delete android-test --yes --cleanup-tag || true
-          gh release create android-test pause-in-play-test.apk \
+          gh release create android-test lumenera-test.apk \
             --prerelease --target "${{ github.sha }}" \
-            --title "Android test build" \
-            --notes "Latest test build of the Pause in Play app from the capacitor branch (${GITHUB_SHA::7}). To install: open this page on your Android phone while signed in to GitHub, tap pause-in-play-test.apk, then allow installing apps from your browser when asked."
+            --title "Lumenera Android test build" \
+            --notes "Latest test build of the Lumenera app from the capacitor branch (${GITHUB_SHA::7}). To install: open this page on your Android phone while signed in to GitHub, tap lumenera-test.apk, then allow installing apps from your browser when asked. If you have an older Pause in Play test build, uninstall it first (this one time only)."

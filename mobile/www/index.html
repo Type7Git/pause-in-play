@@ -3,27 +3,54 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>Pause in Play</title>
+<title>Lumenera</title>
 <style>
-  :root{--bg:#FAF7FB;--ink:#271F31;--muted:#6E6479;--plum:#5B3A6B;--rose:#C0584E;--card:#fff;--line:#E5DDEA}
-  @media (prefers-color-scheme:dark){:root{--bg:#1D1724;--ink:#F2EDF6;--muted:#B4A9C0;--plum:#CFAEE0;--rose:#EC9188;--card:#272030;--line:#382F43}}
+  :root{--bg1:#fbf1f3;--bg2:#f3dbe4;--ink:#313d48;--muted:#5d6a76;--rose:#cf6f8d;--rose-ink:#a8486b;--rose-soft:#f8dbe4;--lilac:#9d89cc;--lilac-soft:#ece5f7}
+  @media (prefers-color-scheme:dark){:root{--bg1:#1b181e;--bg2:#2a1f2a;--ink:#e8ecf0;--muted:#b6bec7;--rose:#e491ab;--rose-ink:#f2a9c0;--rose-soft:#4a2a38;--lilac:#b9a6e6;--lilac-soft:#352d48}}
   *{box-sizing:border-box}
-  body{margin:0;min-height:100vh;display:grid;place-items:center;background:var(--bg);color:var(--ink);font-family:system-ui,-apple-system,"Segoe UI",sans-serif;padding:24px}
-  .card{max-width:340px;text-align:center;display:flex;flex-direction:column;gap:14px;align-items:center}
-  h1{font-size:24px;margin:0;line-height:1.2}
-  h1 em{font-style:normal;color:var(--rose)}
+  html,body{height:100%}
+  body{margin:0;display:grid;place-items:center;overflow:hidden;background:radial-gradient(120% 90% at 30% 15%,var(--bg1),var(--bg2));color:var(--ink);font-family:system-ui,-apple-system,"Segoe UI",sans-serif;padding:24px}
+  .card{position:relative;z-index:1;max-width:340px;text-align:center;display:flex;flex-direction:column;gap:14px;align-items:center}
+  h1{font-family:Georgia,"Times New Roman",serif;font-weight:400;font-size:30px;margin:0;line-height:1.2;letter-spacing:-.01em}
   p{margin:0;color:var(--muted);line-height:1.5}
-  button{font:inherit;font-weight:700;border:0;border-radius:999px;padding:13px 26px;background:var(--plum);color:var(--bg);cursor:pointer;margin-top:6px}
-  svg{width:72px;height:72px}
+  button{font:inherit;font-weight:700;border:0;border-radius:999px;padding:14px 28px;background:linear-gradient(135deg,var(--rose),var(--lilac));color:#fff;cursor:pointer;margin-top:6px;min-height:48px}
+  svg{width:120px;height:120px}
+  .spin{transform-origin:60px 60px;animation:spin 40s linear infinite}
+  @keyframes spin{to{transform:rotate(360deg)}}
+  .bubbles{position:fixed;inset:0;pointer-events:none}
+  .bubbles i{position:absolute;bottom:-60px;border-radius:50%;background:radial-gradient(circle at 32% 30%,rgba(255,255,255,.9),transparent 34%),linear-gradient(150deg,var(--rose-soft),var(--rose));opacity:0;animation:rise linear infinite}
+  .bubbles i:nth-child(3n){background:radial-gradient(circle at 32% 30%,rgba(255,255,255,.9),transparent 34%),linear-gradient(150deg,var(--lilac-soft),var(--lilac))}
+  @keyframes rise{0%{transform:translateY(0) scale(.9);opacity:0}15%{opacity:.5}100%{transform:translateY(-70vh) translateX(-8px) scale(1.05);opacity:0}}
+  @media (prefers-reduced-motion:reduce){.spin,.bubbles i{animation:none}}
 </style>
 </head>
 <body>
+  <div class="bubbles" aria-hidden="true"><i style="left:12%;width:22px;height:22px;animation-duration:9s"></i><i style="left:30%;width:36px;height:36px;animation-duration:12s;animation-delay:-3s"></i><i style="left:48%;width:16px;height:16px;animation-duration:8s;animation-delay:-6s"></i><i style="left:66%;width:30px;height:30px;animation-duration:11s;animation-delay:-1.5s"></i><i style="left:82%;width:20px;height:20px;animation-duration:10s;animation-delay:-4.5s"></i><i style="left:90%;width:40px;height:40px;animation-duration:13s;animation-delay:-8s"></i></div>
   <div class="card">
-    <svg viewBox="0 0 32 32" aria-hidden="true"><circle cx="16" cy="16" r="15" fill="#FAE8CB"/><rect x="7.5" y="10" width="3.6" height="12" rx="1.8" fill="#5B3A6B"/><rect x="13" y="10" width="3.6" height="12" rx="1.8" fill="#7D5A8E"/><path d="M19.5 10.6v10.8a.9.9 0 0 0 1.4.75l7.6-5.4a.9.9 0 0 0 0-1.5l-7.6-5.4a.9.9 0 0 0-1.4.75z" fill="#D48A22"/></svg>
-    <h1>Pause <em>in</em> Play</h1>
+    <svg viewBox="0 0 120 120" aria-hidden="true">
+      <defs>
+        <linearGradient id="r" x1="0" y1="1" x2="0" y2="0"><stop offset="0" stop-color="#a8486b"/><stop offset="1" stop-color="#cf6f8d" stop-opacity=".8"/></linearGradient>
+        <linearGradient id="l" x1="0" y1="1" x2="0" y2="0"><stop offset="0" stop-color="#6f5aa6"/><stop offset="1" stop-color="#9d89cc" stop-opacity=".8"/></linearGradient>
+        <linearGradient id="o" x1="0" x2="1"><stop offset="0" stop-color="#cf6f8d"/><stop offset="1" stop-color="#9d89cc"/></linearGradient>
+      </defs>
+      <path d="M17.8 92 A 53 53 0 1 1 102.2 92" fill="none" stroke="url(#o)" stroke-width="2.6" stroke-linecap="round"/><circle cx="102.2" cy="92" r="3.6" fill="#9d89cc"/>
+      <g class="spin"><g transform="translate(60 60) scale(.86) translate(-60 -60)">
+        <path d="M60 60 C 40 56, 30 36, 42 20 C 52 8, 72 10, 74 26 C 76 42, 70 54, 60 60 Z" fill="url(#r)" opacity=".9"/>
+        <path d="M60 60 C 40 56, 30 36, 42 20 C 52 8, 72 10, 74 26 C 76 42, 70 54, 60 60 Z" fill="url(#l)" opacity=".9" transform="rotate(72 60 60)"/>
+        <path d="M60 60 C 40 56, 30 36, 42 20 C 52 8, 72 10, 74 26 C 76 42, 70 54, 60 60 Z" fill="url(#r)" opacity=".9" transform="rotate(144 60 60)"/>
+        <path d="M60 60 C 40 56, 30 36, 42 20 C 52 8, 72 10, 74 26 C 76 42, 70 54, 60 60 Z" fill="url(#l)" opacity=".9" transform="rotate(216 60 60)"/>
+        <path d="M60 60 C 40 56, 30 36, 42 20 C 52 8, 72 10, 74 26 C 76 42, 70 54, 60 60 Z" fill="url(#r)" opacity=".9" transform="rotate(288 60 60)"/>
+        <circle cx="60" cy="60" r="7.5" fill="#f3c58a"/><circle cx="57.5" cy="57.5" r="2.4" fill="#fff" opacity=".8"/>
+      </g></g>
+    </svg>
+    <h1>Lumenera</h1>
     <p>We can't reach the internet right now. Take a slow breath out, check your connection, and try again when you're ready.</p>
     <button onclick="location.replace('https://pause-in-play.lovable.app/')">Try again</button>
     <p style="font-size:13px">In crisis? Call Lifeline on 13 11 14, or 000 in an emergency.</p>
   </div>
+  <script>
+    // Hand over from the native splash straight away.
+    try { window.Capacitor && window.Capacitor.nativePromise && window.Capacitor.nativePromise("SplashScreen", "hide", { fadeOutDuration: 250 }); } catch (e) {}
+  </script>
 </body>
 </html>

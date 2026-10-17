@@ -1,8 +1,8 @@
 {
-  "name": "pause-in-play-mobile",
+  "name": "lumenera-mobile",
   "private": true,
   "version": "0.1.0",
-  "description": "Native Android/iOS shell for Pause in Play (Capacitor). The web app itself lives in the repo root and is built in Lovable.",
+  "description": "Native Android/iOS shell for Lumenera (Capacitor). The web app itself lives in the repo root and is built in Lovable.",
   "scripts": {
     "sync": "cap sync",
     "android": "cap open android",

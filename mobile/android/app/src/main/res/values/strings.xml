@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='utf-8'?>
 <resources>
-    <string name="app_name">Pause in Play</string>
-    <string name="title_activity_main">Pause in Play</string>
+    <string name="app_name">Lumenera</string>
+    <string name="title_activity_main">Lumenera</string>
     <string name="package_name">au.com.type7.pauseinplay</string>
     <string name="custom_url_scheme">au.com.type7.pauseinplay</string>
 </resources>

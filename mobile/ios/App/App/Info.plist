@@ -3,15 +3,15 @@
 <plist version="1.0">
 <dict>
 	<key>NSMicrophoneUsageDescription</key>
-	<string>Pause in Play uses the microphone only when you tap Tell Sprout, so you can speak instead of type. Audio is never stored.</string>
+	<string>Lumenera uses the microphone only when you tap the microphone to talk to Enera, so you can speak instead of type. Audio is never stored.</string>
 	<key>NSFaceIDUsageDescription</key>
-	<string>Use Face ID to keep your Intimacy and relationships section private.</string>
+	<string>Use Face ID to keep your Sexual health and relationships space private.</string>
   <key>CAPACITOR_DEBUG</key>
 	<string>$(CAPACITOR_DEBUG)</string>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
 	<key>CFBundleDisplayName</key>
-        <string>Pause in Play</string>
+        <string>Lumenera</string>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>

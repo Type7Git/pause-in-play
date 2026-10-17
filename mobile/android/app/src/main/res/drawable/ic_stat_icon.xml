@@ -1,8 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Notification icon: the Pause in Play glyph in white (Android tints it) -->
+<!-- Notification icon: the Lumenera flower in white (Android tints it) -->
 <vector xmlns:android="http://schemas.android.com/apk/res/android"
-    android:width="24dp" android:height="24dp" android:viewportWidth="32" android:viewportHeight="32">
-    <path android:fillColor="#FFFFFFFF" android:pathData="M9.3,10a1.8,1.8 0,0 1,1.8 1.8v8.4a1.8,1.8 0,0 1,-3.6 0v-8.4A1.8,1.8 0,0 1,9.3 10z"/>
-    <path android:fillColor="#FFFFFFFF" android:pathData="M14.8,10a1.8,1.8 0,0 1,1.8 1.8v8.4a1.8,1.8 0,0 1,-3.6 0v-8.4A1.8,1.8 0,0 1,14.8 10z"/>
-    <path android:fillColor="#FFFFFFFF" android:pathData="M19.5,10.6v10.8a0.9,0.9 0,0 0,1.4 0.75l7.6,-5.4a0.9,0.9 0,0 0,0 -1.5l-7.6,-5.4a0.9,0.9 0,0 0,-1.4 0.75z"/>
+    android:width="24dp" android:height="24dp" android:viewportWidth="24" android:viewportHeight="24">
+    <group android:pivotX="12" android:pivotY="12" android:rotation="0">
+        <path android:fillColor="#FFFFFFFF" android:pathData="M12,12 C8,11.2 6,7.2 8.4,4 C10.4,1.6 14.4,2 14.8,5.2 C15.2,8.4 14,10.8 12,12 Z"/>
+    </group>
+    <group android:pivotX="12" android:pivotY="12" android:rotation="72">
+        <path android:fillColor="#FFFFFFFF" android:pathData="M12,12 C8,11.2 6,7.2 8.4,4 C10.4,1.6 14.4,2 14.8,5.2 C15.2,8.4 14,10.8 12,12 Z"/>
+    </group>
+    <group android:pivotX="12" android:pivotY="12" android:rotation="144">
+        <path android:fillColor="#FFFFFFFF" android:pathData="M12,12 C8,11.2 6,7.2 8.4,4 C10.4,1.6 14.4,2 14.8,5.2 C15.2,8.4 14,10.8 12,12 Z"/>
+    </group>
+    <group android:pivotX="12" android:pivotY="12" android:rotation="216">
+        <path android:fillColor="#FFFFFFFF" android:pathData="M12,12 C8,11.2 6,7.2 8.4,4 C10.4,1.6 14.4,2 14.8,5.2 C15.2,8.4 14,10.8 12,12 Z"/>
+    </group>
+    <group android:pivotX="12" android:pivotY="12" android:rotation="288">
+        <path android:fillColor="#FFFFFFFF" android:pathData="M12,12 C8,11.2 6,7.2 8.4,4 C10.4,1.6 14.4,2 14.8,5.2 C15.2,8.4 14,10.8 12,12 Z"/>
+    </group>
 </vector>

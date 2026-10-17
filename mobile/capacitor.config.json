@@ -1,38 +1,47 @@
 {
   "appId": "au.com.type7.pauseinplay",
-  "appName": "Pause in Play",
+  "appName": "Lumenera",
   "webDir": "www",
   "server": {
     "url": "https://pause-in-play.lovable.app",
     "cleartext": false,
     "androidScheme": "https",
     "errorPath": "offline.html",
-    "allowNavigation": ["pause-in-play.lovable.app", "pauseinplay.com", "*.pauseinplay.com", "*.supabase.co", "*.lovable.app"]
+    "allowNavigation": [
+      "*.lovable.app",
+      "*.lumenera.com.au",
+      "*.pauseinplay.com",
+      "*.supabase.co",
+      "lumenera.com.au",
+      "pause-in-play.lovable.app",
+      "pauseinplay.com"
+    ]
   },
   "android": {
-    "backgroundColor": "#FAF7FB",
+    "backgroundColor": "#FBF1F3",
     "allowMixedContent": false
   },
   "ios": {
-    "backgroundColor": "#FAF7FB",
+    "backgroundColor": "#FBF1F3",
     "contentInset": "automatic"
   },
   "plugins": {
     "SplashScreen": {
-      "launchShowDuration": 1200,
+      "launchShowDuration": 4000,
       "launchAutoHide": true,
-      "backgroundColor": "#FAF7FB",
+      "backgroundColor": "#FBF1F3",
       "androidScaleType": "CENTER_CROP",
-      "showSpinner": false
+      "showSpinner": false,
+      "launchFadeOutDuration": 250
     },
     "StatusBar": {
       "overlaysWebView": false,
       "style": "DEFAULT",
-      "backgroundColor": "#FAF7FB"
+      "backgroundColor": "#FBF1F3"
     },
     "LocalNotifications": {
       "smallIcon": "ic_stat_icon",
-      "iconColor": "#5B3A6B"
+      "iconColor": "#A8486B"
     }
   }
 }

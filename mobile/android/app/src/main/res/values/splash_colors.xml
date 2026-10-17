@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Lumenera blush, behind the flower on the Android 12+ splash. Matches the web app's loading screen. -->
+    <color name="lumenera_splash">#FBF1F3</color>
+</resources>
