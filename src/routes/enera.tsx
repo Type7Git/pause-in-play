@@ -30,7 +30,7 @@ function SproutScreen() {
       </div>
       <SproutChat />
       <p role="note" className="text-[13px] leading-snug text-muted-foreground">
-        Enera is an AI guide, not a person or a therapist. Answers come only from the Lumenera library, clinically reviewed by our advisory panel. It can't give medical or personal advice. In crisis, call Lifeline <a href="tel:131114" className="font-bold underline">13 11 14</a> or 000.
+        Enera is an AI guide, not a person or a therapist. Health information comes only from Lumenera's library, reviewed by our clinical advisory panel, and the app's own guide. She won't guess, and she can't give personal medical advice. In crisis, call Lifeline <a href="tel:131114" className="font-bold underline">13 11 14</a> or 000.
       </p>
     </>
   );

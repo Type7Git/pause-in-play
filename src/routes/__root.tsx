@@ -18,6 +18,7 @@ import { RewardsProvider } from "@/lib/rewards";
 import { AppShell } from "@/components/mm/AppShell";
 import { Toaster } from "@/components/ui/sonner";
 import { registerOfflineWorker } from "@/lib/pwa";
+import { BOOT_CSS, BOOT_SCRIPT, BootSplash, useBootFinish } from "@/components/BootSplash";
 
 function NotFoundComponent() {
   return (
@@ -98,11 +99,14 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
 
 function RootShell({ children }: { children: ReactNode }) {
   return (
-    <html lang="en-AU">
+    <html lang="en-AU" suppressHydrationWarning>
       <head>
+        <style dangerouslySetInnerHTML={{ __html: BOOT_CSS }} />
+        <script dangerouslySetInnerHTML={{ __html: BOOT_SCRIPT }} />
         <HeadContent />
       </head>
       <body>
+        <BootSplash />
         {children}
         <Scripts />
       </body>
@@ -113,6 +117,7 @@ function RootShell({ children }: { children: ReactNode }) {
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
   useEffect(() => { void registerOfflineWorker(); }, []);
+  useBootFinish();
 
   return (
     <QueryClientProvider client={queryClient}>
