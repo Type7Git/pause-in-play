@@ -53,6 +53,13 @@ function TellSprout() {
     const t = text.trim();
     if (!t) { setPhase("idle"); setNote("Enera didn't catch anything. Try again, or type it."); return; }
     setHeard(t); setPhase("thinking"); setNote("Got it."); setCrisis(""); setSaved(null);
+    if (!user) {
+      // Sorting uses an AI model, so it needs a free account; she can still file it herself.
+      setDraft({ type: "unsure", doing: t, next: "", remind: "none", thing: t, location: "" });
+      setNote("Sign in and Enera can sort notes for you. For now, choose where this goes below.");
+      setPhase("heard");
+      return;
+    }
     let r: Filed;
     try { r = await fileVoiceNote({ data: { text: t.slice(0, 600) } }); }
     catch { r = { type: "error", text: "Enera couldn't sort that just now. Check it below and choose where it goes." } as Filed; }
