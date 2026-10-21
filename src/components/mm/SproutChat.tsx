@@ -5,14 +5,15 @@ import { useEffect, useRef, useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { askSprout } from "@/lib/sprout.functions";
 import { listen, voiceSupported, type Listening } from "@/lib/speech";
-import type { SproutReply } from "@/lib/sprout-guard";
+import { CRISIS_REPLY, URGENT_REPLY, isCrisis, isUrgent, type SproutReply } from "@/lib/sprout-guard";
+import { useRewards } from "@/lib/rewards";
 import { PanelBadge } from "./Panel";
 import { SproutMic } from "./icons";
 import { Sprout } from "./Sprout";
 import { Pill } from "./ui";
 import { ChevronDown, ArrowLeft } from "lucide-react";
 
-type Msg = { role: "user" | "assistant"; text: string; reply?: SproutReply };
+type Msg = { role: "user" | "assistant"; text: string; reply?: SproutReply; signIn?: boolean };
 
 const OPENING = "Hi, I'm Enera. Ask me about your health at any stage of life, or how to get the most out of Lumenera. I'll share what our clinically reviewed library says, point you to the right tool, or help you work out who to talk to. What's on your mind?";
 const QUICK = [
@@ -24,6 +25,7 @@ const QUICK = [
 /** Chat panel: welcome, then the conversation, then the question box, so each answer reads top-down. Conversation lives only in memory and is cleared when the screen closes. */
 export function SproutChat({ compact = false }: { compact?: boolean }) {
   const ask = useServerFn(askSprout);
+  const { user, openSave } = useRewards();
   const [msgs, setMsgs] = useState<Msg[]>([{ role: "assistant", text: OPENING }]);
   const [text, setText] = useState("");
   const [busy, setBusy] = useState(false);
@@ -59,6 +61,12 @@ export function SproutChat({ compact = false }: { compact?: boolean }) {
     setMsgs((m) => [...m, { role: "user", text: message }]);
     setText("");
     setCat(null);
+    if (!user) {
+      // Enera's answers use a paid AI model, so chatting needs a free account. Safety replies never wait for one.
+      const reply: SproutReply | null = isCrisis(message) ? { kind: "crisis", text: CRISIS_REPLY } : isUrgent(message) ? { kind: "urgent", text: URGENT_REPLY } : null;
+      setMsgs((m) => [...m, reply ? { role: "assistant", text: reply.text, reply } : { role: "assistant", text: "I'd love to help with that. Chatting with me needs a free Lumenera account, so I can keep answering safely. It only takes a minute.", signIn: true }]);
+      return;
+    }
     setBusy(true);
     try {
       const reply = await ask({ data: { message, history } });
@@ -117,6 +125,9 @@ export function SproutChat({ compact = false }: { compact?: boolean }) {
                   <a href="tel:000" className="press inline-flex min-h-11 items-center rounded-full bg-rose px-4 py-2 text-sm font-bold text-shell">Call 000</a>
                   <a href="tel:1800022222" className="press inline-flex min-h-11 items-center rounded-full border border-line bg-card px-4 py-2 text-sm font-bold text-plum">Healthdirect 1800 022 222</a>
                 </span>
+              )}
+              {m.signIn && (
+                <Pill size="sm" className="self-start" onClick={openSave}>Sign in or create an account</Pill>
               )}
               {m.reply?.kind === "crisis" && (
                 <a href="tel:131114" className="press inline-flex min-h-11 items-center self-start rounded-full bg-rose px-4 py-2 text-sm font-bold text-shell">Call Lifeline 13 11 14</a>
