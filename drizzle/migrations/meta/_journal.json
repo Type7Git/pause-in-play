@@ -134,6 +134,13 @@
       "when": 1792545889309,
       "tag": "0018_server_checked_rewards",
       "breakpoints": true
+    },
+    {
+      "idx": 19,
+      "version": "7",
+      "when": 1792546123489,
+      "tag": "0019_wyr_characters_scoped_read",
+      "breakpoints": true
     }
   ]
 }
