@@ -1,5 +1,5 @@
 import { createServerFn } from "@tanstack/react-start";
-import { getRequest } from "@tanstack/react-start/server";
+import { requireSupabaseAuth } from "@/integrations/supabase/auth-middleware";
 import { z } from "zod";
 import type { SproutReply } from "./sprout-guard";
 
@@ -8,13 +8,13 @@ const input = z.object({
   history: z.array(z.object({ role: z.enum(["user", "assistant"]), text: z.string().max(2000) })).max(8).default([]),
 });
 
-/** Public: anyone can chat with Enera. Nothing is stored except anonymised unanswered questions. */
+/** Signed-in only, because every answer calls a paid AI model. Nothing is stored except anonymised unanswered questions. */
 export const askSprout = createServerFn({ method: "POST" })
+  .middleware([requireSupabaseAuth])
   .inputValidator((d) => input.parse(d))
-  .handler(async ({ data }): Promise<SproutReply> => {
-    const req = getRequest();
-    const ip = req.headers.get("cf-connecting-ip") ?? req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ?? "local";
-    const digest = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(`sprout:${ip}`));
+  .handler(async ({ data, context }): Promise<SproutReply> => {
+    // The hourly limit is per account; the bucket is a one-way hash so usage rows never name anyone.
+    const digest = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(`sprout:user:${context.userId}`));
     const bucket = [...new Uint8Array(digest)].slice(0, 12).map((b) => b.toString(16).padStart(2, "0")).join("");
     const { handleSprout } = await import("./sprout.server");
     try {
