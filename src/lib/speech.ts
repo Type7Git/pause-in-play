@@ -5,6 +5,7 @@
  * merged rather than joined; see joinResults (tested).
  */
 import { transcribeVoice } from "./voice.functions";
+import { supabase } from "@/integrations/supabase/client";
 
 type Alt = { transcript: string };
 type Result = ArrayLike<Alt> & { isFinal: boolean };
@@ -98,6 +99,13 @@ export async function listen(o: ListenOptions): Promise<Listening> {
 
 /** Record a short clip and transcribe it on the server; the clip is discarded. */
 async function record(o: ListenOptions, silenceMs: number, maxMs: number, finish: (t: string) => void): Promise<Listening> {
+  // Server transcription uses a paid model, so it is only offered to signed-in people.
+  const { data: auth } = await supabase.auth.getSession();
+  if (!auth.session) {
+    finish(""); // first, so this message is the one left showing
+    o.onProblem("Voice typing on this device needs a free account. You can type instead.", false);
+    return { stop: () => {} };
+  }
   let stream: MediaStream;
   try { stream = await navigator.mediaDevices.getUserMedia({ audio: true }); }
   catch { o.onProblem("The microphone is off for Lumenera. You can turn it on in your settings, or type instead.", true); return { stop: () => {} }; }

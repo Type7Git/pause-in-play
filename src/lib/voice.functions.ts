@@ -1,9 +1,11 @@
 import { createServerFn } from "@tanstack/react-start";
 import { z } from "zod";
+import { requireSupabaseAuth } from "@/integrations/supabase/auth-middleware";
 import type { Filed } from "./voice-file";
 
-/** Public: sorts a note into fields. Stores nothing. */
+/** Signed-in only (it calls a paid AI model): sorts a note into fields. Stores nothing. */
 export const fileVoiceNote = createServerFn({ method: "POST" })
+  .middleware([requireSupabaseAuth])
   .inputValidator((d) => z.object({ text: z.string().trim().min(1).max(600) }).parse(d))
   .handler(async ({ data }): Promise<Filed> => {
     const { fileNote } = await import("./voice.server");
@@ -15,8 +17,9 @@ export const fileVoiceNote = createServerFn({ method: "POST" })
     }
   });
 
-/** Public: turns a short clip (base64, ≤ ~1.5MB) into text. Audio is discarded after. */
+/** Signed-in only (it calls a paid transcription model): turns a short clip (base64, ≤ ~1.5MB) into text. Audio is discarded after. */
 export const transcribeVoice = createServerFn({ method: "POST" })
+  .middleware([requireSupabaseAuth])
   .inputValidator((d) => z.object({ audio: z.string().min(10).max(2_000_000), mime: z.string().regex(/^audio\/[\w.+-]+/) }).parse(d))
   .handler(async ({ data }): Promise<{ text: string } | { error: string }> => {
     const { transcribeClip } = await import("./voice.server");
