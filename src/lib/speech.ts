@@ -102,8 +102,8 @@ async function record(o: ListenOptions, silenceMs: number, maxMs: number, finish
   // Server transcription uses a paid model, so it is only offered to signed-in people.
   const { data: auth } = await supabase.auth.getSession();
   if (!auth.session) {
+    finish(""); // first, so this message is the one left showing
     o.onProblem("Voice typing on this device needs a free account. You can type instead.", false);
-    finish("");
     return { stop: () => {} };
   }
   let stream: MediaStream;
