@@ -4,6 +4,7 @@ import { useQuery } from "@tanstack/react-query";
 import { useEffect, useRef, useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { askSprout } from "@/lib/sprout.functions";
+import { listen, voiceSupported, type Listening } from "@/lib/speech";
 import type { SproutReply } from "@/lib/sprout-guard";
 import { PanelBadge } from "./Panel";
 import { SproutMic } from "./icons";
@@ -27,6 +28,10 @@ export function SproutChat({ compact = false }: { compact?: boolean }) {
   const [text, setText] = useState("");
   const [busy, setBusy] = useState(false);
   const [cat, setCat] = useState<string | null>(null);
+  const [mic, setMic] = useState<"off" | "on" | "unsupported">("off");
+  const [micNote, setMicNote] = useState("");
+  const listening = useRef<Listening | null>(null);
+  useEffect(() => { if (!voiceSupported()) setMic("unsupported"); return () => listening.current?.stop(); }, []);
   const lastRef = useRef<HTMLDivElement>(null);
   const last = msgs.length > 1 ? msgs[msgs.length - 1] : undefined;
   const inputRef = useRef<HTMLTextAreaElement>(null);
@@ -66,6 +71,21 @@ export function SproutChat({ compact = false }: { compact?: boolean }) {
       // On phones, don't pop the keyboard over the answer they're about to read.
       if (window.matchMedia("(pointer: fine)").matches) inputRef.current?.focus({ preventScroll: true });
     }
+  }
+
+  /** Speak straight into the conversation: her words fill the box as she talks, and send when she pauses. */
+  async function talk() {
+    if (mic === "on") { listening.current?.stop(); return; }
+    if (busy) return;
+    setMicNote(""); setMic("on"); setText("");
+    listening.current = await listen({
+      onWords: (w) => setText(w),
+      onDone: (w) => {
+        setMic("off"); listening.current = null;
+        if (w) void send(w); else setMicNote((n) => n || "I didn't catch that. Tap the mic and try again, or type it.");
+      },
+      onProblem: (m) => { setMic("off"); setMicNote(m); },
+    });
   }
 
   return (
@@ -119,21 +139,25 @@ export function SproutChat({ compact = false }: { compact?: boolean }) {
         )}
       </div>
       <form onSubmit={(e) => { e.preventDefault(); send(text); }} className="flex items-end gap-2 rounded-[22px] border border-line bg-card p-2 shadow-soft">
-        <Link to="/tell-enera" aria-label="Tell Enera by voice" className="press grid size-11 shrink-0 place-items-center rounded-full bg-plum-soft text-plum">
-          <SproutMic className="size-5" />
-        </Link>
+        {mic !== "unsupported" && (
+          <button type="button" onClick={() => void talk()} disabled={busy && mic === "off"} aria-pressed={mic === "on"} aria-label={mic === "on" ? "Stop listening" : "Talk to Enera"} className="press relative grid size-11 shrink-0 place-items-center rounded-full bg-plum-soft text-plum aria-pressed:bg-plum aria-pressed:text-shell">
+            {mic === "on" && <span className="mm-ring absolute inset-0 rounded-full border-2 border-plum" aria-hidden="true" />}
+            <SproutMic className="size-5" />
+          </button>
+        )}
         <label htmlFor="sprout-input" className="sr-only">Ask Enera something</label>
         <textarea
           id="sprout-input" ref={inputRef} rows={2} maxLength={600} value={text}
           onChange={(e) => setText(e.target.value)}
           onKeyDown={(e) => { if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); send(text); } }}
-          placeholder="Ask Enera something…"
+          placeholder={mic === "on" ? "Listening… just speak" : "Ask Enera something…"}
           className="max-h-32 min-h-11 min-w-0 flex-1 resize-none rounded-[14px] bg-transparent px-2 py-2 text-[15px] outline-none"
         />
         <Pill type="submit" disabled={busy || !text.trim()} aria-label="Send" className="size-11 shrink-0 p-0">
           <svg viewBox="0 0 24 24" className="size-5" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" /></svg>
         </Pill>
       </form>
+      {mic === "on" ? <p role="status" className="-mt-2 text-sm font-bold text-plum">Listening. I’ll send it when you pause, or tap the mic to stop.</p> : micNote ? <p role="status" className="-mt-2 text-sm text-muted-foreground">{micNote}</p> : null}
 
       <div className="divide-y divide-line border-y border-line">
         <details className="group" onToggle={(e) => { if (!e.currentTarget.open) setCat(null); }}>

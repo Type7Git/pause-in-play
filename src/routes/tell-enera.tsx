@@ -8,7 +8,8 @@ import { enablePush } from "@/lib/push";
 import { savePushToken } from "@/lib/push.functions";
 import { remindAtFor, useRewards } from "@/lib/rewards";
 import { REMIND_LABEL, type Filed, type Remind } from "@/lib/voice-file";
-import { fileVoiceNote, transcribeVoice } from "@/lib/voice.functions";
+import { fileVoiceNote } from "@/lib/voice.functions";
+import { listen as startListening, voiceSupported } from "@/lib/speech";
 
 export const Route = createFileRoute("/tell-enera")({
   head: () => ({
@@ -29,12 +30,6 @@ type Draft = { type: "quest" | "vit" | "unsure"; doing: string; next: string; re
 const REMINDS: Remind[] = ["none", "10min", "30min", "tonight"];
 const VIT_BADGE_AT = 6;
 
-type SR = { lang: string; interimResults: boolean; continuous: boolean; start(): void; stop(): void; onresult: ((e: { results: ArrayLike<ArrayLike<{ transcript: string }> & { isFinal: boolean }> }) => void) | null; onerror: ((e: { error: string }) => void) | null; onend: (() => void) | null };
-const getSR = (): (new () => SR) | null => {
-  const w = window as unknown as { SpeechRecognition?: new () => SR; webkitSpeechRecognition?: new () => SR };
-  return w.SpeechRecognition ?? w.webkitSpeechRecognition ?? null;
-};
-
 function TellSprout() {
   const { addQuest, addVit, earn, user, vit } = useRewards();
   const [phase, setPhase] = useState<Phase>("idle");
@@ -50,7 +45,7 @@ function TellSprout() {
 
   useEffect(() => {
     asked.current = localStorage.getItem("midlife-mind:mic-explained") === "1";
-    if (!getSR() && !(navigator.mediaDevices && "MediaRecorder" in window)) setMicOk(false);
+    if (!voiceSupported()) setMicOk(false);
     return () => stopRef.current();
   }, []);
 
@@ -58,7 +53,9 @@ function TellSprout() {
     const t = text.trim();
     if (!t) { setPhase("idle"); setNote("Enera didn't catch anything. Try again, or type it."); return; }
     setHeard(t); setPhase("thinking"); setNote("Got it."); setCrisis(""); setSaved(null);
-    const r: Filed = await fileVoiceNote({ data: { text: t.slice(0, 600) } });
+    let r: Filed;
+    try { r = await fileVoiceNote({ data: { text: t.slice(0, 600) } }); }
+    catch { r = { type: "error", text: "Enera couldn't sort that just now. Check it below and choose where it goes." } as Filed; }
     if (r.type === "crisis") { setCrisis(r.text); setDraft(null); setPhase("heard"); return; }
     if (r.type === "error") { setDraft({ type: "unsure", doing: t, next: "", remind: "none", thing: t, location: "" }); setNote(r.text); setPhase("heard"); return; }
     setDraft({ type: r.type, doing: r.doing || (r.type === "unsure" ? t : ""), next: r.next_step, remind: r.remind, thing: r.thing || (r.type === "unsure" ? t : ""), location: r.location });
@@ -71,48 +68,14 @@ function TellSprout() {
     if (phase === "listening") { stopRef.current(); return; }
     if (!asked.current) { setPhase("explain"); return; }
     setDraft(null); setCrisis(""); setSaved(null);
-    const Rec = getSR();
-    if (Rec) {
-      const rec = new Rec();
-      rec.lang = "en-AU"; rec.interimResults = true; rec.continuous = true;
-      let text = ""; let silence = 0; let failed = false;
-      const total = window.setTimeout(() => rec.stop(), 30_000);
-      const arm = () => { clearTimeout(silence); silence = window.setTimeout(() => rec.stop(), 3_000); };
-      rec.onresult = (e) => { text = Array.from(e.results).map((r) => r[0]!.transcript).join(" "); setHeard(text); arm(); };
-      rec.onerror = (e) => { if (e.error === "not-allowed" || e.error === "service-not-allowed") { failed = true; denied(); } };
-      rec.onend = () => { clearTimeout(total); clearTimeout(silence); if (!failed) void sort(text); };
-      stopRef.current = () => rec.stop();
-      setPhase("listening"); setNote("Listening…"); setHeard("");
-      rec.start(); arm();
-      return;
-    }
-    // Fallback: record a short clip, transcribe on the server, discard it.
-    let stream: MediaStream;
-    try { stream = await navigator.mediaDevices.getUserMedia({ audio: true }); } catch { denied(); return; }
-    const mr = new MediaRecorder(stream);
-    const chunks: Blob[] = [];
-    mr.ondataavailable = (e) => chunks.push(e.data);
-    const ctx = new AudioContext();
-    const an = ctx.createAnalyser(); ctx.createMediaStreamSource(stream).connect(an);
-    const buf = new Uint8Array(an.fftSize); let quietSince = Date.now();
-    const tick = window.setInterval(() => {
-      an.getByteTimeDomainData(buf);
-      const loud = buf.some((v) => Math.abs(v - 128) > 12);
-      if (loud) quietSince = Date.now(); else if (Date.now() - quietSince > 3_000) mr.stop();
-    }, 200);
-    const total = window.setTimeout(() => mr.state !== "inactive" && mr.stop(), 30_000);
-    mr.onstop = async () => {
-      clearInterval(tick); clearTimeout(total); stream.getTracks().forEach((t) => t.stop()); void ctx.close();
-      setPhase("thinking"); setNote("Got it.");
-      const blob = new Blob(chunks, { type: mr.mimeType || "audio/webm" });
-      const b64 = await new Promise<string>((res) => { const fr = new FileReader(); fr.onload = () => res(String(fr.result).split(",")[1] ?? ""); fr.readAsDataURL(blob); });
-      const r = await transcribeVoice({ data: { audio: b64, mime: blob.type || "audio/webm" } });
-      if ("error" in r) { setPhase("idle"); setNote(r.error); return; }
-      void sort(r.text);
-    };
-    stopRef.current = () => mr.state !== "inactive" && mr.stop();
     setPhase("listening"); setNote("Listening…"); setHeard("");
-    mr.start();
+    const h = await startListening({
+      silenceMs: 3_000,
+      onWords: (w) => setHeard(w),
+      onDone: (w) => { void sort(w); },
+      onProblem: (m, blocked) => { if (blocked) denied(); else setNote(m); },
+    });
+    stopRef.current = h.stop;
   };
 
   const nudge = (remindAt: string | null) => {
