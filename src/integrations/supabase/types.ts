@@ -980,6 +980,14 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      award_reward: {
+        Args: { _amount: number; _badge?: string; _reason: string }
+        Returns: undefined
+      }
+      bring_over_rewards: {
+        Args: { _badges: string[]; _petals: number }
+        Returns: undefined
+      }
       has_role: {
         Args: {
           _role: Database["public"]["Enums"]["app_role"]
@@ -1030,6 +1038,7 @@ export type Database = {
           unread: number
         }[]
       }
+      reward_badge_ok: { Args: { _key: string }; Returns: boolean }
       search_library: {
         Args: { q: string }
         Returns: {

@@ -127,6 +127,13 @@
       "when": 1792196860265,
       "tag": "0017_medicine_cabinet_apply",
       "breakpoints": true
+    },
+    {
+      "idx": 18,
+      "version": "7",
+      "when": 1792545889309,
+      "tag": "0018_server_checked_rewards",
+      "breakpoints": true
     }
   ]
 }
