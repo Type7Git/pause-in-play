@@ -10,7 +10,7 @@
 <!-- LOVABLE:END -->
 
 - All user data (petals, badges, quests, VIT items) flows through the `useRewards()` store: localStorage when signed out, Lovable Cloud tables when signed in, with a one-time local→account migration on first sign-in; why: screens stay storage-agnostic.
-- Petal totals are derived from summing `petal_events`, never stored as a counter; why: append-only history avoids lost updates across devices.
+- Petals sum `petal_events`; petals and badges are written only via capped award RPCs; why: no lost updates, no self-awards.
 - Garden play (src/components/mm/GardenPlay.tsx) never awards petals or badges; flower picks and last-watered time are the only saved garden state, kept in useRewards (auth user_metadata.garden when signed in, localStorage when signed out) and weather is session-only; why: tending is kindness, not a points engine, and weather is mood-like so it is never stored.
 - Garden "top X%" and badge rarity come from the public gardenStanding server function, which returns aggregates only, waits for 25+ gardens and never ranks a garden outside the top half; why: comparison should encourage, never shame.
 - Enera (formerly Sprout) is reached from the Ask Enera bar on /home, the flower button in every tool page's top bar, and the Enera tile; chat is /enera and voice filing /tell-enera (/sprout and /tell-sprout redirect); code names (askSprout, SproutChat, sprout-guard, tool keys "sprout"/"tell-sprout") stay unchanged because tool keys are stored in library_entries; why: renaming stored keys would break approved library links.

@@ -77,9 +77,9 @@ async function loadRemote() {
 
 /** Copy this device's garden into the account, then clear the local copy. */
 async function migrateLocal(userId: string, local: Local) {
-  if (local.petals > 0) await supabase.from("petal_events").insert({ user_id: userId, amount: local.petals, reason: "Brought over from this device" });
-  if (local.badges.length)
-    await supabase.from("badges_earned").upsert(local.badges.map((k) => ({ user_id: userId, badge_key: k })), { onConflict: "user_id,badge_key", ignoreDuplicates: true });
+  // The database checks badge keys and caps how many petals can ever be brought over.
+  if (local.petals > 0 || local.badges.length)
+    await supabase.rpc("bring_over_rewards", { _petals: Math.max(0, Math.round(local.petals)), _badges: local.badges });
   if (local.quests.length)
     await supabase.from("side_quests").insert(local.quests.map((q) => ({ user_id: userId, doing: q.doing, next_step: q.next || null, remind_at: q.remindAt })));
   const realVit = local.vit.filter((v) => !v.example);
@@ -166,7 +166,7 @@ export function RewardsProvider({ children }: { children: ReactNode }) {
         r = await loadRemote();
       } else if (!r.hasEvents) {
         // Brand-new account on a fresh device: plant the first seedling.
-        await supabase.from("badges_earned").upsert({ user_id: u.id, badge_key: "first_seedling" }, { onConflict: "user_id,badge_key", ignoreDuplicates: true });
+        await supabase.rpc("award_reward", { _amount: 0, _reason: "First seedling", _badge: "first_seedling" });
         await supabase.from("user_favourites").upsert(DEFAULT_FAVOURITES.map((k, i) => ({ user_id: u.id, activity_key: k, position: i })), { onConflict: "user_id,activity_key", ignoreDuplicates: true });
         r = await loadRemote();
       }
@@ -207,8 +207,8 @@ export function RewardsProvider({ children }: { children: ReactNode }) {
       setEarned(earnedRef.current);
     }
     if (u) {
-      void supabase.from("petal_events").insert({ user_id: u.id, amount: n, reason: message.slice(0, 120) });
-      if (bkey) void supabase.from("badges_earned").upsert({ user_id: u.id, badge_key: bkey }, { onConflict: "user_id,badge_key", ignoreDuplicates: true });
+      // Checked in the database: known badges only, small amounts, a daily cap.
+      void supabase.rpc("award_reward", { _amount: Math.min(5, Math.max(0, Math.round(n))), _reason: message.slice(0, 120), ...(bkey ? { _badge: bkey } : {}) });
     } else {
       writeLocal((() => { const l = readLocal(); return { ...l, petals: l.petals + n, lastEarnedAt: Date.now(), badges: bkey && !l.badges.includes(bkey) ? [...l.badges, bkey] : l.badges, dirty: true }; })());
       if (!localStorage.getItem(PROMPTED)) {
